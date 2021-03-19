@@ -36,7 +36,7 @@ TODO
 
 TODO
 
-The Azure workflow described in [azure.pkr.hcl](azure.pkr.hcl) requires an Azure Resource Group to operate.
+The Azure workflow described in [azure/image.pkr.hcl](azure/image.pkr.hcl) requires an Azure Resource Group to operate.
 
 To ease in the creation of this, this repository includes a Terraform workflow (in `./terraform/azure`) that can create the prerequisite resources.
 
@@ -59,7 +59,7 @@ To log in, execute the `az login` command and follow the instructions presented 
 To build the Packer image, use the [build](https://www.packer.io/docs/commands/build) command:
 
 ```sh
-packer build azure.pkr.hcl
+make azure
 ```
 
 This will execute the Packer build workflow for Azure images.
