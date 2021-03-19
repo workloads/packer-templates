@@ -1,0 +1,4 @@
+### Packer ###
+packer_cache/
+crash.log
+output-*/
