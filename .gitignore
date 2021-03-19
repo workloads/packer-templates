@@ -8,4 +8,6 @@ output-*/
 *.tfstate
 *.tfstate.backup
 *.terraform.tfstate.lock.info
+aws-terraform-generated.auto.pkrvars.hcl
 azure-terraform-generated.auto.pkrvars.hcl
+google-terraform-generated.auto.pkrvars.hcl
