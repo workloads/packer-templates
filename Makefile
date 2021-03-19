@@ -34,6 +34,7 @@ help: # Displays this help text
 azure: # Create Packer Image(s) in Azure
 	@packer \
 		build \
+			-force \
 			"./azure"
 
 #.PHONY: azure-init

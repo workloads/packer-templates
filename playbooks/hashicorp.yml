@@ -1,0 +1,21 @@
+---
+
+- name: "Manage HashiCorp packages"
+  hosts: default
+  become: true
+
+  tasks:
+    # see https://docs.ansible.com/ansible/2.9/modules/apt_key_module.html
+    - name: add APT Key for HashiCorp repository
+      apt_key:
+        url: "https://apt.releases.hashicorp.com/gpg"
+        state: present
+
+    # see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
+    - name: add
+      apt_repository:
+        # TODO: clean this up
+        repo: "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+        state: present
+        update_cache: true
+        validate_certs: true

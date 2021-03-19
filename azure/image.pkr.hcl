@@ -33,16 +33,23 @@ build {
     "source.azure-arm.nomad"
   ]
 
+  provisioner "ansible" {
+    playbook_file = "./playbooks/packages.yml"
+    command = "ansible-playbook"
+    ansible_env_vars = [
+      "ANSIBLE_NOCOLOR=True",
+      "ANSIBLE_NOCOWS=True"
+      "ANSIBLE_SSH_ARGS='-o ForwardAgent=yes -o ControlMaster=auto -o ControlPersist=60s'",
+    ]
+  }
+
   # carry out deprovisioning steps: https://www.packer.io/docs/builders/azure/arm#linux
   # for information on the Azure Linux Guest Agent, see https://github.com/Azure/WALinuxAgent
   provisioner "shell" {
     execute_command = "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'"
 
     inline = [
-      "apt-get update",
-      "apt-get upgrade --yes",
       "/usr/sbin/waagent -force -deprovision+user",
-      "export HISTSIZE=0",
       "sync"
     ]
 
