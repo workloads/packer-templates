@@ -1,5 +1,5 @@
 locals {
-  terraform_data = templatefile("./templates/azure-terraform-template.auto.pkrvars.hcl", {
+  terraform_data = templatefile("templates/azure-terraform-template.auto.pkrvars.hcl", {
     location                          = azurerm_resource_group.packer.location
     managed_image_resource_group_name = azurerm_resource_group.packer.name
   })
