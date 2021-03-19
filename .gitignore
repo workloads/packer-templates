@@ -2,3 +2,10 @@
 packer_cache/
 crash.log
 output-*/
+
+### Terraform ###
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.terraform.tfstate.lock.info
+azure-terraform-generated.auto.pkrvars.hcl

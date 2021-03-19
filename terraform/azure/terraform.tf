@@ -6,6 +6,12 @@ terraform {
       version = "2.52.0"
     }
 
+    # see https://registry.terraform.io/providers/hashicorp/local/2.1.0
+    local = {
+      source  = "hashicorp/local"
+      version = "2.1.0"
+    }
+
     # see https://registry.terraform.io/providers/hashicorp/random/3.1.0
     random = {
       source  = "hashicorp/random"
