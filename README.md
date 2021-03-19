@@ -10,6 +10,7 @@
   - [Dependencies](#dependencies)
   - [Usage](#usage)
     - [Azure images](#azure-images)
+    - [Run prerequisite Terraform workflows for Azure](#run-prerequisite-terraform-workflows-for-azure)
   - [Author Information](#author-information)
   - [License](#license)
 
@@ -31,7 +32,7 @@ All images use _Ubuntu 20.04_ as the base operating system.
 
 TODO
 
-## Run prerequisite Terraform workflows
+## Run prerequisite Terraform workflows for Azure
 
 TODO
 

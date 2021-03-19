@@ -50,3 +50,10 @@ azure-terraform-destroy: # Destroy prerequisite resources in Azure using Terrafo
 	@terraform \
 		-chdir="./terraform/azure" \
 		destroy
+
+.PHONY: azure-terraform-init
+azure-terraform-init: # Initializes Terraform for use with Azure
+	@terraform \
+		-chdir="./terraform/azure" \
+		init \
+			-upgrade
