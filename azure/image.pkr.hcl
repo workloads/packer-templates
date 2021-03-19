@@ -38,7 +38,7 @@ build {
     command = "ansible-playbook"
     ansible_env_vars = [
       "ANSIBLE_NOCOLOR=True",
-      "ANSIBLE_NOCOWS=True"
+      "ANSIBLE_NOCOWS=True",
       "ANSIBLE_SSH_ARGS='-o ForwardAgent=yes -o ControlMaster=auto -o ControlPersist=60s'",
     ]
   }
