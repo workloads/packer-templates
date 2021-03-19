@@ -10,9 +10,5 @@ crash.log
 output-*/
 
 ### Packer (user-generated) ###
-aws-credentials.auto.pkrvars.hcl
-aws-terraform-generated.auto.pkrvars.hcl
-azure-credentials.auto.pkrvars.hcl
-azure-terraform-generated.auto.pkrvars.hcl
-google-credentials.auto.pkrvars.hcl
-google-terraform-generated.auto.pkrvars.hcl
+credentials.auto.pkrvars.hcl
+generated.auto.pkrvars.hcl

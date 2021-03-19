@@ -1,5 +1,5 @@
 locals {
-  terraform_data = templatefile("./templates/azure-terraform-template.auto.pkrvars.hcl", {
+  terraform_data = templatefile("./templates/generated.auto.pkrvars.hcl", {
     location                          = azurerm_resource_group.packer.location
     managed_image_resource_group_name = azurerm_resource_group.packer.name
   })
@@ -13,5 +13,5 @@ resource "local_file" "terraform_data_for_packer" {
 
   # Packer automatically loads files that end in `*.auto.pkrvars.hcl`
   # see https://www.packer.io/guides/hcl/variables#from-a-file
-  filename = "../../azure-terraform-generated.auto.pkrvars.hcl"
+  filename = "../../azure/generated.auto.pkrvars.hcl"
 }
