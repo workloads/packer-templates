@@ -1,5 +1,3 @@
-# Makefile for shipyard-blueprints
-
 # configuration
 MAKEFLAGS      = --no-builtin-rules --warn-undefined-variables
 SHELL         := sh
@@ -36,11 +34,27 @@ help: # Displays this help text
 azure: # Create Packer Image(s) in Azure
 	@packer \
 		build \
-			-var-file="azure-variables.pkrvars.hcl" \
-			"azure.pkr.hcl"
+			"./azure"
 
-.PHONY: azure-terraform
-azure-terraform: # Create prerequisite resources in Azure using Terraform
+#.PHONY: azure-init
+#azure-init: # Install missing plugins or upgrade plugins
+#	@packer \
+#		init \
+#			"./azure"
+
+.PHONY: azure-fmt
+azure-lint: # Formats and validates Azure Packer Template(s)
+	@packer \
+		fmt \
+			-diff \
+			"./azure" \
+	&& \
+	packer \
+		validate \
+			"./azure"
+
+.PHONY: azure-terraform-apply
+azure-terraform-apply: # Create prerequisite resources in Azure using Terraform
 	@terraform \
 		-chdir="./terraform/azure" \
 		apply
