@@ -12,10 +12,17 @@
         state: present
 
     # see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
-    - name: add
+    - name: TODO1
       apt_repository:
         # TODO: clean this up
         repo: "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
         state: present
         update_cache: true
         validate_certs: true
+
+    # see https://docs.ansible.com/ansible/2.9/modules/systemd_module.html
+    - name: TODO2
+      systemd:
+        state: started
+        name: httpd
+
