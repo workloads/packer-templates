@@ -1,7 +1,8 @@
 ### Packer ###
 packer_cache/
 crash.log
-output-*/
+vagrant-*/
+*.log 
 
 ### Packer (user-generated) ###
 credentials.auto.pkrvars.hcl
