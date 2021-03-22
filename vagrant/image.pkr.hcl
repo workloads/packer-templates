@@ -7,6 +7,7 @@ source "vagrant" "nomad" {
   source_path  = var.source_path
   provider     = "virtualbox"
   add_force    = true
+  output_dir   = "vagrant-nomad"
 }
 
 build {
@@ -22,6 +23,12 @@ build {
       "ANSIBLE_NOCOWS=True"
     ]
   }
+
+  # Vagrant Cloud post-provisioning (https://www.packer.io/docs/post-processors/vagrant-cloud)
+  post-processor "vagrant-cloud" {
+    box_tag = var.box_tag
+    version = var.version
+  }
 }
 
-# TODO: add Vagrant Cloud post-provisioning (https://www.packer.io/docs/post-processors/vagrant-cloud)
+
