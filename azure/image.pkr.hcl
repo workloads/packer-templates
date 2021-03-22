@@ -35,7 +35,8 @@ build {
 
   provisioner "ansible" {
     playbook_file = "./playbooks/main.yml"
-    command = "ansible-playbook"
+    command       = "ansible-playbook"
+
     ansible_env_vars = [
       "ANSIBLE_NOCOLOR=True",
       "ANSIBLE_NOCOWS=True",
