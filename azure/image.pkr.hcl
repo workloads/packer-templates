@@ -34,7 +34,7 @@ build {
   ]
 
   provisioner "ansible" {
-    playbook_file = "./playbooks/packages.yml"
+    playbook_file = "./playbooks/main.yml"
     command = "ansible-playbook"
     ansible_env_vars = [
       "ANSIBLE_NOCOLOR=True",
@@ -56,5 +56,3 @@ build {
     inline_shebang = "/bin/sh -x"
   }
 }
-
-
