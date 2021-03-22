@@ -9,6 +9,11 @@ SHELL         := sh
 color_off      = $(shell tput sgr0)
 color_bright   = $(shell tput bold)
 
+# convenience function to alert user to missing target
+define missing_target
+	$(error Missing target. Specify with `target=<provider>`)
+endef
+
 .SILENT .PHONY: clear
 clear:
 	clear
@@ -30,72 +35,54 @@ help: # Displays this help text
 		-t
 	$(info )
 
-.PHONY: azure
-azure: # Create Packer Image(s) for Azure
+.PHONY: build
+build: # Build a Packer Image(s) for a target
+	@: $(if $(target),,$(call missing_target))
 	@packer \
 		build \
 			-force \
-			"./azure"
+			"./$(target)"
 
-#.PHONY: azure-init
-#azure-init: # Install and upgrade plugins for Packer Template(s) for Azure
-#	@packer \
-#		init \
-#			"./azure"
+.PHONY: init
+init: # Install and upgrade plugins for Packer Template(s) for a target
+	@: $(if $(target),,$(call missing_target))
+	@packer \
+		init \
+			"./$(target)"
 
-.PHONY: azure-fmt
-azure-lint: # Formats and validates Packer Template(s) for Azure
+.PHONY: lint
+lint: # Formats and validates Packer Template(s) for a target
+	@: $(if $(target),,$(call missing_target))
 	@packer \
 		fmt \
 			-diff \
-			"./azure" \
+			"./$(target)" \
 	&& \
 	packer \
 		validate \
-			"./azure"
+			"./$(target)"
 
-.PHONY: azure-terraform-apply
-azure-terraform-apply: # Create prerequisite resources for Azure with Terraform
+.PHONY: terraform-apply
+terraform-apply: # Create prerequisite resources for a target with Terraform
+	@: $(if $(target),,$(call missing_target))
 	@terraform \
-		-chdir="./terraform/azure" \
+		-chdir="./terraform/$(target)" \
 		apply
 
-.PHONY: azure-terraform-destroy
-azure-terraform-destroy: # Destroy prerequisite resources for Azure with Terraform
+.PHONY: terraform-destroy
+terraform-destroy: # Destroy prerequisite resources for a target with Terraform
+	@: $(if $(target),,$(call missing_target))
 	@terraform \
-		-chdir="./terraform/azure" \
+		-chdir="./terraform/$(target)" \
 		destroy
 
-.PHONY: azure-terraform-init
-azure-terraform-init: # Initializes Terraform for Azure
+.PHONY: terraform-init
+terraform-init: # Initializes Terraform for a target
+	@: $(if $(target),,$(call missing_target))
 	@terraform \
-		-chdir="./terraform/azure" \
+		-chdir="./terraform/$(target)" \
 		init \
 			-upgrade
-
-.PHONY: vagrant
-vagrant: # Create Packer Image(s) for Vagrant
-	@packer \
-		build \
-			-force \
-			"./vagrant"
-
-#.PHONY: vagrant-init
-#vagrant-init: # Install and upgrade plugins for Packer Template(s) for Vagrant
-#	@packer \
-#		init \
-#			"./vagrant"
-
-.PHONY: vagrant-fmt
-vagrant-lint: # Formats and validates Packer Template(s) for Vagrant
-	@packer \
-		fmt \
-			-diff \
-			"./vagrant" \
-	&& \
-	packer \
-		validate \
-			"./vagrant"
 
 .PHONY: ansible-lint
 ansible-lint: # Lints Ansible playbook(s)
