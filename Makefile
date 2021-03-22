@@ -31,20 +31,20 @@ help: # Displays this help text
 	$(info )
 
 .PHONY: azure
-azure: # Create Packer Image(s) in Azure
+azure: # Create Packer Image(s) for Azure
 	@packer \
 		build \
 			-force \
 			"./azure"
 
 #.PHONY: azure-init
-#azure-init: # Install missing plugins or upgrade plugins
+#azure-init: # Install and upgrade plugins for Packer Template(s) for Azure
 #	@packer \
 #		init \
 #			"./azure"
 
 .PHONY: azure-fmt
-azure-lint: # Formats and validates Azure Packer Template(s)
+azure-lint: # Formats and validates Packer Template(s) for Azure
 	@packer \
 		fmt \
 			-diff \
@@ -55,19 +55,19 @@ azure-lint: # Formats and validates Azure Packer Template(s)
 			"./azure"
 
 .PHONY: azure-terraform-apply
-azure-terraform-apply: # Create prerequisite resources in Azure using Terraform
+azure-terraform-apply: # Create prerequisite resources for Azure with Terraform
 	@terraform \
 		-chdir="./terraform/azure" \
 		apply
 
 .PHONY: azure-terraform-destroy
-azure-terraform-destroy: # Destroy prerequisite resources in Azure using Terraform
+azure-terraform-destroy: # Destroy prerequisite resources for Azure with Terraform
 	@terraform \
 		-chdir="./terraform/azure" \
 		destroy
 
 .PHONY: azure-terraform-init
-azure-terraform-init: # Initializes Terraform for use with Azure
+azure-terraform-init: # Initializes Terraform for Azure
 	@terraform \
 		-chdir="./terraform/azure" \
 		init \
