@@ -3,13 +3,14 @@
 # see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
 - name: Update APT cache
   apt:
-#    force_apt_get: true
+    force_apt_get: true
     update_cache: true
-    upgrade: true
+    upgrade: "yes"
 
 # see https://docs.ansible.com/ansible/2.9/modules/package_module.html
 - name: Install base packages
-  package:
-    name: "{{ item }}"
+  apt:
+    force_apt_get: true
+    name: "{{ packages.base }}"
     state: present
-  with_items: "{{ packages.base }}"
+    update_cache: true

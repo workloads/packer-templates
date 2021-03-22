@@ -10,13 +10,13 @@ packages:
     - lsb-release
     - sudo
   docker:
-    - docker-ce=5:20.10.5~3-0~ubuntu-bionic
-    - containerd.io=1.4.4-1
+    - "docker-ce=5:20.10.5*"
+    - "containerd.io=1.4.4-1"
   hashicorp:
-    - consul=1.9.4
-    - nomad=1.0.4
-    - vault=1.6.3
+    - "consul=1.9.4"
+    - "nomad=1.0.4"
+    - "vault=1.6.3"
 
 apt_repos:
-  docker: "https://download.docker.com/linux/ubuntu"
+  docker: "https://download.docker.com"
   hashicorp: "https://apt.releases.hashicorp.com"

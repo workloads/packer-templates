@@ -9,29 +9,24 @@
 # see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
 - name: Add APT repository for HashiCorp packages
   apt_repository:
-    repo: "deb [arch={{ ansible_architecture }}] {{ apt_repos.hashicorp }} {{ ansible_distribution_release | lower }} main"
+    repo: "deb [arch=amd64] {{ apt_repos.hashicorp }} {{ ansible_distribution_release | lower }} main"
     state: present
     update_cache: true
-    validate_certs: true
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
-- name: Update APT cache after adding HashiCorp APT repository
-  apt:
-    update_cache: true
-    force_apt_get: true
-
-# see https://docs.ansible.com/ansible/2.9/modules/package_module.html
 - name: Install HashiCorp packages
-  package:
-    name: "{{ item }}"
+  apt:
+    force_apt_get: true
+    install_recommends: true
+    name: "{{ packages.hashicorp }}"
     state: present
-  with_items: "{{ packages.hashicorp }}"
+    update_cache: true
 
-# see https://docs.ansible.com/ansible/2.9/modules/systemd_module.html
-- name: Enable HashiCorp Services
-  systemd:
-    state: started
-    name: "{{ item }}"
-    with_items: "{{ packages.hashicorp }}"
+## see https://docs.ansible.com/ansible/2.9/modules/systemd_module.html
+#- name: Enable HashiCorp Services
+#  systemd:
+#    state: started
+#    name: "{{ item }}"
+#    with_items: "{{ packages.hashicorp }}"
 
 # TODO: add support for groups / users
