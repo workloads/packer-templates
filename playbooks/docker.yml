@@ -9,7 +9,7 @@
 # see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
 - name: Add APT repository for Docker packages
   apt_repository:
-    repo: "deb [arch=amd64] {{ apt_repos.docker }} {{ ansible_distribution_release | lower }} stable"
+    repo: "deb [arch={{ ansible_architecture}}] {{ apt_repos.docker }} {{ ansible_distribution_release | lower }} stable"
     state: present
     update_cache: true
     validate_certs: true
