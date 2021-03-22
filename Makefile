@@ -16,7 +16,7 @@ endef
 
 .SILENT .PHONY: clear
 clear:
-	clear
+	@clear
 
 .SILENT .PHONY: help
 help: # Displays this help text
