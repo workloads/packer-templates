@@ -1,6 +1,5 @@
 ### Packer ###
 packer_cache/
-crash.log
 vagrant-*/
 *.log 
 
@@ -17,4 +16,3 @@ generated.auto.pkrvars.hcl
 ### Vagrant ###
 # General
 .vagrant/
-*.box
