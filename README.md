@@ -9,8 +9,8 @@
   - [Requirements](#requirements)
   - [Dependencies](#dependencies)
   - [Usage](#usage)
-    - [Azure images](#azure-images)
-    - [Run prerequisite Terraform workflows for Azure](#run-prerequisite-terraform-workflows-for-azure)
+    - [Azure](#azure)
+    - [Vagrant](#vagrant)
   - [Author Information](#author-information)
   - [License](#license)
 
@@ -28,11 +28,11 @@ This repository contains Packer templates for multiple Cloud providers. Usage di
 
 All images use _Ubuntu 20.04_ as the base operating system.
 
-### Azure
+## Azure
 
 TODO
 
-## Run prerequisite Terraform workflows for Azure
+### Run prerequisite Terraform workflows for Azure
 
 TODO
 
@@ -44,7 +44,7 @@ For a seamless Packer experience, it is recommended to execute the Terraform wor
 
 Alternatively, you can manually create an Azure Resource Group as well as the `terraform_data.auto.pkrvars.hcl` file.
 
-## Azure images
+### Azure images
 
 For Packer to be able to build images in Azure, you will need to provide authentication credentials.
 
@@ -65,6 +65,10 @@ make azure
 This will execute the Packer build workflow for Azure images.
 
 Once the build workflow completes successfully, you will be able to inspect the image in the [Azure Portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Compute%2Fimages).
+
+### Vagrant
+
+TODO
 
 ## Author Information
 
