@@ -73,6 +73,30 @@ azure-terraform-init: # Initializes Terraform for Azure
 		init \
 			-upgrade
 
+.PHONY: vagrant
+vagrant: # Create Packer Image(s) for Vagrant
+	@packer \
+		build \
+			-force \
+			"./vagrant"
+
+#.PHONY: vagrant-init
+#vagrant-init: # Install and upgrade plugins for Packer Template(s) for Vagrant
+#	@packer \
+#		init \
+#			"./vagrant"
+
+.PHONY: vagrant-fmt
+vagrant-lint: # Formats and validates Packer Template(s) for Vagrant
+	@packer \
+		fmt \
+			-diff \
+			"./vagrant" \
+	&& \
+	packer \
+		validate \
+			"./vagrant"
+
 .PHONY: ansible-lint
 ansible-lint: # Lints Ansible playbook(s)
 	@yamllint \
