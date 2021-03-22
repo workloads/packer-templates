@@ -6,9 +6,8 @@
 
   tasks:
     # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
-    # TODO: consider rewriting this to use `include_vars`
     - name: "Include variables"
-      include: _vars.yml
+      include_vars: _vars.yml
 
     # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
     - name: "Manage base packages"
