@@ -20,3 +20,5 @@
     # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
     - name: "Manage Docker packages"
       include: docker.yml
+
+    # TODO: add support for podman

@@ -6,16 +6,16 @@ packages:
     - ca-certificates
     - curl
     - gnupg
+    - libcap2
     - lsb-release
     - sudo
   docker:
-    - docker-ce
-    - docker-ce-cli
-    - containerd.io
+    - docker-ce=5:20.10.5~3-0~ubuntu-bionic
+    - containerd.io=1.4.4-1
   hashicorp:
-    - consul
-    - nomad
-    - vault
+    - consul=1.9.4
+    - nomad=1.0.4
+    - vault=1.6.3
 
 apt_repos:
   docker: "https://download.docker.com/linux/ubuntu"

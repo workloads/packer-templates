@@ -9,10 +9,16 @@
 # see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
 - name: Add APT repository for HashiCorp packages
   apt_repository:
-    repo: "deb [arch={{ ansible_architecture}}] {{ apt_repos.hashicorp }} {{ ansible_distribution_release | lower }} main"
+    repo: "deb [arch={{ ansible_architecture }}] {{ apt_repos.hashicorp }} {{ ansible_distribution_release | lower }} main"
     state: present
     update_cache: true
     validate_certs: true
+
+# see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
+- name: Update APT cache after adding HashiCorp APT repository
+  apt:
+    update_cache: true
+    force_apt_get: true
 
 # see https://docs.ansible.com/ansible/2.9/modules/package_module.html
 - name: Install HashiCorp packages
