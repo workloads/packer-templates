@@ -1,0 +1,22 @@
+---
+
+packages:
+  base:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg
+    - lsb-release
+    - sudo
+  docker:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+  hashicorp:
+    - consul
+    - nomad
+    - vault
+
+apt_repos:
+  docker: "https://download.docker.com/linux/ubuntu"
+  hashicorp: "https://apt.releases.hashicorp.com"

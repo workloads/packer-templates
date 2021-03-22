@@ -5,14 +5,19 @@
   become: true
 
   tasks:
-    # see https://docs.ansible.com/ansible/2.9/modules/include_module.html#include-module
+    # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
+    # TODO: consider rewriting this to use `include_vars`
+    - name: "Include variables"
+      include: _vars.yml
+
+    # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
     - name: "Manage base packages"
       include: base.yml
 
-    # see https://docs.ansible.com/ansible/2.9/modules/include_module.html#include-module
+    # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
     - name: "Manage HashiCorp packages"
       include: hashicorp.yml
 
-    # see https://docs.ansible.com/ansible/2.9/modules/include_module.html#include-module
+    # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
     - name: "Manage Docker packages"
       include: docker.yml

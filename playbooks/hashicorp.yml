@@ -1,30 +1,31 @@
 ---
 
-  # see https://docs.ansible.com/ansible/2.9/modules/apt_key_module.html
-  - name: Add APT Key for HashiCorp repository
-    apt_key:
-      url: "https://apt.releases.hashicorp.com/gpg"
-      state: present
+# see https://docs.ansible.com/ansible/2.9/modules/apt_key_module.html
+- name: Add APT Key for HashiCorp repository
+  apt_key:
+    url: "{{ apt_repos.hashicorp }/gpg"
+    state: present
 
-  # see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
-  - name: Add APT repository for HashiCorp packages
-    apt_repository:
-      repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release | lower }} main"
-      state: present
-      update_cache: true
-      validate_certs: true
+# see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
+- name: Add APT repository for HashiCorp packages
+  apt_repository:
+    repo: "deb [arch=amd64] {{ apt_repos.hashicorp }} {{ ansible_distribution_release | lower }} main"
+    state: present
+    update_cache: true
+    validate_certs: true
 
-  # see https://docs.ansible.com/ansible/2.9/modules/package_module.html
-  - name: Install HashiCorp packages
-    package:
-      name: "{{ item }}"
-      state: present
-    with_items: "{{ hashicorp_products }}"
+# see https://docs.ansible.com/ansible/2.9/modules/package_module.html
+- name: Install HashiCorp packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ packages.hashicorp }}"
 
-  # see https://docs.ansible.com/ansible/2.9/modules/systemd_module.html
-  - name: Enable HashiCorp Services
-    systemd:
-      state: started
-      name: "{{ item }}"
-      with_items: "{{ hashicorp_products }}"
+# see https://docs.ansible.com/ansible/2.9/modules/systemd_module.html
+- name: Enable HashiCorp Services
+  systemd:
+    state: started
+    name: "{{ item }}"
+    with_items: "{{ packages.hashicorp }}"
 
+# TODO: add support for groups / users
