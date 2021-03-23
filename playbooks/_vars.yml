@@ -9,10 +9,15 @@ packages:
     - libcap2
     - lsb-release
     - sudo
+
+  # see https://docs.docker.com/release-notes/ for version information
   docker:
     - "docker-ce=5:20.10.5*"
     - "containerd.io=1.4.4-1"
+
+  # see https://releases.hashicorp.com for version information
   hashicorp:
+    - "boundary=0.1.8"
     - "consul=1.9.4"
     - "nomad=1.0.4"
     - "vault=1.6.3"
