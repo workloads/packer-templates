@@ -1,5 +1,4 @@
 ---
-
 name: "Code Quality: Super-Linter"
 
 on:
@@ -25,6 +24,7 @@ jobs:
           MULTI_STATUS: true
           SUPPRESS_POSSUM: true
           VALIDATE_ALL_CODEBASE: true
+          VALIDATE_ANSIBLE: true
           VALIDATE_BASH: true
           VALIDATE_JSON: true
           VALIDATE_MD: true
