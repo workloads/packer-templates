@@ -1,7 +1,8 @@
 ### Packer ###
 packer_cache/
 vagrant-*/
-*.log 
+*.log
+*.box
 
 ### Packer (user-generated) ###
 credentials.auto.pkrvars.hcl

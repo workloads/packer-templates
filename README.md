@@ -1,6 +1,6 @@
 # Packer Templates: HashiCorp Nomad
 
-> Packer Templates for HashiCorp Nomad on AWS, Azure and Google Cloud
+> Packer Templates for HashiCorp Nomad for multiple platforms
 
 ## Table of Contents
 
