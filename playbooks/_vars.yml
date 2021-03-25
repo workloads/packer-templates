@@ -1,26 +1,44 @@
 ---
 
-packages:
+apt_packages:
   base:
     - apt-transport-https
     - ca-certificates
     - curl
     - gnupg
+    - jq
     - libcap2
     - lsb-release
     - sudo
 
+  # packages that should be removed (if present)
+  # NOTE: this list is not exhaustive
+  remove:
+    - ftp
+    - snapd
+
   # see https://docs.docker.com/release-notes/ for version information
   docker:
-    - "docker-ce=5:20.10.5*"
-    - "containerd.io=1.4.4-1"
+    - name: docker-ce
+      version: "5:20.10.5*"
+
+    - name: containerd
+      version: "1.4.4-1"
+
 
   # see https://releases.hashicorp.com for version information
   hashicorp:
-    - "boundary=0.1.8"
-    - "consul=1.9.4"
-    - "nomad=1.0.4"
-    - "vault=1.7.0"
+    - name: boundary
+      version: "0.1.8"
+
+    - name: consul
+      version: "1.9.4"
+
+    - name: nomad
+      version: "1.0.4"
+
+    - name: vault
+      version: "1.7.0"
 
 apt_repos:
   docker: "https://download.docker.com"

@@ -22,9 +22,6 @@
     - name: Manage Docker packages
       include: docker.yml
 
-    # TODO: remove unneeded packages
-
     # TODO: add support for podman
 
     # TODO: add hardening for image
-

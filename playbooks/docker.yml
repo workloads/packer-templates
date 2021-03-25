@@ -18,6 +18,7 @@
   apt:
     force_apt_get: true
     install_recommends: true
-    name: "{{ packages.docker }}"
+    name: "{{ item.name }}={{ item.version | default('*') }}"
     state: present
     update_cache: true
+  with_items: "{{ apt_packages.docker }}"

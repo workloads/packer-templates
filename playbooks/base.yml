@@ -11,6 +11,6 @@
 - name: Install base packages
   apt:
     force_apt_get: true
-    name: "{{ packages.base }}"
+    name: "{{ apt_packages.base }}"
     state: present
     update_cache: true
