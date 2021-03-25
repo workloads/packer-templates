@@ -14,3 +14,13 @@
     name: "{{ apt_packages.base }}"
     state: present
     update_cache: true
+
+# see https://docs.ansible.com/ansible/2.9/modules/package_module.html
+- name: Remove extraneous packages
+  apt:
+    autoclean: true
+    autoremove: true
+    force_apt_get: true
+    name: "{{ apt_packages.remove }}"
+    state: absent
+    update_cache: true
