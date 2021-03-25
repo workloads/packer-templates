@@ -20,7 +20,7 @@ packages:
     - "boundary=0.1.8"
     - "consul=1.9.4"
     - "nomad=1.0.4"
-    - "vault=1.6.3"
+    - "vault=1.7.0"
 
 apt_repos:
   docker: "https://download.docker.com"
