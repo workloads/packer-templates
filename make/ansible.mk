@@ -1,8 +1,10 @@
+ansible_playbooks = ansible/playbooks
+
 .PHONY: ansible-lint
 ansible-lint: # Lints Ansible playbook(s)
 	@yamllint \
 		--config-data "{ rules: {line-length: { max: 125 } } }" \
-		"playbooks/$(wildcard *.yml)" \
+		"$(ansible_playbooks)/$(wildcard *.yml)" \
 	&& \
 	ansible-lint \
-		playbooks/main.yml
+		"$(ansible_playbooks)/main.yml"
