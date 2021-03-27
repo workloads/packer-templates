@@ -19,9 +19,3 @@ variable "version" {
   description = "Version of the Vagrant Box to upload to Vagrant Cloud"
   default     = "0.0.1"
 }
-
-variable "compression_level" {
-  type        = number
-  description = "An integer representing the compression level to use when creating the Vagrant box"
-  default     = 9
-}

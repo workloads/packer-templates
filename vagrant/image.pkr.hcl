@@ -27,12 +27,6 @@ build {
     ]
   }
 
-  # TODO: add better support for Vagrant
-  # see https://www.packer.io/docs/post-processors/vagrant
-  post-processor "vagrant" {
-    compression_level = var.compression_level
-  }
-
   # TODO: add better support for Vagrant Cloud
   # see: https://www.packer.io/docs/post-processors/vagrant-cloud
   #post-processor "vagrant-cloud" {
