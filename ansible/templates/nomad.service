@@ -1,0 +1,30 @@
+[Unit]
+Description="HashiCorp Nomad"
+Documentation=https://nomadproject.io/docs/
+Requires=network-online.target
+After=network-online.target
+Wants=consul.service
+After=consul.service
+Wants=vault.service
+After=vault.service
+ConditionFileNotEmpty=/etc/consul.d/consul.hcl
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+[Service]
+User=nomad
+Group=nomad
+ExecStart=/usr/bin/nomad agent -config=/etc/nomad.d/nomad.hcl
+ExecReload=/bin/kill --signal HUP $MAINPID
+KillMode=process
+KillSignal=SIGINT
+Restart=on-failure
+RestartSec=2
+LimitNOFILE=65536
+LimitMEMLOCK=infinity
+
+TasksMax=infinity
+OOMScoreAdjust=-1000
+
+[Install]
+WantedBy=multi-user.target
