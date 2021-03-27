@@ -22,6 +22,7 @@
       - [Build Image](#microsoft-azure-images)
     - [Vagrant](#vagrant)
     - [Vagrant Cloud](#vagrant-cloud)
+      - [Build Image](#vagrant-cloud-images)
   - [Author Information](#author-information)
   - [License](#license)
 
