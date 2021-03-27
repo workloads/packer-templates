@@ -28,13 +28,15 @@
 
 ## Requirements
 
-* Packer `1.7.0` or newer
-* Terraform `0.14.9` or newer
-* Ansible `2.9.6` or newer
+- Packer `1.7.0` or newer
+- Terraform `0.14.9` or newer
+- Ansible `2.9.6` or newer
 
 ## Usage
 
-This repository contains Packer templates for multiple providers. Usage differs slightly for each provider and is therefore broken out into a separate section.
+This repository contains Packer templates for multiple providers.
+
+Usage differs slightly for each provider and is therefore broken out into a separate section.
 
 ### Amazon Web Services
 
@@ -129,7 +131,7 @@ To enable building for and deploying to [Vagrant Cloud](https://app.vagrantup.co
 
 Then, uncomment the Vagrant Cloud-specific `post-processor` (near the bottom of the file) and execute a build targetted at `vagrant`:
 
-```
+```sh
 make build target=vagrant
 ```
 
