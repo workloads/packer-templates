@@ -36,7 +36,7 @@ TODO
 
 TODO
 
-The Azure workflow described in [azure/image.pkr.hcl](azure/image.pkr.hcl) requires an Azure Resource Group to operate.
+The Azure workflow described in [azure/image.pkr.hcl](packer/azure/image.pkr.hcl) requires an Azure Resource Group to operate.
 
 To ease in the creation of this, this repository includes a Terraform workflow (in `./terraform/azure`) that can create the prerequisite resources.
 
