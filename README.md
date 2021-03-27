@@ -74,7 +74,6 @@ To log in, execute the `gcloud auth login` command and follow the instructions p
 
 #### Google Cloud Images
 
-TODO
 not yet available
 
 ### Microsoft Azure
@@ -122,11 +121,13 @@ Once the build workflow completes successfully, you will be able to inspect the 
 
 > build target `vagrant`
 
-Vagrant Cloud is a subset of the [Vagrant](#vagrant) build process and can not be executed as a stand-alone build-process.
+Vagrant Cloud is a subset of the [Vagrant](#vagrant) build process and cannot be executed as a stand-alone build-process.
+
+#### Vagrant Cloud Images
 
 To enable building for and deploying to [Vagrant Cloud](https://app.vagrantup.com/), open [packer/vagrant/image.pkr.hcl](packer/vagrant/image.pkr.hcl).
 
-Then, uncomment the Vagrant Cloud-specific `post-processor` (near the bottom of the file) and execute a(nother) Vagrant build:
+Then, uncomment the Vagrant Cloud-specific `post-processor` (near the bottom of the file) and execute a build targetted at `vagrant`:
 
 ```
 make build target=vagrant
