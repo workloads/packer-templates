@@ -1,3 +1,7 @@
+packer {
+  required_version = ">= 1.7.0"
+}
+
 # see https://www.packer.io/docs/builders/azure/arm
 source "azure-arm" "nomad" {
   # the following configuration represents a minimally viable selection
@@ -38,9 +42,7 @@ build {
     command       = "ansible-playbook"
 
     ansible_env_vars = [
-      "ANSIBLE_NOCOLOR=True",
-      "ANSIBLE_NOCOWS=True",
-      "ANSIBLE_SSH_ARGS='-o ForwardAgent=yes -o ControlMaster=auto -o ControlPersist=60s'",
+      "ANSIBLE_NOCOWS=True"
     ]
   }
 

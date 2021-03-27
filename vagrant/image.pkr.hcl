@@ -1,3 +1,7 @@
+packer {
+  required_version = ">= 1.7.0"
+}
+
 # see https://www.packer.io/docs/builders/vagrant
 source "vagrant" "nomad" {
   # the following configuration represents a minimally viable selection
@@ -19,16 +23,20 @@ build {
     playbook_file = "./playbooks/main.yml"
     command       = "ansible-playbook"
     ansible_env_vars = [
-      "ANSIBLE_NOCOLOR=True",
       "ANSIBLE_NOCOWS=True"
     ]
   }
 
-  # Vagrant Cloud post-provisioning (https://www.packer.io/docs/post-processors/vagrant-cloud)
-  post-processor "vagrant-cloud" {
-    box_tag = var.box_tag
-    version = var.version
+  # TODO: add better support for Vagrant
+  # see https://www.packer.io/docs/post-processors/vagrant
+  post-processor "vagrant" {
+    compression_level = var.compression_level
   }
+
+  # TODO: add better support for Vagrant Cloud
+  # see: https://www.packer.io/docs/post-processors/vagrant-cloud
+  #post-processor "vagrant-cloud" {
+  #  box_tag = var.box_tag
+  #  version = var.version
+  #}
 }
-
-

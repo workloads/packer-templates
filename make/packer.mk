@@ -75,7 +75,7 @@ endif
 .PHONY: build
 build: # Build a Packer Image(s) for a target
 	@: $(if $(target),,$(call missing_target))
-	@echo packer \
+	@packer \
 		build \
 			$(packer_debug) \
 			$(packer_except) \
