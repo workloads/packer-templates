@@ -7,20 +7,21 @@
 - [Packer Templates: HashiCorp Nomad](#packer-templates-hashicorp-nomad)
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
-  - [Dependencies](#dependencies)
   - [Usage](#usage)
-    - [Azure](#azure)
+    - [Microsoft Azure](#azure)
     - [Vagrant](#vagrant)
   - [Author Information](#author-information)
   - [License](#license)
 
 ## Requirements
 
-This repository requires Packer version `1.7.0` or newer.
+* Packer `1.7.0` or newer
+* Terraform `0.14.9` or newer
+* Ansible `2.9.6` or newer
 
-## Dependencies
+## Usage
 
-TODO
+This repository contains Packer templates for multiple providers. Usage differs slightly for each provider and is therefore broken out into a separate section.
 
 ## Usage
 
@@ -58,17 +59,9 @@ To log in, execute the `az login` command and follow the instructions presented 
 
 To build the Packer image, use the [build](https://www.packer.io/docs/commands/build) command:
 
-```sh
-make azure
-```
-
 This will execute the Packer build workflow for Azure images.
 
 Once the build workflow completes successfully, you will be able to inspect the image in the [Azure Portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Compute%2Fimages).
-
-### Vagrant
-
-TODO
 
 ## Author Information
 
