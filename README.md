@@ -9,13 +9,16 @@
   - [Requirements](#requirements)
   - [Usage](#usage)
     - [Amazon Web Services](#amazon-web-services)
+      - [Authentication](#amazon-web-services-authentication)
+      - [Prerequisites](#amazon-web-services-prerequisites)
+      - [Build Image](#amazon-web-services-images)
     - [Google Cloud](#google-cloud)
       - [Authentication](#google-cloud-authentication)
-      - [Prerequisite Resources](#google-cloud-prerequisite)
+      - [Prerequisites](#google-cloud-prerequisites)
       - [Build Image](#google-cloud-images)
     - [Microsoft Azure](#microsoft-azure)
       - [Authentication](#microsoft-azure-authentication)
-      - [Prerequisite Resources](#microsoft-azure-prerequisite)
+      - [Prerequisites](#microsoft-azure-prerequisites)
       - [Build Image](#microsoft-azure-images)
     - [Vagrant](#vagrant)
     - [Vagrant Cloud](#vagrant-cloud)
@@ -35,6 +38,18 @@ This repository contains Packer templates for multiple providers. Usage differs 
 ### Amazon Web Services
 
 > build target `aws`
+
+#### Amazon Web Services Authentication
+
+not yet available
+
+#### Amazon Web Services Prerequisites
+
+not yet available
+
+#### Amazon Web Services Images
+
+not yet available
 
 ### Google Cloud
 
@@ -59,6 +74,7 @@ To log in, execute the `gcloud auth login` command and follow the instructions p
 #### Google Cloud Images
 
 TODO
+not yet available
 
 ### Microsoft Azure
 
