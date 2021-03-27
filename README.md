@@ -8,6 +8,11 @@
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Usage](#usage)
+    - [Amazon Web Services](#amazon-web-services)
+    - [Google Cloud](#google-cloud)
+      - [Authentication](#google-cloud-authentication)
+      - [Prerequisite Resources](#google-cloud-prerequisite)
+      - [Build Image](#google-cloud-images)
     - [Microsoft Azure](#microsoft-azure)
       - [Authentication](#microsoft-azure-authentication)
       - [Prerequisite Resources](#microsoft-azure-prerequisite)
@@ -27,15 +32,31 @@
 
 This repository contains Packer templates for multiple providers. Usage differs slightly for each provider and is therefore broken out into a separate section.
 
+### Amazon Web Services
 
+> build target `aws`
 
+### Google Cloud
 
+> build target `google`
 
+#### Google Cloud Authentication
 
+Packer (and Terraform) requires authentication credentials to interact with Google Cloud APIs.
+
+The Google workflow is set up to use the Google Cloud CLI `gcloud` login information to retrieve these credentials.
+
+To log in, execute the `gcloud auth login` command and follow the instructions presented by the application.
+
+> ⚠️ You will need to log in to a Google Cloud account that has permissions to create Projects, Virtual Machines, and Virtual Machine Images.
+
+#### Google Cloud Prerequisites
 
 TODO
 
+#### Google Cloud Images
 
+TODO
 
 ### Microsoft Azure
 
