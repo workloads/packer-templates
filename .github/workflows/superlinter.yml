@@ -17,7 +17,7 @@ jobs:
       - name: Lint Code
         uses: github/super-linter@v3
         env:
-          ANSIBLE_DIRECTORY: "./playbooks"
+          ANSIBLE_DIRECTORY: "./ansible/playbooks"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: "main"
           DISABLE_ERRORS: false

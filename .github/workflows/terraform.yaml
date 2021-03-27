@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         directory: [
-            "./terraform/azure"
+          "./terraform/azure"
         ]
     steps:
       - name: Checkout Repository
@@ -23,7 +23,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: "0.14.8"
+          terraform_version: "0.14.9"
 
       - name: Run `terraform fmt`
         run: terraform -chdir="${{ matrix.directory }}" fmt -diff -check -no-color -recursive
