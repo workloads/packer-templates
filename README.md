@@ -10,6 +10,7 @@
   - [Usage](#usage)
     - [Microsoft Azure](#azure)
     - [Vagrant](#vagrant)
+    - [Vagrant Cloud](#vagrant-cloud)
   - [Author Information](#author-information)
   - [License](#license)
 
@@ -62,6 +63,20 @@ To build the Packer image, use the [build](https://www.packer.io/docs/commands/b
 This will execute the Packer build workflow for Azure images.
 
 Once the build workflow completes successfully, you will be able to inspect the image in the [Azure Portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Compute%2Fimages).
+
+#### Vagrant Cloud
+
+> Make target `vagrant`
+
+Vagrant Cloud is a subset of the [Vagrant](#vagrant) build process and can not be executed as a stand-alone build-process.
+
+To enable building for and deploying to [Vagrant Cloud](https://app.vagrantup.com/), open [packer/vagrant/image.pkr.hcl](packer/vagrant/image.pkr.hcl).
+
+Then, uncomment the Vagrant Cloud-specific `post-processor` (near the bottom of the file) and execute a(nother) Vagrant build:
+
+```
+make build target=vagrant
+```
 
 ## Author Information
 

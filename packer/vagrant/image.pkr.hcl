@@ -28,9 +28,10 @@ build {
     ]
   }
 
-  # TODO: add better support for Vagrant Cloud
+  # uncomment this stanza to build images for Vagrant Cloud
   # see https://www.packer.io/docs/post-processors/vagrant-cloud
   #post-processor "vagrant-cloud" {
+  # TODO: add better support for Vagrant Cloud
   #  box_tag = var.box_tag
   #  version = var.version
   #}
