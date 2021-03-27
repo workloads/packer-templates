@@ -1,3 +1,7 @@
+# configuration
+color_off    = $(shell tput sgr0)
+color_bright = $(shell tput bold)
+
 # convenience function to alert user to missing target
 define missing_target
 	$(error Missing target. Specify with `target=<provider>`)

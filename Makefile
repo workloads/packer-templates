@@ -8,7 +8,6 @@ SHELL         := sh
 
 # NOTE: specify files in the order they should be loaded
 # NOTE: this allows for a more logical `help` experience
-include make/configuration.mk
 include make/commons.mk
 include make/packer.mk
 include make/terraform.mk
