@@ -23,9 +23,13 @@
       include: docker.yml
       # TODO: make docker installation conditional
 
-    # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
-    - name: Manage Podman packages
-      include: podman.yml
-      # TODO: make podman installation conditional
+#    # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
+#    - name: Manage Podman packages
+#      include: podman.yml
+#      # TODO: make podman installation conditional
 
-    # TODO: add hardening for image
+    # TODO: harden image
+
+    # TODO: optimize system settings
+
+    # TODO: verify images with goss
