@@ -52,6 +52,7 @@ To log in, execute the `gcloud auth login` command and follow the instructions p
 
 #### Google Cloud Prerequisites
 
+> init command `make terraform-init target=google`
 > build command: `make terraform-apply target=google`
 > destroy command: `make terraform-destroy target=google`
 
@@ -75,6 +76,7 @@ To log in, execute the `az login` command and follow the instructions presented 
 
 #### Microsoft Azure Prerequisites
 
+> init command `make terraform-init target=azure`
 > build command: `make terraform-apply target=azure`
 > destroy command: `make terraform-destroy target=azure`
 

@@ -4,7 +4,7 @@ packer {
 }
 
 # see https://www.packer.io/docs/builders/azure/arm
-source "azure-arm" "nomad" {
+source "azure-arm" "image" {
   # the following configuration represents a minimally viable selection
   # for all options see: https://www.packer.io/docs/builders/azure/arm
 
@@ -35,7 +35,7 @@ source "azure-arm" "nomad" {
 
 build {
   sources = [
-    "source.azure-arm.nomad"
+    "source.azure-arm.o,age"
   ]
 
   provisioner "ansible" {

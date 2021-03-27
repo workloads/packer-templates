@@ -4,7 +4,7 @@ packer {
 }
 
 # see https://www.packer.io/docs/builders/vagrant
-source "vagrant" "nomad" {
+source "vagrant" "image" {
   # the following configuration represents a minimally viable selection
   # for all options see: https://www.packer.io/docs/builders/vagrant
 
@@ -17,7 +17,7 @@ source "vagrant" "nomad" {
 
 build {
   sources = [
-    "source.vagrant.nomad"
+    "source.vagrant.image"
   ]
 
   provisioner "ansible" {
