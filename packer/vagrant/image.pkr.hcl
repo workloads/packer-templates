@@ -21,7 +21,7 @@ build {
   ]
 
   provisioner "ansible" {
-    playbook_file = "./playbooks/main.yml"
+    playbook_file = "./ansible/playbooks/main.yml"
     command       = "ansible-playbook"
     ansible_env_vars = [
       "ANSIBLE_NOCOWS=True"

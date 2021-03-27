@@ -86,7 +86,7 @@ build: # Build a Packer Image(s) for a target
 			$(packer_parallel_builds) \
 			$(packer_timestamp_ui) \
 			$(packer_var_file) \
-			"./$(target)"
+			"./packer/$(target)"
 
 # see https://www.packer.io/docs/commands/init
 .PHONY: init
@@ -95,7 +95,7 @@ init: # Install and upgrade plugins for Packer Template(s) for a target
 	@packer \
 		init \
 			-upgrade \
-			"./$(target)"
+			"./packer/$(target)"
 
 # see https://www.packer.io/docs/commands/fmt
 # and https://www.packer.io/docs/commands/validate
@@ -106,11 +106,11 @@ lint: # Formats and validates Packer Template(s) for a target
 		fmt \
 			-check \
 			-diff \
-			"./$(target)" \
+			"./packer/$(target)" \
 	&& \
 	packer \
 		validate \
 			$(packer_except) \
 			$(packer_only) \
 			$(packer_var_file) \
-			"./$(target)"
+			"./packer/$(target)"
