@@ -35,7 +35,7 @@ source "azure-arm" "image" {
 
 build {
   sources = [
-    "source.azure-arm.o,age"
+    "source.azure-arm.image"
   ]
 
   provisioner "ansible" {
