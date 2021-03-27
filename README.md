@@ -8,7 +8,6 @@
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Usage](#usage)
-    - [Microsoft Azure](#azure)
     - [Microsoft Azure](#microsoft-azure)
       - [Authentication](#microsoft-azure-authentication)
       - [Prerequisite Resources](#microsoft-azure-prerequisite)
@@ -28,23 +27,15 @@
 
 This repository contains Packer templates for multiple providers. Usage differs slightly for each provider and is therefore broken out into a separate section.
 
-## Usage
 
-This repository contains Packer templates for multiple Cloud providers. Usage differs slightly for each provider and is therefore broken out into a separate section.
 
-All images use _Ubuntu 20.04_ as the base operating system.
 
-## Azure
+
+
 
 TODO
 
-### Run prerequisite Terraform workflows for Azure
 
-TODO
-
-The Azure workflow described in [azure/image.pkr.hcl](packer/azure/image.pkr.hcl) requires an Azure Resource Group to operate.
-
-To ease in the creation of this, this repository includes a Terraform workflow (in `./terraform/azure`) that can create the prerequisite resources.
 
 ### Microsoft Azure
 
