@@ -18,7 +18,6 @@ apt_packages:
     - ftp
     - snapd
 
-  # see https://docs.docker.com/release-notes/ for version information
   docker:
     # see https://docs.docker.com/release-notes/
     - name: docker-ce
@@ -27,7 +26,6 @@ apt_packages:
 #    - name: containerd
 #      version: "1.4.4*"
 
-  # see https://releases.hashicorp.com for version information
   hashicorp:
     # see https://releases.hashicorp.com/boundary/
     - name: boundary
