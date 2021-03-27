@@ -1,3 +1,4 @@
+# see https://www.packer.io/docs/templates/hcl_templates/blocks/packer
 packer {
   required_version = ">= 1.7.0"
 }
@@ -28,7 +29,7 @@ build {
   }
 
   # TODO: add better support for Vagrant Cloud
-  # see: https://www.packer.io/docs/post-processors/vagrant-cloud
+  # see https://www.packer.io/docs/post-processors/vagrant-cloud
   #post-processor "vagrant-cloud" {
   #  box_tag = var.box_tag
   #  version = var.version

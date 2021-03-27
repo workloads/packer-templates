@@ -1,3 +1,4 @@
+# see https://www.packer.io/docs/templates/hcl_templates/blocks/packer
 packer {
   required_version = ">= 1.7.0"
 }

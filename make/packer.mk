@@ -97,8 +97,8 @@ init: # Install and upgrade plugins for Packer Template(s) for a target
 			-upgrade \
 			"./$(target)"
 
-# see: https://www.packer.io/docs/commands/fmt
-# and: https://www.packer.io/docs/commands/validate
+# see https://www.packer.io/docs/commands/fmt
+# and https://www.packer.io/docs/commands/validate
 .PHONY: lint
 lint: # Formats and validates Packer Template(s) for a target
 	@: $(if $(target),,$(call missing_target))
