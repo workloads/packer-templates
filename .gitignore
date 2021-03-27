@@ -1,8 +1,6 @@
 ### Packer ###
 packer_cache/
-vagrant-*/
 *.log
-*.box
 
 ### Packer (user-generated) ###
 credentials.auto.pkrvars.hcl
@@ -15,5 +13,6 @@ generated.auto.pkrvars.hcl
 *.terraform.tfstate.lock.info
 
 ### Vagrant ###
-# General
 .vagrant/
+vagrant-*/
+*.box
