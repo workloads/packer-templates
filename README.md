@@ -46,30 +46,24 @@ The Azure workflow described in [azure/image.pkr.hcl](packer/azure/image.pkr.hcl
 
 To ease in the creation of this, this repository includes a Terraform workflow (in `./terraform/azure`) that can create the prerequisite resources.
 
-For a seamless Packer experience, it is recommended to execute the Terraform workflow before the Packer workflow.
+### Microsoft Azure
 
-Alternatively, you can manually create an Azure Resource Group as well as the `terraform_data.auto.pkrvars.hcl` file.
+> build target `azure`
 
-### Azure images
 #### Microsoft Azure Authentication
 
-For Packer to be able to build images in Azure, you will need to provide authentication credentials.
 Packer (and Terraform) requires authentication credentials to interact with Azure APIs.
 
 The Azure workflow is set up to use the Azure CLI `az` login information to retrieve these credentials.
 
 To log in, execute the `az login` command and follow the instructions presented by the application.
 
-> ⚠️ You will need to log in to an Azure account that has permissions to create Virtual Machines and store Virtual Machine Images.
 > ⚠️ You will need to log in to an Azure account that has permissions to create Resource Groups, Virtual Machines, and Virtual Machine Images.
 
-### Build the Azure Image
 #### Microsoft Azure Prerequisites
 
-To build the Packer image, use the [build](https://www.packer.io/docs/commands/build) command:
 > build command: `make terraform-apply target=azure`
 
-This will execute the Packer build workflow for Azure images.
 The Azure workflow described in [azure/image.pkr.hcl](packer/azure/image.pkr.hcl) requires an Azure Resource Group to operate.
 
 To ease in the creation of this, this repository includes a Terraform workflow (in `./terraform/azure`) that can create the prerequisite resources.
@@ -93,7 +87,6 @@ Once the build workflow completes successfully, you will be able to inspect the 
 
 #### Vagrant Cloud
 
-> Make target `vagrant`
 > build target `vagrant`
 
 Vagrant Cloud is a subset of the [Vagrant](#vagrant) build process and can not be executed as a stand-alone build-process.
