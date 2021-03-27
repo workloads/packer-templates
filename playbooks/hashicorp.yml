@@ -23,6 +23,18 @@
     update_cache: true
   with_items: "{{ apt_packages.hashicorp }}"
 
+# see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
+- name: Install HashiCorp Nomad plugins
+  apt:
+    force_apt_get: true
+    install_recommends: true
+    name: "{{ item.name }}={{ item.version | default('*') }}"
+    state: present
+    update_cache: true
+  with_items: "{{ apt_packages.hashicorp_nomad_plugins }}"
+
+
+
 # see https://docs.ansible.com/ansible/2.9/modules/template_module.html
 - name: Copy Unit file
   template:
@@ -31,10 +43,10 @@
   with_items: "{{ apt_packages.hashicorp }}"
 
 # see https://docs.ansible.com/ansible/2.9/modules/systemd_module.html
-- name: Enable HashiCorp Services
-  systemd:
-    state: started
-    name: item.name
-  with_items: "{{ apt_packages.hashicorp }}"
+#- name: Enable HashiCorp Services
+#  systemd:
+#    state: started
+#    name: item.name
+#  with_items: "{{ apt_packages.hashicorp }}"
 
 # TODO: add support for groups / users

@@ -9,6 +9,7 @@ apt_packages:
     - jq
     - libcap2
     - lsb-release
+    - osquery
     - sudo
 
   # packages that should be removed (if present)
@@ -19,6 +20,7 @@ apt_packages:
 
   # see https://docs.docker.com/release-notes/ for version information
   docker:
+    # see https://docs.docker.com/release-notes/
     - name: docker-ce
       version: "5:20.10.5*"
 
@@ -27,17 +29,39 @@ apt_packages:
 
   # see https://releases.hashicorp.com for version information
   hashicorp:
+    # see https://releases.hashicorp.com/boundary/
     - name: boundary
-      version: "0.1.8"
+      version: 0.1.8
 
+    # see https://releases.hashicorp.com/consul/
     - name: consul
-      version: "1.9.4"
+      version: 1.9.4
 
+    # see https://releases.hashicorp.com/nomad/
     - name: nomad
-      version: "1.0.4"
+      version: 1.0.4
 
+    # see https://releases.hashicorp.com/vault/
     - name: vault
-      version: "1.7.0"
+      version: 1.7.0
+
+  hashicorp_nomad_plugins:
+    # see https://releases.hashicorp.com/nomad-driver-podman/
+    - name: nomad-driver-podman
+      version: 0.2.0
+
+#    # see https://releases.hashicorp.com/nomad-driver-lxc/
+#    - name: nomad-driver-lxc
+#      version: 0.1.0
+
+    # see https://releases.hashicorp.com/nomad-autoscaler/
+    - name: nomad-autoscaler
+      version: 0.3.0
+
+  podman:
+    # see https://podman.io/releases/
+    - name: podman
+      version: 3.0.0
 
 apt_repos:
   docker: "https://download.docker.com"
