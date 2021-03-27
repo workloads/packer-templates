@@ -52,7 +52,8 @@ To log in, execute the `gcloud auth login` command and follow the instructions p
 
 #### Google Cloud Prerequisites
 
-TODO
+> build command: `make terraform-apply target=google`
+> destroy command: `make terraform-destroy target=google`
 
 #### Google Cloud Images
 
@@ -75,6 +76,7 @@ To log in, execute the `az login` command and follow the instructions presented 
 #### Microsoft Azure Prerequisites
 
 > build command: `make terraform-apply target=azure`
+> destroy command: `make terraform-destroy target=azure`
 
 The Azure workflow described in [azure/image.pkr.hcl](packer/azure/image.pkr.hcl) requires an Azure Resource Group to operate.
 
