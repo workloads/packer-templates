@@ -54,4 +54,37 @@
 #  with_items: "{{ apt_packages.hashicorp }}"
 #  when: toggles.hashicorp.enable_services
 
-# TODO: add support for groups / users
+# TODO: consider adding a `hashicorp` group
+# see https://docs.ansible.com/ansible/2.9/modules/group_module.html
+- name: Add Groups
+  group:
+    name: "{{ item.name }}"
+    state: present
+    system: true
+  with_items: apt_packages.hashicorp
+  when: toggles.hashicorp.create_groups
+
+# TODO: add users to `hashicorp` group (if available)
+# see https://docs.ansible.com/ansible/2.9/modules/user_module.html
+- name: Add Users
+  user:
+    name: "{{ item.name }}"
+    comment: "HashiCorp {{ item.name | capitalize }}"
+    group: "{{ item.name }}"
+    system: true
+  with_items: apt_packages.hashicorp
+  when: toggles.hashicorp.create_users
+
+# see https://docs.ansible.com/ansible/2.9/modules/user_module.html
+- name: Add `nomad` User to `docker` Group
+  user:
+    name: nomad
+    group: docker
+    system: true
+    grousp: docker
+    append: true
+  with_items: apt_packages.hashicorp
+  when:
+    - docker.install_packages
+    - hashicorp.create_users
+    - hashicorp.add_nomad_user_to_docker
