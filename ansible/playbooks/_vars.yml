@@ -11,6 +11,7 @@ apt_packages:
     - lsb-release
     - osquery
     - sudo
+    - unzip
 
   # packages that should be removed (if present)
   # NOTE: this list is not exhaustive

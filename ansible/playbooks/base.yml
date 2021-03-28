@@ -24,3 +24,5 @@
     name: "{{ apt_packages.remove }}"
     state: absent
     update_cache: true
+
+  # TODO: add support for specifying additional packages
