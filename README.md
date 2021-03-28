@@ -39,6 +39,24 @@ This repository contains Packer templates for multiple providers.
 
 Usage differs slightly for each provider and is therefore broken out into separate sections.
 
+The primary way of interacting with this repository is `make` via a [Makefile](./Makefile).
+
+Execute `make` to get an overview of possible options:
+
+```sh
+PACKER TEMPLATES
+
+help               Displays this help text
+build              Build a Packer Image(s) for a target
+init               Install and upgrade plugins for Packer Template(s) for a target
+lint               Formats and validates Packer Template(s) for a target
+terraform-plan     Plan prerequisite resources for a target with Terraform
+terraform-apply    Create prerequisite resources for a target with Terraform
+terraform-destroy  Destroy prerequisite resources for a target with Terraform
+terraform-init     Initializes Terraform for a target
+ansible-lint       Lints Ansible playbook(s)
+```
+
 ### Amazon Web Services
 
 > image template: [./packer/aws/image.pkr.hcl](./packer/aws/image.pkr.hcl)
