@@ -41,7 +41,10 @@ Usage differs slightly for each provider and is therefore broken out into a sepa
 
 ### Amazon Web Services
 
-> build target `aws`
+> image template: [./packer/aws/image.pkr.hcl](./packer/aws/image.pkr.hcl)
+> image variables: [./packer/aws/variables.pkr.hcl](./packer/aws/variables.pkr.hcl)
+> build target: `aws`
+> build command: `make build target=aws`
 
 #### Amazon Web Services Authentication
 
@@ -57,7 +60,10 @@ not yet available
 
 ### Google Cloud
 
-> build target `google`
+> image template: [./packer/google/image.pkr.hcl](./packer/google/image.pkr.hcl)
+> image variables: [./packer/google/variables.pkr.hcl](./packer/google/variables.pkr.hcl)
+> build target: `google`
+> build command: `make build target=google`
 
 #### Google Cloud Authentication
 
@@ -81,7 +87,10 @@ not yet available
 
 ### Microsoft Azure
 
-> build target `azure`
+> image template: [./packer/azure/image.pkr.hcl](./packer/azure/image.pkr.hcl)
+> image variables: [./packer/azure/variables.pkr.hcl](./packer/azure/variables.pkr.hcl)
+> build target: `azure`
+> build command: `make build target=azure`
 
 #### Microsoft Azure Authentication
 
@@ -117,6 +126,8 @@ Once the build workflow completes successfully, you will be able to inspect the 
 
 ### Vagrant
 
+> image template: [./packer/vagrant/image.pkr.hcl](./packer/vagrant/image.pkr.hcl)
+> image variables: [./packer/vagrant/variables.pkr.hcl](./packer/vagrant/variables.pkr.hcl)
 > build target: `vagrant`
 > build command: `make build target=vagrant`
 
