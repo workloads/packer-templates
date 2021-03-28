@@ -4,8 +4,8 @@ variable "source_path" {
   type        = string
   description = "Name of the Vagrant Box to use for your base image"
 
-  # see https://app.vagrantup.com/ubuntu/boxes/bionic64
-  default = "ubuntu/bionic64"
+  # see https://app.vagrantup.com/ubuntu/boxes/focal64
+  default = "ubuntu/focal64"
 }
 
 variable "box_tag" {
