@@ -15,11 +15,6 @@
       when: toggles.enable_os
 
     # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
-    - name: Manage HashiCorp packages
-      include: hashicorp.yml
-      when: toggles.enable_hashicorp
-
-    # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
     - name: Manage Docker packages
       include: docker.yml
       when: toggles.enable_docker
@@ -28,6 +23,11 @@
     - name: Manage Podman packages
       include: podman.yml
       when: toggles.enable_podman
+
+    # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
+    - name: Manage HashiCorp packages
+      include: hashicorp.yml
+      when: toggles.enable_hashicorp
 
     # TODO: harden image
 

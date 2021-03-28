@@ -25,3 +25,21 @@
     update_cache: true
   with_items: "{{ apt_packages.docker }}"
   when: toggles.docker.install_packages
+
+# TODO: consider adding a `hashicorp` group
+# see https://docs.ansible.com/ansible/2.9/modules/group_module.html
+- name: Add `docker` Group
+  group:
+    name: docker
+    state: present
+    system: true
+  when: toggles.docker.create_group
+
+# see https://docs.ansible.com/ansible/2.9/modules/user_module.html
+- name: Add Users
+  user:
+    create_home: true
+    name: docker
+    group: docker
+    system: true
+  when: toggles.docker.create_user

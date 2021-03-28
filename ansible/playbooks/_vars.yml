@@ -13,6 +13,8 @@ toggles:
     update_apt_cache: true
   docker:
     add_apt_repository: true
+    create_group: true
+    create_user: true
     install_packages: true
   hashicorp:
     add_apt_repository: true
