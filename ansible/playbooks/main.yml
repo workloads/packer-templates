@@ -13,15 +13,18 @@
     # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
     - name: Manage base packages
       include: base.yml
+    - name: Manage OS packages
 
     # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
     - name: Manage HashiCorp packages
       include: hashicorp.yml
+      when: enable_hashicorp
 
     # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
     - name: Manage Docker packages
       include: docker.yml
       # TODO: make docker installation conditional
+      when: enable_docker
 
 #    # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
 #    - name: Manage Podman packages

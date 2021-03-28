@@ -1,5 +1,33 @@
 ---
 
+# toggles to enable and disable various operations
+toggles:
+  # global toggles for (complete) playbooks
+  enable_base: true
+  enable_docker: true
+  enable_hashicorp: true
+  enable_podman: true
+
+  base:
+    install_base_packages: true
+    remove_extraneous_packages: true
+    update_apt_cache: true
+  docker:
+    add_apt_repository: true
+    install_packages: true
+  hashicorp:
+    add_apt_repository: true
+    add_nomad_user_to_docker: true
+    copy_unit_files: true
+    create_users: true
+    create_groups: true
+    enable_services: true
+    install_nomad_plugins: true
+    install_packages: true
+  podman:
+    install_packages: true
+
+# packages to install
 apt_packages:
   base:
     - apt-transport-https

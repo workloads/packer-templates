@@ -6,6 +6,7 @@
     force_apt_get: true
     update_cache: true
     upgrade: "yes"
+  when: toggles.base.update_apt_cache
 
 # see https://docs.ansible.com/ansible/2.9/modules/package_module.html
 - name: Install base packages
@@ -14,6 +15,7 @@
     name: "{{ apt_packages.base }}"
     state: present
     update_cache: true
+  when: toggles.base.install_base_packages
 
 # see https://docs.ansible.com/ansible/2.9/modules/package_module.html
 - name: Remove extraneous packages
@@ -24,5 +26,6 @@
     name: "{{ apt_packages.remove }}"
     state: absent
     update_cache: true
+  when: toggles.base.remove_extraneous_packages
 
   # TODO: add support for specifying additional packages

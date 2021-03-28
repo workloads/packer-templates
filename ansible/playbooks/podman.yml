@@ -11,3 +11,4 @@
     state: present
     update_cache: true
   with_items: "{{ apt_packages.podman }}"
+  when: toggles.podman.install_packages
