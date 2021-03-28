@@ -56,9 +56,9 @@ apt_packages:
 #      version: "1.4.4"
 
   hashicorp:
-    - # see https://releases.hashicorp.com/boundary/
-      name: boundary
-      version: 0.1.8
+#    - # see https://releases.hashicorp.com/boundary/
+#      name: boundary
+#      version: 0.1.8
     - # see https://releases.hashicorp.com/consul/
       name: consul
       version: 1.9.4
