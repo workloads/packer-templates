@@ -8,7 +8,7 @@ toggles:
   enable_hashicorp: true
   enable_podman: true
 
-  base:
+  os:
     install_base_packages: true
     remove_extraneous_packages: true
     update_apt_cache: true

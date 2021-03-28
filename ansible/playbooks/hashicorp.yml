@@ -26,6 +26,7 @@
   with_items: "{{ apt_packages.hashicorp }}"
   when: toggles.hashicorp.install_packages
 
+# TODO: ensure these packages are available
 ## see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
 #- name: Install HashiCorp Nomad plugins
 #  apt:
