@@ -36,7 +36,6 @@ apt_packages:
     - jq
     - libcap2
     - lsb-release
-    - osquery
     - sudo
     - unzip
   remove:
