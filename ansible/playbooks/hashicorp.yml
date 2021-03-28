@@ -39,6 +39,7 @@
 #  when: toggles.hashicorp.install_nomad_plugins
 
 # TODO: consider adding a `hashicorp` group
+
 # see https://docs.ansible.com/ansible/2.9/modules/group_module.html
 - name: Add Groups
   group:
@@ -51,6 +52,7 @@
     - toggles.hashicorp.create_groups
 
 # TODO: add users to `hashicorp` group (if available)
+
 # see https://docs.ansible.com/ansible/2.9/modules/user_module.html
 - name: Add Users
   user:
