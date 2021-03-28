@@ -23,6 +23,7 @@
     - [Vagrant](#vagrant)
     - [Vagrant Cloud](#vagrant-cloud)
       - [Build Image](#vagrant-cloud-images)
+  - [Notes](#notes)
   - [Author Information](#author-information)
   - [License](#license)
 
@@ -134,6 +135,10 @@ Then, uncomment the Vagrant Cloud-specific `post-processor` (near the bottom of 
 ```sh
 make build target=vagrant
 ```
+
+## Notes
+
+This repository takes input and inspiration from a handful of community projects. The authors would like to thank: [@ansible-community](https://github.com/ansible-community) in particular.
 
 ## Author Information
 

@@ -41,7 +41,6 @@ apt_packages:
   remove:
   # packages that should be removed (if present)
   # NOTE: this list is not exhaustive
-  remove:
     - ftp
     - snapd
 
@@ -71,11 +70,9 @@ apt_packages:
     - # see https://releases.hashicorp.com/nomad-driver-podman/
       name: nomad-driver-podman
       version: 0.2.0
-
 #    - # see https://releases.hashicorp.com/nomad-driver-lxc/
 #      name: nomad-driver-lxc
 #      version: 0.1.0
-
     - # see https://releases.hashicorp.com/nomad-autoscaler/
       name: nomad-autoscaler
       version: 0.3.0
