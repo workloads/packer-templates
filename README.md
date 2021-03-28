@@ -1,6 +1,6 @@
 # Packer Templates: HashiCorp Nomad
 
-> Packer Templates for HashiCorp Nomad for multiple platforms
+> Packer Templates for HashiCorp Nomad (incl. Consul, and Vault) for multiple (Cloud) Platforms
 
 ## Table of Contents
 
