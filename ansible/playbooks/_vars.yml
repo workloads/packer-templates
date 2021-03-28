@@ -23,6 +23,7 @@ toggles:
     enable_services: true
     install_nomad_plugins: true
     install_packages: true
+    start_services: true
   podman:
     install_packages: true
 

@@ -38,22 +38,6 @@
 #  with_items: "{{ apt_packages.hashicorp_nomad_plugins }}"
 #  when: toggles.hashicorp.install_nomad_plugins
 
-# see https://docs.ansible.com/ansible/2.9/modules/template_module.html
-- name: Copy HashiCorp Unit Files
-  template:
-    src: ../templates/{{ item.name }}.service
-    dest: /lib/systemd/system/{{ item.name }}.service
-  with_items: "{{ apt_packages.hashicorp }}"
-  when: toggles.hashicorp.copy_unit_files
-
-# see https://docs.ansible.com/ansible/2.9/modules/systemd_module.html
-#- name: Enable HashiCorp Services
-#  systemd:
-#    state: started
-#    name: item.name
-#  with_items: "{{ apt_packages.hashicorp }}"
-#  when: toggles.hashicorp.enable_services
-
 # TODO: consider adding a `hashicorp` group
 # see https://docs.ansible.com/ansible/2.9/modules/group_module.html
 - name: Add Groups
@@ -81,10 +65,25 @@
     name: nomad
     group: docker
     system: true
-    grousp: docker
     append: true
   with_items: "{{ apt_packages.hashicorp }}"
   when:
-    - docker.install_packages
-    - hashicorp.create_users
-    - hashicorp.add_nomad_user_to_docker
+    - toggles.docker.install_packages
+    - toggles.hashicorp.create_users
+    - toggles.hashicorp.add_nomad_user_to_docker
+
+# see https://docs.ansible.com/ansible/2.9/modules/template_module.html
+- name: Copy HashiCorp Unit Files
+  template:
+    src: ../templates/{{ item.name }}.service
+    dest: /lib/systemd/system/{{ item.name }}.service
+  with_items: "{{ apt_packages.hashicorp }}"
+  when: toggles.hashicorp.copy_unit_files
+
+# see https://docs.ansible.com/ansible/2.9/modules/systemd_module.html
+- name: Start HashiCorp Services
+  systemd:
+    state: started
+    name: "{{ item.name }}"
+  with_items: "{{ apt_packages.hashicorp }}"
+  when: toggles.hashicorp.start_services
