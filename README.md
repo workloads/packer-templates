@@ -37,7 +37,7 @@
 
 This repository contains Packer templates for multiple providers.
 
-Usage differs slightly for each provider and is therefore broken out into a separate section.
+Usage differs slightly for each provider and is therefore broken out into separate sections.
 
 ### Amazon Web Services
 
