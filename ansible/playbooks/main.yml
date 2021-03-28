@@ -22,13 +22,12 @@
     # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
     - name: Manage Docker packages
       include: docker.yml
-      # TODO: make docker installation conditional
       when: enable_docker
 
-#    # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
-#    - name: Manage Podman packages
-#      include: podman.yml
-#      # TODO: make podman installation conditional
+    # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
+    - name: Manage Podman packages
+      include: podman.yml
+      when: enable_podman
 
     # TODO: harden image
 
