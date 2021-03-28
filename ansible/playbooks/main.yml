@@ -12,22 +12,22 @@
     # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
     - name: Manage OS packages
       include: os.yml
-      when: enable_os
+      when: toggles.enable_os
 
     # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
     - name: Manage HashiCorp packages
       include: hashicorp.yml
-      when: enable_hashicorp
+      when: toggles.enable_hashicorp
 
     # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
     - name: Manage Docker packages
       include: docker.yml
-      when: enable_docker
+      when: toggles.enable_docker
 
     # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
     - name: Manage Podman packages
       include: podman.yml
-      when: enable_podman
+      when: toggles.enable_podman
 
     # TODO: harden image
 

@@ -3,11 +3,10 @@
 # toggles to enable and disable various operations
 toggles:
   # global toggles for (complete) playbooks
-  enable_base: true
+  enable_os: true
   enable_docker: true
   enable_hashicorp: true
   enable_podman: true
-
   os:
     install_base_packages: true
     remove_extraneous_packages: true
@@ -27,9 +26,9 @@ toggles:
   podman:
     install_packages: true
 
-# packages to install
 apt_packages:
   base:
+  # packages to install
     - apt-transport-https
     - ca-certificates
     - curl
@@ -40,7 +39,7 @@ apt_packages:
     - osquery
     - sudo
     - unzip
-
+  remove:
   # packages that should be removed (if present)
   # NOTE: this list is not exhaustive
   remove:
@@ -48,46 +47,43 @@ apt_packages:
     - snapd
 
   docker:
-    # see https://docs.docker.com/release-notes/
-    - name: docker-ce
+    - # see https://docs.docker.com/release-notes/
+      name: docker-ce
       version: "5:20.10.5*"
 
 #    - name: containerd
 #      version: "1.4.4*"
 
   hashicorp:
-    # see https://releases.hashicorp.com/boundary/
-    - name: boundary
+    - # see https://releases.hashicorp.com/boundary/
+      name: boundary
       version: 0.1.8
-
-    # see https://releases.hashicorp.com/consul/
-    - name: consul
+    - # see https://releases.hashicorp.com/consul/
+      name: consul
       version: 1.9.4
-
-    # see https://releases.hashicorp.com/nomad/
-    - name: nomad
+    - # see https://releases.hashicorp.com/nomad/
+      name: nomad
       version: 1.0.4
-
-    # see https://releases.hashicorp.com/vault/
-    - name: vault
+    - # see https://releases.hashicorp.com/vault/
+      name: vault
       version: 1.7.0
 
   hashicorp_nomad_plugins:
-    # see https://releases.hashicorp.com/nomad-driver-podman/
-    - name: nomad-driver-podman
+    - # see https://releases.hashicorp.com/nomad-driver-podman/
+      name: nomad-driver-podman
       version: 0.2.0
 
-#    # see https://releases.hashicorp.com/nomad-driver-lxc/
-#    - name: nomad-driver-lxc
+#    - # see https://releases.hashicorp.com/nomad-driver-lxc/
+#      name: nomad-driver-lxc
 #      version: 0.1.0
 
-    # see https://releases.hashicorp.com/nomad-autoscaler/
-    - name: nomad-autoscaler
+    - # see https://releases.hashicorp.com/nomad-autoscaler/
+      name: nomad-autoscaler
       version: 0.3.0
 
   podman:
-    # see https://podman.io/releases/
-    - name: podman
+    - # see https://podman.io/releases/
+      name: podman
       version: 3.0.0
 
 apt_repos:

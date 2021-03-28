@@ -1,7 +1,5 @@
 ---
 
-# TODO: add support for Kubic repo: https://podman.io/getting-started/installation
-
 # see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
 - name: Install Podman packages
   apt:
