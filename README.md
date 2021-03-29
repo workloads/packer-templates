@@ -34,31 +34,27 @@ Terraform is used as a helper, only. It is possible (though not advised) to manu
 
 This repository contains Packer templates for multiple providers.
 
-Usage differs slightly for each provider and is therefore broken out into separate sections.
-
-The primary way of interacting with this repository is `make` via a [Makefile](./Makefile).
+The primary way of interacting with this repository is `make` via a [Makefile](Makefile).
 
 This allows for a consistent execution of the underlying workflows.
 
-> NOTE: All workflows can be executed manually. See the [Makefile](./Makefile) for more information.
+The workflow for (most) providers is as follows:
 
-Execute `make` to get an overview of possible options:
+- log in to provider's CLI interface
+- create prerequisite resources
+  - initialize Terraform (using `make terraform-init target=provider`)
+  - create Terraform-managed resources (using `make terraform-apply target=provider`)
+- create image(s)
+  - initialize Packer (using `make init target=provider`)
+  - build Packer-managed image(s) (using `make build target=provider`)
+- optionally: delete prerequisite resources
+  - delete Terraform-managed resources (using `make terraform-destroy target=provider`)
 
-```sh
-PACKER TEMPLATES
+Usage differs slightly for each provider and is therefore broken out into separate sections.
 
-help               Displays this help text
-build              Build a Packer Image(s) for a target
-init               Install and upgrade plugins for Packer Template(s) for a target
-lint               Formats and validates Packer Template(s) for a target
-terraform-plan     Plan prerequisite resources for a target with Terraform
-terraform-apply    Create prerequisite resources for a target with Terraform
-terraform-destroy  Destroy prerequisite resources for a target with Terraform
-terraform-init     Initializes Terraform for a target
-ansible-lint       Lints Ansible playbook(s)
-```
+See the `packer/` (and `terraform/`) subdirectories for more information.
 
-All operations, except for `ansible-lint` and `help` require a `target`.
+> All workflows _can_ be executed manually. See the [Makefile](Makefile) for more information.
 
 ## Notes
 
