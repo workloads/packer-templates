@@ -45,6 +45,10 @@ Usage differs slightly for each provider and is therefore broken out into separa
 
 The primary way of interacting with this repository is `make` via a [Makefile](./Makefile).
 
+This allows for a consistent execution of the underlying workflows.
+
+> NOTE: All workflows can be executed manually. See the [Makefile](./Makefile) for more information.
+
 Execute `make` to get an overview of possible options:
 
 ```sh
