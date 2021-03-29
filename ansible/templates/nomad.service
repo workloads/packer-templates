@@ -7,7 +7,7 @@ Wants=consul.service
 After=consul.service
 Wants=vault.service
 After=vault.service
-ConditionFileNotEmpty=/etc/consul.d/consul.hcl
+ConditionFileNotEmpty=/etc/nomad.d/nomad.hcl
 StartLimitIntervalSec=60
 StartLimitBurst=3
 
