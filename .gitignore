@@ -1,6 +1,10 @@
+### Ansible ###
+*.retry
+
 ### Packer ###
 packer_cache/
 *.log
+output-*
 
 ### Packer (user-generated) ###
 credentials.auto.pkrvars.hcl
