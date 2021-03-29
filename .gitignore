@@ -15,6 +15,7 @@ generated.auto.pkrvars.hcl
 *.tfstate
 *.tfstate.backup
 *.terraform.tfstate.lock.info
+terraform.tfvars
 
 ### Vagrant ###
 .vagrant/
