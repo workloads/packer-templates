@@ -33,6 +33,10 @@
 - Terraform `0.14.9` or newer
 - Ansible `2.9.6` or newer
 
+Ansible is used to carry out system-level operations (e.g.: installing and removing packages).
+
+Terraform is used as a helper, only. It is possible (though not advised) to manually create the resources needed.
+
 ## Usage
 
 This repository contains Packer templates for multiple providers.
