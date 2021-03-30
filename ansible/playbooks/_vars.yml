@@ -34,6 +34,15 @@ toggles:
 
     # enable services for enabled products
     enable_services: true
+
+    # enable product-specific operations
+    enabled:
+      boundary: false
+      consul: false
+      nomad: true
+      vault: false
+
+    # install Nomad plugins
     install_nomad_plugins: true
 
     # install packages for enabled products

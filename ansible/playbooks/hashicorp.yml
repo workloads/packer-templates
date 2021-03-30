@@ -24,7 +24,9 @@
     state: present
     update_cache: true
   with_items: "{{ apt_packages.hashicorp }}"
-  when: toggles.hashicorp.install_packages
+  when:
+    - toggles.hashicorp.enabled[item.name]
+    - toggles.hashicorp.install_packages
 
 # TODO: ensure these packages are available
 ## see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
@@ -48,6 +50,7 @@
     system: true
   with_items: "{{ apt_packages.hashicorp }}"
   when:
+    - toggles.hashicorp.enabled[item.name]
     - toggles.docker.create_group
     - toggles.hashicorp.create_groups
 
@@ -61,7 +64,9 @@
     name: "{{ item.name }}"
     system: true
   with_items: "{{ apt_packages.hashicorp }}"
-  when: toggles.hashicorp.create_users
+  when:
+    - toggles.hashicorp.enabled[item.name]
+    - toggles.hashicorp.create_users
 
 # see https://docs.ansible.com/ansible/2.9/modules/user_module.html
 - name: Add `nomad` User to `docker` Group
@@ -72,6 +77,7 @@
     system: true
   with_items: "{{ apt_packages.hashicorp }}"
   when:
+    - toggles.hashicorp.enabled[item.name]
     - toggles.docker.install_packages
     - toggles.hashicorp.create_users
     - toggles.hashicorp.add_nomad_user_to_docker
@@ -82,7 +88,9 @@
     dest: /lib/systemd/system/{{ item.name }}.service
     src: ../templates/{{ item.name }}.service
   with_items: "{{ apt_packages.hashicorp }}"
-  when: toggles.hashicorp.copy_unit_files
+  when:
+    - toggles.hashicorp.enabled[item.name]
+    - toggles.hashicorp.copy_unit_files
 
 # see https://docs.ansible.com/ansible/2.9/modules/systemd_module.html
 - name: Start HashiCorp Services
@@ -90,4 +98,6 @@
     state: started
     name: "{{ item.name }}"
   with_items: "{{ apt_packages.hashicorp }}"
-  when: toggles.hashicorp.start_services
+  when:
+    - toggles.hashicorp.enabled[item.name]
+    - toggles.hashicorp.start_services
