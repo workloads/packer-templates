@@ -69,6 +69,13 @@ variable "os_type" {
   default     = "Linux"
 }
 
+variable "ansible_env_vars" {
+  type        = list(string)
+  description = "Environment variables to set before running Ansible."
+
+  # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
+}
+
 locals {
   managed_image_name = "${var.managed_image_name_prefix}-${lower(var.image_offer)}-${replace(lower(var.image_sku), ".", "")}"
 }

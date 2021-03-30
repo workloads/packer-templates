@@ -21,11 +21,9 @@ build {
   ]
 
   provisioner "ansible" {
-    playbook_file = "./ansible/playbooks/main.yml"
-    command       = "ansible-playbook"
-    ansible_env_vars = [
-      "ANSIBLE_NOCOWS=True"
-    ]
+    playbook_file    = "./ansible/playbooks/main.yml"
+    command          = "ansible-playbook"
+    ansible_env_vars = var.ansible_env_vars
   }
 
   # uncomment this stanza to build images for Vagrant Cloud

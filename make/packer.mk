@@ -34,6 +34,13 @@ else
 packer_force =
 endif
 
+# Ignore the shared variables file
+ifndef ignore-shared-vars
+packer_shared_var_file = -var-file="./packer/_shared/shared.pkrvars.hcl"
+else
+packer_shared_var_file =
+endif
+
 # Produce machine-readable output.
 ifdef machine-readable
 packer_machine_readable = -machine-readable
@@ -62,8 +69,6 @@ else
 packer_timestamp_ui =
 endif
 
-# TODO: add support for `var`
-
 # TODO: add support for multiple `var-files` arguments
 ifdef var-file
 packer_var_file = -var-file=$(var-file)
@@ -85,6 +90,7 @@ build: # Build a Packer Image(s) for a target
 			$(packer_on_error) \
 			$(packer_parallel_builds) \
 			$(packer_timestamp_ui) \
+			$(packer_shared_var_file) \
 			$(packer_var_file) \
 			"./packer/$(target)"
 
@@ -104,7 +110,6 @@ lint: # Formats and validates Packer Template(s) for a target
 	@: $(if $(target),,$(call missing_target))
 	@packer \
 		fmt \
-			-check \
 			-diff \
 			"./packer/$(target)" \
 	&& \
@@ -112,5 +117,6 @@ lint: # Formats and validates Packer Template(s) for a target
 		validate \
 			$(packer_except) \
 			$(packer_only) \
+			$(packer_shared_var_file) \
 			$(packer_var_file) \
 			"./packer/$(target)"

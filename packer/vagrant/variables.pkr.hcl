@@ -19,3 +19,10 @@ variable "version" {
   description = "Version of the Vagrant Box to upload to Vagrant Cloud"
   default     = "0.0.1"
 }
+
+variable "ansible_env_vars" {
+  type        = list(string)
+  description = "Environment variables to set before running Ansible."
+
+  # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
+}

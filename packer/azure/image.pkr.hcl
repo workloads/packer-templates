@@ -44,9 +44,7 @@ build {
     playbook_file = "./ansible/playbooks/main.yml"
     command       = "ansible-playbook"
 
-    ansible_env_vars = [
-      "ANSIBLE_NOCOWS=True"
-    ]
+    ansible_env_vars = var.ansible_env_vars
   }
 
   # carry out deprovisioning steps: https://www.packer.io/docs/builders/azure/arm#linux
