@@ -31,6 +31,8 @@ source "azure-arm" "image" {
   # artifact configuration
   managed_image_resource_group_name = var.managed_image_resource_group_name
   managed_image_name                = local.managed_image_name
+
+  # TODO: azure_tags
 }
 
 build {
