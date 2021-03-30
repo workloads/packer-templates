@@ -30,8 +30,7 @@ toggles:
     install_packages: true
 
 apt_packages:
-  base:
-  # packages to install
+  to_install:
     - apt-transport-https
     - ca-certificates
     - curl
@@ -41,11 +40,12 @@ apt_packages:
     - lsb-release
     - sudo
     - unzip
-  remove:
-  # packages that should be removed (if present)
   # NOTE: this list is not exhaustive
+  to_remove:
+    # NOTE: this list is not exhaustive
     - ftp
     - snapd
+    - telnet
 
   docker:
     - # see https://docs.docker.com/release-notes/
