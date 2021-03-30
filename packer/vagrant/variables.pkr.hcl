@@ -55,6 +55,13 @@ variable "shared_ansible_env_vars" {
   # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
 }
 
+variable "shared_extra_arguments" {
+  type        = list(string)
+  description = "Extra arguments to pass to Ansible."
+
+  # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
+}
+
 variable "skip_add" {
   type        = bool
   description = "Don't add the box to your local environment."

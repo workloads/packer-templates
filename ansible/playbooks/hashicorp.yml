@@ -5,7 +5,9 @@
   apt_key:
     state: present
     url: "{{ apt_repos.hashicorp }}/gpg"
-  when: toggles.hashicorp.add_apt_repository
+  when:
+    - ansible_os_family == "Ubuntu"
+    - toggles.hashicorp.add_apt_repository
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
 - name: Add APT repository for HashiCorp packages
@@ -13,7 +15,9 @@
     repo: "deb [arch=amd64] {{ apt_repos.hashicorp }} {{ ansible_distribution_release | lower }} main"
     state: present
     update_cache: true
-  when: toggles.hashicorp.add_apt_repository
+  when:
+    - ansible_os_family == "Ubuntu"
+    - toggles.hashicorp.add_apt_repository
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
 - name: Install HashiCorp packages
@@ -25,6 +29,7 @@
     update_cache: true
   with_items: "{{ apt_packages.hashicorp }}"
   when:
+    - ansible_os_family == "Ubuntu"
     - toggles.hashicorp.enabled[item.name]
     - toggles.hashicorp.install_packages
 

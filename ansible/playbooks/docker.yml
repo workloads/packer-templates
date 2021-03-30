@@ -5,7 +5,9 @@
   apt_key:
     url: "{{ apt_repos.docker }}/linux/ubuntu/gpg"
     state: present
-  when: toggles.docker.add_apt_repository
+  when:
+    - ansible_os_family == "Ubuntu"
+    - toggles.docker.add_apt_repository
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
 - name: Add APT repository for Docker packages
@@ -13,7 +15,9 @@
     repo: "deb [arch=amd64] {{ apt_repos.docker }}/linux/ubuntu {{ ansible_distribution_release | lower }} stable"
     state: present
     update_cache: true
-  when: toggles.docker.add_apt_repository
+  when:
+    - ansible_os_family == "Ubuntu"
+    - toggles.docker.add_apt_repository
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
 - name: Install Docker packages
@@ -24,7 +28,9 @@
     state: present
     update_cache: true
   with_items: "{{ apt_packages.docker }}"
-  when: toggles.docker.install_packages
+  when:
+    - ansible_os_family == "Ubuntu"
+    - toggles.docker.install_packages
 
 # TODO: consider adding a `hashicorp` group
 # see https://docs.ansible.com/ansible/2.9/modules/group_module.html

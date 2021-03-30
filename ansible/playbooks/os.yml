@@ -6,7 +6,9 @@
     force_apt_get: true
     update_cache: true
     upgrade: "yes"
-  when: toggles.os.update_apt_cache
+  when:
+    - ansible_os_family == "Ubuntu"
+    - toggles.os.update_apt_cache
 
 # see https://docs.ansible.com/ansible/2.9/modules/package_module.html
 - name: Install base packages
@@ -15,7 +17,9 @@
     name: "{{ apt_packages.to_install }}"
     state: present
     update_cache: true
-  when: toggles.os.install_packages
+  when:
+    - ansible_os_family == "Ubuntu"
+    - toggles.os.install_packages
 
 # see https://docs.ansible.com/ansible/2.9/modules/package_module.html
 - name: Remove extraneous packages
@@ -26,6 +30,8 @@
     name: "{{ apt_packages.to_remove }}"
     state: absent
     update_cache: true
-  when: toggles.os.remove_packages
+  when:
+    - ansible_os_family == "Ubuntu"
+    - toggles.os.remove_packages
 
   # TODO: add support for specifying additional packages

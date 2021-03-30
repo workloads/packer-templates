@@ -23,6 +23,7 @@ build {
     "source.vagrant.image"
   ]
 
+  # see https://www.packer.io/docs/provisioners/ansible
   provisioner "ansible" {
     playbook_file    = "./ansible/playbooks/main.yml"
     command          = "ansible-playbook"
