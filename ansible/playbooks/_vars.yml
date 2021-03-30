@@ -17,16 +17,33 @@ toggles:
     create_user: true
     install_packages: true
   hashicorp:
+    # add HashiCorp APT repository
     add_apt_repository: true
+
+    # add `nomad` user to `docker` group
     add_nomad_user_to_docker: true
+
+    # copy unit files for enabled products
     copy_unit_files: true
+
+    # create users for enabled products
     create_users: true
+
+    # create groups for enabled products
     create_groups: true
+
+    # enable services for enabled products
     enable_services: true
     install_nomad_plugins: true
+
+    # install packages for enabled products
     install_packages: true
+
+    # start services for enabled products
     start_services: true
+
   podman:
+    # install packages for Podman
     install_packages: true
 
 apt_packages:
@@ -47,6 +64,7 @@ apt_packages:
     - snapd
     - telnet
 
+  # package definitions (name and version) for Docker
   docker:
     - # see https://docs.docker.com/release-notes/
       name: docker-ce
@@ -55,6 +73,7 @@ apt_packages:
 #      name: containerd
 #      version: "1.4.4"
 
+  # package definitions (name and version) for HashiCorp products
   hashicorp:
     - # see https://releases.hashicorp.com/boundary/
       name: boundary
@@ -69,6 +88,7 @@ apt_packages:
       name: vault
       version: 1.7.0
 
+  # plugin definitions (name and version) for HashiCorp Nomad
   hashicorp_nomad_plugins:
     - # see https://releases.hashicorp.com/nomad-driver-podman/
       name: nomad-driver-podman
@@ -80,6 +100,7 @@ apt_packages:
       name: nomad-autoscaler
       version: 0.3.0
 
+  # package definitions (name and version) for HashiCorp products
   podman:
     - # see https://podman.io/releases/
       name: podman
