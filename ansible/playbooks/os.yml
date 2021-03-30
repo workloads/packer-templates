@@ -15,7 +15,7 @@
     name: "{{ apt_packages.to_install }}"
     state: present
     update_cache: true
-  when: toggles.os.install_base_packages
+  when: toggles.os.install_packages
 
 # see https://docs.ansible.com/ansible/2.9/modules/package_module.html
 - name: Remove extraneous packages
@@ -26,6 +26,6 @@
     name: "{{ apt_packages.to_remove }}"
     state: absent
     update_cache: true
-  when: toggles.os.remove_extraneous_packages
+  when: toggles.os.remove_packages
 
   # TODO: add support for specifying additional packages
