@@ -38,7 +38,7 @@ toggles:
     # enable product-specific operations
     enabled:
       boundary: false
-      consul: false
+      consul: true
       nomad: true
       vault: false
 

@@ -1,8 +1,14 @@
 # This file is automatically loaded by Packer
 
+variable "add_clean" {
+  type        = bool
+  description = "Should Vagrant remove any old temporary fdiles from prior downloads?"
+  default     = false
+}
+
 variable "add_force" {
-  type        = string
-  description = " Should the box be downloaded and overwrite any existing box with this name?"
+  type        = bool
+  description = "Should the box be downloaded and overwrite any existing box with this name?"
   default     = null
 }
 
@@ -22,6 +28,12 @@ variable "box_version" {
   type        = string
   description = "What box version to use when initializing Vagrant."
   default     = ""
+}
+
+variable "communicator" {
+  type        = string
+  description = "Which communicator to use when initializing Vagrant."
+  default     = "ssh"
 }
 
 variable "output_dir" {

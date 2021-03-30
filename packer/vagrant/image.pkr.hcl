@@ -10,8 +10,8 @@ source "vagrant" "image" {
   add_force       = var.add_force
   box_name        = var.box_name
   box_version     = var.box_version
+  communicator    = var.communicator
   output_dir      = var.output_dir
-  communicator    = "ssh"
   provider        = var.provider
   skip_add        = var.skip_add
   source_path     = var.source_path
