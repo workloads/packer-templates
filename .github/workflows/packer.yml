@@ -32,4 +32,4 @@ jobs:
         with:
           command: validate
           target: "${{ matrix.directory }}/image.pkr.hcl"
-          arguments: "-var-file=packer/shared/shared.pkrvars.hcl"
+          arguments: "-var-file=packer/_shared/shared.pkrvars.hcl"
