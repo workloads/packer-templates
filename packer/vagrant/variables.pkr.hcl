@@ -20,7 +20,7 @@ variable "version" {
   default     = "0.0.1"
 }
 
-variable "ansible_env_vars" {
+variable "shared_ansible_env_vars" {
   type        = list(string)
   description = "Environment variables to set before running Ansible."
 

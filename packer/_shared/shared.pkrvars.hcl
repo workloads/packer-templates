@@ -1,1 +1,1 @@
-ansible_env_vars = ["ANSIBLE_NOCOWS=True"]
+shared_ansible_env_vars = ["ANSIBLE_NOCOWS=True"]

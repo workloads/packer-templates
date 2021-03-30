@@ -69,7 +69,7 @@ variable "os_type" {
   default     = "Linux"
 }
 
-variable "ansible_env_vars" {
+variable "shared_ansible_env_vars" {
   type        = list(string)
   description = "Environment variables to set before running Ansible."
 
