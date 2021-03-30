@@ -7,12 +7,15 @@ packer {
 source "vagrant" "image" {
   # the following configuration represents a minimally viable selection
   # for all options see: https://www.packer.io/docs/builders/vagrant
-
-  communicator = "ssh"
-  source_path  = var.source_path
-  provider     = "virtualbox"
-  add_force    = true
-  output_dir   = "vagrant-nomad"
+  add_force       = var.add_force
+  box_name        = var.box_name
+  box_version     = var.box_version
+  output_dir      = var.output_dir
+  communicator    = "ssh"
+  provider        = var.provider
+  skip_add        = var.skip_add
+  source_path     = var.source_path
+  teardown_method = var.teardown_method
 }
 
 build {
@@ -31,6 +34,6 @@ build {
   #post-processor "vagrant-cloud" {
   # TODO: add better support for Vagrant Cloud
   #  box_tag = var.box_tag
-  #  version = var.version
+  #  version = var.box_version
   #}
 }
