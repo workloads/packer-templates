@@ -1,0 +1,30 @@
+---
+
+generated_on: "{{ template_run_date }}"
+
+{% if toggles.hashicorp.install_packages %}
+hashicorp:
+{% for item in apt_packages.hashicorp %}
+{% if toggles.hashicorp.enabled[item.name] %}
+  - "{{ item.name }}={{ item.version}}"
+{% endif %}
+{% endfor -%}
+{% endif %}
+
+{% if toggles.docker.install_packages %}
+docker:
+{% for item in apt_packages.docker %}
+{% if toggles.docker.install_packages %}
+  - "{{ item.name }}={{ item.version}}"
+{% endif %}
+{% endfor -%}
+{% endif %}
+
+{% if toggles.podman.install_packages %}
+podman:
+{% for item in apt_packages.podman %}
+{% if toggles.podman.install_packages %}
+  - "{{ item.name }}={{ item.version}}"
+{% endif %}
+{% endfor -%}
+{% endif %}

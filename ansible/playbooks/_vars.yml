@@ -51,6 +51,10 @@ toggles:
     # start services for enabled products
     start_services: true
 
+  misc:
+    # create file with version information
+    create_versions_file: true
+
   podman:
     # install packages for Podman
     install_packages: true
@@ -114,8 +118,11 @@ apt_packages:
       version: 3.0.0
 
 version_files:
-  text: "versions.txt"
-  yaml: "versions.yaml"
+  source: "../templates"
+  destination: "../../generated"
+  templates:
+    - "versions.txt"
+    - "versions.yml"
 
 apt_repos:
   docker: "https://download.docker.com"

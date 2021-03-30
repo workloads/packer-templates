@@ -1,0 +1,15 @@
+---
+
+# see https://docs.ansible.com/ansible/2.9/modules/template_module.html
+- name: Create Version Files
+  template:
+    backup: false
+    dest: "{{ version_files.destination }}/{{ item }}"
+    force: true
+    src: "{{ version_files.source }}/{{ item }}.j2"
+    trim_blocks: true
+  with_items: "{{ version_files.templates }}"
+  when:
+    - toggles.misc.create_versions_file
+  become: false
+  delegate_to: localhost

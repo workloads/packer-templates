@@ -1,0 +1,33 @@
+File generated on {{ template_run_date }}
+
+{% if toggles.hashicorp.install_packages %}
+## HashiCorp package information:
+
+{% for item in apt_packages.hashicorp %}
+{% if toggles.hashicorp.enabled[item.name] %}
+  * {{ item.name }} v{{ item.version}}
+{% endif %}
+{% endfor -%}
+{% endif %}
+
+{% if toggles.docker.install_packages %}
+
+## Docker packages:
+
+{% for item in apt_packages.docker %}
+{% if toggles.docker.install_packages %}
+  * {{ item.name }} v{{ item.version}}
+{% endif %}
+{% endfor -%}
+{% endif %}
+
+{% if toggles.podman.install_packages %}
+
+## Podman packages:
+
+{% for item in apt_packages.podman %}
+{% if toggles.podman.install_packages %}
+  * {{ item.name }} v{{ item.version}}
+{% endif %}
+{% endfor -%}
+{% endif %}

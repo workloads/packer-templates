@@ -29,6 +29,11 @@
       include: hashicorp.yml
       when: toggles.enable_hashicorp
 
+    # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
+    - name: Manage miscellaneous operations
+      include: misc.yml
+      when: toggles.enable_misc_operations
+
     # TODO: harden image
 
     # TODO: optimize system settings
