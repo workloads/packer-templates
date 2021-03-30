@@ -113,6 +113,10 @@ apt_packages:
       name: podman
       version: 3.0.0
 
+version_files:
+  text: "versions.txt"
+  yaml: "versions.yaml"
+
 apt_repos:
   docker: "https://download.docker.com"
   hashicorp: "https://apt.releases.hashicorp.com"

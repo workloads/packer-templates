@@ -15,6 +15,7 @@ jobs:
             "./packer/azure",
             "./packer/vagrant"
         ]
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -27,9 +28,9 @@ jobs:
           command: fmt
           target: "${{ matrix.directory }}/image.pkr.hcl"
 
-      - name: Validate Template
-        uses: hashicorp/packer-github-actions@master
-        with:
-          command: validate
-          target: "${{ matrix.directory }}/image.pkr.hcl"
-          arguments: "-var-file=packer/_shared/shared.pkrvars.hcl"
+#      - name: Validate Template
+#        uses: hashicorp/packer-github-actions@master
+#        with:
+#          command: validate
+#          target: "${{ matrix.directory }}/image.pkr.hcl"
+#          arguments: "-var-file=packer/_shared/shared.pkrvars.hcl"
