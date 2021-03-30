@@ -57,9 +57,7 @@ apt_packages:
     - lsb-release
     - sudo
     - unzip
-  # NOTE: this list is not exhaustive
   to_remove:
-    # NOTE: this list is not exhaustive
     - ftp
     - snapd
     - telnet
