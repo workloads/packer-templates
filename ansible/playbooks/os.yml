@@ -12,7 +12,7 @@
 - name: Install base packages
   apt:
     force_apt_get: true
-    name: "{{ apt_packages.base }}"
+    name: "{{ apt_packages.to_install }}"
     state: present
     update_cache: true
   when: toggles.os.install_base_packages
@@ -23,7 +23,7 @@
     autoclean: true
     autoremove: true
     force_apt_get: true
-    name: "{{ apt_packages.remove }}"
+    name: "{{ apt_packages.to_remove }}"
     state: absent
     update_cache: true
   when: toggles.os.remove_extraneous_packages
