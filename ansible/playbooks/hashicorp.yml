@@ -97,6 +97,7 @@
   with_items: "{{ packages.hashicorp }}"
   when:
     - toggles.hashicorp_enabled[item.name] is defined
+    - toggles.hashicorp_enabled[item.name]
     - toggles.hashicorp.create_users
     - toggles.hashicorp.create_groups
 
