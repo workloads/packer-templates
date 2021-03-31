@@ -127,6 +127,12 @@ variable "build_config" {
       misc              = map(bool)
       podman            = map(bool)
     })
+
+    version_files = object({
+      source      = string
+      destination = string
+      templates   = list(string)
+    })
   })
 
   description = "Configuration for Ansible"

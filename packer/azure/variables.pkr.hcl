@@ -5,15 +5,18 @@
 # Then, move `credentials.auto.pkrvars.hcl.sample` to `azure-credentials.auto.pkrvars.hcl` and populate it.
 
 #variable "subscription_id" {
-#  type = string
+#  type        = string
+#  description = "Subscription under which the build will be performed."
 #}
 
 #variable "client_id" {
-#  type = string
+#  type        = string
+#  description = "The Active Directory service principal associated with your builder."
 #}
 
 #variable "client_secret" {
-#  type = string
+#  type        = string
+#  description = "The password or secret for your service principal."
 #
 #  # sensitive values are hidden from outputs
 #  sensitive = true
@@ -72,7 +75,17 @@ variable "build_config" {
       misc              = map(bool)
       podman            = map(bool)
     })
+
+    version_files = object({
+      source      = string
+      destination = string
+      templates   = list(string)
+    })
   })
+
+  description = "Configuration for Ansible"
+  # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
+}
 
 variable "cloud_environment_name" {
   type        = string

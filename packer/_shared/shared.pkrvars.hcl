@@ -80,7 +80,6 @@ build_config = {
       vault    = false
     }
 
-
     misc = {
       # create files with version information
       create_versions_files = true
@@ -168,6 +167,14 @@ build_config = {
         name    = "podman"
         version = "3.0.0"
       }
+    ]
+  }
+
+  version_files = {
+    source = "../templates"
+    destination = "../../generated"
+    templates: [
+      "versions.txt"
     ]
   }
 }
