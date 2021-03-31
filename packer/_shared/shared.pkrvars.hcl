@@ -2,7 +2,7 @@
 build_config = {
   # Environment variables to set before running Ansible
   ansible_env_vars = [
-    "ANSIBLE_NOCOWS=True",
+    "ANSIBLE_CONFIG=ansible/ansible.cfg"
   ]
 
   apt_repos = {
