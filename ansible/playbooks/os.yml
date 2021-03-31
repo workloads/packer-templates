@@ -22,7 +22,7 @@
 - name: Install Packages
   apt:
     force_apt_get: true
-    name: "{{ apt_packages.to_install }}"
+    name: "{{ packages.to_install }}"
     state: present
     update_cache: true
   when:
@@ -35,7 +35,7 @@
     autoclean: true
     autoremove: true
     force_apt_get: true
-    name: "{{ apt_packages.to_remove }}"
+    name: "{{ packages.to_remove }}"
     state: absent
     update_cache: true
   when:

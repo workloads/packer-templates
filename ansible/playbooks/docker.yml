@@ -35,7 +35,7 @@
     name: "{{ item.name }}={{ item.version | default('*') }}"
     state: present
     update_cache: true
-  with_items: "{{ apt_packages.docker }}"
+  with_items: "{{ packages.docker }}"
   when:
     - ansible_os_family == "Ubuntu"
     - toggles.docker.install_packages
