@@ -1,9 +1,12 @@
 ---
 
 # see https://docs.ansible.com/ansible/2.9/modules/debug_module.html
-- name: "debug"
+- name: debug
   debug:
     msg: "included hashicorp.yml"
+  when:
+    - toggle.enable_debug_statements is defined
+    - toggle.enable_debug_statements
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_key_module.html
 - name: Add APT Key for HashiCorp repository

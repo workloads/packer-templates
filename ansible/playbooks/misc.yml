@@ -1,9 +1,12 @@
 ---
 
 # see https://docs.ansible.com/ansible/2.9/modules/debug_module.html
-- name: "debug"
+- name: debug
   debug:
     msg: "included misc.yml"
+  when:
+    - toggle.enable_debug_statements is defined
+    - toggle.enable_debug_statements
 
 # see https://docs.ansible.com/ansible/2.9/modules/file_module.html
 - name: Create local Directory for Version Files
@@ -29,10 +32,6 @@
     - toggles.misc.create_versions_files
   become: false
   delegate_to: localhost
-
-- name: FINDME
-  debug:
-    var: ansible_env
 
 # see https://docs.ansible.com/ansible/2.9/modules/copy_module.html
 # - name: Copy Version Files

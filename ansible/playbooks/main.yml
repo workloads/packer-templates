@@ -10,6 +10,14 @@
       include_vars:
         file: generated_configuration.yml
 
+    # see https://docs.ansible.com/ansible/2.9/modules/debug_module.html
+    - name: ansible_env
+      debug:
+        var: ansible_env
+      when:
+        - toggle.enable_debug_statements is defined
+        - toggle.enable_debug_statements
+
     # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
     - name: Manage OS Packages
       include: os.yml
