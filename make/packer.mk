@@ -110,6 +110,11 @@ lint: # Formats and validates Packer Template(s) for a target
 	@packer \
 		fmt \
 			-recursive \
+			"./packer/_shared/" \
+	&& \
+	packer \
+		fmt \
+			-recursive \
 			"./packer/$(target)" \
 	&& \
 	packer \

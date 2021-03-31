@@ -12,8 +12,9 @@ jobs:
     strategy:
       matrix:
         directory: [
-          "./packer/azure",
-          "./packer/vagrant"
+          "./packer/_shared/shared.pkrvars.hcl",
+          "./packer/azure/image.pkr.hcl",
+          "./packer/vagrant/image.pkr.hcl"
         ]
 
     steps:
@@ -26,7 +27,7 @@ jobs:
         uses: hashicorp/packer-github-actions@master
         with:
           command: fmt
-          target: "${{ matrix.directory }}/image.pkr.hcl"
+          target: "${{ matrix.directory }}"
 
 #      - name: Validate Template
 #        uses: hashicorp/packer-github-actions@master
