@@ -20,7 +20,7 @@
 # see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
 - name: Add APT repository for Podman packages
   apt_repository:
-    repo: "deb {{ apt_repos.podman }} main"
+    filename: podman
     state: present
     update_cache: true
   when:

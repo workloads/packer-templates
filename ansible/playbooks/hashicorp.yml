@@ -20,6 +20,7 @@
 # see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
 - name: Add APT repository for HashiCorp packages
   apt_repository:
+    filename: hashicorp
     repo: "deb [arch=amd64] {{ apt_repos.hashicorp }} {{ ansible_distribution_release | lower }} main"
     state: present
     update_cache: true
