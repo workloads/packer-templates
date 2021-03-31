@@ -53,13 +53,12 @@ See the `packer/` (and `terraform/`) subdirectories for more information.
 
 This repository supports the following providers:
 
-| target    | local documentation                    | Packer Builder                                                         | Terraform Provider                                                                   | Notes                                                        |
-|-----------|----------------------------------------|------------------------------------------------------------------------|--------------------------------------------------------------------------------------|--------------------------------------------------------------|
-| `aws`     | [aws/README.md](aws/README.md)         | `amazon-ebs` ([docs](https://www.packer.io/docs/builders/amazon/ebs )) | n/a                                                                                  |                                                              |
-| `azure`   | [azure/README.md](azure/README.md)     | `azure-arm`  ([docs](https://www.packer.io/docs/builders/azure/arm))   | `azurerm` ([docs](https://registry.terraform.io/providers/hashicorp/azurerm/latest)) |                                                              |
-| `google`  | [google/README.md](google/README.md)   | `googlecompute` ([docs](https://www.packer.io/docs/builders/vagrant))  | `google` ([docs](https://registry.terraform.io/providers/hashicorp/google/latest))   |                                                              |
-| `vagrant` | [vagrant/README.md](vagrant/README.md) | `vagrant` ([docs](https://www.packer.io/docs/builders/vagrant))        | n/a                                                                                  | This target also supports the `vagrant-cloud` post-processor |
-
+| target    | local documentation                    | Packer Builder                | Terraform Provider | Notes                                                        |
+|-----------|----------------------------------------|-------------------------------|--------------------|--------------------------------------------------------------|
+| `aws`     | [packer/aws/README.md](packer/aws/README.md)         | `amazon-ebs`    | n/a                |                                                              |
+| `azure`   | [packer/azure/README.md](packer/azure/README.md)     | `azure-arm`     | `azurerm`          |                                                              |
+| `google`  | [packer/google/README.md](packer/google/README.md)   | `googlecompute` | `google`           |                                                              |
+| `vagrant` | [packer/vagrant/README.md](packer/vagrant/README.md) | `vagrant`       | n/a                | This target also supports the `vagrant-cloud` post-processor |
 
 ## Notes
 
