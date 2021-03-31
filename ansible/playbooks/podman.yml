@@ -8,6 +8,25 @@
     - toggle.enable_debug_statements is defined
     - toggle.enable_debug_statements
 
+# see https://docs.ansible.com/ansible/2.9/modules/apt_key_module.html
+- name: Add APT Key for Podman repository
+  apt_key:
+    state: present
+    url: "{{ apt_repos.podman }}/Release.key"
+  when:
+    - ansible_os_family == "Ubuntu"
+    - toggles.podman.add_apt_repository
+
+# see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
+- name: Add APT repository for Podman packages
+  apt_repository:
+    repo: "deb {{ apt_repos.podman }} main"
+    state: present
+    update_cache: true
+  when:
+    - ansible_os_family == "Ubuntu"
+    - toggles.podman.add_apt_repository
+
 # see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
 - name: Install Podman packages
   apt:
@@ -17,4 +36,6 @@
     state: present
     update_cache: true
   with_items: "{{ packages.podman }}"
-  when: toggles.podman.install_packages
+  when:
+    - ansible_os_family == "Ubuntu"
+    - toggles.podman.install_packages

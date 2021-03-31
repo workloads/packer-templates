@@ -8,6 +8,7 @@ build_config = {
   apt_repos = {
     docker    = "https://download.docker.com"
     hashicorp = "https://apt.releases.hashicorp.com"
+    podman    = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/"
   }
 
   # Extra arguments to pass to Ansible
