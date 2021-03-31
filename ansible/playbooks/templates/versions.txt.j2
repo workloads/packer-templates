@@ -1,7 +1,7 @@
 Information generated on {{ template_run_date }}
 
 {% if toggles.enable_hashicorp and toggles.hashicorp.install_packages %}
-## HashiCorp package information:
+## HashiCorp Packages:
 
 {% for item in packages.hashicorp %}
 {% if toggles.hashicorp_enabled[item.name] %}
@@ -10,8 +10,8 @@ Information generated on {{ template_run_date }}
 {% endfor -%}
 {% endif %}
 
-{% if toggles.hashicorp.install_nomad_plugins %}
-### HashiCorp Nomad plugin information:
+{% if toggles.enable_hashicorp and toggles.hashicorp.install_nomad_plugins %}
+### HashiCorp Nomad Plugins:
 
 {% for item in packages.hashicorp_nomad_plugins %}
   * {{ item.name }} v{{ item.version}}
@@ -19,23 +19,17 @@ Information generated on {{ template_run_date }}
 {% endif %}
 
 {% if toggles.enable_docker and toggles.docker.install_packages %}
-
-## Docker packages:
+## Docker Packages:
 
 {% for item in packages.docker %}
-{% if toggles.docker.install_packages %}
   * {{ item.name }} v{{ item.version}}
-{% endif %}
 {% endfor -%}
 {% endif %}
 
 {% if toggles.enable_podman and toggles.podman.install_packages %}
-
 ## Podman packages:
 
 {% for item in packages.podman %}
-{% if toggles.podman.install_packages %}
   * {{ item.name }} v{{ item.version}}
-{% endif %}
 {% endfor -%}
 {% endif %}

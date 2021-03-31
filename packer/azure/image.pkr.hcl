@@ -8,6 +8,7 @@ source "azure-arm" "image" {
   # the following configuration represents a minimally viable selection
   # for all options see: https://www.packer.io/docs/builders/azure/arm
 
+  # TODO: add support for azure_tags
   azure_tags = {}
 
   cloud_environment_name = var.cloud_environment_name
