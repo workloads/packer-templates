@@ -11,7 +11,7 @@
     - toggles.os.update_apt_cache
 
 # see https://docs.ansible.com/ansible/2.9/modules/package_module.html
-- name: Install base packages
+- name: Install Packages
   apt:
     force_apt_get: true
     name: "{{ apt_packages.to_install }}"
@@ -22,7 +22,7 @@
     - toggles.os.install_packages
 
 # see https://docs.ansible.com/ansible/2.9/modules/package_module.html
-- name: Remove extraneous packages
+- name: Remove Packages
   apt:
     autoclean: true
     autoremove: true

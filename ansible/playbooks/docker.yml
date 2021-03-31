@@ -42,7 +42,7 @@
   when: toggles.docker.create_group
 
 # see https://docs.ansible.com/ansible/2.9/modules/user_module.html
-- name: Add Users
+- name: Add `docker` User
   user:
     create_home: true
     name: docker
