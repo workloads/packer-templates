@@ -8,6 +8,7 @@
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Usage](#usage)
+    - [Supported Providers](#supported-providers)
   - [Notes](#notes)
   - [Author Information](#author-information)
   - [License](#license)
@@ -48,6 +49,18 @@ See the `packer/` (and `terraform/`) subdirectories for more information.
 
 > All workflows _can_ be executed manually. See the [Makefile](Makefile) for more information.
 
+### Supported Providers
+
+This repository supports the following providers:
+
+| target    | local documentation                    | Packer Builder                                                         | Terraform Provider                                                                   | Notes                                                        |
+|-----------|----------------------------------------|------------------------------------------------------------------------|--------------------------------------------------------------------------------------|--------------------------------------------------------------|
+| `aws`     | [aws/README.md](aws/README.md)         | `amazon-ebs` ([docs](https://www.packer.io/docs/builders/amazon/ebs )) | n/a                                                                                  |                                                              |
+| `azure`   | [azure/README.md](azure/README.md)     | `azure-arm`  ([docs](https://www.packer.io/docs/builders/azure/arm))   | `azurerm` ([docs](https://registry.terraform.io/providers/hashicorp/azurerm/latest)) |                                                              |
+| `google`  | [google/README.md](google/README.md)   | `googlecompute` ([docs](https://www.packer.io/docs/builders/vagrant))  | `google` ([docs](https://registry.terraform.io/providers/hashicorp/google/latest))   |                                                              |
+| `vagrant` | [vagrant/README.md](vagrant/README.md) | `vagrant` ([docs](https://www.packer.io/docs/builders/vagrant))        | n/a                                                                                  | This target also supports the `vagrant-cloud` post-processor |
+
+
 ## Notes
 
 This repository takes input and inspiration from a handful of community projects.
@@ -56,7 +69,7 @@ The authors would like to thank: [@ansible-community](https://github.com/ansible
 
 ## Author Information
 
-This repository is maintained by the contributors listed on [GitHub](https://github.com/operatehappy/packer-nomad/graphs/contributors).
+This repository is maintained by the contributors listed on [GitHub](https://github.com/operatehappy/packer-hashicorp/graphs/contributors).
 
 ## License
 
