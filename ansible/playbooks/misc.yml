@@ -1,7 +1,7 @@
 ---
 
 # see https://docs.ansible.com/ansible/2.9/modules/file_module.html
-- name: Create Directory for Version Files (LOCALLY)
+- name: Create local Directory for Version Files
   file:
     path: "{{ version_files.destination }}"
     state: directory
@@ -11,7 +11,7 @@
   delegate_to: localhost
 
 # see https://docs.ansible.com/ansible/2.9/modules/template_module.html
-- name: Create Version Files (LOCALLY)
+- name: Create Version Files
   template:
     backup: false
     dest: "{{ version_files.destination }}/{{ item }}"
@@ -28,7 +28,7 @@
 - name: Copy Version Files
   copy:
     backup: false
-    dest: "/home"
+    dest: "/tmp" # TODO: copy this to `/home/$user`
     force: true
     src: "{{ version_files.destination }}/{{ item }}"
   with_items: "{{ version_files.templates }}"
