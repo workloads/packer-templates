@@ -34,6 +34,6 @@
       include: misc.yml
       when: toggles.enable_misc_operations
 
-    # TODO: harden image
+# TODO: harden image
 
-    # TODO: optimize system settings
+# TODO: optimize system settings

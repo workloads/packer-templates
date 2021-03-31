@@ -35,7 +35,7 @@
 
 # TODO: ensure these packages are available
 ## see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
-#- name: Install Nomad plugins
+# - name: Install Nomad plugins
 #  apt:
 #    force_apt_get: true
 #    install_recommends: true

@@ -1,0 +1,9 @@
+---
+extends: default
+
+rules:
+  truthy:
+    allowed-values: ['true', 'false']
+    check-keys: true
+  line-length:
+    max: 180

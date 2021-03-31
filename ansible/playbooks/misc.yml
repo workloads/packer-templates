@@ -28,7 +28,10 @@
 - name: Copy Version Files
   copy:
     backup: false
-    dest: "/tmp" # TODO: copy this to `/home/$user`
+
+    # TODO: copy this to `/home/$user`
+    dest: "/tmp"
+
     force: true
     src: "{{ version_files.destination }}/{{ item }}"
   with_items: "{{ version_files.templates }}"

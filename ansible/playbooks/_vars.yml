@@ -80,44 +80,50 @@ apt_packages:
 
   # package definitions (name and version) for Docker
   docker:
-    - # see https://docs.docker.com/release-notes/
-      name: docker-ce
+    # see https://docs.docker.com/release-notes/
+    - name: docker-ce
       version: "5:20.10.5*"
-#    - # see https://github.com/containerd/containerd/releases
-#      name: containerd
+
+#    # see https://github.com/containerd/containerd/releases
+#    - name: containerd
 #      version: "1.4.4"
 
   # package definitions (name and version) for HashiCorp products
   hashicorp:
-    - # see https://releases.hashicorp.com/boundary/
-      name: boundary
+    # see https://releases.hashicorp.com/boundary/
+    - name: boundary
       version: 0.1.8
-    - # see https://releases.hashicorp.com/consul/
-      name: consul
+
+    # see https://releases.hashicorp.com/consul/
+    - name: consul
       version: 1.9.4
-    - # see https://releases.hashicorp.com/nomad/
-      name: nomad
+
+    # see https://releases.hashicorp.com/nomad/
+    - name: nomad
       version: 1.0.4
-    - # see https://releases.hashicorp.com/vault/
-      name: vault
+
+    # see https://releases.hashicorp.com/vault/
+    - name: vault
       version: 1.7.0
 
   # plugin definitions (name and version) for HashiCorp Nomad
   hashicorp_nomad_plugins:
-    - # see https://releases.hashicorp.com/nomad-driver-podman/
-      name: nomad-driver-podman
+    # see https://releases.hashicorp.com/nomad-driver-podman/
+    - name: nomad-driver-podman
       version: 0.2.0
-#    - # see https://releases.hashicorp.com/nomad-driver-lxc/
-#      name: nomad-driver-lxc
-#      version: 0.1.0
-    - # see https://releases.hashicorp.com/nomad-autoscaler/
-      name: nomad-autoscaler
+
+    # see https://releases.hashicorp.com/nomad-driver-lxc/
+    - name: nomad-driver-lxc
+      version: 0.1.0
+
+    # see https://releases.hashicorp.com/nomad-autoscaler/
+    - name: nomad-autoscaler
       version: 0.3.0
 
   # package definitions (name and version) for HashiCorp products
   podman:
-    - # see https://podman.io/releases/
-      name: podman
+    # see https://podman.io/releases/
+    - name: podman
       version: 3.0.0
 
 version_files:
