@@ -19,6 +19,18 @@
 #  sensitive = true
 #}
 
+variable "image_name" {
+  type        = string
+  description = "Name to use for the image"
+  default     = ""
+}
+
+variable "image_version" {
+  type        = string
+  description = "Version to use for the image"
+  default     = ""
+}
+
 variable "image_publisher" {
   type        = string
   description = "Name of the publisher to use for your base image"
@@ -51,12 +63,6 @@ variable "vm_size" {
   description = "Size of the VM used for building"
 }
 
-variable "managed_image_name_prefix" {
-  type        = string
-  description = "Prefix of Managed Image Name"
-  default     = "nomad"
-}
-
 variable "managed_image_resource_group_name" {
   type = string
   # this value is set in `terraform-generated.auto.pkrvars.hcl`
@@ -69,27 +75,25 @@ variable "os_type" {
   default     = "Linux"
 }
 
-variable "shared_ansible_env_vars" {
-  type        = list(string)
-  description = "Environment variables to set before running Ansible."
+variable "shared" {
+  type = object({
+    ansible_env_vars          = list(string)
+    extra_arguments           = list(string)
+    image_version_date_format = string
+    name                      = string
+  })
 
-  # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
-}
-
-variable "shared_extra_arguments" {
-  type        = list(string)
-  description = "Extra arguments to pass to Ansible."
-
-  # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
-}
-
-variable "shared_name" {
-  type        = string
-  description = "Shared name for the Image."
+  description = "List of shared variables"
 
   # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
 }
 
 locals {
-  managed_image_name = var.managed_image_name_prefix == "" ? var.shared_name : "${var.managed_image_name_prefix}-${lower(var.image_offer)}-${replace(lower(var.image_sku), ".", "")}"
+  # set `image_name_prefix` to shared value, unless it is user-specified
+  image_name = var.image_name == "" ? var.shared.name : var.image_name
+
+  # set `image_version` to generated value, unless it is user-defined
+  image_version = var.image_version == "" ? formatdate(var.shared.image_version_date_format, timestamp()) : var.image_version
+
+  managed_image_name = "${local.image_name}-${local.image_version}"
 }

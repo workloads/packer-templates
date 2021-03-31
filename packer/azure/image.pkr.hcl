@@ -42,10 +42,10 @@ build {
 
   # see https://www.packer.io/docs/provisioners/ansible
   provisioner "ansible" {
-    ansible_env_vars = var.shared_ansible_env_vars
+    ansible_env_vars = var.shared.ansible_env_vars
     playbook_file    = "./ansible/playbooks/main.yml"
     command          = "ansible-playbook"
-    extra_arguments  = var.shared_extra_arguments
+    extra_arguments  = var.shared.extra_arguments
   }
 
   # carry out deprovisioning steps: https://www.packer.io/docs/builders/azure/arm#linux

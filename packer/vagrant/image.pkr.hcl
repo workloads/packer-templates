@@ -28,7 +28,7 @@ build {
   provisioner "ansible" {
     playbook_file    = "./ansible/playbooks/main.yml"
     command          = "ansible-playbook"
-    ansible_env_vars = var.shared_ansible_env_vars
+    ansible_env_vars = var.shared.ansible_env_vars
   }
 
   # uncomment this stanza to build images for Vagrant Cloud

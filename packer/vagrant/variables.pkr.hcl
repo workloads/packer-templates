@@ -36,12 +36,6 @@ variable "box_version" {
   default     = ""
 }
 
-variable "box_version_date_format" {
-  type        = string
-  description = "Formatting sequence to use for date formats"
-  default     = "YYYYMMDD-hhmmss"
-}
-
 variable "communicator" {
   type        = string
   description = "Which communicator to use when initializing Vagrant."
@@ -60,23 +54,15 @@ variable "provider" {
   default     = "virtualbox"
 }
 
-variable "shared_ansible_env_vars" {
-  type        = list(string)
-  description = "Environment variables to set before running Ansible."
+variable "shared" {
+  type = object({
+    ansible_env_vars          = list(string)
+    extra_arguments           = list(string)
+    image_version_date_format = string
+    name                      = string
+  })
 
-  # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
-}
-
-variable "shared_extra_arguments" {
-  type        = list(string)
-  description = "Extra arguments to pass to Ansible."
-
-  # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
-}
-
-variable "shared_name" {
-  type        = string
-  description = "Shared name for the Image."
+  description = "List of shared variables"
 
   # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
 }
@@ -109,11 +95,11 @@ variable "template" {
 
 locals {
   # set `box_name` to shared value, unless it is user-specified
-  box_name = var.box_name == "" ? var.shared_name : var.box_name
+  box_name = var.box_name == "" ? var.shared.name : var.box_name
 
   box_tag = "${var.box_organization}/${local.box_name}"
 
   # set `box_version` to generated value, unless it is user-defined
-  box_version_timestamp = formatdate(var.box_version_date_format, timestamp())
+  box_version_timestamp = formatdate(var.shared.image_version_date_format, timestamp())
   box_version           = var.box_version == "" ? local.box_version_timestamp : var.box_version
 }
