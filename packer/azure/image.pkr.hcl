@@ -8,6 +8,29 @@ source "azure-arm" "image" {
   # the following configuration represents a minimally viable selection
   # for all options see: https://www.packer.io/docs/builders/azure/arm
 
+  azure_tags = {}
+
+  cloud_environment_name = var.cloud_environment_name
+
+  # cloud-init configuration
+  custom_data_file = var.custom_data_file
+
+  # base image
+  image_offer     = var.image_offer
+  image_publisher = var.image_publisher
+  image_sku       = var.image_sku
+  image_version   = var.image_version
+
+  location = var.location
+
+  # artifact configuration
+  managed_image_name                = local.managed_image_name
+  managed_image_resource_group_name = var.managed_image_resource_group_name
+
+  os_type = var.os_type
+
+  ssh_clear_authorized_keys = var.ssh_clear_authorized_keys
+
   # authentication with `az` CLI supplied credentials
   use_azure_cli_auth = true
 
@@ -18,21 +41,7 @@ source "azure-arm" "image" {
   # client_id       = var.client_id
   # client_secret   = var.client_secret
 
-  # base image
-  image_publisher = var.image_publisher
-  image_offer     = var.image_offer
-  image_sku       = var.image_sku
-
-  # capture machine configuration
-  location = var.location
-  vm_size  = var.vm_size
-  os_type  = var.os_type
-
-  # artifact configuration
-  managed_image_resource_group_name = var.managed_image_resource_group_name
-  managed_image_name                = local.managed_image_name
-
-  # TODO: azure_tags
+  vm_size = var.vm_size
 }
 
 build {
