@@ -1,6 +1,6 @@
 Information generated on {{ template_run_date }}
 
-{% if toggles.enable_hashicorp && toggles.hashicorp.install_packages %}
+{% if toggles.enable_hashicorp and toggles.hashicorp.install_packages %}
 ## HashiCorp package information:
 
 {% for item in packages.hashicorp %}
@@ -18,7 +18,7 @@ Information generated on {{ template_run_date }}
 {% endfor -%}
 {% endif %}
 
-{% if toggles.enable_docker && toggles.docker.install_packages %}
+{% if toggles.enable_docker and toggles.docker.install_packages %}
 
 ## Docker packages:
 
@@ -29,7 +29,7 @@ Information generated on {{ template_run_date }}
 {% endfor -%}
 {% endif %}
 
-{% if toggles.enable_podman && toggles.podman.install_packages %}
+{% if toggles.enable_podman and toggles.podman.install_packages %}
 
 ## Podman packages:
 
