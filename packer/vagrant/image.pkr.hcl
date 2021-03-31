@@ -16,6 +16,7 @@ source "vagrant" "image" {
   skip_add        = var.skip_add
   source_path     = var.source_path
   teardown_method = var.teardown_method
+  template        = var.template
 }
 
 build {

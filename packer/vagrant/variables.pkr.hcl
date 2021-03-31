@@ -101,6 +101,12 @@ variable "teardown_method" {
   default     = "destroy"
 }
 
+variable "template" {
+  type        = string
+  description = "A path to a Go Template for a Vagrantfile."
+  default     = "./packer/vagrant/Vagrantfile"
+}
+
 locals {
   # set `box_name` to shared value, unless it is user-specified
   box_name = var.box_name == "" ? var.shared_name : var.box_name
