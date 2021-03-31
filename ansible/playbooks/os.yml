@@ -15,7 +15,7 @@
     update_cache: true
     upgrade: "yes"
   when:
-    - ansible_os_family == "Ubuntu"
+    - ansible_os_family == "Debian"
     - toggles.os.update_apt_cache
 
 # see https://docs.ansible.com/ansible/2.9/modules/package_module.html
@@ -26,7 +26,7 @@
     state: present
     update_cache: true
   when:
-    - ansible_os_family == "Ubuntu"
+    - ansible_os_family == "Debian"
     - toggles.os.install_packages
 
 # see https://docs.ansible.com/ansible/2.9/modules/package_module.html
@@ -39,5 +39,5 @@
     state: absent
     update_cache: true
   when:
-    - ansible_os_family == "Ubuntu"
+    - ansible_os_family == "Debian"
     - toggles.os.remove_packages

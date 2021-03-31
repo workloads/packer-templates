@@ -14,7 +14,7 @@
     state: present
     url: "{{ apt_repos.hashicorp }}/gpg"
   when:
-    - ansible_os_family == "Ubuntu"
+    - ansible_os_family == "Debian"
     - toggles.hashicorp.add_apt_repository
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
@@ -24,7 +24,7 @@
     state: present
     update_cache: true
   when:
-    - ansible_os_family == "Ubuntu"
+    - ansible_os_family == "Debian"
     - toggles.hashicorp.add_apt_repository
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
@@ -37,7 +37,7 @@
     update_cache: true
   with_items: "{{ packages.hashicorp }}"
   when:
-    - ansible_os_family == "Ubuntu"
+    - ansible_os_family == "Debian"
     - toggles.hashicorp_enabled[item.name]
     - toggles.hashicorp.install_packages
 

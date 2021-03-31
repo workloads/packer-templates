@@ -14,7 +14,7 @@
     state: present
     url: "{{ apt_repos.podman }}/Release.key"
   when:
-    - ansible_os_family == "Ubuntu"
+    - ansible_os_family == "Debian"
     - toggles.podman.add_apt_repository
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
@@ -24,7 +24,7 @@
     state: present
     update_cache: true
   when:
-    - ansible_os_family == "Ubuntu"
+    - ansible_os_family == "Debian"
     - toggles.podman.add_apt_repository
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
@@ -37,5 +37,5 @@
     update_cache: true
   with_items: "{{ packages.podman }}"
   when:
-    - ansible_os_family == "Ubuntu"
+    - ansible_os_family == "Debian"
     - toggles.podman.install_packages
