@@ -18,16 +18,28 @@ variable "box_name" {
   default     = ""
 }
 
+variable "box_organization" {
+  type        = string
+  description = "Name of the Vagrant Organization to use for Vagrant Cloud"
+  default     = "operatehappy"
+}
+
 variable "box_tag" {
   type        = string
   description = "Name of the Vagrant Box to upload to Vagrant Cloud"
-  default     = "operatehappy/ubuntu-hashicorp"
+  default     = ""
 }
 
 variable "box_version" {
   type        = string
   description = "What box version to use when initializing Vagrant."
   default     = ""
+}
+
+variable "box_version_date_format" {
+  type        = string
+  description = "Formatting sequence to use for date formats"
+  default     = "YYYYMMDD-hhmmss"
 }
 
 variable "communicator" {
@@ -62,6 +74,13 @@ variable "shared_extra_arguments" {
   # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
 }
 
+variable "shared_name" {
+  type        = string
+  description = "Shared name for the Image."
+
+  # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
+}
+
 variable "skip_add" {
   type        = bool
   description = "Don't add the box to your local environment."
@@ -80,4 +99,15 @@ variable "teardown_method" {
   type        = string
   description = "Whether to halt, suspend, or destroy the box when the build has completed."
   default     = "destroy"
+}
+
+locals {
+  # set `box_name` to shared value, unless it is user-specified
+  box_name = var.box_name == "" ? var.shared_name : var.box_name
+
+  box_tag = "${var.box_organization}/${local.box_name}"
+
+  # set `box_version` to generated value, unless it is user-defined
+  box_version_timestamp = formatdate(var.box_version_date_format, timestamp())
+  box_version           = var.box_version == "" ? local.box_version_timestamp : var.box_version
 }

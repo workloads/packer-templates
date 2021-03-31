@@ -83,6 +83,13 @@ variable "shared_extra_arguments" {
   # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
 }
 
+variable "shared_name" {
+  type        = string
+  description = "Shared name for the Image."
+
+  # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
+}
+
 locals {
-  managed_image_name = "${var.managed_image_name_prefix}-${lower(var.image_offer)}-${replace(lower(var.image_sku), ".", "")}"
+  managed_image_name = var.managed_image_name_prefix == "" ? var.shared_name : "${var.managed_image_name_prefix}-${lower(var.image_offer)}-${replace(lower(var.image_sku), ".", "")}"
 }

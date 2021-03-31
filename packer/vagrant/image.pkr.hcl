@@ -8,7 +8,7 @@ source "vagrant" "image" {
   # the following configuration represents a minimally viable selection
   # for all options see: https://www.packer.io/docs/builders/vagrant
   add_force       = var.add_force
-  box_name        = var.box_name
+  box_name        = local.box_name
   box_version     = var.box_version
   communicator    = var.communicator
   output_dir      = var.output_dir
@@ -34,7 +34,7 @@ build {
   # see https://www.packer.io/docs/post-processors/vagrant-cloud
   #post-processor "vagrant-cloud" {
   # TODO: add better support for Vagrant Cloud
-  #  box_tag = var.box_tag
+  #  box_tag = local.box_tag
   #  version = var.box_version
   #}
 }
