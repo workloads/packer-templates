@@ -109,6 +109,7 @@ lint: # Formats and validates Packer Template(s) for a target
 	@: $(if $(target),,$(call missing_target))
 	@packer \
 		fmt \
+			-recursive \
 			"./packer/$(target)" \
 	&& \
 	packer \

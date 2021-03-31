@@ -16,7 +16,7 @@
 
 ## Requirements
 
-- Packer `1.7.0` or newer
+- Packer `1.7.1` or newer
 - Terraform `0.14.9` or newer
 - Ansible `2.9.6` or newer
 
