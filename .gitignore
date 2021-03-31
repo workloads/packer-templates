@@ -8,6 +8,7 @@ packer_cache/
 output-*
 
 ### Packer (user-generated) ###
+ansible/playbooks/vars/generated_configuration.yml
 credentials.auto.pkrvars.hcl
 generated.auto.pkrvars.hcl
 

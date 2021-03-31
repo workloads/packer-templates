@@ -33,15 +33,3 @@
   when:
     - ansible_os_family == "Ubuntu"
     - toggles.os.remove_packages
-
-# see https://docs.ansible.com/ansible/2.9/modules/package_module.html
-- name: Install extra packages
-  apt:
-    force_apt_get: true
-    name: "{{ apt_packages.extra }}"
-    state: present
-    update_cache: true
-  when:
-    - ansible_os_family == "Ubuntu"
-    - toggles.os.install_extra_packages
-    - os.extra_packages is not undefined

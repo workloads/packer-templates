@@ -8,5 +8,5 @@
     name: "{{ item.name }}={{ item.version | default('*') }}"
     state: present
     update_cache: true
-  with_items: "{{ apt_packages.podman }}"
+  with_items: "{{ packages.podman }}"
   when: toggles.podman.install_packages

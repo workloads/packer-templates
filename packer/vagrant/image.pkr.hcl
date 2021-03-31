@@ -19,6 +19,16 @@ source "vagrant" "image" {
   template        = var.template
 }
 
+# see https://www.packer.io/docs/builders/file
+source "file" "image_configuration" {
+  content = yamlencode(var.build_config)
+  target  = "ansible/playbooks/vars/generated_configuration.yml"
+}
+
+build {
+  sources = ["source.file.image_configuration"]
+}
+
 build {
   sources = [
     "source.vagrant.image"
@@ -28,7 +38,7 @@ build {
   provisioner "ansible" {
     playbook_file    = "./ansible/playbooks/main.yml"
     command          = "ansible-playbook"
-    ansible_env_vars = var.shared.ansible_env_vars
+    ansible_env_vars = var.build_config.ansible_env_vars
   }
 
   # uncomment this stanza to build images for Vagrant Cloud

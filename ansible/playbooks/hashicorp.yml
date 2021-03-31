@@ -27,10 +27,10 @@
     name: "{{ item.name }}={{ item.version | default('*') }}"
     state: present
     update_cache: true
-  with_items: "{{ apt_packages.hashicorp }}"
+  with_items: "{{ packages.hashicorp }}"
   when:
     - ansible_os_family == "Ubuntu"
-    - toggles.hashicorp.enabled[item.name]
+    - toggles.hashicorp_enabled[item.name]
     - toggles.hashicorp.install_packages
 
 # TODO: ensure these packages are available
@@ -42,7 +42,7 @@
 #    name: "{{ item.name }}={{ item.version | default('*') }}"
 #    state: present
 #    update_cache: true
-#  with_items: "{{ apt_packages.hashicorp_nomad_plugins }}"
+#  with_items: "{{ packages.hashicorp_nomad_plugins }}"
 #  when: toggles.hashicorp.install_nomad_plugins
 
 # TODO: consider adding a `hashicorp` group
@@ -53,9 +53,9 @@
     name: "{{ item.name }}"
     state: present
     system: true
-  with_items: "{{ apt_packages.hashicorp }}"
+  with_items: "{{ packages.hashicorp }}"
   when:
-    - toggles.hashicorp.enabled[item.name]
+    - toggles.hashicorp_enabled[item.name]
     - toggles.docker.create_group
     - toggles.hashicorp.create_groups
 
@@ -68,9 +68,9 @@
     group: "{{ item.name }}"
     name: "{{ item.name }}"
     system: true
-  with_items: "{{ apt_packages.hashicorp }}"
+  with_items: "{{ packages.hashicorp }}"
   when:
-    - toggles.hashicorp.enabled[item.name]
+    - toggles.hashicorp_enabled[item.name]
     - toggles.hashicorp.create_users
 
 # see https://docs.ansible.com/ansible/2.9/modules/user_module.html
@@ -80,9 +80,9 @@
     group: docker
     name: nomad
     system: true
-  with_items: "{{ apt_packages.hashicorp }}"
+  with_items: "{{ packages.hashicorp }}"
   when:
-    - toggles.hashicorp.enabled[item.name]
+    - toggles.hashicorp_enabled[item.name]
     - toggles.docker.install_packages
     - toggles.hashicorp.create_users
     - toggles.hashicorp.add_nomad_user_to_docker
@@ -92,9 +92,9 @@
   template:
     dest: /lib/systemd/system/{{ item.name }}.service
     src: templates/{{ item.name }}.service
-  with_items: "{{ apt_packages.hashicorp }}"
+  with_items: "{{ packages.hashicorp }}"
   when:
-    - toggles.hashicorp.enabled[item.name]
+    - toggles.hashicorp_enabled[item.name]
     - toggles.hashicorp.copy_unit_files
 
 # see https://docs.ansible.com/ansible/2.9/modules/systemd_module.html
@@ -102,8 +102,8 @@
   systemd:
     state: started
     name: "{{ item.name }}"
-  with_items: "{{ apt_packages.hashicorp }}"
+  with_items: "{{ packages.hashicorp }}"
   when:
-    - toggles.hashicorp.enabled[item.name]
+    - toggles.hashicorp_enabled[item.name]
     - toggles.hashicorp.enable_services
     - toggles.hashicorp.start_services

@@ -3,10 +3,18 @@ File generated on {{ template_run_date }}
 {% if toggles.hashicorp.install_packages %}
 ## HashiCorp package information:
 
-{% for item in apt_packages.hashicorp %}
-{% if toggles.hashicorp.enabled[item.name] %}
+{% for item in packages.hashicorp %}
+{% if toggles.hashicorp_enabled[item.name] %}
   * {{ item.name }} v{{ item.version}}
 {% endif %}
+{% endfor -%}
+{% endif %}
+
+{% if toggles.hashicorp.install_nomad_plugins %}
+### HashiCorp Nomad plugin information:
+
+{% for item in packages.hashicorp_nomad_plugins %}
+  * {{ item.name }} v{{ item.version}}
 {% endfor -%}
 {% endif %}
 
@@ -14,7 +22,7 @@ File generated on {{ template_run_date }}
 
 ## Docker packages:
 
-{% for item in apt_packages.docker %}
+{% for item in packages.docker %}
 {% if toggles.docker.install_packages %}
   * {{ item.name }} v{{ item.version}}
 {% endif %}
@@ -25,7 +33,7 @@ File generated on {{ template_run_date }}
 
 ## Podman packages:
 
-{% for item in apt_packages.podman %}
+{% for item in packages.podman %}
 {% if toggles.podman.install_packages %}
   * {{ item.name }} v{{ item.version}}
 {% endif %}
