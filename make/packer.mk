@@ -69,7 +69,6 @@ else
 packer_timestamp_ui =
 endif
 
-# TODO: add support for multiple `var-files` arguments
 ifdef var-file
 packer_var_file = -var-file=$(var-file)
 else

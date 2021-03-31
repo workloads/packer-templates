@@ -44,7 +44,6 @@ build {
   # uncomment this stanza to build images for Vagrant Cloud
   # see https://www.packer.io/docs/post-processors/vagrant-cloud
   #post-processor "vagrant-cloud" {
-  # TODO: add better support for Vagrant Cloud
   #  box_tag    = local.box_tag
   #  no_release = var.no_release
   #  version    = var.box_version
