@@ -82,7 +82,8 @@
     system: true
   with_items: "{{ packages.hashicorp }}"
   when:
-    - toggles.hashicorp_enabled[item.name]
+    - toggles.hashicorp_enabled["nomad"] is defined
+    - toggles.hashicorp_enabled["nomad"]
     - toggles.docker.install_packages
     - toggles.hashicorp.create_users
     - toggles.hashicorp.add_nomad_user_to_docker
