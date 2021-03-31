@@ -54,7 +54,7 @@
 #  when: toggles.hashicorp.install_nomad_plugins
 
 # see https://docs.ansible.com/ansible/2.9/modules/group_module.html
-- name: Add Groups
+- name: Add HashiCorp Groups
   group:
     name: "{{ item.name }}"
     state: present
@@ -68,7 +68,7 @@
 # TODO: add users to `hashicorp` group (if available)
 
 # see https://docs.ansible.com/ansible/2.9/modules/user_module.html
-- name: Add Users
+- name: Add HashiCorp Users
   user:
     comment: "HashiCorp {{ item.name | capitalize }}"
     group: "{{ item.name }}"
