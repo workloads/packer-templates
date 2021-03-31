@@ -1,7 +1,17 @@
 ---
 
+# see https://docs.ansible.com/ansible/2.9/modules/file_module.html
+- name: Create Directory for Version Files (LOCALLY)
+  file:
+    path: "{{ version_files.destination }}"
+    state: directory
+  when:
+    - toggles.misc.create_versions_files
+  become: false
+  delegate_to: localhost
+
 # see https://docs.ansible.com/ansible/2.9/modules/template_module.html
-- name: Create Version Files
+- name: Create Version Files (LOCALLY)
   template:
     backup: false
     dest: "{{ version_files.destination }}/{{ item }}"
@@ -10,6 +20,17 @@
     trim_blocks: true
   with_items: "{{ version_files.templates }}"
   when:
-    - toggles.misc.create_versions_file
+    - toggles.misc.create_versions_files
   become: false
   delegate_to: localhost
+
+# see https://docs.ansible.com/ansible/2.9/modules/copy_module.html
+- name: Copy Version Files
+  copy:
+    backup: false
+    dest: "/home"
+    force: true
+    src: "{{ version_files.destination }}/{{ item }}"
+  with_items: "{{ version_files.templates }}"
+  when:
+    - toggles.misc.copy_versions_files

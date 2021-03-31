@@ -39,7 +39,7 @@ variable "communicator" {
 variable "output_dir" {
   type        = string
   description = "The directory to create that will contain your output box."
-  default     = "vagrant"
+  default     = "generated/vagrant"
 }
 
 variable "provider" {

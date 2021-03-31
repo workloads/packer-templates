@@ -54,10 +54,16 @@ toggles:
   misc:
     # create file with version information
     create_versions_file: true
+    # create files with version information
+    create_versions_files: true
+
+    # copy files with version information to image
+    copy_versions_files: true
 
   podman:
     # install packages for Podman
     install_packages: true
+    install_packages: false
 
 apt_packages:
   to_install:

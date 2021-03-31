@@ -105,4 +105,5 @@
   with_items: "{{ apt_packages.hashicorp }}"
   when:
     - toggles.hashicorp.enabled[item.name]
+    - toggles.hashicorp.enable_services
     - toggles.hashicorp.start_services
