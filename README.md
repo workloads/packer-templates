@@ -1,10 +1,10 @@
-# Packer Templates: HashiCorp Nomad
+# Packer Templates: HashiCorp products
 
-> Packer Templates for HashiCorp Nomad (incl. Consul, and Vault) for multiple (Cloud) Platforms
+> Packer Templates for HashiCorp products for multiple (Cloud) Platforms
 
 ## Table of Contents
 
-- [Packer Templates: HashiCorp Nomad](#packer-templates-hashicorp-nomad)
+- [Packer Templates: HashiCorp products](#packer-templates-hashicorp-products)
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Usage](#usage)
