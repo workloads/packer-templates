@@ -23,24 +23,26 @@ build_config = {
 
   # toggles to enable and disable various operations
   toggles = {
-    # global toggles for (complete) playbooks
-    enable_os              = false
-    enable_docker          = false
+    # feature flags to enable (complete) playbooks
+    enable_os              = true
+    enable_docker          = true
     enable_hashicorp       = true
     enable_misc_operations = true
     enable_podman          = false
 
+    # OS-specific feature flags
     os = {
-      install_packages = false
-      remove_packages  = false
-      update_apt_cache = false
+      install_packages = true
+      remove_packages  = true
+      update_apt_cache = true
     }
 
+    # Docker-specific feature flags
     docker = {
-      add_apt_repository = false
-      create_group       = false
-      create_user        = false
-      install_packages   = false
+      add_apt_repository = true
+      create_group       = true
+      create_user        = true
+      install_packages   = true
     }
 
     hashicorp = {
