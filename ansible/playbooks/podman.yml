@@ -21,6 +21,7 @@
 - name: Add APT repository for Podman packages
   apt_repository:
     filename: podman
+    repo: "deb [arch=amd64] {{ apt_repos.podman }} stable"
     state: present
     update_cache: true
   when:

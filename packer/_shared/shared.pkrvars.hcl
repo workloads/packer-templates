@@ -30,7 +30,7 @@ build_config = {
     enable_docker           = true
     enable_hashicorp        = true
     enable_misc_operations  = true
-    enable_podman           = true
+    enable_podman           = false
 
     # OS-specific feature flags
     os = {
@@ -131,10 +131,10 @@ build_config = {
         name    = "docker-ce"
         version = "5:20.10.5*"
       },
-#      { # see https://docs.docker.com/release-notes/
-#        name    = "containerd"
-#        version = "1.4.4"
-#      }
+      { # see https://docs.docker.com/release-notes/
+        name    = "containerd.io"
+        version = "*"
+      }
     ]
 
     # package definitions (name and version) for HashiCorp products
