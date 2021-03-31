@@ -45,8 +45,6 @@
 #  with_items: "{{ packages.hashicorp_nomad_plugins }}"
 #  when: toggles.hashicorp.install_nomad_plugins
 
-# TODO: consider adding a `hashicorp` group
-
 # see https://docs.ansible.com/ansible/2.9/modules/group_module.html
 - name: Add Groups
   group:
@@ -91,8 +89,8 @@
 # see https://docs.ansible.com/ansible/2.9/modules/template_module.html
 - name: Copy Unit Files
   template:
-    dest: /lib/systemd/system/{{ item.name }}.service
-    src: templates/{{ item.name }}.service
+    dest: "/lib/systemd/system/{{ item.name }}.service"
+    src: "{{ item.name }}.service"
   with_items: "{{ packages.hashicorp }}"
   when:
     - toggles.hashicorp_enabled[item.name]
