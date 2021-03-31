@@ -20,5 +20,5 @@ terraform.tfvars
 
 ### Vagrant ###
 .vagrant/
-vagrant-*/
 *.box
+generated/vagrant/
