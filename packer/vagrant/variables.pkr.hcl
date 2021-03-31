@@ -21,7 +21,7 @@ variable "box_name" {
 variable "box_tag" {
   type        = string
   description = "Name of the Vagrant Box to upload to Vagrant Cloud"
-  default     = "operatehappy/ubuntu-nomad"
+  default     = "operatehappy/ubuntu-hashicorp"
 }
 
 variable "box_version" {
@@ -79,5 +79,5 @@ variable "source_path" {
 variable "teardown_method" {
   type        = string
   description = "Whether to halt, suspend, or destroy the box when the build has completed."
-  default     = "halt"
+  default     = "destroy"
 }
