@@ -24,11 +24,12 @@ build_config = {
   # toggles to enable and disable various operations
   toggles = {
     # feature flags to enable (complete) playbooks
-    enable_os              = true
-    enable_docker          = true
-    enable_hashicorp       = true
-    enable_misc_operations = true
-    enable_podman          = false
+    enable_debug_statements = true
+    enable_os               = true
+    enable_docker           = true
+    enable_hashicorp        = true
+    enable_misc_operations  = true
+    enable_podman           = true
 
     # OS-specific feature flags
     os = {
@@ -72,7 +73,7 @@ build_config = {
       install_packages = true
 
       # start services for enabled products
-      start_services = true
+      start_services = false
     }
 
     # feature flags for product-specific operations
@@ -94,8 +95,11 @@ build_config = {
 
     # Podman-specific feature flags
     podman = {
+      # add Podman APT repository
+      add_apt_repository = true
+
       # install packages for Podman
-      install_packages = false
+      install_packages = true
     }
   }
 
@@ -178,9 +182,9 @@ build_config = {
   }
 
   version_files = {
-    source = "../templates"
+    source      = "../templates"
     destination = "../../generated"
-    templates: [
+    templates = [
       "versions.txt"
     ]
   }
