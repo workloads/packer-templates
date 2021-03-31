@@ -83,6 +83,7 @@ build_config = {
       vault    = false
     }
 
+    # miscellaneous feature flags
     misc = {
       # create files with version information
       create_versions_files = true
@@ -91,6 +92,7 @@ build_config = {
       copy_versions_files = true
     }
 
+    # Podman-specific feature flags
     podman = {
       # install packages for Podman
       install_packages = false
@@ -98,6 +100,7 @@ build_config = {
   }
 
   packages = {
+    # packages that should be installed
     to_install = [
       "apt-transport-https",
       "ca-certificates",
@@ -110,6 +113,7 @@ build_config = {
       "unzip",
     ]
 
+    # packages that should be removed
     to_remove = [
       "ftp",
       "snapd",
@@ -132,7 +136,7 @@ build_config = {
     hashicorp = [
       { # see https://releases.hashicorp.com/boundary/
         name    = "boundary"
-        version = "KERIM"
+        version = "0.1.8"
       },
       { # see https://releases.hashicorp.com/consul/
         name    = "consul"
