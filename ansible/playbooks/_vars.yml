@@ -1,8 +1,0 @@
----
-
-version_files:
-  source: "../templates"
-  destination: "../../generated"
-  templates:
-    - "versions.txt"
-    - "versions.yml"
