@@ -9,7 +9,7 @@
     - toggle.enable_debug_statements
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_key_module.html
-- name: Add APT Key for HashiCorp repository
+- name: Add APT Key for HashiCorp Repository
   apt_key:
     state: present
     url: "{{ apt_repos.hashicorp }}/gpg"
@@ -18,7 +18,7 @@
     - toggles.hashicorp.add_apt_repository
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
-- name: Add APT repository for HashiCorp packages
+- name: Add APT repository for HashiCorp Packages
   apt_repository:
     filename: hashicorp
     repo: "deb [arch=amd64] {{ apt_repos.hashicorp }} {{ ansible_distribution_release | lower }} main"
@@ -29,7 +29,7 @@
     - toggles.hashicorp.add_apt_repository
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
-- name: Install HashiCorp packages
+- name: Install HashiCorp Packages
   apt:
     force_apt_get: true
     install_recommends: true
@@ -44,7 +44,7 @@
 
 # TODO: ensure these packages are available
 ## see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
-# - name: Install Nomad plugins
+# - name: Install Nomad Plugins
 #  apt:
 #    force_apt_get: true
 #    install_recommends: true
@@ -55,7 +55,7 @@
 #  when: toggles.hashicorp.install_nomad_plugins
 
 # see https://docs.ansible.com/ansible/2.9/modules/group_module.html
-- name: Add HashiCorp Groups
+- name: Add Groups for HashiCorp Packages
   group:
     name: "{{ item.name }}"
     state: present
@@ -66,10 +66,17 @@
     - toggles.docker.create_group
     - toggles.hashicorp.create_groups
 
-# TODO: add users to `hashicorp` group (if available)
+# see https://docs.ansible.com/ansible/2.9/modules/group_module.html
+- name: Add Groups for HashiCorp Packages
+  group:
+    name: "hashicorp"
+    state: present
+    system: true
+  when:
+    - toggles.hashicorp.create_groups
 
 # see https://docs.ansible.com/ansible/2.9/modules/user_module.html
-- name: Add HashiCorp Users
+- name: Add Users for HashiCorp Packages
   user:
     comment: "HashiCorp {{ item.name | capitalize }}"
     group: "{{ item.name }}"
@@ -81,22 +88,33 @@
     - toggles.hashicorp.create_users
 
 # see https://docs.ansible.com/ansible/2.9/modules/user_module.html
+- name: Add Users to `hashicorp` Group
+  user:
+    append: true
+    group: hashicorp
+    name: "{{ item.name }}"
+    system: true
+  with_items: "{{ packages.hashicorp }}"
+  when:
+    - toggles.hashicorp_enabled[item.name] is defined
+    - toggles.hashicorp.create_users
+    - toggles.hashicorp.create_groups
+
+# see https://docs.ansible.com/ansible/2.9/modules/user_module.html
 - name: Add `nomad` User to `docker` Group
   user:
     append: true
     group: docker
     name: nomad
     system: true
-  with_items: "{{ packages.hashicorp }}"
   when:
-    - toggles.hashicorp_enabled["nomad"] is defined
-    - toggles.hashicorp_enabled["nomad"]
+    - toggles.hashicorp_enabled.nomad is defined
     - toggles.docker.install_packages
     - toggles.hashicorp.create_users
     - toggles.hashicorp.add_nomad_user_to_docker
 
 # see https://docs.ansible.com/ansible/2.9/modules/template_module.html
-- name: Copy Unit Files
+- name: Copy Unit Files for HashiCorp Packages
   template:
     dest: "/lib/systemd/system/{{ item.name }}.service"
     src: "{{ item.name }}.service"
@@ -106,7 +124,7 @@
     - toggles.hashicorp.copy_unit_files
 
 # see https://docs.ansible.com/ansible/2.9/modules/systemd_module.html
-- name: Start HashiCorp Services
+- name: Start Services for HashiCorp Packages
   systemd:
     state: started
     name: "{{ item.name }}"

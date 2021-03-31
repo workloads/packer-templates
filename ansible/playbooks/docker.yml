@@ -9,7 +9,7 @@
     - toggle.enable_debug_statements
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_key_module.html
-- name: Add APT Key for Docker repository
+- name: Add APT Key for Docker Repository
   apt_key:
     url: "{{ apt_repos.docker }}/linux/ubuntu/gpg"
     state: present
@@ -18,7 +18,7 @@
     - toggles.docker.add_apt_repository
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
-- name: Add APT repository for Docker packages
+- name: Add APT repository for Docker Packages
   apt_repository:
     filename: docker
     repo: "deb [arch=amd64] {{ apt_repos.docker }}/linux/ubuntu {{ ansible_distribution_release | lower }} stable"
@@ -29,7 +29,7 @@
     - toggles.docker.add_apt_repository
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
-- name: Install Docker packages
+- name: Install Docker Packages
   apt:
     force_apt_get: true
     install_recommends: true

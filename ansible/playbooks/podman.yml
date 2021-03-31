@@ -9,7 +9,7 @@
     - toggle.enable_debug_statements
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_key_module.html
-- name: Add APT Key for Podman repository
+- name: Add APT Key for Podman Repository
   apt_key:
     state: present
     url: "{{ apt_repos.podman }}/Release.key"
@@ -18,7 +18,7 @@
     - toggles.podman.add_apt_repository
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
-- name: Add APT repository for Podman packages
+- name: Add APT repository for Podman Packages
   apt_repository:
     filename: podman
     repo: "deb [arch=amd64] {{ apt_repos.podman }} stable"
@@ -29,7 +29,7 @@
     - toggles.podman.add_apt_repository
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
-- name: Install Podman packages
+- name: Install Podman Packages
   apt:
     force_apt_get: true
     install_recommends: true

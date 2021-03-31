@@ -9,7 +9,7 @@
     - toggle.enable_debug_statements
 
 # see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
-- name: Update APT cache
+- name: Update APT Cache
   apt:
     force_apt_get: true
     update_cache: true
