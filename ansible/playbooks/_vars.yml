@@ -52,8 +52,6 @@ toggles:
     start_services: true
 
   misc:
-    # create file with version information
-    create_versions_file: true
     # create files with version information
     create_versions_files: true
 
@@ -62,7 +60,6 @@ toggles:
 
   podman:
     # install packages for Podman
-    install_packages: true
     install_packages: false
 
 apt_packages:
