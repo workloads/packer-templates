@@ -1,5 +1,10 @@
 ---
 
+# see https://docs.ansible.com/ansible/2.9/modules/debug_module.html
+- name: "debug"
+  debug:
+    msg: "included os.yml"
+
 # see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
 - name: Update APT cache
   apt:

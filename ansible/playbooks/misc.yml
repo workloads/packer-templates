@@ -1,5 +1,10 @@
 ---
 
+# see https://docs.ansible.com/ansible/2.9/modules/debug_module.html
+- name: "debug"
+  debug:
+    msg: "included misc.yml"
+
 # see https://docs.ansible.com/ansible/2.9/modules/file_module.html
 - name: Create local Directory for Version Files
   file:

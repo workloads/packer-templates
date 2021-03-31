@@ -1,5 +1,9 @@
 ---
 
+# see https://docs.ansible.com/ansible/2.9/modules/debug_module.html
+- debug:
+    msg: "Included docker.yml"
+
 # see https://docs.ansible.com/ansible/2.9/modules/apt_key_module.html
 - name: Add APT Key for Docker repository
   apt_key:
