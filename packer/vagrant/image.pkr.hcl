@@ -45,7 +45,9 @@ build {
   # see https://www.packer.io/docs/post-processors/vagrant-cloud
   #post-processor "vagrant-cloud" {
   # TODO: add better support for Vagrant Cloud
-  #  box_tag = local.box_tag
-  #  version = var.box_version
+  #  box_tag    = local.box_tag
+  #  no_release = var.no_release
+  #  version    = var.box_version
+  #  version_description = local.version_description
   #}
 }
