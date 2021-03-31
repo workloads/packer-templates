@@ -9,6 +9,7 @@
   - [Requirements](#requirements)
   - [Usage](#usage)
     - [Supported Providers](#supported-providers)
+    - [Workflow](#workflow)
   - [Notes](#notes)
   - [Author Information](#author-information)
   - [License](#license)
@@ -31,34 +32,37 @@ The primary way of interacting with this repository is `make` via a [Makefile](M
 
 This allows for a consistent execution of the underlying workflows.
 
-The workflow for (most) providers is as follows:
+### Supported Providers
+
+This repository supports the following providers:
+
+| target    | local documentation                    | Packer Builder                | Terraform Provider |
+|-----------|----------------------------------------|-------------------------------|--------------------|
+| `aws`     | [packer/aws/README.md](packer/aws/README.md)         | `amazon-ebs`    | n/a                |
+| `azure`   | [packer/azure/README.md](packer/azure/README.md)     | `azure-arm`     | `azurerm`          |
+| `google`  | [packer/google/README.md](packer/google/README.md)   | `googlecompute` | `google`           |
+| `vagrant` | [packer/vagrant/README.md](packer/vagrant/README.md) | `vagrant`       | n/a                |
+
+
+### Workflow
+
+The workflow for (most) targets is as follows:
 
 - log in to provider's CLI interface
 - create prerequisite resources
-  - initialize Terraform (using `make terraform-init target=provider`)
-  - create Terraform-managed resources (using `make terraform-apply target=provider`)
+  - initialize Terraform (using `make terraform-init target=target`)
+  - create Terraform-managed resources (using `make terraform-apply target=target`)
 - create image(s)
-  - initialize Packer (using `make init target=provider`)
-  - build Packer-managed image(s) (using `make build target=provider`)
+  - initialize Packer (using `make init target=target`)
+  - build Packer-managed image(s) (using `make build target=target`)
 - optionally: delete prerequisite resources
-  - delete Terraform-managed resources (using `make terraform-destroy target=provider`)
+  - delete Terraform-managed resources (using `make terraform-destroy target=target`)
 
 Usage differs slightly for each provider and is therefore broken out into separate sections.
 
 See the `packer/` (and `terraform/`) subdirectories for more information.
 
 > All workflows _can_ be executed manually. See the [Makefile](Makefile) for more information.
-
-### Supported Providers
-
-This repository supports the following providers:
-
-| target    | local documentation                    | Packer Builder                | Terraform Provider | Notes                                                        |
-|-----------|----------------------------------------|-------------------------------|--------------------|--------------------------------------------------------------|
-| `aws`     | [packer/aws/README.md](packer/aws/README.md)         | `amazon-ebs`    | n/a                |                                                              |
-| `azure`   | [packer/azure/README.md](packer/azure/README.md)     | `azure-arm`     | `azurerm`          |                                                              |
-| `google`  | [packer/google/README.md](packer/google/README.md)   | `googlecompute` | `google`           |                                                              |
-| `vagrant` | [packer/vagrant/README.md](packer/vagrant/README.md) | `vagrant`       | n/a                | This target also supports the `vagrant-cloud` post-processor |
 
 ## Notes
 
