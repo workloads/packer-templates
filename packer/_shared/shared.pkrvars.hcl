@@ -131,10 +131,10 @@ build_config = {
         name    = "docker-ce"
         version = "5:20.10.5*"
       },
-      { # see https://docs.docker.com/release-notes/
-        name    = "containerd"
-        version = "1.4.4"
-      }
+#      { # see https://docs.docker.com/release-notes/
+#        name    = "containerd"
+#        version = "1.4.4"
+#      }
     ]
 
     # package definitions (name and version) for HashiCorp products
