@@ -1,28 +1,33 @@
 ---
 
 # see https://docs.ansible.com/ansible/2.9/modules/file_module.html
-# - name: Create local Directory for Version Files
-#  file:
-#    path: "{{ version_files.destination }}"
-#    state: directory
-#  when:
-#    - toggles.misc.create_versions_files
-#  become: false
-#  delegate_to: localhost
+- name: Create local Directory for Version Files
+  file:
+    path: "{{ version_files.destination }}"
+    state: directory
+  when:
+    - toggles.misc.create_versions_files
+  become: false
+  delegate_to: localhost
 
 # see https://docs.ansible.com/ansible/2.9/modules/template_module.html
-# - name: Create Version Files
-#  template:
-#    backup: false
-#    dest: "{{ version_files.destination }}/{{ item }}"
-#    force: true
-#    src: "{{ version_files.source }}/{{ item }}.j2"
-#    trim_blocks: true
-#  with_items: "{{ version_files.templates }}"
-#  when:
-#    - toggles.misc.create_versions_files
-#  become: false
-#  delegate_to: localhost
+- name: Create Version Files
+  template:
+    backup: false
+    dest: "../../generated/{{ item }}"
+    force: true
+    src: "{{ item }}.j2"
+    trim_blocks: true
+  with_items:
+    - versions.txt
+  when:
+    - toggles.misc.create_versions_files
+  become: false
+  delegate_to: localhost
+
+- name: FINDME
+  debug:
+    var: ansible_env
 
 # see https://docs.ansible.com/ansible/2.9/modules/copy_module.html
 # - name: Copy Version Files

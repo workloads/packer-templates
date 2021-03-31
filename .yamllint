@@ -1,6 +1,10 @@
 ---
 extends: default
 
+ignore: |
+  # ignore Packer-generated files
+  ansible/playbooks/vars/generated_configuration.yml
+
 rules:
   truthy:
     allowed-values: ['true', 'false']
