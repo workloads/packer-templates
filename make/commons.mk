@@ -27,13 +27,3 @@ help: # Displays this help text
 		-s ";" \
 		-t
 	$(info )
-
-# unsupported helper to open "generated" directory
-.SILENT .PHONY: gen
-gen:
-	@open ./generated
-
-# unsupported helper to open "VirtualBox.app"
-.SILENT .PHONY: vb
-vb:
-	@ open -a "VirtualBox"
