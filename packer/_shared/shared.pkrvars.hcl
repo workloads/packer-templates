@@ -45,24 +45,25 @@ build_config = {
       install_packages   = true
     }
 
+    # HashiCorp-specific feature flags
     hashicorp = {
       # add HashiCorp APT repository
-      add_apt_repository = false
+      add_apt_repository = true
 
       # add `nomad` user to `docker` group
-      add_nomad_user_to_docker = false
+      add_nomad_user_to_docker = true
 
       # copy unit files for enabled products
       copy_unit_files = false
 
       # create users for enabled products
-      create_users = false
+      create_users = true
 
       # create groups for enabled products
-      create_groups = false
+      create_groups = true
 
       # enable services for enabled products
-      enable_services = false
+      enable_services = true
 
       # install Nomad plugins
       install_nomad_plugins = true
@@ -74,7 +75,7 @@ build_config = {
       start_services = true
     }
 
-    # enable product-specific operations
+    # feature flags for product-specific operations
     hashicorp_enabled = {
       boundary = false
       consul   = true
