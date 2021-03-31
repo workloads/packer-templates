@@ -12,8 +12,8 @@ jobs:
     strategy:
       matrix:
         directory: [
-            "./packer/azure",
-            "./packer/vagrant"
+          "./packer/azure",
+          "./packer/vagrant"
         ]
 
     steps:

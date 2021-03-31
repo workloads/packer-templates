@@ -1,0 +1,28 @@
+---
+
+name: "Code Quality: Snyk"
+
+on:
+  pull_request:
+
+jobs:
+  snyk:
+    name: snyk
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directory: [
+          "./terraform/azure"
+        ]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name:  Run Snyk to check Terraform files
+        uses: snyk/actions/iac@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          file: "${{ matrix.directory }}"

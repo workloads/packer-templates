@@ -50,7 +50,9 @@ See the `packer/` (and `terraform/`) subdirectories for more information.
 
 ## Notes
 
-This repository takes input and inspiration from a handful of community projects. The authors would like to thank: [@ansible-community](https://github.com/ansible-community) in particular.
+This repository takes input and inspiration from a handful of community projects.
+
+The authors would like to thank: [@ansible-community](https://github.com/ansible-community) in particular.
 
 ## Author Information
 
