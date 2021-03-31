@@ -62,11 +62,12 @@ variable "build_config" {
     })
 
     toggles = object({
-      enable_os              = bool
-      enable_docker          = bool
-      enable_hashicorp       = bool
-      enable_misc_operations = bool
-      enable_podman          = bool
+      enable_os               = bool
+      enable_debug_statements = bool
+      enable_docker           = bool
+      enable_hashicorp        = bool
+      enable_misc_operations  = bool
+      enable_podman           = bool
 
       os                = map(bool)
       docker            = map(bool)

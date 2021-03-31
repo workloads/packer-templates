@@ -1,4 +1,4 @@
-# Packer Templates: HashiCorp products
+# Packer Templates: HashiCorp Products
 
 > Packer Templates for HashiCorp products for multiple (Cloud) Platforms
 
