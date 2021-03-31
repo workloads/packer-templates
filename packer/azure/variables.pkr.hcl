@@ -73,6 +73,7 @@ variable "build_config" {
       podman            = map(bool)
     })
   })
+}
 
 variable "cloud_environment_name" {
   type        = string
