@@ -82,6 +82,7 @@ variable "build_config" {
       templates   = list(string)
     })
   })
+}
 
   description = "Configuration for Ansible"
   # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
