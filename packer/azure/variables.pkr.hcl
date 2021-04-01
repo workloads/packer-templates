@@ -4,16 +4,19 @@
 # and enable the variables for `subscription_id`, `client_id`, and `client_secret`
 # Then, move `credentials.auto.pkrvars.hcl.sample` to `azure-credentials.auto.pkrvars.hcl` and populate it.
 
+# see https://www.packer.io/docs/builders/azure/arm# "
 #variable "subscription_id" {
 #  type        = string
 #  description = "Subscription under which the build will be performed."
 #}
 
+# see https://www.packer.io/docs/builders/azure/arm# "
 #variable "client_id" {
 #  type        = string
 #  description = "The Active Directory service principal associated with your builder."
 #}
 
+# see https://www.packer.io/docs/builders/azure/arm# "
 #variable "client_secret" {
 #  type        = string
 #  description = "The password or secret for your service principal."
@@ -22,12 +25,14 @@
 #  sensitive = true
 #}
 
+# see https://www.packer.io/docs/builders/azure/arm#azure_tags
 variable "azure_tags" {
   type        = map(string)
   description = "Name/value pair tags to apply to every resource deployed."
   default     = {}
 }
 
+# see https://www.packer.io/docs/builders/azure/arm#build_config
 variable "build_config" {
   type = object({
     ansible_env_vars          = list(string)
@@ -85,21 +90,25 @@ variable "build_config" {
   })
 
   description = "Configuration for Ansible"
+
   # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
 }
 
+# see https://www.packer.io/docs/builders/azure/arm#cloud_environment_name
 variable "cloud_environment_name" {
   type        = string
   description = "Specify a Cloud Environment Name."
   default     = "Public"
 }
 
+# see https://www.packer.io/docs/builders/azure/arm#custom_data_file
 variable "custom_data_file" {
   type        = string
   description = "Specify a file containing custom data to inject into the cloud-init process."
   default     = ""
 }
 
+# see https://www.packer.io/docs/builders/azure/arm#image_publisher
 variable "image_publisher" {
   type        = string
   description = "Name of the publisher to use for your base image."
@@ -127,6 +136,7 @@ variable "image_version" {
   default     = "latest"
 }
 
+# see https://www.packer.io/docs/builders/azure/arm#location
 variable "location" {
   type        = string
   description = "Azure datacenter in which your VM will build."
@@ -134,30 +144,35 @@ variable "location" {
   # this value is set in `terraform-generated.auto.pkrvars.hcl`
 }
 
+# see https://www.packer.io/docs/builders/azure/arm#managed_image_name
 variable "managed_image_name" {
   type        = string
   description = "Name to use for the image."
   default     = ""
 }
 
+# see https://www.packer.io/docs/builders/azure/arm#managed_image_version
 variable "managed_image_version" {
   type        = string
   description = "Version to use for the image."
   default     = ""
 }
 
+# see https://www.packer.io/docs/builders/azure/arm#ssh_clear_authorized_keys
 variable "ssh_clear_authorized_keys" {
   type        = bool
   description = "If true, Packer will attempt to remove its temporary key from the image."
   default     = true
 }
 
+# see https://www.packer.io/docs/builders/azure/arm#vm_size
 variable "vm_size" {
   type        = string
   description = "Size of the VM used for building."
   default     = "Standard_A1"
 }
 
+# see https://www.packer.io/docs/builders/azure/arm#managed_image_resource_group_name
 variable "managed_image_resource_group_name" {
   type        = string
   description = "Resource group under which the final artifact will be stored."
@@ -165,6 +180,7 @@ variable "managed_image_resource_group_name" {
   # this value is set in `terraform-generated.auto.pkrvars.hcl`
 }
 
+# see https://www.packer.io/docs/builders/azure/arm#os_type
 variable "os_type" {
   type        = string
   description = "OS Type to use for configuration of authentication credentials."
@@ -172,9 +188,6 @@ variable "os_type" {
 }
 
 locals {
-  # parse Ansible-generated Versions File
-  //  versions_file = yamldecode(file(var.versions_file_path))
-
   # set `azure_tags` to generated value, unless it is user-specified
   //  generated_azure_tags =
   //  azure_tags = var.azure_tags == {} ? local.generated_azure_tags : var.azure_tags
