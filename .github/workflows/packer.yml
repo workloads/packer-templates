@@ -1,0 +1,37 @@
+---
+
+name: "Code Quality: Packer"
+
+on:
+  pull_request:
+
+jobs:
+  packer:
+    name: packer
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directory: [
+          "./packer/_shared/shared.pkrvars.hcl",
+          "./packer/azure/image.pkr.hcl",
+          "./packer/vagrant/image.pkr.hcl"
+        ]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Format Template
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: fmt
+          target: "${{ matrix.directory }}"
+
+#      - name: Validate Template
+#        uses: hashicorp/packer-github-actions@master
+#        with:
+#          command: validate
+#          target: "${{ matrix.directory }}/image.pkr.hcl"
+#          arguments: "-var-file=packer/_shared/shared.pkrvars.hcl"

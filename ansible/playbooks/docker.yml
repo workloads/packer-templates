@@ -1,0 +1,60 @@
+---
+
+# see https://docs.ansible.com/ansible/2.9/modules/debug_module.html
+- name: debug
+  debug:
+    msg: "included docker.yml"
+  when:
+    - toggle.enable_debug_statements is defined
+    - toggle.enable_debug_statements
+
+# see https://docs.ansible.com/ansible/2.9/modules/apt_key_module.html
+- name: Add APT Key for Docker Repository
+  apt_key:
+    url: "{{ apt_repos.docker }}/linux/ubuntu/gpg"
+    state: present
+  when:
+    - ansible_os_family == "Debian"
+    - toggles.docker.add_apt_repository
+
+# see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
+- name: Add APT repository for Docker Packages
+  apt_repository:
+    filename: docker
+    repo: "deb [arch=amd64] {{ apt_repos.docker }}/linux/ubuntu {{ ansible_distribution_release | lower }} stable"
+    state: present
+    update_cache: true
+  when:
+    - ansible_os_family == "Debian"
+    - toggles.docker.add_apt_repository
+
+# see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
+- name: Install Docker Packages
+  apt:
+    force_apt_get: true
+    install_recommends: true
+    name: "{{ item.name }}={{ item.version | default('*') }}"
+    state: present
+    update_cache: true
+  with_items: "{{ packages.docker }}"
+  when:
+    - ansible_os_family == "Debian"
+    - toggles.docker.install_packages
+
+# TODO: consider adding a `hashicorp` group
+# see https://docs.ansible.com/ansible/2.9/modules/group_module.html
+- name: Add `docker` Group
+  group:
+    name: docker
+    state: present
+    system: true
+  when: toggles.docker.create_group
+
+# see https://docs.ansible.com/ansible/2.9/modules/user_module.html
+- name: Add `docker` User
+  user:
+    create_home: true
+    name: docker
+    group: docker
+    system: true
+  when: toggles.docker.create_user

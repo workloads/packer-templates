@@ -1,4 +1,25 @@
+### Ansible ###
+*.retry
+generated/*
+
 ### Packer ###
 packer_cache/
-crash.log
-output-*/
+*.log
+output-*
+
+### Packer (user-generated) ###
+ansible/playbooks/vars/generated_configuration.yml
+credentials.auto.pkrvars.hcl
+generated.auto.pkrvars.hcl
+
+### Terraform ###
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.terraform.tfstate.lock.info
+terraform.tfvars
+
+### Vagrant ###
+.vagrant/
+*.box
+generated/vagrant/

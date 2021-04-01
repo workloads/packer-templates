@@ -1,0 +1,136 @@
+---
+
+# see https://docs.ansible.com/ansible/2.9/modules/debug_module.html
+- name: debug
+  debug:
+    msg: "included hashicorp.yml"
+  when:
+    - toggle.enable_debug_statements is defined
+    - toggle.enable_debug_statements
+
+# see https://docs.ansible.com/ansible/2.9/modules/apt_key_module.html
+- name: Add APT Key for HashiCorp Repository
+  apt_key:
+    state: present
+    url: "{{ apt_repos.hashicorp }}/gpg"
+  when:
+    - ansible_os_family == "Debian"
+    - toggles.hashicorp.add_apt_repository
+
+# see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
+- name: Add APT repository for HashiCorp Packages
+  apt_repository:
+    filename: hashicorp
+    repo: "deb [arch=amd64] {{ apt_repos.hashicorp }} {{ ansible_distribution_release | lower }} main"
+    state: present
+    update_cache: true
+  when:
+    - ansible_os_family == "Debian"
+    - toggles.hashicorp.add_apt_repository
+
+# see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
+- name: Install HashiCorp Packages
+  apt:
+    force_apt_get: true
+    install_recommends: true
+    name: "{{ item.name }}={{ item.version | default('*') }}"
+    state: present
+    update_cache: true
+  with_items: "{{ packages.hashicorp }}"
+  when:
+    - ansible_os_family == "Debian"
+    - toggles.hashicorp_enabled[item.name]
+    - toggles.hashicorp.install_packages
+
+# TODO: ensure these packages are available
+## see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
+# - name: Install Nomad Plugins
+#  apt:
+#    force_apt_get: true
+#    install_recommends: true
+#    name: "{{ item.name }}={{ item.version | default('*') }}"
+#    state: present
+#    update_cache: true
+#  with_items: "{{ packages.hashicorp_nomad_plugins }}"
+#  when: toggles.hashicorp.install_nomad_plugins
+
+# see https://docs.ansible.com/ansible/2.9/modules/group_module.html
+- name: Add Groups for HashiCorp Packages
+  group:
+    name: "{{ item.name }}"
+    state: present
+    system: true
+  with_items: "{{ packages.hashicorp }}"
+  when:
+    - toggles.hashicorp_enabled[item.name]
+    - toggles.docker.create_group
+    - toggles.hashicorp.create_groups
+
+# see https://docs.ansible.com/ansible/2.9/modules/group_module.html
+- name: Add Groups for HashiCorp Packages
+  group:
+    name: "hashicorp"
+    state: present
+    system: true
+  when:
+    - toggles.hashicorp.create_groups
+
+# see https://docs.ansible.com/ansible/2.9/modules/user_module.html
+- name: Add Users for HashiCorp Packages
+  user:
+    comment: "HashiCorp {{ item.name | capitalize }}"
+    group: "{{ item.name }}"
+    name: "{{ item.name }}"
+    system: true
+  with_items: "{{ packages.hashicorp }}"
+  when:
+    - toggles.hashicorp_enabled[item.name]
+    - toggles.hashicorp.create_users
+
+# see https://docs.ansible.com/ansible/2.9/modules/user_module.html
+- name: Add Users to `hashicorp` Group
+  user:
+    append: true
+    group: hashicorp
+    name: "{{ item.name }}"
+    system: true
+  with_items: "{{ packages.hashicorp }}"
+  when:
+    - toggles.hashicorp_enabled[item.name] is defined
+    - toggles.hashicorp_enabled[item.name]
+    - toggles.hashicorp.create_users
+    - toggles.hashicorp.create_groups
+
+# see https://docs.ansible.com/ansible/2.9/modules/user_module.html
+- name: Add `nomad` User to `docker` Group
+  user:
+    append: true
+    group: docker
+    name: nomad
+    system: true
+  when:
+    - toggles.hashicorp_enabled.nomad is defined
+    - toggles.docker.install_packages
+    - toggles.hashicorp.create_users
+    - toggles.hashicorp.add_nomad_user_to_docker
+
+# see https://docs.ansible.com/ansible/2.9/modules/template_module.html
+- name: Copy Unit Files for HashiCorp Packages
+  template:
+    dest: "/lib/systemd/system/{{ item.name }}.service"
+    src: "{{ item.name }}.service"
+  with_items: "{{ packages.hashicorp }}"
+  when:
+    - toggles.hashicorp_enabled[item.name]
+    - toggles.hashicorp.copy_unit_files
+
+# see https://docs.ansible.com/ansible/2.9/modules/systemd_module.html
+- name: Start Services for HashiCorp Packages
+  systemd:
+    state: started
+    name: "{{ item.name }}"
+  with_items: "{{ packages.hashicorp }}"
+  when:
+    - toggles.hashicorp_enabled[item.name]
+    - toggles.hashicorp.enable_services
+    - toggles.hashicorp.start_services
