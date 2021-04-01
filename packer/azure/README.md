@@ -11,8 +11,11 @@
 ## Overview
 
 > image template: [image.pkr.hcl](image.pkr.hcl)
+
 > image variables: [variables.pkr.hcl](variables.pkr.hcl)
+
 > build target: `azure`
+
 > build command: `make build target=azure`
 
 > `make` commands must be run from the root directory.
@@ -30,7 +33,9 @@ To log in, execute the `az login` command and follow the instructions presented 
 ## Prerequisites
 
 > init command `make terraform-init target=azure`
+
 > build command: `make terraform-apply target=azure`
+
 > destroy command: `make terraform-destroy target=azure`
 
 > `make` commands must be run from the root directory.
