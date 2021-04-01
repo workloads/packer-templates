@@ -4,19 +4,19 @@
 # and enable the variables for `subscription_id`, `client_id`, and `client_secret`
 # Then, move `credentials.auto.pkrvars.hcl.sample` to `azure-credentials.auto.pkrvars.hcl` and populate it.
 
-# see https://www.packer.io/docs/builders/azure/arm# "
+# see https://www.packer.io/docs/builders/azure/arm#subscription_id
 #variable "subscription_id" {
 #  type        = string
 #  description = "Subscription under which the build will be performed."
 #}
 
-# see https://www.packer.io/docs/builders/azure/arm# "
+# see https://www.packer.io/docs/builders/azure/arm#client_id
 #variable "client_id" {
 #  type        = string
 #  description = "The Active Directory service principal associated with your builder."
 #}
 
-# see https://www.packer.io/docs/builders/azure/arm# "
+# see https://www.packer.io/docs/builders/azure/arm#client_secret
 #variable "client_secret" {
 #  type        = string
 #  description = "The password or secret for your service principal."
@@ -32,7 +32,6 @@ variable "azure_tags" {
   default     = {}
 }
 
-# see https://www.packer.io/docs/builders/azure/arm#build_config
 variable "build_config" {
   type = object({
     ansible_env_vars          = list(string)
@@ -151,7 +150,6 @@ variable "managed_image_name" {
   default     = ""
 }
 
-# see https://www.packer.io/docs/builders/azure/arm#managed_image_version
 variable "managed_image_version" {
   type        = string
   description = "Version to use for the image."
