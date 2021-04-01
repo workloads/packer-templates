@@ -24,7 +24,9 @@ not yet available
 ## Prerequisites
 
 > init command `make terraform-init target=aws`
+
 > build command: `make terraform-apply target=aws`
+
 > destroy command: `make terraform-destroy target=aws`
 
 > `make` commands must be run from the root directory.
