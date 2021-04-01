@@ -46,6 +46,7 @@ source "azure-arm" "image" {
 }
 
 # see https://www.packer.io/docs/builders/file
+# TODO: replace with templatefile
 source "file" "image_configuration" {
   content = yamlencode(var.build_config)
   target  = "ansible/playbooks/vars/generated_configuration.yml"
