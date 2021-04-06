@@ -89,7 +89,6 @@ variable "availability_zone" {
 # see https://www.packer.io/docs/builders/amazon/ebs#block_duration_minutes
 # TODO: add support for variable "block_duration_minutes"
 
-# see https://www.packer.io/docs/builders/amazon/ebs#build_config
 variable "build_config" {
   type = object({
     ansible_env_vars          = list(string)
@@ -97,6 +96,10 @@ variable "build_config" {
     extra_arguments           = list(string)
     image_version_date_format = string
     name                      = string
+
+    generated_files = object({
+      configuration = string
+    })
 
     packages = object({
       to_install = list(string)

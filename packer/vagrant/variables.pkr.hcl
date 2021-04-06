@@ -75,6 +75,8 @@ variable "build_config" {
       }))
     })
 
+    playbook_file = string
+
     toggles = object({
       enable_os               = bool
       enable_debug_statements = bool
@@ -99,7 +101,6 @@ variable "build_config" {
   })
 
   description = "Configuration for Ansible"
-
   # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
 }
 

@@ -189,4 +189,8 @@ build_config = {
       "versions.txt"
     ]
   }
+
+  generated_files = {
+    configuration = "ansible/playbooks/vars/generated_configuration.yml"
+  }
 }

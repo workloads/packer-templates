@@ -93,7 +93,7 @@ source "amazon-ebs" "image" {
 # TODO: replace with templatefile
 source "file" "image_configuration" {
   content = yamlencode(var.build_config)
-  target  = "ansible/playbooks/vars/generated_configuration.yml"
+  target  = var.generated_files.configuration
 }
 
 build {

@@ -40,6 +40,10 @@ variable "build_config" {
     image_version_date_format = string
     name                      = string
 
+    generated_files = object({
+      configuration = string
+    })
+
     packages = object({
       to_install = list(string)
       to_remove  = list(string)
@@ -89,7 +93,6 @@ variable "build_config" {
   })
 
   description = "Configuration for Ansible"
-
   # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
 }
 
