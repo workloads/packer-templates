@@ -9,11 +9,12 @@
     - toggle.enable_debug_statements
 
 # see https://docs.ansible.com/ansible/2.9/modules/copy_module.html
+# TODO: fix the `src` in a better way
 - name: Copy Version Files
   copy:
     backup: false
     dest: "/tmp"
     force: true
-    src: "../{{ generated_files.versions }}"
+    src: "../../{{ generated_files.versions }}"
   when:
     - toggles.misc.copy_versions_files
