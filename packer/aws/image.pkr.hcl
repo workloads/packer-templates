@@ -1,3 +1,8 @@
+# see https://www.packer.io/docs/templates/hcl_templates/blocks/packer
+packer {
+  required_version = ">= 1.7.1"
+}
+
 # see https://www.packer.io/docs/builders/amazon/ebs
 source "amazon-ebs" "image" {
   # the following configuration represents a minimally viable selection

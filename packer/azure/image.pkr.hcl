@@ -33,7 +33,7 @@ source "azure-arm" "image" {
   ssh_clear_authorized_keys = var.ssh_clear_authorized_keys
 
   # authentication with `az` CLI supplied credentials
-  use_azure_cli_auth = true
+  use_azure_cli_auth = var.use_azure_cli_auth
 
   # authentication with explicitly defined credentials
   # NOTE: to use this section, disable the `use_azure_cli_auth` property and

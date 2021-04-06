@@ -191,6 +191,13 @@ variable "os_type" {
   default     = "Linux"
 }
 
+# see https://www.packer.io/docs/builders/azure/arm#use_azure_cli_auth
+variable "use_azure_cli_auth" {
+  type        = bool
+  description = "Flag to use Azure CLI authentication."
+  default     = true
+}
+
 locals {
   # set `azure_tags` to generated value, unless it is user-specified
   //  generated_azure_tags =
