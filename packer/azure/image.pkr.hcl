@@ -53,7 +53,7 @@ source "file" "image_configuration" {
 
 # see https://www.packer.io/docs/builders/file
 source "file" "version_description" {
-  content = local.version_description
+  content = local.managed_image_version
   target  = var.build_config.generated_files.versions
 }
 
