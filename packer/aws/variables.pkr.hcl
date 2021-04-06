@@ -100,6 +100,7 @@ variable "build_config" {
 
     generated_files = object({
       configuration = string
+      versions      = string
     })
 
     packages = object({
@@ -129,6 +130,10 @@ variable "build_config" {
 
     playbook_file = string
 
+    templates = object({
+      versions = string
+    })
+
     toggles = object({
       enable_os               = bool
       enable_debug_statements = bool
@@ -144,15 +149,10 @@ variable "build_config" {
       misc              = map(bool)
       podman            = map(bool)
     })
-
-    version_files = object({
-      source      = string
-      destination = string
-      templates   = list(string)
-    })
   })
 
-  description = "Configuration for Ansible"
+  description = "Shared Configuration for all Images"
+
   # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
 }
 

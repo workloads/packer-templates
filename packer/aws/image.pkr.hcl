@@ -95,14 +95,22 @@ source "amazon-ebs" "image" {
 }
 
 # see https://www.packer.io/docs/builders/file
-# TODO: replace with templatefile
 source "file" "image_configuration" {
   content = yamlencode(var.build_config)
   target  = var.build_config.generated_files.configuration
 }
 
+# see https://www.packer.io/docs/builders/file
+source "file" "version_description" {
+  content = local.version_description
+  target  = var.build_config.generated_files.versions
+}
+
 build {
-  sources = ["source.file.image_configuration"]
+  sources = [
+    "source.file.image_configuration",
+    "source.file.version_description"
+  ]
 }
 
 build {

@@ -188,15 +188,12 @@ build_config = {
     ]
   }
 
-  version_files = {
-    source      = "../templates"
-    destination = "../../generated"
-    templates = [
-      "versions.txt"
-    ]
+  templates = {
+    versions = "../_shared/image-description.tpl.md"
   }
 
   generated_files = {
     configuration = "ansible/playbooks/vars/generated_configuration.yml"
+    versions      = "generated/version-information.md"
   }
 }

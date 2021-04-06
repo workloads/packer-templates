@@ -53,6 +53,7 @@ variable "build_config" {
 
     generated_files = object({
       configuration = string
+      versions      = string
     })
 
     packages = object({
@@ -82,6 +83,10 @@ variable "build_config" {
 
     playbook_file = string
 
+    templates = object({
+      versions = string
+    })
+
     toggles = object({
       enable_os               = bool
       enable_debug_statements = bool
@@ -97,15 +102,10 @@ variable "build_config" {
       misc              = map(bool)
       podman            = map(bool)
     })
-
-    version_files = object({
-      source      = string
-      destination = string
-      templates   = list(string)
-    })
   })
 
-  description = "Configuration for Ansible"
+  description = "Shared Configuration for all Images"
+
   # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
 }
 
@@ -177,6 +177,12 @@ locals {
   box_version_timestamp = formatdate(var.build_config.image_version_date_format, timestamp())
   box_version           = var.box_version == "" ? local.box_version_timestamp : var.box_version
 
-  # TODO: use the Ansible-rendered `versions.txt` as input for this
-  version_description = ""
+  version_description_data = {
+    build_config = var.build_config
+    name         = local.box_tag
+    version      = local.box_version
+    timestamp    = local.box_version_timestamp
+  }
+
+  version_description = templatefile(var.build_config.templates.versions, local.version_description_data)
 }
