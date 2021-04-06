@@ -93,7 +93,7 @@ source "amazon-ebs" "image" {
 # TODO: replace with templatefile
 source "file" "image_configuration" {
   content = yamlencode(var.build_config)
-  target  = var.generated_files.configuration
+  target  = var.build_config.generated_files.configuration
 }
 
 build {
@@ -108,8 +108,8 @@ build {
   # see https://www.packer.io/docs/provisioners/ansible
   provisioner "ansible" {
     ansible_env_vars = var.build_config.ansible_env_vars
-    playbook_file    = "./ansible/playbooks/main.yml"
-    command          = "ansible-playbook"
+    playbook_file    = var.build_config.playbook_file
+    command          = var.build_config.command
     extra_arguments  = var.build_config.extra_arguments
   }
 }

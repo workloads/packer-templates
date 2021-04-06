@@ -46,9 +46,14 @@ variable "build_config" {
   type = object({
     ansible_env_vars          = list(string)
     apt_repos                 = map(string)
+    command                   = string
     extra_arguments           = list(string)
     image_version_date_format = string
     name                      = string
+
+    generated_files = object({
+      configuration = string
+    })
 
     packages = object({
       to_install = list(string)

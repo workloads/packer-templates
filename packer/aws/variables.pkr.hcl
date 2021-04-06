@@ -93,6 +93,7 @@ variable "build_config" {
   type = object({
     ansible_env_vars          = list(string)
     apt_repos                 = map(string)
+    command                   = string
     extra_arguments           = list(string)
     image_version_date_format = string
     name                      = string
@@ -125,6 +126,8 @@ variable "build_config" {
         version = string
       }))
     })
+
+    playbook_file = string
 
     toggles = object({
       enable_os               = bool

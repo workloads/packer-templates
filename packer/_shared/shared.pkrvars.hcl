@@ -11,6 +11,9 @@ build_config = {
     podman    = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/"
   }
 
+  # The command to invoke Ansible with.
+  command = "ansible-playbook"
+
   # Extra arguments to pass to Ansible
   extra_arguments = [
     "-v",
@@ -21,6 +24,9 @@ build_config = {
 
   # Shared name for Images
   name = "ubuntu-hashicorp"
+
+  # The playbook to be run by Ansible.
+  playbook_file = "./ansible/playbooks/main.yml"
 
   # toggles to enable and disable various operations
   toggles = {
