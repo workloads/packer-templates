@@ -8,12 +8,13 @@ source "amazon-ebs" "image" {
   # the following configuration represents a minimally viable selection
   # for all options see: https://www.packer.io/docs/builders/amazon/ebs
 
-  access_key = var.access_key
+  //access_key = var.access_key
 
   # TODO: add support for block variable "ami_block_device_mappings"
 
   ami_description             = var.ami_description
   ami_name                    = local.ami_name
+  /*
   ami_groups                  = var.ami_groups
   ami_product_codes           = var.ami_product_codes
   ami_regions                 = var.ami_regions
@@ -43,7 +44,9 @@ source "amazon-ebs" "image" {
   force_delete_snapshot    = var.force_delete_snapshot
   force_deregister         = var.force_deregister
   iam_instance_profile     = var.iam_instance_profile
+  */
   instance_type            = var.instance_type
+  /*
   insecure_skip_tls_verify = var.insecure_skip_tls_verify
 
   # TODO: add support for variable "kms_key_id"
@@ -56,10 +59,11 @@ source "amazon-ebs" "image" {
   # TODO: add support for variable "no_ephemeral" when Windows support is added
 
   profile = var.profile
+  */
   region  = var.region
 
   # TODO: add support for variable "region_kms_key_ids"
-
+  /*
   run_tags           = var.run_tags
   run_volume_tags    = var.run_volume_tags
   secret_key         = var.secret_key
@@ -80,10 +84,18 @@ source "amazon-ebs" "image" {
   snapshot_groups            = var.snapshot_groups
   snapshot_tags              = var.snapshot_tags
   snapshot_users             = var.snapshot_users
-
-  # TODO: add support for block variable "source_ami_filter"
-
+  */
+  source_ami_filter {
+    filters = {
+      virtualization-type = "hvm"
+      name                = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
+      root-device-type    = "ebs"
+    }
+    owners      = ["099720109477"]
+    most_recent = true
+  }
   ssh_username              = var.ssh_username
+  /*
   ssh_port                  = var.ssh_port
   ssh_password              = var.ssh_password
   ssh_clear_authorized_keys = var.ssh_clear_authorized_keys
@@ -92,6 +104,24 @@ source "amazon-ebs" "image" {
   token = var.token
 
   # TODO: add support for variable "vault_aws_engine"
+  # Both vpc_filter and vpc_id are supported.
+  subnet_filter {
+    filters = {
+      "tag:Class": "build"
+    }
+    most_free = true
+    random = false
+  }
+  */
+  subnet_id = "subnet-0060135ffc1f5540b"
+  /*
+  vpc_filter {
+    filters = {
+      "isDefault": "false",
+    }
+  }
+  */
+  vpc_id = "vpc-020390d3973df66ae"
 }
 
 # see https://www.packer.io/docs/builders/file

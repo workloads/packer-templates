@@ -17,13 +17,6 @@ variable "ami_description" {
   default     = ""
 }
 
-# see https://www.packer.io/docs/builders/amazon/ebs#ami_name
-variable "ami_name" {
-  type        = string
-  description = "The name of the resulting AMI that will appear when managing AMIs in the AWS console or via APIs."
-  default     = ""
-}
-
 # see https://www.packer.io/docs/builders/amazon/ebs#ami_groups
 variable "ami_groups" {
   type        = list(string)
@@ -31,19 +24,25 @@ variable "ami_groups" {
   default     = []
 }
 
+# see https://www.packer.io/docs/builders/amazon/ebs#ami_name
+variable "ami_name" {
+  type        = string
+  description = "The name of the resulting AMI that will appear when managing AMIs in the AWS console or via APIs."
+  default     = ""
+}
+
 # see https://www.packer.io/docs/builders/amazon/ebs#ami_product_codes
 variable "ami_product_codes" {
   type        = list(string)
   description = "A list of product codes to associate with the AMI."
-  default     = []
-
+  default     = ["none"]
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#ami_regions
 variable "ami_regions" {
   type        = list(string)
   description = "A list of regions to copy the AMI to."
-  default     = []
+  default     = ["none"]
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#ami_users
