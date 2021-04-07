@@ -10,8 +10,11 @@
 ## Overview
 
 > image template: [.image.pkr.hcl](image.pkr.hcl)
+
 > image variables: [.variables.pkr.hcl](variables.pkr.hcl)
+
 > build target: `vagrant`
+
 > build command: `make build target=vagrant`
 
 > `make` commands must be run from the root directory.

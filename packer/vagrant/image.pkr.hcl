@@ -1,6 +1,6 @@
 # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer
 packer {
-  required_version = ">= 1.7.1"
+  required_version = ">= 1.7.2"
 }
 
 # see https://www.packer.io/docs/builders/vagrant
@@ -22,11 +22,20 @@ source "vagrant" "image" {
 # see https://www.packer.io/docs/builders/file
 source "file" "image_configuration" {
   content = yamlencode(var.build_config)
-  target  = "ansible/playbooks/vars/generated_configuration.yml"
+  target  = var.build_config.generated_files.configuration
+}
+
+# see https://www.packer.io/docs/builders/file
+source "file" "version_description" {
+  content = local.version_description
+  target  = var.build_config.generated_files.versions
 }
 
 build {
-  sources = ["source.file.image_configuration"]
+  sources = [
+    "source.file.image_configuration",
+    "source.file.version_description"
+  ]
 }
 
 build {
@@ -36,17 +45,18 @@ build {
 
   # see https://www.packer.io/docs/provisioners/ansible
   provisioner "ansible" {
-    playbook_file    = "./ansible/playbooks/main.yml"
-    command          = "ansible-playbook"
     ansible_env_vars = var.build_config.ansible_env_vars
+    playbook_file    = var.build_config.playbook_file
+    command          = var.build_config.command
+    extra_arguments  = var.build_config.extra_arguments
   }
 
   # uncomment this stanza to build images for Vagrant Cloud
   # see https://www.packer.io/docs/post-processors/vagrant-cloud
   #post-processor "vagrant-cloud" {
-  #  box_tag    = local.box_tag
-  #  no_release = var.no_release
-  #  version    = var.box_version
-  #  version_description = local.version_description
+  #  box_tag             = local.box_tag
+  #  no_release          = var.no_release
+  #  version             = var.box_version
+  #  version_description = file(var.build_config.generated_files.versions)
   #}
 }

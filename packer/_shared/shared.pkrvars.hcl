@@ -1,19 +1,24 @@
 # these variables are shared across all images
 build_config = {
   # Environment variables to set before running Ansible
+  # When in doubt, edit `ansible/ansible.cfg` instead of `ansible_env_vars`
   ansible_env_vars = [
     "ANSIBLE_CONFIG=ansible/ansible.cfg"
   ]
 
+  # TODO: make `podman` smarter
   apt_repos = {
     docker    = "https://download.docker.com"
     hashicorp = "https://apt.releases.hashicorp.com"
     podman    = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/"
   }
 
+  # The command to invoke Ansible with.
+  command = "ansible-playbook"
+
   # Extra arguments to pass to Ansible
   extra_arguments = [
-    "-v",
+    # "-v",
   ]
 
   # Formatting sequence to use for date formats
@@ -22,6 +27,9 @@ build_config = {
   # Shared name for Images
   name = "ubuntu-hashicorp"
 
+  # The playbook to be run by Ansible.
+  playbook_file = "./ansible/playbooks/main.yml"
+
   # toggles to enable and disable various operations
   toggles = {
     # feature flags to enable (complete) playbooks
@@ -29,7 +37,6 @@ build_config = {
     enable_os               = true
     enable_docker           = true
     enable_hashicorp        = true
-    enable_misc_operations  = true
     enable_podman           = false
 
     # OS-specific feature flags
@@ -182,11 +189,12 @@ build_config = {
     ]
   }
 
-  version_files = {
-    source      = "../templates"
-    destination = "../../generated"
-    templates = [
-      "versions.txt"
-    ]
+  templates = {
+    versions = "../_shared/image-description.pkrtpl.md"
+  }
+
+  generated_files = {
+    configuration = "generated/generated_configuration.yml"
+    versions      = "generated/version-information.md"
   }
 }

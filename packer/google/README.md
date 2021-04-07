@@ -11,8 +11,11 @@
 ## Overview
 
 > image template: [image.pkr.hcl](image.pkr.hcl)
+
 > image variables: [variables.pkr.hcl](variables.pkr.hcl)
+
 > build target: `google`
+
 > build command: `make build target=google`
 
 > `make` commands must be run from the root directory.
@@ -30,7 +33,9 @@ To log in, execute the `gcloud auth login` command and follow the instructions p
 ## Prerequisites
 
 > init command `make terraform-init target=google`
+
 > build command: `make terraform-apply target=google`
+
 > destroy command: `make terraform-destroy target=google`
 
 > `make` commands must be run from the root directory.

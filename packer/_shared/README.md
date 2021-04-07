@@ -1,3 +1,3 @@
 # shared configuration
 
-This directory contains configuration that is shared across multiple build targets.
+This directory contains configuration that is meant to be shared across all build targets.

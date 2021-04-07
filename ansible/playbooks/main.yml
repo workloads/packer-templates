@@ -1,6 +1,6 @@
 ---
 
-- name: "Provision Packer image"
+- name: "Provision Packer Image"
   hosts: default
   become: true
 
@@ -8,7 +8,7 @@
     # see https://docs.ansible.com/ansible/2.9/modules/include_vars_module.html
     - name: Include Packer-generated Variables
       include_vars:
-        file: generated_configuration.yml
+        file: ../../generated/generated_configuration.yml
 
     # see https://docs.ansible.com/ansible/2.9/modules/debug_module.html
     - name: ansible_env
@@ -20,7 +20,7 @@
 
     # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
     - name: Manage OS Packages
-      include: os.yml
+      include: base.yml
       when: toggles.enable_os
 
     # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
@@ -37,11 +37,6 @@
     - name: Manage HashiCorp Packages
       include: hashicorp.yml
       when: toggles.enable_hashicorp
-
-    # see https://docs.ansible.com/ansible/2.9/modules/include_module.html
-    - name: Manage miscellaneous Operations
-      include: misc.yml
-      when: toggles.enable_misc_operations
 
 # TODO: harden image
 

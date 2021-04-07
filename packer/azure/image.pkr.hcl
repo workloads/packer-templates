@@ -1,6 +1,6 @@
 # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer
 packer {
-  required_version = ">= 1.7.1"
+  required_version = ">= 1.7.2"
 }
 
 # see https://www.packer.io/docs/builders/azure/arm
@@ -33,7 +33,7 @@ source "azure-arm" "image" {
   ssh_clear_authorized_keys = var.ssh_clear_authorized_keys
 
   # authentication with `az` CLI supplied credentials
-  use_azure_cli_auth = true
+  use_azure_cli_auth = var.use_azure_cli_auth
 
   # authentication with explicitly defined credentials
   # NOTE: to use this section, disable the `use_azure_cli_auth` property and
@@ -48,11 +48,20 @@ source "azure-arm" "image" {
 # see https://www.packer.io/docs/builders/file
 source "file" "image_configuration" {
   content = yamlencode(var.build_config)
-  target  = "ansible/playbooks/vars/generated_configuration.yml"
+  target  = var.build_config.generated_files.configuration
+}
+
+# see https://www.packer.io/docs/builders/file
+source "file" "version_description" {
+  content = local.managed_image_version
+  target  = var.build_config.generated_files.versions
 }
 
 build {
-  sources = ["source.file.image_configuration"]
+  sources = [
+    "source.file.image_configuration",
+    "source.file.version_description"
+  ]
 }
 
 build {
@@ -63,8 +72,8 @@ build {
   # see https://www.packer.io/docs/provisioners/ansible
   provisioner "ansible" {
     ansible_env_vars = var.build_config.ansible_env_vars
-    playbook_file    = "./ansible/playbooks/main.yml"
-    command          = "ansible-playbook"
+    playbook_file    = var.build_config.playbook_file
+    command          = var.build_config.command
     extra_arguments  = var.build_config.extra_arguments
   }
 
