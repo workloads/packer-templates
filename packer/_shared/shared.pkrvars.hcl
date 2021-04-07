@@ -189,7 +189,7 @@ build_config = {
   }
 
   templates = {
-    versions = "../_shared/image-description.tpl.md"
+    versions = "../_shared/image-description.pkrtpl.md"
   }
 
   generated_files = {
