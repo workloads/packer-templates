@@ -6,10 +6,9 @@
 
   tasks:
     # see https://docs.ansible.com/ansible/2.9/modules/include_vars_module.html
-    # TODO: move the `file` path to the `generated` directory
     - name: Include Packer-generated Variables
       include_vars:
-        file: generated_configuration.yml
+        file: ../../generated/generated_configuration.yml
 
     # see https://docs.ansible.com/ansible/2.9/modules/debug_module.html
     - name: ansible_env

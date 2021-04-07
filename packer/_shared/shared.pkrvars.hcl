@@ -1,6 +1,7 @@
 # these variables are shared across all images
 build_config = {
   # Environment variables to set before running Ansible
+  # When in doubt, edit `ansible/ansible.cfg` instead of `ansible_env_vars`
   ansible_env_vars = [
     "ANSIBLE_CONFIG=ansible/ansible.cfg"
   ]
@@ -193,7 +194,7 @@ build_config = {
   }
 
   generated_files = {
-    configuration = "ansible/playbooks/vars/generated_configuration.yml"
+    configuration = "generated/generated_configuration.yml"
     versions      = "generated/version-information.md"
   }
 }

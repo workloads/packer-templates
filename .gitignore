@@ -1,15 +1,14 @@
 ### Ansible ###
 *.retry
-generated/*
 
 ### Packer ###
 packer_cache/
 *.log
 output-*
+credentials.auto.pkrvars.hcl
 
 ### Packer (user-generated) ###
-ansible/playbooks/vars/generated_configuration.yml
-credentials.auto.pkrvars.hcl
+generated/*
 generated.auto.pkrvars.hcl
 
 ### Terraform ###
@@ -22,4 +21,3 @@ terraform.tfvars
 ### Vagrant ###
 .vagrant/
 *.box
-generated/vagrant/
