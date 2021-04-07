@@ -14,7 +14,7 @@ variable "access_key" {
 variable "ami_description" {
   type        = string
   description = "The description to set for the resulting AMI(s)."
-  default     = ""
+  default     = "Created with Packer"
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#ami_groups
@@ -422,6 +422,13 @@ variable "ssh_clear_authorized_keys" {
   default     = true
 }
 
+# see https://www.packer.io/docs/builders/amazon/ebs#subnet_id
+variable "subnet_id" {
+  type        = string
+  description = "If using VPC, the ID of the subnet, such as subnet-12345def, where Packer will launch the EC2 instance. This field is required if you are using an non-default VPC."
+  default     = ""
+}
+
 # see https://www.packer.io/docs/builders/amazon/ebs#tags
 variable "tags" {
   type        = map(string)
@@ -442,6 +449,21 @@ variable "token" {
 # see https://www.packer.io/docs/builders/amazon/ebs#vault_aws_engine
 # TODO: add support for block variable "vault_aws_engine"
 
+variable "version_description" {
+  type        = string
+  description = "Version to use for the image."
+  default     = "1"
+}
+
+# see https://www.packer.io/docs/builders/amazon/ebs#vpc_id
+variable "vpc_id" {
+  type        = string
+  description = "Requires subnet_id to be set. Used to create a temporary security group within the VPC. If this field is left blank, Packer will try to get the VPC ID from the subnet_id."
+  default     = ""
+}
+
 locals {
-  ami_name = var.ami_name == "" ? "TODO" : var.ami_name
+  version_description = var.version_description == "" ? formatdate(var.build_config.image_version_date_format, timestamp()) : var.version_description
+
+  ami_name = var.ami_name == "" ? var.build_config.name : var.ami_name
 }
