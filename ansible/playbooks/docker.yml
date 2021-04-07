@@ -41,7 +41,6 @@
     - ansible_os_family == "Debian"
     - toggles.docker.install_packages
 
-# TODO: consider adding a `hashicorp` group
 # see https://docs.ansible.com/ansible/2.9/modules/group_module.html
 - name: Add `docker` Group
   group:
