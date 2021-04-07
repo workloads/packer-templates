@@ -11,6 +11,7 @@ rules:
   # see https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.line_length
   line-length:
     max: 180
+
   # see https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.truthy
   truthy:
     allowed-values: [
