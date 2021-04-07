@@ -36,7 +36,6 @@ build_config = {
     enable_os               = true
     enable_docker           = true
     enable_hashicorp        = true
-    enable_misc_operations  = true
     enable_podman           = false
 
     # OS-specific feature flags

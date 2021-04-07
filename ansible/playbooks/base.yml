@@ -3,7 +3,7 @@
 # see https://docs.ansible.com/ansible/2.9/modules/debug_module.html
 - name: debug
   debug:
-    msg: "included os.yml"
+    msg: "included base.yml"
   when:
     - toggle.enable_debug_statements is defined
     - toggle.enable_debug_statements
@@ -41,3 +41,14 @@
   when:
     - ansible_os_family == "Debian"
     - toggles.os.remove_packages
+
+# see https://docs.ansible.com/ansible/2.9/modules/copy_module.html
+# TODO: fix the `src` in a better way
+- name: Copy Version Files
+  copy:
+    backup: false
+    dest: "/tmp"
+    force: true
+    src: "../../{{ generated_files.versions }}"
+  when:
+    - toggles.misc.copy_versions_files
