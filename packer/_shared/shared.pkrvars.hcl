@@ -6,6 +6,7 @@ build_config = {
     "ANSIBLE_CONFIG=ansible/ansible.cfg"
   ]
 
+  # TODO: make `podman` smarter
   apt_repos = {
     docker    = "https://download.docker.com"
     hashicorp = "https://apt.releases.hashicorp.com"
@@ -17,7 +18,7 @@ build_config = {
 
   # Extra arguments to pass to Ansible
   extra_arguments = [
-    "-v",
+    # "-v",
   ]
 
   # Formatting sequence to use for date formats
