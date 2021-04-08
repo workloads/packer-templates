@@ -1,0 +1,6 @@
+---
+
+  collections:
+    - # see https://galaxy.ansible.com/devsec/hardening
+      name: dev-sec.os-hardening
+      version: "7.5.0"
