@@ -9,8 +9,11 @@
     - devsec.hardening
 
   roles:
-    - os_hardening
-    - ssh_hardening
+    - # see https://github.com/dev-sec/ansible-collection-hardening/tree/master/roles/os_hardening
+      os_hardening
+
+    - # see https://github.com/dev-sec/ansible-collection-hardening/tree/master/roles/ssh_hardening
+      ssh_hardening
 
   tasks:
     # see https://docs.ansible.com/ansible/2.10/modules/include_vars_module.html
