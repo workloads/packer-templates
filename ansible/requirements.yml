@@ -2,5 +2,5 @@
 
   collections:
     - # see https://galaxy.ansible.com/devsec/hardening
-      name: dev-sec.os-hardening
+      name: devsec.hardening
       version: "7.5.0"
