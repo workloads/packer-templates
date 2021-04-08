@@ -17,6 +17,7 @@
 
   tasks:
     # see https://docs.ansible.com/ansible/2.10/modules/include_vars_module.html
+    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_vars_module.html
     - name: Include Packer-generated Variables
       include_vars:
         file: ../../generated/generated_configuration.yml
