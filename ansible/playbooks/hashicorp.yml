@@ -127,6 +127,7 @@
 # see https://docs.ansible.com/ansible/2.10/modules/systemd_module.html
 - name: Start Services for HashiCorp Packages
   systemd:
+    enabled: true
     state: started
     name: "{{ item.name }}"
   with_items: "{{ packages.hashicorp }}"
