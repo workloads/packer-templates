@@ -1,10 +1,26 @@
 # these variables are shared across all images
 build_config = {
-  # Environment variables to set before running Ansible
-  # When in doubt, edit `ansible/ansible.cfg` instead of `ansible_env_vars`
-  ansible_env_vars = [
-    "ANSIBLE_CONFIG=ansible/ansible.cfg"
-  ]
+  ansible = {
+    # Environment variables to set before running Ansible
+    # When in doubt, edit `ansible/ansible.cfg` instead of `ansible_env_vars`
+    ansible_env_vars = [
+      "ANSIBLE_CONFIG=ansible/ansible.cfg"
+    ]
+
+    # The command to invoke Ansible with.
+    command = "ansible-playbook"
+
+    # Extra arguments to pass to Ansible
+    extra_arguments = [
+      # "-v",
+    ]
+
+    # A requirements file which provides a way to install roles with the `ansible-galaxy` CLI on the remote machine.
+    galaxy_file = "./ansible/requirements.yml"
+
+    # The playbook to be run by Ansible.
+    playbook_file = "./ansible/playbooks/main.yml"
+  }
 
   # TODO: make `podman` smarter
   apt_repos = {
@@ -13,22 +29,11 @@ build_config = {
     podman    = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/"
   }
 
-  # The command to invoke Ansible with.
-  command = "ansible-playbook"
-
-  # Extra arguments to pass to Ansible
-  extra_arguments = [
-    # "-v",
-  ]
-
   # Formatting sequence to use for date formats
   image_version_date_format = "YYYYMMDD-hhmmss"
 
   # Shared name for Images
   name = "ubuntu-hashicorp"
-
-  # The playbook to be run by Ansible.
-  playbook_file = "./ansible/playbooks/main.yml"
 
   # toggles to enable and disable various operations
   toggles = {

@@ -45,10 +45,11 @@ build {
 
   # see https://www.packer.io/docs/provisioners/ansible
   provisioner "ansible" {
-    ansible_env_vars = var.build_config.ansible_env_vars
-    playbook_file    = var.build_config.playbook_file
-    command          = var.build_config.command
-    extra_arguments  = var.build_config.extra_arguments
+    ansible_env_vars = var.build_config.ansible.ansible_env_vars
+    command          = var.build_config.ansible.command
+    extra_arguments  = var.build_config.ansible.extra_arguments
+    galaxy_file      = var.build_config.ansible.galaxy_file
+    playbook_file    = var.build_config.ansible.playbook_file
   }
 
   # uncomment this stanza to build images for Vagrant Cloud

@@ -44,10 +44,15 @@ variable "box_version" {
 
 variable "build_config" {
   type = object({
-    ansible_env_vars          = list(string)
+    ansible = object({
+      ansible_env_vars = list(string)
+      command          = string
+      extra_arguments  = list(string)
+      galaxy_file      = string
+      playbook_file    = string
+    })
+
     apt_repos                 = map(string)
-    command                   = string
-    extra_arguments           = list(string)
     image_version_date_format = string
     name                      = string
 
@@ -80,8 +85,6 @@ variable "build_config" {
         version = string
       }))
     })
-
-    playbook_file = string
 
     templates = object({
       versions = string
