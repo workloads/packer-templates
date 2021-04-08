@@ -42,7 +42,7 @@ variable "ami_product_codes" {
 variable "ami_regions" {
   type        = list(string)
   description = "A list of regions to copy the AMI to."
-  default     = ["none"]
+  default     = []
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#ami_users
