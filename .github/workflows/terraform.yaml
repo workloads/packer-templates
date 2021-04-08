@@ -23,7 +23,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: "0.14.9"
+          terraform_version: "0.14.10"
 
       - name: Run `terraform fmt`
         run: terraform -chdir="${{ matrix.directory }}" fmt -diff -check -no-color -recursive
