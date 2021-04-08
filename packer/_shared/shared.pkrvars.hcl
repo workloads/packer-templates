@@ -81,7 +81,7 @@ build_config = {
       install_packages = true
 
       # start services for enabled products
-      start_services = false
+      start_services = true
     }
 
     # feature flags for product-specific operations
