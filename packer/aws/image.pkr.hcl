@@ -3,6 +3,15 @@ packer {
   required_version = ">= 1.7.2"
 }
 
+# see https://www.packer.io/docs/datasources/amazon/ami
+data "amazon-ami" "image" {
+  filters = var.image.filters
+
+  most_recent = var.image.most_recent
+  owners      = var.image.owners
+  region      = var.region
+}
+
 # see https://www.packer.io/docs/builders/amazon/ebs
 source "amazon-ebs" "image" {
   # the following configuration represents a minimally viable selection
@@ -13,18 +22,10 @@ source "amazon-ebs" "image" {
   instance_type   = var.instance_type
   region          = var.region
   ssh_username    = var.ssh_username
+  source_ami      = data.amazon-ami.image.id
   subnet_id       = var.subnet_id
   tags            = var.tags
 
-  source_ami_filter {
-    filters = {
-      virtualization-type = "hvm"
-      name                = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
-      root-device-type    = "ebs"
-    }
-    owners      = ["099720109477"]
-    most_recent = true
-  }
   # TODO: add support for variable "vault_aws_engine"
 }
 

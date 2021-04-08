@@ -222,6 +222,35 @@ variable "iam_instance_profile" {
   default     = ""
 }
 
+variable "image" {
+  type = object({
+    filters = {
+      name                = string
+      root-device-type    = string
+      virtualization-type = string
+    }
+
+    most_recent = bool
+    owners      = list(string)
+  })
+
+  description = "Amazon AMI Image Filter"
+
+  default = {
+    filters = {
+      name                = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
+      root-device-type    = "ebs"
+      virtualization-type = "hvm"
+    }
+
+    # Selects the newest created image when true.
+    most_recent = true
+
+    # Filters the images by their owner.
+    owners = ["099720109477"]
+  }
+}
+
 # see https://www.packer.io/docs/builders/amazon/ebs#insecure_skip_tls_verify
 variable "insecure_skip_tls_verify" {
   type        = bool
@@ -452,7 +481,7 @@ variable "token" {
 variable "version_description" {
   type        = string
   description = "Version to use for the image."
-  default     = "1"
+  default     = ""
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#vpc_id
