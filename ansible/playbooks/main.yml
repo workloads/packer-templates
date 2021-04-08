@@ -4,6 +4,14 @@
   hosts: default
   become: true
 
+  collections:
+    # see https://github.com/dev-sec/ansible-collection-hardening/
+    - devsec.hardening
+
+  roles:
+    - os_hardening
+    - ssh_hardening
+
   tasks:
     # see https://docs.ansible.com/ansible/2.9/modules/include_vars_module.html
     - name: Include Packer-generated Variables
