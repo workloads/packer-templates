@@ -52,16 +52,16 @@ build {
     playbook_file    = var.build_config.ansible.playbook_file
   }
 
-#  # see https://www.packer.io/docs/provisioners/inspec
-#  provisioner "inspec" {
-#    attributes           = var.build_config.inspec.attributes
-#    attributes_directory = var.build_config.inspec.attributes_directory
-#    backend              = var.build_config.inspec.backend
-#    command              = var.build_config.inspec.command
-#    inspec_env_vars      = var.build_config.inspec.inspec_env_vars
-#    profile              = var.build_config.inspec.profile
-#    user                 = var.build_config.inspec.user
-#  }
+  #  # see https://www.packer.io/docs/provisioners/inspec
+  #  provisioner "inspec" {
+  #    attributes           = var.build_config.inspec.attributes
+  #    attributes_directory = var.build_config.inspec.attributes_directory
+  #    backend              = var.build_config.inspec.backend
+  #    command              = var.build_config.inspec.command
+  #    inspec_env_vars      = var.build_config.inspec.inspec_env_vars
+  #    profile              = var.build_config.inspec.profile
+  #    user                 = var.build_config.inspec.user
+  #  }
 
   # uncomment this stanza to build images for Vagrant Cloud
   # see https://www.packer.io/docs/post-processors/vagrant-cloud
