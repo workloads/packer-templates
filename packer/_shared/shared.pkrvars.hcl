@@ -63,7 +63,7 @@ build_config = {
       add_nomad_user_to_docker = true
 
       # copy unit files for enabled products
-      copy_unit_files = false
+      copy_unit_files = true
 
       # create users for enabled products
       create_users = true
