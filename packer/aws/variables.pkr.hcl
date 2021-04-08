@@ -35,7 +35,7 @@ variable "ami_name" {
 variable "ami_product_codes" {
   type        = list(string)
   description = "A list of product codes to associate with the AMI."
-  default     = ["none"]
+  default     = []
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#ami_regions
