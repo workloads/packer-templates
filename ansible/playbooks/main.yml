@@ -21,30 +21,30 @@
       include_vars:
         file: ../../generated/generated_configuration.yml
 
-    # see https://docs.ansible.com/ansible/2.10/modules/debug_module.html
-    - name: ansible_env
+    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/debug_module.html
+    - name: Print `ansible_env`
       debug:
         var: ansible_env
       when:
         - toggle.enable_debug_statements is defined
         - toggle.enable_debug_statements
 
-    # see https://docs.ansible.com/ansible/2.10/modules/include_module.html
+    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
     - name: Manage OS Packages
       include: base.yml
       when: toggles.enable_os
 
-    # see https://docs.ansible.com/ansible/2.10/modules/include_module.html
+    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
     - name: Manage Docker Packages
       include: docker.yml
       when: toggles.enable_docker
 
-    # see https://docs.ansible.com/ansible/2.10/modules/include_module.html
+    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
     - name: Manage Podman Packages
       include: podman.yml
       when: toggles.enable_podman
 
-    # see https://docs.ansible.com/ansible/2.10/modules/include_module.html
+    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
     - name: Manage HashiCorp Packages
       include: hashicorp.yml
       when: toggles.enable_hashicorp

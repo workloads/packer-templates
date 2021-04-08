@@ -1,6 +1,6 @@
 ---
 
-# see https://docs.ansible.com/ansible/2.10/modules/debug_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/debug_module.html
 - name: debug
   debug:
     msg: "included base.yml"
@@ -8,7 +8,7 @@
     - toggle.enable_debug_statements is defined
     - toggle.enable_debug_statements
 
-# see https://docs.ansible.com/ansible/2.10/modules/apt_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
 - name: Update APT Cache
   apt:
     force_apt_get: true

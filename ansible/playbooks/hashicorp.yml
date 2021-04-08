@@ -1,6 +1,6 @@
 ---
 
-# see https://docs.ansible.com/ansible/2.10/modules/debug_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/debug_module.html
 - name: debug
   debug:
     msg: "included hashicorp.yml"
@@ -8,7 +8,7 @@
     - toggle.enable_debug_statements is defined
     - toggle.enable_debug_statements
 
-# see https://docs.ansible.com/ansible/2.10/modules/apt_key_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_key_module.html
 - name: Add APT Key for HashiCorp Repository
   apt_key:
     state: present
@@ -17,7 +17,7 @@
     - ansible_os_family == "Debian"
     - toggles.hashicorp.add_apt_repository
 
-# see https://docs.ansible.com/ansible/2.10/modules/apt_repository_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_repository_module.html
 - name: Add APT repository for HashiCorp Packages
   apt_repository:
     filename: hashicorp
@@ -28,7 +28,7 @@
     - ansible_os_family == "Debian"
     - toggles.hashicorp.add_apt_repository
 
-# see https://docs.ansible.com/ansible/2.10/modules/apt_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
 - name: Install HashiCorp Packages
   apt:
     force_apt_get: true
@@ -43,7 +43,7 @@
     - toggles.hashicorp.install_packages
 
 # TODO: ensure these packages are available
-## see https://docs.ansible.com/ansible/2.10/modules/apt_module.html
+## see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
 # - name: Install Nomad Plugins
 #  apt:
 #    force_apt_get: true
@@ -54,7 +54,7 @@
 #  with_items: "{{ packages.hashicorp_nomad_plugins }}"
 #  when: toggles.hashicorp.install_nomad_plugins
 
-# see https://docs.ansible.com/ansible/2.10/modules/group_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/group_module.html
 - name: Add Groups for HashiCorp Packages
   group:
     name: "{{ item.name }}"
@@ -66,7 +66,7 @@
     - toggles.docker.create_group
     - toggles.hashicorp.create_groups
 
-# see https://docs.ansible.com/ansible/2.10/modules/group_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/group_module.html
 - name: Add Groups for HashiCorp Packages
   group:
     name: "hashicorp"
@@ -75,7 +75,7 @@
   when:
     - toggles.hashicorp.create_groups
 
-# see https://docs.ansible.com/ansible/2.10/modules/user_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/user_module.html
 - name: Add Users for HashiCorp Packages
   user:
     comment: "HashiCorp {{ item.name | capitalize }}"
@@ -87,7 +87,7 @@
     - toggles.hashicorp_enabled[item.name]
     - toggles.hashicorp.create_users
 
-# see https://docs.ansible.com/ansible/2.10/modules/user_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/user_module.html
 - name: Add Users to `hashicorp` Group
   user:
     append: true
@@ -101,7 +101,7 @@
     - toggles.hashicorp.create_users
     - toggles.hashicorp.create_groups
 
-# see https://docs.ansible.com/ansible/2.10/modules/user_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/user_module.html
 - name: Add `nomad` User to `docker` Group
   user:
     append: true
@@ -114,7 +114,7 @@
     - toggles.hashicorp.create_users
     - toggles.hashicorp.add_nomad_user_to_docker
 
-# see https://docs.ansible.com/ansible/2.10/modules/template_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/template_module.html
 - name: Copy Unit Files for HashiCorp Packages
   template:
     dest: "/lib/systemd/system/{{ item.name }}.service"
