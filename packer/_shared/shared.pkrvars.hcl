@@ -126,11 +126,7 @@ build_config = {
     ]
 
     # packages that should be removed
-    to_remove = [
-      "ftp",
-      "snapd",
-      "telnet"
-    ]
+    to_remove = []
 
     # package definitions (name and version) for Docker(-related) products
     docker = [
