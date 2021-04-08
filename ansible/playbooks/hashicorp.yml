@@ -91,7 +91,8 @@
 - name: Add Users to `hashicorp` Group
   user:
     append: true
-    group: hashicorp
+    groups:
+      - hashicorp
     name: "{{ item.name }}"
     system: true
   with_items: "{{ packages.hashicorp }}"
