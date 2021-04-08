@@ -54,7 +54,18 @@ variable "build_config" {
 
     apt_repos                 = map(string)
     image_version_date_format = string
-    name                      = string
+
+    inspec = object({
+      attributes           = list(string)
+      attributes_directory = string
+      backend              = string
+      command              = string
+      inspec_env_vars      = list(string)
+      profile              = string
+      user                 = string
+    })
+
+    name = string
 
     generated_files = object({
       configuration = string

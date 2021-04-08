@@ -32,6 +32,31 @@ build_config = {
   # Formatting sequence to use for date formats
   image_version_date_format = "YYYYMMDD-hhmmss"
 
+  inspec = {
+    # see https://www.packer.io/docs/provisioners/inspec#attributes
+    attributes = []
+
+    # see https://www.packer.io/docs/provisioners/inspec#attributes_directory
+    attributes_directory = null
+
+    # see https://www.packer.io/docs/provisioners/inspec#backend
+    backend = "ssh"
+
+    # see https://www.packer.io/docs/provisioners/inspec#command
+    command = "inspec"
+
+    # see https://www.packer.io/docs/provisioners/inspec#inspec_env_vars
+    inspec_env_vars = [
+      "CHEF_LICENSE=accept"
+    ]
+
+    # see https://www.packer.io/docs/provisioners/inspec#profile
+    profile = "git@github.com:dev-sec/linux-baseline.git"
+
+    # https://www.packer.io/docs/provisioners/inspec#user
+    user = null
+  }
+
   # Shared name for Images
   name = "ubuntu-hashicorp"
 
