@@ -16,6 +16,8 @@ ifeq ($(target),vagrant)
 	else
 	except_vagrant_cloud = 'post-processor.vagrant-cloud'
 	endif
+else
+$(error Vagrant Cloud post-processing support can only be enabled for Vagrant builds)
 endif
 
 # Run all builds and post-processors other than these.
