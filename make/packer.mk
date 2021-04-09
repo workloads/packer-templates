@@ -19,7 +19,7 @@ endif
 
 except_vagrant_cloud =
 else
-except_vagrant_cloud = 'post-processor.vagrant-cloud'
+except_vagrant_cloud = post-processor.vagrant-cloud
 endif
 
 # Run all builds and post-processors other than these.
