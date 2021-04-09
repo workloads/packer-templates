@@ -5,19 +5,19 @@ packer {
 
   # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#specifying-plugin-requirements
   required_plugins {
-     amazon = {
-       version = ">= 0.0.1"
-       source = "github.com/hashicorp/amazon"
-     }
-   }
+    amazon = {
+      version = ">= 0.0.1"
+      source  = "github.com/hashicorp/amazon"
+    }
+  }
 }
 
 # see https://www.packer.io/docs/datasources/amazon/ami
 data "amazon-ami" "image" {
-  filters = var.image.filters
+  filters = local.image.filters
 
-  most_recent = var.image.most_recent
-  owners      = var.image.owners
+  most_recent = local.image.most_recent
+  owners      = local.image.owners
   region      = var.region
 }
 
@@ -59,9 +59,10 @@ build {
 
   # see https://www.packer.io/docs/provisioners/ansible
   provisioner "ansible" {
-    ansible_env_vars = var.build_config.ansible_env_vars
-    playbook_file    = var.build_config.playbook_file
-    command          = var.build_config.command
-    extra_arguments  = var.build_config.extra_arguments
+    ansible_env_vars = var.build_config.ansible.ansible_env_vars
+    command          = var.build_config.ansible.command
+    extra_arguments  = var.build_config.ansible.extra_arguments
+    galaxy_file      = var.build_config.ansible.galaxy_file
+    playbook_file    = var.build_config.ansible.playbook_file
   }
 }

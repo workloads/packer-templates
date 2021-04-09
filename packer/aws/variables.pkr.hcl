@@ -90,12 +90,28 @@ variable "availability_zone" {
 
 variable "build_config" {
   type = object({
-    ansible_env_vars          = list(string)
+    ansible = object({
+      ansible_env_vars = list(string)
+      command          = string
+      extra_arguments  = list(string)
+      galaxy_file      = string
+      playbook_file    = string
+    })
+
     apt_repos                 = map(string)
-    command                   = string
-    extra_arguments           = list(string)
     image_version_date_format = string
-    name                      = string
+
+    inspec = object({
+      attributes           = list(string)
+      attributes_directory = string
+      backend              = string
+      command              = string
+      inspec_env_vars      = list(string)
+      profile              = string
+      user                 = string
+    })
+
+    name = string
 
     generated_files = object({
       configuration = string
@@ -126,8 +142,6 @@ variable "build_config" {
         version = string
       }))
     })
-
-    playbook_file = string
 
     templates = object({
       versions = string
@@ -222,14 +236,9 @@ variable "iam_instance_profile" {
   default     = ""
 }
 
+# NOTE: the `filters` of `image` is defined in the `locals` stanza at the bottom of this file
 variable "image" {
   type = object({
-    filters = object({
-      name                = string
-      root-device-type    = string
-      virtualization-type = string
-    })
-
     most_recent = bool
     owners      = list(string)
   })
@@ -237,12 +246,6 @@ variable "image" {
   description = "Amazon AMI Image Filter"
 
   default = {
-    filters = {
-      name                = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
-      root-device-type    = "ebs"
-      virtualization-type = "hvm"
-    }
-
     # Selects the newest created image when true.
     most_recent = true
 
@@ -492,6 +495,16 @@ variable "vpc_id" {
 }
 
 locals {
+
+  image_filters = {
+    name                = "ubuntu/images/${var.ami_virtualization_type}-ssd/ubuntu-focal-20.04-amd64-server-*"
+    root-device-type    = "ebs"
+    virtualization-type = var.ami_virtualization_type
+  }
+
+  # merge `var.image` and `locals.image_filters` for less repetition
+  image = merge(var.image, local.image_filters)
+
   version_description = var.version_description == "" ? formatdate(var.build_config.image_version_date_format, timestamp()) : var.version_description
 
   ami_name = var.ami_name == "" ? var.build_config.name : var.ami_name
