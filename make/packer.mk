@@ -10,14 +10,16 @@ packer_debug =
 endif
 
 # Toggle to enable the Vagrant Cloud post-processor
-ifeq ($(target),vagrant)
-	ifdef enable-vagrant-cloud
-	except_vagrant_cloud =
-	else
-	except_vagrant_cloud = 'post-processor.vagrant-cloud'
-	endif
-else
+ifdef enable-vagrant-cloud
+
+# Verify that the current target is Vagrant
+ifneq ($(target),vagrant)
 $(error Vagrant Cloud post-processing support can only be enabled for Vagrant builds)
+endif
+
+except_vagrant_cloud =
+else
+except_vagrant_cloud = 'post-processor.vagrant-cloud'
 endif
 
 # Run all builds and post-processors other than these.
