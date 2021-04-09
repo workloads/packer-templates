@@ -6,7 +6,6 @@
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Authentication](#authentication)
-  - [Prerequisites](#prerequisites)
   - [Images](#images)
 
 ## Overview
@@ -24,16 +23,6 @@
 ## Authentication
 
 not yet available
-
-## Prerequisites
-
-> init command `make terraform-init target=aws`
-
-> build command: `make terraform-apply target=aws`
-
-> destroy command: `make terraform-destroy target=aws`
-
-> `make` commands must be run from the root directory.
 
 ## Images
 
