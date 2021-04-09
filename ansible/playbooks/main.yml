@@ -4,14 +4,14 @@
   hosts: default
   become: true
   vars:
-    minimal_ansible_version: "2.10.7"
+    ansible_required_version: "2.10.7"
 
   pre_tasks:
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/fail_module.html
     - name: Verify Ansible version meets requirements
       fail:
-        msg: Need v{{ minimal_ansible_version }}, got v{{ ansible_version.full}}
-      when: ansible_version.full < minimal_ansible_version
+        msg: Need v{{ ansible_required_version }}, got v{{ ansible_version.full}}
+      when: ansible_version.full < ansible_required_version
 
   collections:
     # see https://github.com/dev-sec/ansible-collection-hardening/
