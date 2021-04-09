@@ -495,17 +495,16 @@ variable "vpc_id" {
 }
 
 locals {
+  image_filter_name = "ubuntu/images/${var.ami_virtualization_type}-ssd/ubuntu-focal-20.04-amd64-server-*"
 
-  image_filters = {
-    name                = "ubuntu/images/${var.ami_virtualization_type}-ssd/ubuntu-focal-20.04-amd64-server-*"
-    root-device-type    = "ebs"
-    virtualization-type = var.ami_virtualization_type
+  version_description_data = {
+    build_config = var.build_config
+    name         = local.box_tag
+    version      = local.box_version
+    timestamp    = local.box_version_timestamp
   }
 
-  # merge `var.image` and `locals.image_filters` for less repetition
-  image = merge(var.image, local.image_filters)
-
-  version_description = var.version_description == "" ? formatdate(var.build_config.image_version_date_format, timestamp()) : var.version_description
+  version_description = templatefile(var.build_config.templates.versions, local.version_description_data)
 
   ami_name = var.ami_name == "" ? var.build_config.name : var.ami_name
 }

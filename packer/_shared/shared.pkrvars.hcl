@@ -124,9 +124,6 @@ build_config = {
 
     # miscellaneous feature flags
     misc = {
-      # create files with version information
-      create_versions_files = true
-
       # copy files with version information to image
       copy_versions_files = true
     }
