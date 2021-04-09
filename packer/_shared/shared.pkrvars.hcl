@@ -220,7 +220,7 @@ build_config = {
   }
 
   generated_files = {
-    configuration = "generated/generated_configuration.yml"
+    configuration = "generated/generated-configuration.yml"
     versions      = "generated/version-information.md"
   }
 }
