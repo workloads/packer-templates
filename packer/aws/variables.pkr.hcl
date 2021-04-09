@@ -224,11 +224,11 @@ variable "iam_instance_profile" {
 
 variable "image" {
   type = object({
-    filters = {
+    filters = object({
       name                = string
       root-device-type    = string
       virtualization-type = string
-    }
+    })
 
     most_recent = bool
     owners      = list(string)
