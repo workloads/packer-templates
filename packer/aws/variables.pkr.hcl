@@ -14,7 +14,7 @@ variable "access_key" {
 variable "ami_description" {
   type        = string
   description = "The description to set for the resulting AMI(s)."
-  default     = "Created with Packer"
+  default     = ""
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#ami_groups
@@ -57,11 +57,11 @@ variable "ami_users" {
 variable "ami_virtualization_type" {
   type        = string
   description = "The type of virtualization for the AMI you are building."
-  default     = "paravirtual"
+  default     = "hvm"
 
   validation {
-    condition     = can(contains(["paravirtual", "hvm"], var.ami_virtualization_type))
-    error_message = "The AMI Virtualization Type must be one of \"paravirtual\", \"hvm\"."
+    condition     = can(contains(["hvm", "paravirtual"], var.ami_virtualization_type))
+    error_message = "The AMI Virtualization Type must be one of \"hvm\", \"paravirtual\"."
   }
 }
 
