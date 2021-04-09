@@ -15,16 +15,7 @@ except ?=
 ifdef except
 packer_except = -except="$(except)"
 else
-packer_except =
-endif
-
-# Build only the specified builds.
-only ?=
-
-ifdef only
-packer_only = -only=$(only)
-else
-packer_only =
+packer_except = 
 endif
 
 # Force a build to continue if artifacts exist, deletes existing artifacts.
@@ -46,6 +37,15 @@ ifdef machine-readable
 packer_machine_readable = -machine-readable
 else
 packer_machine_readable =
+endif
+
+# Build only the specified builds.
+only ?=
+
+ifdef only
+packer_only = -only=$(only)
+else
+packer_only =
 endif
 
 # If the build fails do: clean up (default), abort, ask, or run-cleanup-provisioner.
