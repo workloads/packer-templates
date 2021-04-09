@@ -10,13 +10,13 @@
 
 ## Overview
 
-> image template: [image.pkr.hcl](image.pkr.hcl)
-
-> image variables: [variables.pkr.hcl](variables.pkr.hcl)
-
-> build target: `aws`
-
-> build command: `make build target=aws`
+|                 |                                        |
+|-----------------|----------------------------------------|
+| image template  | [image.pkr.hcl](image.pkr.hcl)         |
+| image variables | [variables.pkr.hcl](variables.pkr.hcl) |
+| build target    | `aws`                                  |
+| build command   | `make build target=aws`                |
+| lint command    | `make lint target=aws`                 |
 
 > `make` commands must be run from the root directory.
 
