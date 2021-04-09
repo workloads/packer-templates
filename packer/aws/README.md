@@ -26,4 +26,8 @@ not yet available
 
 ## Images
 
-not yet available
+```sh
+make build target=aws
+```
+
+️> `make` commands must be run from the root directory.

@@ -53,6 +53,8 @@ Alternatively, you can manually create an Azure Resource Group as well as the `.
 
 ## Images
 
-> build command: `make build target=azure`
+```sh
+make build target=azure
+```
 
 Once the build workflow completes successfully, you will be able to inspect the image in the [Azure Portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Compute%2Fimages).

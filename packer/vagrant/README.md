@@ -22,7 +22,9 @@
 
 ## Vagrant
 
-> build target `vagrant`
+```sh
+make build target=vagrant
+```
 
 ## Vagrant Cloud
 
@@ -36,4 +38,4 @@ Then, uncomment the Vagrant Cloud-specific `post-processor` (near the bottom of 
 make build target=vagrant
 ```
 
-> `make` commands must be run from the root directory.
+️> `make` commands must be run from the root directory.
