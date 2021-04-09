@@ -3,6 +3,7 @@
 ## Table of Contents
 
 - [Microsoft Azure](#microsoft-azure)
+  - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Authentication](#authentication)
   - [Prerequisites](#prerequisites)

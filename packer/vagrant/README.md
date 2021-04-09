@@ -3,6 +3,7 @@
 ## Table of Contents
 
 - [HashiCorp Vagrant](#hashicorp-vagrant)
+  - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Vagrant](#vagrant)
   - [Vagrant Cloud](#vagrant-cloud)
