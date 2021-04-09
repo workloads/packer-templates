@@ -9,13 +9,22 @@ else
 packer_debug =
 endif
 
+# Toggle to enable the Vagrant Cloud post-processor
+ifeq ($(target),vagrant)
+	ifdef enable-vagrant-cloud
+	except_vagrant_cloud =
+	else
+	except_vagrant_cloud = 'post-processor.vagrant-cloud'
+	endif
+endif
+
 # Run all builds and post-processors other than these.
 except ?=
 
 ifdef except
-packer_except = -except="$(except)"
+packer_except = -except="$(except), $(except_vagrant_cloud)"
 else
-packer_except = 
+packer_except = -except="$(except_vagrant_cloud)"
 endif
 
 # Force a build to continue if artifacts exist, deletes existing artifacts.
