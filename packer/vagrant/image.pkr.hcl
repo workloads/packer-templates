@@ -61,10 +61,10 @@ build {
 
   # uncomment this stanza to build images for Vagrant Cloud
   # see https://www.packer.io/docs/post-processors/vagrant-cloud
-  #post-processor "vagrant-cloud" {
-  #  box_tag             = local.box_tag
-  #  no_release          = var.no_release
-  #  version             = local.box_version
-  #  version_description = file(var.build_config.generated_files.versions)
-  #}
+  post-processor "vagrant-cloud" {
+    box_tag             = local.box_tag
+    no_release          = var.no_release
+    version             = local.box_version
+    # version_description = file(var.build_config.generated_files.versions)
+  }
 }
