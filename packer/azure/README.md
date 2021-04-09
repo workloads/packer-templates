@@ -41,7 +41,7 @@ To log in, execute the `az login` command and follow the instructions presented 
 
 > `make` commands must be run from the root directory.
 
-The Azure workflow described in [azure/image.pkr.hcl](image.pkr.hcl) requires an Azure Resource Group to operate.
+The Azure workflow described in [image.pkr.hcl](image.pkr.hcl) requires an Azure Resource Group to operate.
 
 To ease in the creation of this, this repository includes a Terraform workflow (in `./terraform/azure`) that can create the prerequisite resources.
 
