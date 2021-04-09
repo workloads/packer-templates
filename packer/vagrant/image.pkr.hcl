@@ -34,12 +34,7 @@ source "file" "version_description" {
 build {
   sources = [
     "source.file.image_configuration",
-    "source.file.version_description"
-  ]
-}
-
-build {
-  sources = [
+    "source.file.version_description",
     "source.vagrant.image"
   ]
 
