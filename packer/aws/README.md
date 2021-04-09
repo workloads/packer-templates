@@ -3,6 +3,7 @@
 ## Table of Contents
 
 - [Amazon Web Services](#amazon-web-services)
+  - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Authentication](#authentication)
   - [Prerequisites](#prerequisites)
