@@ -30,7 +30,7 @@ Vagrant Cloud is a subset of the [Vagrant](#vagrant) build process and cannot be
 
 To enable building for and deploying to [Vagrant Cloud](https://app.vagrantup.com/), open [image.pkr.hcl](image.pkr.hcl).
 
-Then, uncomment the Vagrant Cloud-specific `post-processor` (near the bottom of the file) and execute a build targetted at `vagrant`:
+Then, uncomment the Vagrant Cloud-specific `post-processor` (near the bottom of the file) and execute a build targeted at `vagrant`:
 
 ```sh
 make build target=vagrant
