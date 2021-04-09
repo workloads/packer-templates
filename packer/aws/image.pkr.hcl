@@ -14,11 +14,15 @@ packer {
 
 # see https://www.packer.io/docs/datasources/amazon/ami
 data "amazon-ami" "image" {
-  filters = local.image.filters
+  filters = {
+    name = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
+    # local.image_filter_name
+    root-device-type    = "ebs"
+    virtualization-type = var.ami_virtualization_type
+  }
 
-  most_recent = local.image.most_recent
-  owners      = local.image.owners
-  region      = var.region
+  most_recent = var.image.most_recent
+  owners      = var.image.owners
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs
