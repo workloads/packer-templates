@@ -9,6 +9,13 @@ else
 packer_debug =
 endif
 
+# Toggle to enable the InSpec provisioner
+ifdef enable-inspec
+except_inspec =
+else
+except_inspec = inspec
+endif
+
 # Toggle to enable the Vagrant Cloud post-processor
 ifdef enable-vagrant-cloud
 
