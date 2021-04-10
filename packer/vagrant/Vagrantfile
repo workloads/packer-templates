@@ -47,8 +47,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Packer-built Output Vagrant Box
   config.vm.define OUTPUT_VM_BOX do |output|
-    output.vm.box = OUTPUT_VM_BOX
-    output.vm.box_url = "file://package.box"
+    output.vm.box         = OUTPUT_VM_BOX
+    output.vm.box_url     = OUTPUT_VM_BOX_URL
     config.ssh.insert_key = false
   end
 
