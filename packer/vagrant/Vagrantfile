@@ -46,11 +46,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Packer-built Output Vagrant Box
-  config.vm.define "{{.BoxName}}" do |output|
-    output.vm.box = "{{.BoxName}}"
+  config.vm.define OUTPUT_VM_BOX do |output|
+    output.vm.box = OUTPUT_VM_BOX
     output.vm.box_url = "file://package.box"
     config.ssh.insert_key = false
   end
 
-  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.post_up_message = VM_POST_UP_MESSAGE
+
+  # see https://www.vagrantup.com/docs/synced-folders/basic_usage
+  config.vm.synced_folder '.',
+    VM_SYNCED_FOLDER_PATH,
+    disabled: VM_SYNCED_FOLDER_DISABLED
+
 end
