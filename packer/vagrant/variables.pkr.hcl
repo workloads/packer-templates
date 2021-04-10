@@ -52,7 +52,13 @@ variable "build_config" {
       playbook_file    = string
     })
 
-    apt_repos                 = map(string)
+    apt_repos = map(string)
+
+    generated_files = object({
+      configuration = string
+      versions      = string
+    })
+
     image_version_date_format = string
 
     inspec = object({
@@ -67,15 +73,7 @@ variable "build_config" {
 
     name = string
 
-    generated_files = object({
-      configuration = string
-      versions      = string
-    })
-
     packages = object({
-      to_install = list(string)
-      to_remove  = list(string)
-
       docker = list(object({
         name    = string
         version = string
@@ -95,6 +93,9 @@ variable "build_config" {
         name    = string
         version = string
       }))
+
+      to_install = list(string)
+      to_remove  = list(string)
     })
 
     templates = object({
@@ -103,17 +104,17 @@ variable "build_config" {
     })
 
     toggles = object({
-      enable_os               = bool
       enable_debug_statements = bool
       enable_docker           = bool
       enable_hashicorp        = bool
+      enable_os               = bool
       enable_podman           = bool
 
-      os                = map(bool)
       docker            = map(bool)
       hashicorp         = map(bool)
       hashicorp_enabled = map(bool)
       misc              = map(bool)
+      os                = map(bool)
       podman            = map(bool)
     })
   })

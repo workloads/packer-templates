@@ -29,6 +29,11 @@ build_config = {
     podman    = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/"
   }
 
+  generated_files = {
+    configuration = "generated/generated-configuration.yml"
+    versions      = "generated/version-information.md"
+  }
+
   # Formatting sequence to use for date formats
   image_version_date_format = "YYYYMMDD-hhmmss"
 
@@ -60,101 +65,7 @@ build_config = {
   # Shared name for Images
   name = "ubuntu-hashicorp"
 
-  # toggles to enable and disable various operations
-  toggles = {
-    # feature flags to enable (complete) playbooks
-    enable_debug_statements = false
-    enable_os               = true
-    enable_docker           = true
-    enable_hashicorp        = true
-    enable_podman           = false
-
-    # OS-specific feature flags
-    os = {
-      install_packages = true
-      remove_packages  = true
-      update_apt_cache = true
-    }
-
-    # Docker-specific feature flags
-    docker = {
-      add_apt_repository = true
-      create_group       = true
-      create_user        = true
-      install_packages   = true
-    }
-
-    # HashiCorp-specific feature flags
-    hashicorp = {
-      # add HashiCorp APT repository
-      add_apt_repository = true
-
-      # add `nomad` user to `docker` group
-      add_nomad_user_to_docker = true
-
-      # copy unit files for enabled products
-      copy_unit_files = true
-
-      # create users for enabled products
-      create_users = true
-
-      # create groups for enabled products
-      create_groups = true
-
-      # enable services for enabled products
-      enable_services = true
-
-      # install Nomad plugins
-      install_nomad_plugins = true
-
-      # install packages for enabled products
-      install_packages = true
-
-      # start services for enabled products
-      start_services = true
-    }
-
-    # feature flags for product-specific operations
-    hashicorp_enabled = {
-      boundary = false
-      consul   = true
-      nomad    = true
-      vault    = false
-    }
-
-    # miscellaneous feature flags
-    misc = {
-      # copy files with version information to image
-      copy_versions_files = true
-    }
-
-    # Podman-specific feature flags
-    podman = {
-      # add Podman APT repository
-      add_apt_repository = true
-
-      # install packages for Podman
-      install_packages = true
-    }
-  }
-
   packages = {
-    # packages that should be installed
-    to_install = [
-      "apt-transport-https",
-      "ca-certificates",
-      "curl",
-      "gnupg",
-      "jq",
-      "libcap2",
-      "lsb-release",
-      "sudo",
-      "unzip",
-    ]
-
-    # packages that should be removed
-    to_remove = []
-
     # package definitions (name and version) for Docker(-related) products
     docker = [
       { # see https://docs.docker.com/release-notes/
@@ -210,6 +121,22 @@ build_config = {
         version = "3.0.0"
       }
     ]
+
+    # packages that should be installed
+    to_install = [
+      "apt-transport-https",
+      "ca-certificates",
+      "curl",
+      "gnupg",
+      "jq",
+      "libcap2",
+      "lsb-release",
+      "sudo",
+      "unzip",
+    ]
+
+    # packages that should be removed
+    to_remove = []
   }
 
   templates = {
@@ -218,8 +145,81 @@ build_config = {
     versions      = "../_shared/image-description.pkrtpl.md"
   }
 
-  generated_files = {
-    configuration = "generated/generated-configuration.yml"
-    versions      = "generated/version-information.md"
+  # toggles to enable and disable various operations
+  toggles = {
+    # feature flags to enable (complete) playbooks
+    enable_debug_statements = false
+    enable_docker           = true
+    enable_hashicorp        = true
+    enable_os               = true
+    enable_podman           = false
+
+    # Docker-specific feature flags
+    docker = {
+      add_apt_repository = true
+      create_group       = true
+      create_user        = true
+      install_packages   = true
+    }
+
+    # HashiCorp-specific feature flags
+    hashicorp = {
+      # add HashiCorp APT repository
+      add_apt_repository = true
+
+      # add `nomad` user to `docker` group
+      add_nomad_user_to_docker = true
+
+      # copy unit files for enabled products
+      copy_unit_files = true
+
+      # create users for enabled products
+      create_users = true
+
+      # create groups for enabled products
+      create_groups = true
+
+      # enable services for enabled products
+      enable_services = true
+
+      # install Nomad plugins
+      install_nomad_plugins = true
+
+      # install packages for enabled products
+      install_packages = true
+
+      # start services for enabled products
+      start_services = true
+    }
+
+    # feature flags for product-specific operations
+    hashicorp_enabled = {
+      boundary = false
+      consul   = true
+      nomad    = true
+      vault    = false
+    }
+
+    # miscellaneous feature flags
+    misc = {
+      # copy files with version information to image
+      copy_versions_files = true
+    }
+
+    # OS-specific feature flags
+    os = {
+      install_packages = true
+      remove_packages  = true
+      update_apt_cache = true
+    }
+
+    # Podman-specific feature flags
+    podman = {
+      # add Podman APT repository
+      add_apt_repository = true
+
+      # install packages for Podman
+      install_packages = true
+    }
   }
 }
