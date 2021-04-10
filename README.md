@@ -67,7 +67,7 @@ See the `packer/` (and `terraform/`) subdirectories for more information.
 
 This repository takes input and inspiration from a handful of community projects.
 
-The authors would like to thank [@ansible-community](https://github.com/ansible-community?q=hashicorp) in particular.
+The authors would like to thank [@ansible-community](https://github.com/ansible-community?q=hashicorp) and [Mark Lewis](https://github.com/ml4/base) in particular.
 
 ## Author Information
 
