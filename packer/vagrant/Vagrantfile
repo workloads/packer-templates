@@ -20,11 +20,6 @@ VM_POST_UP_MESSAGE        = 'Provision, Secure, Connect, Run.'
 VM_SYNCED_FOLDER_DISABLED = true
 VM_SYNCED_FOLDER_PATH     = '/vagrant'
 
-# see https://www.vagrantup.com/docs/networking/public_network#dhcp
-VM_NETWORK_AUTO_CONFIG = true
-VM_NETWORK_HOSTNAME    = true
-VM_NETWORK_IP          = '10.47.42.77'
-
 # see https://www.vagrantup.com/docs/providers/virtualbox/configuration
 VIRTUALBOX_CHECK_GUEST_ADDITIONS = false
 VIRTUALBOX_GUI                   = false
@@ -51,6 +46,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     output.vm.box_url     = OUTPUT_VM_BOX_URL
     config.ssh.insert_key = false
   end
+
+  # TODO: add private and public networking
+
+  # TODO: add port-forwarding
 
   config.vm.post_up_message = VM_POST_UP_MESSAGE
 
