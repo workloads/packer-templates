@@ -213,7 +213,8 @@ build_config = {
   }
 
   templates = {
-    versions = "../_shared/image-description.pkrtpl.md"
+    configuration = "../_shared/generated-configuration.pkrtpl.yml"
+    versions      = "../_shared/image-description.pkrtpl.md"
   }
 
   generated_files = {

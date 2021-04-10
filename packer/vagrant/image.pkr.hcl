@@ -22,8 +22,11 @@ source "vagrant" "image" {
 
 # see https://www.packer.io/docs/builders/file
 source "file" "image_configuration" {
-  content = yamlencode(var.build_config)
-  target  = var.build_config.generated_files.configuration
+  content = templatefile(var.build_config.templates.configuration, {
+    configuration = yamlencode(var.build_config)
+  })
+
+  target = var.build_config.generated_files.configuration
 }
 
 # see https://www.packer.io/docs/builders/file
@@ -65,6 +68,6 @@ build {
     box_tag             = local.box_tag
     no_release          = var.no_release
     version             = local.box_version
-    # version_description = file(var.build_config.generated_files.versions)
+    version_description = local.version_description
   }
 }

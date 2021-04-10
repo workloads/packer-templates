@@ -144,7 +144,8 @@ variable "build_config" {
     })
 
     templates = object({
-      versions = string
+      configuration = string
+      versions      = string
     })
 
     toggles = object({
