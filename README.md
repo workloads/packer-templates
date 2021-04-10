@@ -4,7 +4,7 @@
 
 ## Table of Contents
 
-- [Packer Templates: HashiCorp products](#packer-templates-hashicorp-products)
+- [Packer Templates: HashiCorp Products](#packer-templates-hashicorp-products)
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Usage](#usage)
@@ -36,13 +36,12 @@ This allows for a consistent execution of the underlying workflows.
 
 This repository supports the following providers:
 
-| target    | local documentation                    | Packer Builder                | Terraform Provider |
-|-----------|----------------------------------------|-------------------------------|--------------------|
+| target    | local documentation                                  | Packer Builder  | Terraform Provider |
+|-----------|------------------------------------------------------|-----------------|--------------------|
 | `aws`     | [packer/aws/README.md](packer/aws/README.md)         | `amazon-ebs`    | n/a                |
 | `azure`   | [packer/azure/README.md](packer/azure/README.md)     | `azure-arm`     | `azurerm`          |
 | `google`  | [packer/google/README.md](packer/google/README.md)   | `googlecompute` | `google`           |
 | `vagrant` | [packer/vagrant/README.md](packer/vagrant/README.md) | `vagrant`       | n/a                |
-
 
 ### Workflow
 
@@ -62,7 +61,7 @@ Usage differs slightly for each provider and is therefore broken out into separa
 
 See the `packer/` (and `terraform/`) subdirectories for more information.
 
-> All workflows _can_ be executed manually. See the [Makefile](Makefile) for more information.
+> All workflows _can_ be executed manually, though this is not advisable. See the [Makefile](Makefile) for more information.
 
 ## Notes
 

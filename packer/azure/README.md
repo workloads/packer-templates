@@ -29,7 +29,7 @@ The Azure workflow is set up to use the Azure CLI `az` login information to retr
 
 To log in, execute the `az login` command and follow the instructions presented by the application.
 
-> ⚠️ You will need to log in to an Azure account that has permissions to create Resource Groups, Virtual Machines, and Virtual Machine Images.
+> You will need to log in to an Azure account that has permissions to create Resource Groups, Virtual Machines, and Virtual Machine Images.
 
 ## Prerequisites
 
