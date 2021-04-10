@@ -33,11 +33,19 @@ VIRTUALBOX_CPU                   = 2
 VIRTUALBOX_MEMORY                = 4096
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.ssh.forward_agent = SSH_FORWARD_AGENT
+  config.vm.communicator   = VM_COMMUNICATOR
+  config.vm.hostname       = VM_HOSTNAME
+
+  # TODO: add support for port-forwarding (see #10)
+
+  # Source Vagrant Box
   config.vm.define "source", autostart: false do |source|
     source.vm.box = "{{.SourceBox}}"
   	config.ssh.insert_key = {{.InsertKey}}
   end
 
+  # Packer-built Output Vagrant Box
   config.vm.define "{{.BoxName}}" do |output|
     output.vm.box = "{{.BoxName}}"
     output.vm.box_url = "file://package.box"
