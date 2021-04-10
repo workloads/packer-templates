@@ -213,6 +213,7 @@ build_config = {
   }
 
   templates = {
+    # these paths are relative to the Packer Builder target
     configuration = "../_shared/generated-configuration.pkrtpl.yml"
     versions      = "../_shared/image-description.pkrtpl.md"
   }
