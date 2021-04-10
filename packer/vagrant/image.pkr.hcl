@@ -56,7 +56,7 @@ build {
     playbook_file    = var.build_config.ansible.playbook_file
   }
 
-  #  # see https://www.packer.io/docs/provisioners/inspec
+  # see https://www.packer.io/docs/provisioners/inspec
   #  provisioner "inspec" {
   #    attributes           = var.build_config.inspec.attributes
   #    attributes_directory = var.build_config.inspec.attributes_directory
