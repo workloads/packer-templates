@@ -2,6 +2,7 @@
 
 name: "Code Quality: Terraform"
 
+# yamllint disable-line rule:truthy
 on:
   pull_request:
 

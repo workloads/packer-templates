@@ -1,6 +1,7 @@
 ---
 name: "Code Quality: Super-Linter"
 
+# yamllint disable-line rule:truthy
 on:
   pull_request:
 
