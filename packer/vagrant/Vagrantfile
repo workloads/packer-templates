@@ -37,7 +37,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Source Vagrant Box
   config.vm.define 'source', autostart: false do |source|
     source.vm.box = '{{.SourceBox}}'
-  	#config.ssh.insert_key = {{.InsertKey}}
   end
 
   # Packer-built Output Vagrant Box
@@ -55,14 +54,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # see https://www.vagrantup.com/docs/synced-folders/basic_usage
   config.vm.synced_folder '.',
-    VM_SYNCED_FOLDER_PATH,
-    disabled: VM_SYNCED_FOLDER_DISABLED
+                          VM_SYNCED_FOLDER_PATH,
+                          disabled: VM_SYNCED_FOLDER_DISABLED
 
   config.vm.provider 'virtualbox' do |v|
     v.check_guest_additions = VIRTUALBOX_CHECK_GUEST_ADDITIONS
     v.cpus                  = VIRTUALBOX_CPU
     v.gui                   = VIRTUALBOX_GUI
     v.memory                = VIRTUALBOX_MEMORY
-    #v.name                  = VIRTUALBOX_NAME
+    # v.name                = VIRTUALBOX_NAME
   end
 end
