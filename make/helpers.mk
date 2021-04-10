@@ -27,18 +27,18 @@ _ssh:
 	&& \
 	vagrant ssh $(vagrant_box_name)
 
-.PHONY: ansible-lint
-ansible-lint: # Lints Ansible playbook(s)
+.PHONY: _lint_ansible
+_lint_ansible: # Lints Ansible playbook(s)
 	@cd $(ansible_playbooks) \
 	&& \
 	ansible-lint \
 		"main.yml"
 
-.PHONY: yamllint
-yamllint: # Lints YAML files
+.PHONY: _lint_yaml
+_lint_yaml: # Lints YAML files
 	@yamllint \
 		--config-file ".yamllint" \
 		"."
 
-.PHONY: lint
-lint: yamllint ansible-lint
+.PHONY: _lint
+_lint: _lint_yaml _lint_ansible
