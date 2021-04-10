@@ -5,7 +5,7 @@ extends: default
 # see https://yamllint.readthedocs.io/en/stable/configuration.html#ignoring-paths
 ignore: |
   # ignore Packer-generated files
-  ansible/playbooks/vars/generated_configuration.yml
+  generated/generated-configuration.yml
 
 rules:
   # see https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.line_length
