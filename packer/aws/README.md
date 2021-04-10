@@ -4,9 +4,14 @@
 
 - [Amazon Web Services](#amazon-web-services)
   - [Table of Contents](#table-of-contents)
+  - [Requirements](#requirements)
   - [Overview](#overview)
   - [Authentication](#authentication)
   - [Images](#images)
+
+## Requirements
+
+- `aws` (AWS CLI) `2.1.36` or newer
 
 ## Overview
 

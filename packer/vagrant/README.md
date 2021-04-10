@@ -4,9 +4,14 @@
 
 - [HashiCorp Vagrant](#hashicorp-vagrant)
   - [Table of Contents](#table-of-contents)
+  - [Requirements](#requirements)
   - [Overview](#overview)
   - [Vagrant](#vagrant)
   - [Vagrant Cloud](#vagrant-cloud)
+
+## Requirements
+
+- Vagrant `2.2.10` or newer
 
 ## Overview
 

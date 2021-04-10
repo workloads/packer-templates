@@ -4,10 +4,15 @@
 
 - [Microsoft Azure](#microsoft-azure)
   - [Table of Contents](#table-of-contents)
+  - [Requirements](#requirements)
   - [Overview](#overview)
   - [Authentication](#authentication)
   - [Prerequisites](#prerequisites)
   - [Images](#images)
+
+## Requirements
+
+- `az` (Azure CLI) `2.21.0` or newer
 
 ## Overview
 
