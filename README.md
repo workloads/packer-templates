@@ -28,7 +28,7 @@ Terraform is used as a helper, only. It is possible (though not advised) to manu
 
 This repository contains Packer templates for multiple providers.
 
-The primary way of interacting with this repository is `make` via a [Makefile](Makefile).
+The primary way of interacting with this repository is `make` via the included [Makefile](Makefile).
 
 This allows for a consistent execution of the underlying workflows.
 
