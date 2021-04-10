@@ -67,7 +67,6 @@ build {
   #    user                 = var.build_config.inspec.user
   #  }
 
-  # uncomment this stanza to build images for Vagrant Cloud
   # see https://www.packer.io/docs/post-processors/vagrant-cloud
   post-processor "vagrant-cloud" {
     box_tag             = local.box_tag
