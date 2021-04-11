@@ -13,7 +13,7 @@ endif
 ifdef enable-inspec
 except_inspec =
 else
-except_inspec = inspec
+except_inspec = provisioners.inspec
 endif
 
 # Toggle to enable the Vagrant Cloud post-processor
@@ -33,9 +33,9 @@ endif
 except ?=
 
 ifdef except
-packer_except = -except="$(except), $(except_vagrant_cloud)"
+packer_except = -except="$(except), $(except_vagrant_cloud), $(except_inspec)"
 else
-packer_except = -except="$(except_vagrant_cloud)"
+packer_except = -except="$(except_vagrant_cloud), $(except_inspec)"
 endif
 
 # Force a build to continue if artifacts exist, deletes existing artifacts.
