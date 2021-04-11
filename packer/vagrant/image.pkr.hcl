@@ -39,6 +39,8 @@ source "file" "version_description" {
 }
 
 build {
+  name = "templates"
+
   sources = [
     "source.file.image_configuration",
     "source.file.version_description"
@@ -46,6 +48,8 @@ build {
 }
 
 build {
+  name = "provisioners"
+
   sources = [
     "source.vagrant.image"
   ]
