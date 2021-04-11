@@ -29,6 +29,9 @@ build_config = {
     podman    = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/"
   }
 
+  checksum_output = "generated/{{.BuildName}}_{{.BuilderType}}_{{.ChecksumType}}.checksum"
+  checksum_types  = ["sha256"]
+
   communicator = {
     # If true, Packer will attempt to remove its temporary keys.
     ssh_clear_authorized_keys = true

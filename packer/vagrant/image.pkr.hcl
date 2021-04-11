@@ -80,4 +80,10 @@ build {
     version             = local.box_version
     version_description = local.version_description
   }
+
+  # see https://www.packer.io/docs/post-processors/checksum#checksum-post-processor
+  post-processor "checksum" {
+    checksum_types = var.build_config.checksum_types
+    output         = var.build_config.checksum_output
+  }
 }

@@ -45,6 +45,9 @@ variable "build_config" {
 
     apt_repos = map(string)
 
+    checksum_output = string
+    checksum_types  = list(string)
+
     communicator = object({
       ssh_clear_authorized_keys    = bool
       ssh_disable_agent_forwarding = bool
