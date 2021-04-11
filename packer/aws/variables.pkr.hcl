@@ -105,6 +105,8 @@ variable "build_config" {
       ssh_port                     = number
       ssh_clear_authorized_keys    = bool
       ssh_disable_agent_forwarding = bool
+      ssh_password                 = string
+      ssh_username                 = string
       type                         = string
     })
 
@@ -431,37 +433,6 @@ variable "snapshot_users" {
   type        = list(string)
   description = "A list of account IDs that have access to create volumes from the snapshot(s)."
   default     = []
-}
-
-# see https://www.packer.io/docs/builders/amazon/ebs#source_ami_filter
-# TODO: add support for block variable "source_ami_filter"
-
-# see https://www.packer.io/docs/builders/amazon/ebs#ssh_username
-variable "ssh_username" {
-  type        = string
-  description = "The username to connect to SSH with."
-  default     = "ubuntu"
-}
-
-# see https://www.packer.io/docs/builders/amazon/ebs#ssh_port
-variable "ssh_port" {
-  type        = number
-  description = "The port to connect to SSH."
-  default     = "22"
-}
-
-# see https://www.packer.io/docs/builders/amazon/ebs#ssh_password
-variable "ssh_password" {
-  type        = string
-  description = "A plaintext password to use to authenticate with SSH."
-  default     = ""
-}
-
-# see https://www.packer.io/docs/builders/amazon/ebs#ssh_clear_authorized_keys
-variable "ssh_clear_authorized_keys" {
-  type        = bool
-  description = "If true, Packer will attempt to remove its temporary keys."
-  default     = true
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#subnet_id

@@ -59,6 +59,8 @@ variable "build_config" {
       ssh_port                     = number
       ssh_clear_authorized_keys    = bool
       ssh_disable_agent_forwarding = bool
+      ssh_password                 = string
+      ssh_username                 = string
       type                         = string
     })
 

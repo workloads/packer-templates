@@ -49,6 +49,8 @@ variable "build_config" {
       ssh_port                     = number
       ssh_clear_authorized_keys    = bool
       ssh_disable_agent_forwarding = bool
+      ssh_password                 = string
+      ssh_username                 = string
       type                         = string
     })
 
@@ -183,13 +185,6 @@ variable "managed_image_version" {
   type        = string
   description = "Version to use for the image."
   default     = ""
-}
-
-# see https://www.packer.io/docs/builders/azure/arm#ssh_clear_authorized_keys
-variable "ssh_clear_authorized_keys" {
-  type        = bool
-  description = "If true, Packer will attempt to remove its temporary key from the image."
-  default     = true
 }
 
 # see https://www.packer.io/docs/builders/azure/arm#vm_size

@@ -12,26 +12,21 @@ source "azure-arm" "image" {
   # TODO: add support for azure_tags
   azure_tags = {}
 
-  cloud_environment_name = var.cloud_environment_name
-
-  # cloud-init configuration
-  custom_data_file = var.custom_data_file
-
-  # base image
-  image_offer     = var.image_offer
-  image_publisher = var.image_publisher
-  image_sku       = var.image_sku
-  image_version   = var.image_version
-
-  location = var.location
-
-  # artifact configuration
+  cloud_environment_name            = var.cloud_environment_name
+  communicator                      = var.build_config.communicator.type
+  custom_data_file                  = var.custom_data_file
+  image_offer                       = var.image_offer
+  image_publisher                   = var.image_publisher
+  image_sku                         = var.image_sku
+  image_version                     = var.image_version
+  location                          = var.location
   managed_image_name                = local.managed_image_name_full
   managed_image_resource_group_name = var.managed_image_resource_group_name
-
-  os_type = var.os_type
-
-  ssh_clear_authorized_keys = var.ssh_clear_authorized_keys
+  os_type                           = var.os_type
+  ssh_clear_authorized_keys         = var.build_config.communicator.ssh_clear_authorized_keys
+  ssh_disable_agent_forwarding      = var.build_config.communicator.ssh_disable_agent_forwarding
+  ssh_username                      = var.build_config.communicator.ssh_username
+  ssh_port                          = var.build_config.communicator.ssh_port
 
   # authentication with `az` CLI supplied credentials
   use_azure_cli_auth = var.use_azure_cli_auth
