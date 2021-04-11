@@ -30,20 +30,11 @@ build_config = {
   }
 
   communicator = {
-    # The port to connect to SSH
-    ssh_port = null
-
     # If true, Packer will attempt to remove its temporary keys.
     ssh_clear_authorized_keys = true
 
     # If true, SSH agent forwarding will be disabled.
     ssh_disable_agent_forwarding = false
-
-    # A plaintext password to use to authenticate with SSH.
-    ssh_password = ""
-
-    # The username to connect to SSH with.
-    ssh_username = "ubuntu"
 
     # Which communicator to use when initializing a build.
     type = "ssh"

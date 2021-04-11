@@ -25,8 +25,6 @@ source "azure-arm" "image" {
   os_type                           = var.os_type
   ssh_clear_authorized_keys         = var.build_config.communicator.ssh_clear_authorized_keys
   ssh_disable_agent_forwarding      = var.build_config.communicator.ssh_disable_agent_forwarding
-  ssh_username                      = var.build_config.communicator.ssh_username
-  ssh_port                          = var.build_config.communicator.ssh_port
 
   # authentication with `az` CLI supplied credentials
   use_azure_cli_auth = var.use_azure_cli_auth

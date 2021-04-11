@@ -37,8 +37,6 @@ source "amazon-ebs" "image" {
   region                       = var.region
   ssh_clear_authorized_keys    = var.build_config.communicator.ssh_clear_authorized_keys
   ssh_disable_agent_forwarding = var.build_config.communicator.ssh_disable_agent_forwarding
-  ssh_username                 = var.build_config.communicator.ssh_username
-  ssh_port                     = var.build_config.communicator.ssh_port
   source_ami                   = data.amazon-ami.image.id
   subnet_id                    = var.subnet_id
   tags                         = var.tags
