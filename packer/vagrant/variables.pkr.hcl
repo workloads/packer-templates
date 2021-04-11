@@ -175,7 +175,7 @@ variable "source_path" {
 variable "teardown_method" {
   type        = string
   description = "Whether to halt, suspend, or destroy the box when the build has completed."
-  default     = "destroy"
+  default     = "halt"
 }
 
 # see https://www.packer.io/docs/builders/vagrant#template
