@@ -42,6 +42,7 @@ variable "box_version" {
   default     = ""
 }
 
+# shared configuration
 variable "build_config" {
   type = object({
     ansible = object({
@@ -53,6 +54,13 @@ variable "build_config" {
     })
 
     apt_repos = map(string)
+
+    communicator = object({
+      ssh_port                     = number
+      ssh_clear_authorized_keys    = bool
+      ssh_disable_agent_forwarding = bool
+      type                         = string
+    })
 
     generated_files = object({
       configuration = string
@@ -122,13 +130,6 @@ variable "build_config" {
   description = "Shared Configuration for all Images"
 
   # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
-}
-
-# see https://www.packer.io/docs/builders/vagrant#communicator
-variable "communicator" {
-  type        = string
-  description = "Which communicator to use when initializing Vagrant."
-  default     = "ssh"
 }
 
 # see https://www.packer.io/docs/builders/vagrant#no_release

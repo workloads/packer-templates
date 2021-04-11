@@ -88,6 +88,7 @@ variable "availability_zone" {
 # see https://www.packer.io/docs/builders/amazon/ebs#block_duration_minutes
 # TODO: add support for variable "block_duration_minutes"
 
+# shared configuration
 variable "build_config" {
   type = object({
     ansible = object({
@@ -99,6 +100,13 @@ variable "build_config" {
     })
 
     apt_repos = map(string)
+
+    communicator = object({
+      ssh_port                     = number
+      ssh_clear_authorized_keys    = bool
+      ssh_disable_agent_forwarding = bool
+      type                         = string
+    })
 
     generated_files = object({
       configuration = string

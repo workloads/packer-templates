@@ -8,16 +8,19 @@ packer {
 source "vagrant" "image" {
   # the following configuration represents a minimally viable selection
   # for all options see: https://www.packer.io/docs/builders/vagrant
-  add_force       = var.add_force
-  box_name        = local.box_name
-  box_version     = var.box_version
-  communicator    = var.communicator
-  output_dir      = var.output_dir
-  provider        = var.provider
-  skip_add        = var.skip_add
-  source_path     = var.source_path
-  teardown_method = var.teardown_method
-  template        = var.template
+  add_force                    = var.add_force
+  box_name                     = local.box_name
+  box_version                  = var.box_version
+  communicator                 = var.build_config.communicator.type
+  output_dir                   = var.output_dir
+  provider                     = var.provider
+  skip_add                     = var.skip_add
+  source_path                  = var.source_path
+  ssh_clear_authorized_keys    = var.build_config.communicator.ssh_clear_authorized_keys
+  ssh_disable_agent_forwarding = var.build_config.communicator.ssh_disable_agent_forwarding
+  ssh_port                     = var.build_config.communicator.ssh_port
+  teardown_method              = var.teardown_method
+  template                     = var.template
 }
 
 # see https://www.packer.io/docs/builders/file

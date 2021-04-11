@@ -35,12 +35,10 @@ make build target=vagrant
 
 Vagrant Cloud is a subset of the [Vagrant](#vagrant) build process and cannot be executed as a stand-alone build-process.
 
-To enable building for and deploying to [Vagrant Cloud](https://app.vagrantup.com/), open [image.pkr.hcl](image.pkr.hcl).
-
-Then, uncomment the Vagrant Cloud-specific `post-processor` (near the bottom of the file) and execute a build targeted at `vagrant`:
+To enable building for and deploying to [Vagrant Cloud](https://app.vagrantup.com/), pass the `enable-vagrant-cloud` flag:
 
 ```sh
-make build target=vagrant
+make build target=vagrant enable-vagrant-cloud=1
 ```
 
 ️> `make` commands must be run from the root directory.

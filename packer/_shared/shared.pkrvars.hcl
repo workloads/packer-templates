@@ -29,6 +29,20 @@ build_config = {
     podman    = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/"
   }
 
+  communicator = {
+    # The port to connect to SSH
+    ssh_port = 22
+
+    # If true, Packer will attempt to remove its temporary keys.
+    ssh_clear_authorized_keys = true
+
+    # If true, SSH agent forwarding will be disabled.
+    ssh_disable_agent_forwarding = false
+
+    # Which communicator to use when initializing a build.
+    type = "ssh"
+  }
+
   generated_files = {
     configuration = "generated/generated-configuration.yml"
     versions      = "generated/version-information.md"

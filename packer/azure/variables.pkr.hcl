@@ -32,6 +32,7 @@ variable "azure_tags" {
   default     = {}
 }
 
+# shared configuration
 variable "build_config" {
   type = object({
     ansible = object({
@@ -43,6 +44,13 @@ variable "build_config" {
     })
 
     apt_repos = map(string)
+
+    communicator = object({
+      ssh_port                     = number
+      ssh_clear_authorized_keys    = bool
+      ssh_disable_agent_forwarding = bool
+      type                         = string
+    })
 
     generated_files = object({
       configuration = string
