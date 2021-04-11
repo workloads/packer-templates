@@ -3,7 +3,7 @@
 # see https://www.packer.io/docs/builders/vagrant#add_clean
 variable "add_clean" {
   type        = bool
-  description = "Should Vagrant remove any old temporary fdiles from prior downloads?"
+  description = "Should Vagrant remove any old temporary files from prior downloads?"
   default     = false
 }
 

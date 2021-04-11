@@ -59,7 +59,7 @@ The workflow for (most) targets is as follows:
 
 Usage differs slightly for each provider and is therefore broken out into separate sections.
 
-See the `packer/` (and `terraform/`) subdirectories for more information.
+See the `packer/` (and `terraform/`) sub-directories for more information.
 
 > All workflows _can_ be executed manually, though this is not advisable. See the [Makefile](Makefile) for more information.
 
