@@ -13,7 +13,7 @@ endif
 ifdef enable-inspec
 except_inspec =
 else
-except_inspec = provisioners.inspec
+except_inspec = provisioner.inspec
 endif
 
 # Toggle to enable the Vagrant Cloud post-processor
