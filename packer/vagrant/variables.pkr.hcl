@@ -61,6 +61,7 @@ variable "build_config" {
     communicator = object({
       ssh_clear_authorized_keys    = bool
       ssh_disable_agent_forwarding = bool
+      ssh_username                 = string
       type                         = string
     })
 
@@ -169,6 +170,12 @@ variable "source_path" {
 
   # see https://app.vagrantup.com/ubuntu/boxes/focal64
   default = "ubuntu/focal64"
+}
+
+variable "ssh_username" {
+  type        = string
+  description = "The username to connect to SSH with."
+  default     = "vagrant"
 }
 
 # see https://www.packer.io/docs/builders/vagrant#teardown_method

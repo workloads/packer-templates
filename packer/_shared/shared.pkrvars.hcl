@@ -39,6 +39,9 @@ build_config = {
     # If true, SSH agent forwarding will be disabled.
     ssh_disable_agent_forwarding = false
 
+    # The username to connect to SSH with.
+    ssh_username = "ubuntu"
+
     # Which communicator to use when initializing a build.
     type = "ssh"
   }

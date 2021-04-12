@@ -107,6 +107,7 @@ variable "build_config" {
     communicator = object({
       ssh_clear_authorized_keys    = bool
       ssh_disable_agent_forwarding = bool
+      ssh_username                 = string
       type                         = string
     })
 
