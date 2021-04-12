@@ -477,16 +477,14 @@ variable "vpc_id" {
 }
 
 locals {
+  ami_name = var.ami_name == "" ? var.build_config.name : var.ami_name
+
   image_filter_name = "ubuntu/images/${var.ami_virtualization_type}-ssd/ubuntu-focal-20.04-amd64-server-*"
 
-  version_description_data = {
+  version_description = templatefile(var.build_config.templates.versions, {
     build_config = var.build_config
-    name         = local.box_tag
-    version      = local.box_version
-    timestamp    = local.box_version_timestamp
-  }
-
-  version_description = templatefile(var.build_config.templates.versions, local.version_description_data)
-
-  ami_name = var.ami_name == "" ? var.build_config.name : var.ami_name
+    name         = var.build_config.name
+    version      = "{{ isotime }}"
+    timestamp    = "{{ isotime }}"
+  })
 }
