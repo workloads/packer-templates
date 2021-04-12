@@ -153,7 +153,16 @@ build_config = {
     ]
 
     # packages that should be removed
-    to_remove = []
+    to_remove = [
+      # see https://packages.ubuntu.com/focal/dosfstools
+      "dosfstools",
+      "ftp",
+      "fuse",
+      "open-iscsi",
+      "pastebinit",
+      "snapd",
+      "ubuntu-release-upgrader-core"
+    ]
   }
 
   templates = {
