@@ -1,5 +1,5 @@
 # configuration
-ansible_playbooks = ansible/playbooks
+ansible_playbooks = ./ansible/playbooks
 generated_dir     = ./generated/vagrant
 vagrant_box_name ?= "ubuntu-hashicorp"
 

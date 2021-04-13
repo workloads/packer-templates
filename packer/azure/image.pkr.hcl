@@ -2,6 +2,17 @@
 packer {
   # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#version-constraint-syntax
   required_version = ">= 1.7.2"
+
+//  required_plugins {
+//    azure = {
+//      version = "0.0.1"
+//      source  = "github.com/hashicorp/azure"
+//    }
+//
+//    ansible = {
+//      version = "0.0.1"
+//      source  = "github.com/hashicorp/ansible"
+//    }
 }
 
 # see https://www.packer.io/docs/builders/azure/arm
