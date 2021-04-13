@@ -172,12 +172,6 @@ variable "source_path" {
   default = "ubuntu/focal64"
 }
 
-variable "ssh_username" {
-  type        = string
-  description = "The username to connect to SSH with."
-  default     = "vagrant"
-}
-
 # see https://www.packer.io/docs/builders/vagrant#teardown_method
 variable "teardown_method" {
   type        = string

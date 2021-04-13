@@ -18,7 +18,6 @@ source "vagrant" "image" {
   source_path                  = var.source_path
   ssh_clear_authorized_keys    = var.build_config.communicator.ssh_clear_authorized_keys
   ssh_disable_agent_forwarding = var.build_config.communicator.ssh_disable_agent_forwarding
-  ssh_username                 = var.ssh_username
   teardown_method              = var.teardown_method
   template                     = var.template
 }
