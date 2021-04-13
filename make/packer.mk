@@ -97,7 +97,7 @@ endif
 
 # see https://www.packer.io/docs/commands/build
 .PHONY: build
-build: # Build a Packer Image(s) for a target
+build: # Build a Packer Image
 	@: $(if $(target),,$(call missing_target))
 	@packer \
 		build \
@@ -115,7 +115,7 @@ build: # Build a Packer Image(s) for a target
 
 # see https://www.packer.io/docs/commands/init
 .PHONY: init
-init: # Install and upgrade plugins for Packer Template(s) for a target
+init: # Install and upgrade Packer Plugins
 	@: $(if $(target),,$(call missing_target))
 	@packer \
 		init \

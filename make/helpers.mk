@@ -8,7 +8,7 @@ vagrant_box_name ?= "ubuntu-hashicorp"
 _gen:
 	@open $(generated_dir)
 
-# unsupported helper to open "VirtualBox.app"
+# unsupported helper to open "VirtualBox.app" (macOS only)
 .SILENT .PHONY: _vb
 _vb:
 	@open -a "VirtualBox"
@@ -27,15 +27,17 @@ _ssh:
 	&& \
 	vagrant ssh $(vagrant_box_name)
 
+# Lints Ansible playbook(s)
 .PHONY: _lint_ansible
-_lint_ansible: # Lints Ansible playbook(s)
+_lint_ansible:
 	@cd $(ansible_playbooks) \
 	&& \
 	ansible-lint \
 		"main.yml"
 
+ # Lints YAML files
 .PHONY: _lint_yaml
-_lint_yaml: # Lints YAML files
+_lint_yaml:
 	@yamllint \
 		--config-file ".yamllint" \
 		"."
