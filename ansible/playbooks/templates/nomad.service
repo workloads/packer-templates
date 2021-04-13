@@ -7,14 +7,14 @@ Wants=consul.service
 After=consul.service
 Wants=vault.service
 After=vault.service
-ConditionFileNotEmpty=/etc/nomad.d/nomad.hcl
+ConditionDirectoryNotEmpty=/etc/nomad.d/
 StartLimitIntervalSec=60
 StartLimitBurst=3
 
 [Service]
 User=nomad
 Group=nomad
-ExecStart=/usr/bin/nomad agent -config=/etc/nomad.d/nomad.hcl
+ExecStart=/usr/bin/nomad agent -config=/etc/nomad.d/
 ExecReload=/bin/kill --signal HUP $MAINPID
 KillMode=process
 KillSignal=SIGINT
