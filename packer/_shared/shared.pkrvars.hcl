@@ -158,6 +158,7 @@ build_config = {
       "dosfstools",
       "ftp",
       "fuse",
+      "ntfs-3g",
       "open-iscsi",
       "pastebinit",
       "snapd",
