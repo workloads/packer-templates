@@ -9,7 +9,7 @@ assignees: ksatirli
 
 I'd like to request support for a new platform.
 
-## general information
+# general information
 
 <!-- What is the name you expect this target to be available under?  -->
 <!-- This name cannot be identical to an already existing target.    -->
