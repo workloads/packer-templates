@@ -18,7 +18,7 @@
 
 - Packer `1.7.2` or newer
 - Terraform `0.14.10` or newer
-- Ansible `2.10.7` (or a newer `2.10.x` release)
+- Ansible `2.10.7` or newer
 
 Ansible is used for system-level operations (e.g.: installing and removing packages).
 
