@@ -1,36 +1,42 @@
 ---
 name: Bug
 about: A bug or problem with this Repository
+title: Add support for
 labels: bug
----
+assignees: ksatirli
 
-<!-- Please provide a general summary of the issue in the Title above -->
+---
 
 # Expected Behavior
 
-<!-- Explain what you expect to happen -->
+<!-- Describe the behavior you are expecting as detailed as possible.     -->
+<!-- This helps us understand your report better and allows us to triage. -->
 
-## Current Behavior
+# Current Behavior
 
-<!-- Explain what actually happens -->
+<!-- Describe what actually happens as detailed as possible.              -->
+<!-- This helps us understand your report better and allows us to triage. -->
 
 ## Steps to Reproduce
 
-<!-- Explain how to reproduce the problem -->
-<!-- If relevant, include code, screenshots or links -->
+<!-- Describe how to reproduce the issue. Use as much detail as possible. -->
+<!-- This helps us understand your report better and allows us to triage. -->
+<!-- Use this part of the Issue to share any additional information.      -->
+<!-- Code examples and screenshots are welcome, too!                      -->
+
+## Environment information
+
+<!-- Use this part of the Issue to share any additional information. -->
+<!-- Code examples and screenshots are welcome, too!                 -->
 
 ## Environment
 
-1.) Output of `packer version`:
+* Output of `make _env_info`:
 
-```sh
-
-```
-
-2.) Version of the Repository: ``
-
-3.) Any other relevant environment information:
-
-```sh
+```text
 
 ```
+
+* Additional information:
+
+<!-- Share any additional information you have in this section. -->
