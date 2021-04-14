@@ -17,17 +17,17 @@ I'd like to request support for a new platform.
 
 * What is the desired name of the target: ``
 
-<!-- Find the relevant Packer Builder here: http://hashi.co/builders -->
+<!-- Find the relevant Packer Builder here: http://hashi.co/builders. -->
 
 * Link to relevant Packer Builder:
 
-<!-- Find the relevant Terraform Provider here: http://hashi.co/registry -->
-<!-- We prefer Official and Verified Providers                           -->
+<!-- Find the relevant Terraform Provider here: http://hashi.co/registry. -->
+<!-- We prefer Official and Verified Providers.                           -->
 
 * Link to relevant Terraform Provider:
 
 ## additional information
 
-<!-- Use this part of the Issue to share any additional information     -->
-<!-- you have, such as use-cases, considerations, limitations and       -->
-<!-- any caveats that come to mind. These details help us when triaging -->
+<!-- Use this part of the Issue to share any additional information      -->
+<!-- you have, such as use-cases, considerations, limitations and        -->
+<!-- any caveats that come to mind. These details help us when triaging. -->
