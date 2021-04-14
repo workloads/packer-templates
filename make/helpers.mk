@@ -9,9 +9,9 @@ define print_version_if_available
 endef
 
 # helper to print version information
-.SILENT .PHONY: _env_info
-_env_info:
-	@echo "* Output of \`make _env_info\`:\r\n"
+.SILENT .PHONY: env-info
+env-info: # Prints Version Information
+	@echo "* Output of \`make env-info\`:\r\n"
 
 	# TODO: consider adding a `foreach` for this function
 

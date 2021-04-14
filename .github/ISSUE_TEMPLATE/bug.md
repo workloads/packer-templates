@@ -31,7 +31,7 @@ assignees: ksatirli
 
 ## Environment
 
-* Output of `make _env_info`:
+* Output of `make env-info`:
 
 ```text
 
