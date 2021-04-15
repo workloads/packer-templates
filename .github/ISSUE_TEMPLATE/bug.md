@@ -1,7 +1,6 @@
 ---
 name: Bug
 about: A bug or problem with this Repository
-title: Add support for
 labels: bug
 assignees: ksatirli
 
