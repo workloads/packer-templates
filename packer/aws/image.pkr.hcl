@@ -4,17 +4,17 @@ packer {
   required_version = ">= 1.7.2"
 
   # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#specifying-plugin-requirements
-//  required_plugins {
-//    amazon = {
-//      version = ">= 0.0.1"
-//      source  = "github.com/hashicorp/amazon"
-//    }
-//
-//    ansible = {
-//      version = ">= 0.0.1"
-//      source  = "github.com/hashicorp/ansible"
-//    }
-//  }
+  required_plugins {
+    amazon = {
+      version = ">= 0.0.1"
+      source  = "github.com/hashicorp/amazon"
+    }
+
+    ansible = {
+      version = ">= 0.0.1"
+      source  = "github.com/hashicorp/ansible"
+    }
+  }
 }
 
 # see https://www.packer.io/docs/datasources/amazon/ami
