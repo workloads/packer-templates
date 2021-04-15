@@ -30,7 +30,7 @@ jobs:
         run: terraform -chdir="${{ matrix.directory }}" fmt -diff -check -no-color -recursive
 
       - name: Run `terraform init`
-        run: terraform -chdir="${{ matrix.directory }}" init -backend=false -get=true -get-plugins=true
+        run: terraform -chdir="${{ matrix.directory }}" init -backend=false -get=true
 
       - name: Run `terraform validate`
         run: terraform -chdir="${{ matrix.directory }}" validate -no-color
