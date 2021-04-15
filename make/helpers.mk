@@ -36,6 +36,9 @@ env-info: # Prints Version Information
 	# expected output: `Google Cloud SDK 321.0.0 [...]`
 	$(call print_version_if_available,"gcloud", "--version")
 
+	# expected output: `4.32.0`
+	$(call print_version_if_available,"inspec", "--version")
+
 	# unsupported helper to open "generated" directory
 .SILENT .PHONY: _gen
 _gen:
