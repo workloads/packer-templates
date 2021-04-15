@@ -9,22 +9,33 @@ else
 packer_debug =
 endif
 
+# Toggle to enable the InSpec provisioner
+ifdef enable-inspec
+except_inspec =
+else
+except_inspec = provisioner.inspec
+endif
+
+# Toggle to enable the Vagrant Cloud post-processor
+ifdef enable-vagrant-cloud
+
+# Verify that the current target is Vagrant
+ifneq ($(target),vagrant)
+$(error Vagrant Cloud post-processing support can only be enabled for Vagrant builds)
+endif
+
+except_vagrant_cloud =
+else
+except_vagrant_cloud = vagrant-cloud
+endif
+
 # Run all builds and post-processors other than these.
 except ?=
 
 ifdef except
-packer_except = -except="$(except)"
+packer_except = -except="$(except), $(except_vagrant_cloud), $(except_inspec)"
 else
-packer_except =
-endif
-
-# Build only the specified builds.
-only ?=
-
-ifdef only
-packer_only = -only=$(only)
-else
-packer_only =
+packer_except = -except="$(except_vagrant_cloud), $(except_inspec)"
 endif
 
 # Force a build to continue if artifacts exist, deletes existing artifacts.
@@ -46,6 +57,15 @@ ifdef machine-readable
 packer_machine_readable = -machine-readable
 else
 packer_machine_readable =
+endif
+
+# Build only the specified builds.
+only ?=
+
+ifdef only
+packer_only = -only=$(only)
+else
+packer_only =
 endif
 
 # If the build fails do: clean up (default), abort, ask, or run-cleanup-provisioner.
@@ -77,7 +97,7 @@ endif
 
 # see https://www.packer.io/docs/commands/build
 .PHONY: build
-build: # Build a Packer Image(s) for a target
+build: # Builds an Image with Packer
 	@: $(if $(target),,$(call missing_target))
 	@packer \
 		build \
@@ -95,7 +115,7 @@ build: # Build a Packer Image(s) for a target
 
 # see https://www.packer.io/docs/commands/init
 .PHONY: init
-init: # Install and upgrade plugins for Packer Template(s) for a target
+init: # Installs and upgrades Packer Plugins
 	@: $(if $(target),,$(call missing_target))
 	@packer \
 		init \
@@ -105,7 +125,7 @@ init: # Install and upgrade plugins for Packer Template(s) for a target
 # see https://www.packer.io/docs/commands/fmt
 # and https://www.packer.io/docs/commands/validate
 .PHONY: lint
-lint: # Formats and validates Packer Template(s) for a target
+lint: # Formats and validates Packer Template
 	@: $(if $(target),,$(call missing_target))
 	@packer \
 		fmt \

@@ -1,6 +1,6 @@
 ---
 
-# see https://docs.ansible.com/ansible/2.9/modules/debug_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/debug_module.html
 - name: debug
   debug:
     msg: "included base.yml"
@@ -8,7 +8,7 @@
     - toggle.enable_debug_statements is defined
     - toggle.enable_debug_statements
 
-# see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
 - name: Update APT Cache
   apt:
     force_apt_get: true
@@ -18,7 +18,7 @@
     - ansible_os_family == "Debian"
     - toggles.os.update_apt_cache
 
-# see https://docs.ansible.com/ansible/2.9/modules/package_module.html
+# see https://docs.ansible.com/ansible/2.10/modules/package_module.html
 - name: Install Packages
   apt:
     force_apt_get: true
@@ -29,7 +29,7 @@
     - ansible_os_family == "Debian"
     - toggles.os.install_packages
 
-# see https://docs.ansible.com/ansible/2.9/modules/package_module.html
+# see https://docs.ansible.com/ansible/2.10/modules/package_module.html
 - name: Remove Packages
   apt:
     autoclean: true
@@ -42,7 +42,7 @@
     - ansible_os_family == "Debian"
     - toggles.os.remove_packages
 
-# see https://docs.ansible.com/ansible/2.9/modules/copy_module.html
+# see https://docs.ansible.com/ansible/2.10/modules/copy_module.html
 # TODO: fix the `src` in a better way
 - name: Copy Version Files
   copy:

@@ -11,5 +11,4 @@ SHELL         := sh
 include make/commons.mk
 include make/packer.mk
 include make/terraform.mk
-include make/ansible.mk
 include make/helpers.mk

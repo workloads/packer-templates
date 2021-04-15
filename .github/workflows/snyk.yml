@@ -2,6 +2,7 @@
 
 name: "Snyk: Terraform"
 
+# yamllint disable-line rule:truthy
 on:
   pull_request:
 
@@ -20,7 +21,7 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name:  Run Snyk to test Terraform files
+      - name: Run Snyk to test Terraform files
         uses: snyk/actions/iac@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

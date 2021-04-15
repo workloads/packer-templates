@@ -1,6 +1,6 @@
 ---
 
-# see https://docs.ansible.com/ansible/2.9/modules/debug_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/debug_module.html
 - name: debug
   debug:
     msg: "included docker.yml"
@@ -8,7 +8,7 @@
     - toggle.enable_debug_statements is defined
     - toggle.enable_debug_statements
 
-# see https://docs.ansible.com/ansible/2.9/modules/apt_key_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_key_module.html
 - name: Add APT Key for Docker Repository
   apt_key:
     url: "{{ apt_repos.docker }}/linux/ubuntu/gpg"
@@ -17,7 +17,7 @@
     - ansible_os_family == "Debian"
     - toggles.docker.add_apt_repository
 
-# see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_repository_module.html
 - name: Add APT repository for Docker Packages
   apt_repository:
     filename: docker
@@ -28,7 +28,7 @@
     - ansible_os_family == "Debian"
     - toggles.docker.add_apt_repository
 
-# see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
 - name: Install Docker Packages
   apt:
     force_apt_get: true
@@ -41,7 +41,7 @@
     - ansible_os_family == "Debian"
     - toggles.docker.install_packages
 
-# see https://docs.ansible.com/ansible/2.9/modules/group_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/group_module.html
 - name: Add `docker` Group
   group:
     name: docker
@@ -49,7 +49,7 @@
     system: true
   when: toggles.docker.create_group
 
-# see https://docs.ansible.com/ansible/2.9/modules/user_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/user_module.html
 - name: Add `docker` User
   user:
     create_home: true

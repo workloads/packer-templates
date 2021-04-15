@@ -1,6 +1,18 @@
 # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer
 packer {
+  # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#version-constraint-syntax
   required_version = ">= 1.7.2"
+
+//  required_plugins {
+//    azure = {
+//      version = "0.0.1"
+//      source  = "github.com/hashicorp/azure"
+//    }
+//
+//    ansible = {
+//      version = "0.0.1"
+//      source  = "github.com/hashicorp/ansible"
+//    }
 }
 
 # see https://www.packer.io/docs/builders/azure/arm
@@ -11,26 +23,19 @@ source "azure-arm" "image" {
   # TODO: add support for azure_tags
   azure_tags = {}
 
-  cloud_environment_name = var.cloud_environment_name
-
-  # cloud-init configuration
-  custom_data_file = var.custom_data_file
-
-  # base image
-  image_offer     = var.image_offer
-  image_publisher = var.image_publisher
-  image_sku       = var.image_sku
-  image_version   = var.image_version
-
-  location = var.location
-
-  # artifact configuration
+  cloud_environment_name            = var.cloud_environment_name
+  communicator                      = var.build_config.communicator.type
+  custom_data_file                  = var.custom_data_file
+  image_offer                       = var.image_offer
+  image_publisher                   = var.image_publisher
+  image_sku                         = var.image_sku
+  image_version                     = var.image_version
+  location                          = var.location
   managed_image_name                = local.managed_image_name_full
   managed_image_resource_group_name = var.managed_image_resource_group_name
-
-  os_type = var.os_type
-
-  ssh_clear_authorized_keys = var.ssh_clear_authorized_keys
+  os_type                           = var.os_type
+  ssh_clear_authorized_keys         = var.build_config.communicator.ssh_clear_authorized_keys
+  ssh_disable_agent_forwarding      = var.build_config.communicator.ssh_disable_agent_forwarding
 
   # authentication with `az` CLI supplied credentials
   use_azure_cli_auth = var.use_azure_cli_auth
@@ -47,8 +52,11 @@ source "azure-arm" "image" {
 
 # see https://www.packer.io/docs/builders/file
 source "file" "image_configuration" {
-  content = yamlencode(var.build_config)
-  target  = var.build_config.generated_files.configuration
+  content = templatefile(var.build_config.templates.configuration, {
+    configuration = yamlencode(var.build_config)
+  })
+
+  target = var.build_config.generated_files.configuration
 }
 
 # see https://www.packer.io/docs/builders/file
@@ -58,6 +66,8 @@ source "file" "version_description" {
 }
 
 build {
+  name = "templates"
+
   sources = [
     "source.file.image_configuration",
     "source.file.version_description"
@@ -65,16 +75,19 @@ build {
 }
 
 build {
+  name = "provisioners"
+
   sources = [
     "source.azure-arm.image"
   ]
 
   # see https://www.packer.io/docs/provisioners/ansible
   provisioner "ansible" {
-    ansible_env_vars = var.build_config.ansible_env_vars
-    playbook_file    = var.build_config.playbook_file
-    command          = var.build_config.command
-    extra_arguments  = var.build_config.extra_arguments
+    ansible_env_vars = var.build_config.ansible.ansible_env_vars
+    command          = var.build_config.ansible.command
+    extra_arguments  = var.build_config.ansible.extra_arguments
+    galaxy_file      = var.build_config.ansible.galaxy_file
+    playbook_file    = var.build_config.ansible.playbook_file
   }
 
   # carry out deprovisioning steps: https://www.packer.io/docs/builders/azure/arm#linux
@@ -88,5 +101,11 @@ build {
     ]
 
     inline_shebang = "/bin/sh -x"
+  }
+
+  # see https://www.packer.io/docs/post-processors/checksum#checksum-post-processor
+  post-processor "checksum" {
+    checksum_types = var.build_config.checksum_types
+    output         = var.build_config.checksum_output
   }
 }

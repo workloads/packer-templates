@@ -14,7 +14,7 @@ variable "access_key" {
 variable "ami_description" {
   type        = string
   description = "The description to set for the resulting AMI(s)."
-  default     = "Created with Packer"
+  default     = ""
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#ami_groups
@@ -57,11 +57,11 @@ variable "ami_users" {
 variable "ami_virtualization_type" {
   type        = string
   description = "The type of virtualization for the AMI you are building."
-  default     = "paravirtual"
+  default     = "hvm"
 
   validation {
-    condition     = can(contains(["paravirtual", "hvm"], var.ami_virtualization_type))
-    error_message = "The AMI Virtualization Type must be one of \"paravirtual\", \"hvm\"."
+    condition     = can(contains(["hvm", "paravirtual"], var.ami_virtualization_type))
+    error_message = "The AMI Virtualization Type must be one of \"hvm\", \"paravirtual\"."
   }
 }
 
@@ -88,24 +88,49 @@ variable "availability_zone" {
 # see https://www.packer.io/docs/builders/amazon/ebs#block_duration_minutes
 # TODO: add support for variable "block_duration_minutes"
 
+# shared configuration
 variable "build_config" {
   type = object({
-    ansible_env_vars          = list(string)
-    apt_repos                 = map(string)
-    command                   = string
-    extra_arguments           = list(string)
-    image_version_date_format = string
-    name                      = string
+    ansible = object({
+      ansible_env_vars = list(string)
+      command          = string
+      extra_arguments  = list(string)
+      galaxy_file      = string
+      playbook_file    = string
+    })
+
+    apt_repos = map(string)
+
+    checksum_output = string
+    checksum_types  = list(string)
+
+    communicator = object({
+      ssh_clear_authorized_keys    = bool
+      ssh_disable_agent_forwarding = bool
+      ssh_username                 = string
+      type                         = string
+    })
 
     generated_files = object({
       configuration = string
       versions      = string
     })
 
-    packages = object({
-      to_install = list(string)
-      to_remove  = list(string)
+    image_version_date_format = string
 
+    inspec = object({
+      attributes           = list(string)
+      attributes_directory = string
+      backend              = string
+      command              = string
+      inspec_env_vars      = list(string)
+      profile              = string
+      user                 = string
+    })
+
+    name = string
+
+    packages = object({
       docker = list(object({
         name    = string
         version = string
@@ -125,26 +150,28 @@ variable "build_config" {
         name    = string
         version = string
       }))
+
+      to_install = list(string)
+      to_remove  = list(string)
     })
 
-    playbook_file = string
-
     templates = object({
-      versions = string
+      configuration = string
+      versions      = string
     })
 
     toggles = object({
-      enable_os               = bool
       enable_debug_statements = bool
       enable_docker           = bool
       enable_hashicorp        = bool
+      enable_os               = bool
       enable_podman           = bool
 
-      os                = map(bool)
       docker            = map(bool)
       hashicorp         = map(bool)
       hashicorp_enabled = map(bool)
       misc              = map(bool)
+      os                = map(bool)
       podman            = map(bool)
     })
   })
@@ -222,14 +249,9 @@ variable "iam_instance_profile" {
   default     = ""
 }
 
+# NOTE: the `filters` of `image` is defined in the `locals` stanza at the bottom of this file
 variable "image" {
   type = object({
-    filters = object({
-      name                = string
-      root-device-type    = string
-      virtualization-type = string
-    })
-
     most_recent = bool
     owners      = list(string)
   })
@@ -237,12 +259,6 @@ variable "image" {
   description = "Amazon AMI Image Filter"
 
   default = {
-    filters = {
-      name                = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
-      root-device-type    = "ebs"
-      virtualization-type = "hvm"
-    }
-
     # Selects the newest created image when true.
     most_recent = true
 
@@ -420,37 +436,6 @@ variable "snapshot_users" {
   default     = []
 }
 
-# see https://www.packer.io/docs/builders/amazon/ebs#source_ami_filter
-# TODO: add support for block variable "source_ami_filter"
-
-# see https://www.packer.io/docs/builders/amazon/ebs#ssh_username
-variable "ssh_username" {
-  type        = string
-  description = "The username to connect to SSH with."
-  default     = "ubuntu"
-}
-
-# see https://www.packer.io/docs/builders/amazon/ebs#ssh_port
-variable "ssh_port" {
-  type        = number
-  description = "The port to connect to SSH."
-  default     = "22"
-}
-
-# see https://www.packer.io/docs/builders/amazon/ebs#ssh_password
-variable "ssh_password" {
-  type        = string
-  description = "A plaintext password to use to authenticate with SSH."
-  default     = ""
-}
-
-# see https://www.packer.io/docs/builders/amazon/ebs#ssh_clear_authorized_keys
-variable "ssh_clear_authorized_keys" {
-  type        = bool
-  description = "If true, Packer will attempt to remove its temporary keys."
-  default     = true
-}
-
 # see https://www.packer.io/docs/builders/amazon/ebs#subnet_id
 variable "subnet_id" {
   type        = string
@@ -492,7 +477,14 @@ variable "vpc_id" {
 }
 
 locals {
-  version_description = var.version_description == "" ? formatdate(var.build_config.image_version_date_format, timestamp()) : var.version_description
-
   ami_name = var.ami_name == "" ? var.build_config.name : var.ami_name
+
+  image_filter_name = "ubuntu/images/${var.ami_virtualization_type}-ssd/ubuntu-focal-20.04-amd64-server-*"
+
+  version_description = templatefile(var.build_config.templates.versions, {
+    build_config = var.build_config
+    name         = var.build_config.name
+    version      = "{{ isotime }}"
+    timestamp    = "{{ isotime }}"
+  })
 }

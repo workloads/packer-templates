@@ -6,14 +6,14 @@ terraform_auto_approve =
 endif
 
 .PHONY: terraform-plan
-terraform-plan: # Plan prerequisite resources for a target with Terraform
+terraform-plan: # Plans prerequisite resources with Terraform
 	@: $(if $(target),,$(call missing_target))
 	@terraform \
 		-chdir="./terraform/$(target)" \
 		plan \
 
 .PHONY: terraform-apply
-terraform-apply: # Create prerequisite resources for a target with Terraform
+terraform-apply: # Creates prerequisite resources with Terraform
 	@: $(if $(target),,$(call missing_target))
 	@terraform \
 		-chdir="./terraform/$(target)" \
@@ -21,7 +21,7 @@ terraform-apply: # Create prerequisite resources for a target with Terraform
 			$(terraform_auto_approve)
 
 .PHONY: terraform-destroy
-terraform-destroy: # Destroy prerequisite resources for a target with Terraform
+terraform-destroy: # Destroys prerequisite resources with Terraform
 	@: $(if $(target),,$(call missing_target))
 	@terraform \
 		-chdir="./terraform/$(target)" \
@@ -29,7 +29,7 @@ terraform-destroy: # Destroy prerequisite resources for a target with Terraform
 			$(terraform_auto_approve)
 
 .PHONY: terraform-init
-terraform-init: # Initializes Terraform for a target
+terraform-init: # Initializes Terraform
 	@: $(if $(target),,$(call missing_target))
 	@terraform \
 		-chdir="./terraform/$(target)" \

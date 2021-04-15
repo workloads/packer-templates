@@ -2,6 +2,7 @@
 
 name: "Code Quality: Packer"
 
+# yamllint disable-line rule:truthy
 on:
   pull_request:
 

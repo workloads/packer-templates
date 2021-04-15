@@ -32,24 +32,49 @@ variable "azure_tags" {
   default     = {}
 }
 
+# shared configuration
 variable "build_config" {
   type = object({
-    ansible_env_vars          = list(string)
-    apt_repos                 = map(string)
-    command                   = string
-    extra_arguments           = list(string)
-    image_version_date_format = string
-    name                      = string
+    ansible = object({
+      ansible_env_vars = list(string)
+      command          = string
+      extra_arguments  = list(string)
+      galaxy_file      = string
+      playbook_file    = string
+    })
+
+    apt_repos = map(string)
+
+    checksum_output = string
+    checksum_types  = list(string)
+
+    communicator = object({
+      ssh_clear_authorized_keys    = bool
+      ssh_disable_agent_forwarding = bool
+      ssh_username                 = string
+      type                         = string
+    })
 
     generated_files = object({
       configuration = string
       versions      = string
     })
 
-    packages = object({
-      to_install = list(string)
-      to_remove  = list(string)
+    image_version_date_format = string
 
+    inspec = object({
+      attributes           = list(string)
+      attributes_directory = string
+      backend              = string
+      command              = string
+      inspec_env_vars      = list(string)
+      profile              = string
+      user                 = string
+    })
+
+    name = string
+
+    packages = object({
       docker = list(object({
         name    = string
         version = string
@@ -69,26 +94,28 @@ variable "build_config" {
         name    = string
         version = string
       }))
+
+      to_install = list(string)
+      to_remove  = list(string)
     })
 
-    playbook_file = string
-
     templates = object({
-      versions = string
+      configuration = string
+      versions      = string
     })
 
     toggles = object({
-      enable_os               = bool
       enable_debug_statements = bool
       enable_docker           = bool
       enable_hashicorp        = bool
+      enable_os               = bool
       enable_podman           = bool
 
-      os                = map(bool)
       docker            = map(bool)
       hashicorp         = map(bool)
       hashicorp_enabled = map(bool)
       misc              = map(bool)
+      os                = map(bool)
       podman            = map(bool)
     })
   })
@@ -123,14 +150,14 @@ variable "image_publisher" {
 variable "image_offer" {
   type        = string
   description = "Name of the publisher's offer to use for your base image."
-  default     = "UbuntuServer"
+  default     = "0001-com-ubuntu-server-focal"
 }
 
 # see https://www.packer.io/docs/builders/azure/arm#image_sku
 variable "image_sku" {
   type        = string
   description = "SKU of the image offer to use for your base image."
-  default     = "18.04-LTS"
+  default     = "20_04-lts"
 }
 
 # see https://www.packer.io/docs/builders/azure/arm#image_version
@@ -159,13 +186,6 @@ variable "managed_image_version" {
   type        = string
   description = "Version to use for the image."
   default     = ""
-}
-
-# see https://www.packer.io/docs/builders/azure/arm#ssh_clear_authorized_keys
-variable "ssh_clear_authorized_keys" {
-  type        = bool
-  description = "If true, Packer will attempt to remove its temporary key from the image."
-  default     = true
 }
 
 # see https://www.packer.io/docs/builders/azure/arm#vm_size

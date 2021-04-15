@@ -3,7 +3,7 @@ Description="HashiCorp Consul"
 Documentation=https://consul.io/docs/
 Requires=network-online.target
 After=network-online.target
-ConditionFileNotEmpty=/etc/consul.d/consul.hcl
+ConditionDirectoryNotEmpty=/etc/consul.d/
 StartLimitIntervalSec=60
 StartLimitBurst=3
 

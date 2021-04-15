@@ -1,6 +1,6 @@
 ---
 
-# see https://docs.ansible.com/ansible/2.9/modules/debug_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/debug_module.html
 - name: debug
   debug:
     msg: "included podman.yml"
@@ -8,7 +8,7 @@
     - toggle.enable_debug_statements is defined
     - toggle.enable_debug_statements
 
-# see https://docs.ansible.com/ansible/2.9/modules/apt_key_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_key_module.html
 - name: Add APT Key for Podman Repository
   apt_key:
     state: present
@@ -17,7 +17,7 @@
     - ansible_os_family == "Debian"
     - toggles.podman.add_apt_repository
 
-# see https://docs.ansible.com/ansible/2.9/modules/apt_repository_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_repository_module.html
 - name: Add APT repository for Podman Packages
   apt_repository:
     filename: podman
@@ -28,7 +28,7 @@
     - ansible_os_family == "Debian"
     - toggles.podman.add_apt_repository
 
-# see https://docs.ansible.com/ansible/2.9/modules/apt_module.html
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
 - name: Install Podman Packages
   apt:
     force_apt_get: true

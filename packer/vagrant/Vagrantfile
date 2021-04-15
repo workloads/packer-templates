@@ -1,14 +1,67 @@
-Vagrant.configure("2") do |config|
-  config.vm.define "source", autostart: false do |source|
-    source.vm.box = "{{.SourceBox}}"
-  	config.ssh.insert_key = {{.InsertKey}}
+# frozen_string_literal: true
+
+# see https://www.vagrantup.com/docs/vagrantfile/version
+VAGRANTFILE_API_VERSION = '2'
+
+# see https://www.vagrantup.com/docs/vagrantfile/vagrant_version
+Vagrant.require_version '>= 2.2.15'
+
+OUTPUT_VM_BOX     = '{{.BoxName}}'
+OUTPUT_VM_BOX_URL = 'file://package.box'
+
+# see https://www.vagrantup.com/docs/vagrantfile/ssh_settings
+SSH_FORWARD_AGENT = true
+SSH_INSERT_KEY    = false
+
+# see https://www.vagrantup.com/docs/vagrantfile/machine_settings
+VM_COMMUNICATOR           = 'ssh'
+VM_HOSTNAME               = 'hashicorp'
+VM_POST_UP_MESSAGE        = 'Provision, Secure, Connect, Run.'
+VM_SYNCED_FOLDER_DISABLED = true
+VM_SYNCED_FOLDER_PATH     = '/vagrant'
+
+# see https://www.vagrantup.com/docs/providers/virtualbox/configuration
+VIRTUALBOX_CHECK_GUEST_ADDITIONS = false
+VIRTUALBOX_GUI                   = false
+VIRTUALBOX_NAME                  = VM_HOSTNAME
+VIRTUALBOX_CPU                   = 2
+VIRTUALBOX_MEMORY                = 4096
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.ssh.forward_agent = SSH_FORWARD_AGENT
+  config.vm.communicator   = VM_COMMUNICATOR
+  config.vm.hostname       = VM_HOSTNAME
+
+  # TODO: add support for port-forwarding (see #10)
+
+  # Source Vagrant Box
+  config.vm.define 'source', autostart: false do |source|
+    source.vm.box = '{{.SourceBox}}'
   end
 
-  config.vm.define "{{.BoxName}}" do |output|
-    output.vm.box = "{{.BoxName}}"
-    output.vm.box_url = "file://package.box"
+  # Packer-built Output Vagrant Box
+  config.vm.define OUTPUT_VM_BOX do |output|
+    output.vm.box         = OUTPUT_VM_BOX
+    output.vm.box_url     = OUTPUT_VM_BOX_URL
     config.ssh.insert_key = false
   end
 
-  config.vm.synced_folder ".", "/vagrant", disabled: true
+  # TODO: add private and public networking
+
+  # TODO: add port-forwarding
+
+  config.vm.post_up_message = VM_POST_UP_MESSAGE
+
+  # see https://www.vagrantup.com/docs/synced-folders/basic_usage
+  config.vm.synced_folder '.',
+                          VM_SYNCED_FOLDER_PATH,
+                          disabled: VM_SYNCED_FOLDER_DISABLED
+
+  config.vm.provider 'virtualbox' do |v|
+    v.check_guest_additions = VIRTUALBOX_CHECK_GUEST_ADDITIONS
+    v.cpus                  = VIRTUALBOX_CPU
+    v.gui                   = VIRTUALBOX_GUI
+    v.memory                = VIRTUALBOX_MEMORY
+    # v.name                = VIRTUALBOX_NAME
+  end
 end

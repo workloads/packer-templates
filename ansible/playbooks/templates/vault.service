@@ -5,14 +5,14 @@ Requires=network-online.target
 After=network-online.target
 Wants=consul.service
 After=consul.service
-ConditionFileNotEmpty=/etc/vault.d/vault.hcl
+ConditionDirectoryNotEmpty=/etc/vault.d/
 StartLimitIntervalSec=60
 StartLimitBurst=3
 
 [Service]
 User=vault
 Group=vault
-ExecStart=/usr/bin/vault server -config=/etc/vault.d/vault.hcl
+ExecStart=/usr/bin/vault server -config=/etc/vault.d/
 ExecReload=/bin/kill --signal HUP $MAINPID
 KillMode=process
 KillSignal=SIGINT
