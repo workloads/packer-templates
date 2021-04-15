@@ -17,7 +17,7 @@
 ## Requirements
 
 - Packer `1.7.2` or newer
-- Terraform `0.14.10` or newer
+- Terraform `0.15.0` or newer
 - Ansible `2.10.7` or newer
 
 Ansible is used for system-level operations (e.g.: installing and removing packages).
