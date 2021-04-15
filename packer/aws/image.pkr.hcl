@@ -53,6 +53,7 @@ source "amazon-ebs" "image" {
 # see https://www.packer.io/docs/builders/file
 source "file" "image_configuration" {
   content = templatefile(var.build_config.templates.configuration, {
+    timestamp     = formatdate(var.build_config.image_version_date_format, timestamp())
     configuration = yamlencode(var.build_config)
   })
 
