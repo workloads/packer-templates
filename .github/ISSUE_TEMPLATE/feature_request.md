@@ -4,7 +4,6 @@ about: A request to change Image-specific behavior
 title: Add support for
 labels: enhancement, help wanted
 assignees: ksatirli
-
 ---
 
 As an _<role>_ I would like to _<action>_

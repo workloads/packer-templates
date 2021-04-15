@@ -4,7 +4,6 @@ about: A request to add support for a new (Cloud) Platform
 title: Add support for
 labels: enhancement, help wanted
 assignees: ksatirli
-
 ---
 
 I'd like to request support for a new platform.

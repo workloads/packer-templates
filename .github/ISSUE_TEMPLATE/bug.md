@@ -3,7 +3,6 @@ name: Bug
 about: A bug or problem with this Repository
 labels: bug
 assignees: ksatirli
-
 ---
 
 # Expected Behavior
