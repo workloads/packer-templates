@@ -5,13 +5,15 @@ packer {
 
   # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#specifying-plugin-requirements
   required_plugins {
+    # see https://github.com/hashicorp/packer-plugin-vagrant/releases/
     vagrant = {
-      version = "0.0.1"
+      version = "0.0.2"
       source  = "github.com/hashicorp/vagrant"
     }
 
+    # see https://github.com/hashicorp/packer-plugin-ansible/releases/
     ansible = {
-      version = "0.0.1"
+      version = "0.0.2"
       source  = "github.com/hashicorp/ansible"
     }
   }
