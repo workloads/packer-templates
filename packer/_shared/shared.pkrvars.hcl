@@ -85,11 +85,11 @@ build_config = {
   packages = {
     # package definitions (name and version) for Docker(-related) products
     docker = [
-      { # see https://docs.docker.com/release-notes/
+      { # see https://docs.docker.com/engine/release-notes/
         name    = "docker-ce"
         version = "5:20.10.5*"
       },
-      { # see https://docs.docker.com/release-notes/
+      { # see https://github.com/containerd/containerd/releases/
         name    = "containerd.io"
         version = "*"
       }
