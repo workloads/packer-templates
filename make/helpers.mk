@@ -39,29 +39,17 @@ env-info: # Prints Version Information
 	# expected output: `4.32.0`
 	$(call print_version_if_available,"inspec", "--version")
 
+	# unsupported helper to remove "generated" directory
+.SILENT .PHONY: _clean
+_clean:
+	@rm \
+ 		-rf \
+ 		$(generated_dir)
+
 	# unsupported helper to open "generated" directory
 .SILENT .PHONY: _gen
 _gen:
 	@open $(generated_dir)
-
-# unsupported helper to open "VirtualBox.app" (macOS only)
-.SILENT .PHONY: _vb
-_vb:
-	@open -a "VirtualBox"
-
-# unsupported helper to execute `vagrant up`
-.SILENT .PHONY: _up
-_up:
-	cd $(generated_dir) \
-	&& \
-	vagrant up
-
-# unsupported helper to execute `vagrant ssh`
-.SILENT .PHONY: _ssh
-_ssh:
-	@cd $(generated_dir) \
-	&& \
-	vagrant ssh $(vagrant_box_name)
 
 # Lints Ansible playbook(s)
 .PHONY: _lint_ansible
@@ -80,3 +68,22 @@ _lint_yaml:
 
 .PHONY: _lint
 _lint: _lint_yaml _lint_ansible
+
+# unsupported helper to execute `vagrant ssh`
+.SILENT .PHONY: _ssh
+_ssh:
+	@cd $(generated_dir) \
+	&& \
+	vagrant ssh $(vagrant_box_name)
+
+# unsupported helper to execute `vagrant up`
+.SILENT .PHONY: _up
+_up:
+	cd $(generated_dir) \
+	&& \
+	vagrant up
+
+# unsupported helper to open "VirtualBox.app" (macOS only)
+.SILENT .PHONY: _vb
+_vb:
+	@open -a "VirtualBox"
