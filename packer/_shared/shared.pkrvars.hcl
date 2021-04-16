@@ -87,7 +87,7 @@ build_config = {
     docker = [
       { # see https://docs.docker.com/engine/release-notes/
         name    = "docker-ce"
-        version = "5:20.10.5*"
+        version = "5:20.10.6*"
       },
       { # see https://github.com/containerd/containerd/releases/
         name    = "containerd.io"
