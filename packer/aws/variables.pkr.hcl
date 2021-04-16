@@ -450,6 +450,12 @@ variable "tags" {
   default     = {}
 }
 
+# `target` as received from `make`
+variable "target" {
+  type        = string
+  description = "Build Target as received from `make`."
+}
+
 # see https://www.packer.io/docs/builders/amazon/ebs#temporary_iam_instance_profile_policy_document
 # TODO: add support for variable "temporary_iam_instance_profile_policy_document"
 
@@ -480,6 +486,18 @@ locals {
   ami_name = var.ami_name == "" ? var.build_config.name : var.ami_name
 
   image_filter_name = "ubuntu/images/${var.ami_virtualization_type}-ssd/ubuntu-focal-20.04-amd64-server-*"
+
+  # concatenate repository-defined extra arguments for Ansible with user-defined ones
+  # see https://www.packer.io/docs/provisioners/ansible#ansible_env_vars
+  ansible_extra_arguments = concat(
+    # repository-defined extra arguments for Ansible
+    [
+      "--extra-vars", "build_target=${var.target}"
+    ],
+
+    # user-defined extra arguments for Ansible
+    var.build_config.ansible.extra_arguments
+  )
 
   version_description = templatefile(var.build_config.templates.versions, {
     build_config = var.build_config

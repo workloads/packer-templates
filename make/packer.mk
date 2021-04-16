@@ -89,6 +89,9 @@ else
 packer_timestamp_ui =
 endif
 
+# expose build target to Packer
+packer_var_target = -var "target=$(target)"
+
 ifdef var-file
 packer_var_file = -var-file=$(var-file)
 else
@@ -109,6 +112,7 @@ build: # Builds an Image with Packer
 			$(packer_on_error) \
 			$(packer_parallel_builds) \
 			$(packer_timestamp_ui) \
+			$(packer_var_target) \
 			$(packer_shared_var_file) \
 			$(packer_var_file) \
 			"./packer/$(target)"
@@ -141,6 +145,7 @@ lint: # Formats and validates Packer Template
 		validate \
 			$(packer_except) \
 			$(packer_only) \
+			$(packer_var_target) \
 			$(packer_shared_var_file) \
 			$(packer_var_file) \
 			"./packer/$(target)"

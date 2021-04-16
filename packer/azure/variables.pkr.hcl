@@ -210,6 +210,12 @@ variable "os_type" {
   default     = "Linux"
 }
 
+# `target` as received from `make`
+variable "target" {
+  type        = string
+  description = "Build Target as received from `make`."
+}
+
 # see https://www.packer.io/docs/builders/azure/arm#use_azure_cli_auth
 variable "use_azure_cli_auth" {
   type        = bool
@@ -229,4 +235,16 @@ locals {
   managed_image_version = var.managed_image_version == "" ? formatdate(var.build_config.image_version_date_format, timestamp()) : var.managed_image_version
 
   managed_image_name_full = "${local.managed_image_name}-${local.managed_image_version}"
+
+  # concatenate repository-defined extra arguments for Ansible with user-defined ones
+  # see https://www.packer.io/docs/provisioners/ansible#ansible_env_vars
+  ansible_extra_arguments = concat(
+    # repository-defined extra arguments for Ansible
+    [
+      "--extra-vars", "build_target=${var.target}"
+    ],
+
+    # user-defined extra arguments for Ansible
+    var.build_config.ansible.extra_arguments
+  )
 }

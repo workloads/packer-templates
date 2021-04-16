@@ -73,7 +73,7 @@ build {
   provisioner "ansible" {
     ansible_env_vars = var.build_config.ansible.ansible_env_vars
     command          = var.build_config.ansible.command
-    extra_arguments  = var.build_config.ansible.extra_arguments
+    extra_arguments  = local.ansible_extra_arguments
     galaxy_file      = var.build_config.ansible.galaxy_file
     playbook_file    = var.build_config.ansible.playbook_file
   }

@@ -175,7 +175,7 @@ build_config = {
   # toggles to enable and disable various operations
   toggles = {
     # feature flags to enable (complete) playbooks
-    enable_debug_statements = false
+    enable_debug_statements = true
     enable_docker           = true
     enable_hashicorp        = true
     enable_os               = true
