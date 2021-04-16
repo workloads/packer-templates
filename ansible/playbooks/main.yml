@@ -22,7 +22,11 @@
     - os_hardening
 
     # see https://github.com/dev-sec/ansible-collection-hardening/tree/master/roles/ssh_hardening
-    - ssh_hardening
+    # SSH hardening must be omitted when in a Vagrant context
+    - role: ssh_hardening
+      when: build_target != "vagrant"
+
+# check exit status if ansible fails
 
   tasks:
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_vars_module.html
