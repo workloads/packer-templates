@@ -103,7 +103,7 @@ build_config = {
       },
       { # see https://releases.hashicorp.com/consul/
         name    = "consul"
-        version = "1.9.4"
+        version = "1.9.5"
       },
       { # see https://releases.hashicorp.com/nomad/
         name    = "nomad"
