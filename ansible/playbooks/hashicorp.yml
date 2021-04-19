@@ -107,7 +107,8 @@
 - name: Add `nomad` User to `docker` Group
   user:
     append: true
-    group: docker
+    groups:
+      - docker
     name: nomad
     system: true
   when:
