@@ -61,12 +61,14 @@ env-info: # Prints Version Information
 	# expected output: `Vagrant 2.2.15`
 	$(call print_version_if_available,"vagrant", "--version")
 
-	$(call print_version_if_available,"VBoxHeadless", "--version")
 	# expected output: `6.1.18r142142`
 	$(call print_version_if_available,"vboxmanage", "--version")
 
 	# expected output: `aws-cli/2.1.36 [..]`
 	$(call print_version_if_available,"aws", "--version")
+
+	# expected output: `4.32.0`
+	$(call print_version_if_available,"inspec", "version")
 
 	$(call print_az_version_if_available)
 
