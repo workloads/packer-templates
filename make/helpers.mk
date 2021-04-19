@@ -18,9 +18,24 @@ _gen:
 # Lints Ansible playbook(s)
 .PHONY: _lint_ansible
 _lint_ansible:
-	@cd $(ansible_playbooks) \
+	@: $(if $(target),,$(call missing_target))
+# run minimal Packer build to generate Ansible configuration files
+	@packer \
+		build \
+			$(packer_debug) \
+			-only "*.file.image_configuration" \
+			-force \
+			$(packer_machine_readable) \
+			$(packer_timestamp_ui) \
+			$(packer_var_target) \
+			$(packer_shared_var_file) \
+			$(packer_var_file) \
+			"./packer/$(target)" \
+	&& \
+	cd $(ansible_playbooks) \
 	&& \
 	ansible-lint \
+		-v \
 		"main.yml"
 
  # Lints YAML files
