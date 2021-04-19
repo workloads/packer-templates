@@ -89,7 +89,7 @@ variable "availability_zone" {
 # TODO: add support for variable "block_duration_minutes"
 
 # shared configuration
-variable "build_config" {
+variable "shared" {
   type = object({
     ansible = object({
       ansible_env_vars = list(string)
@@ -483,7 +483,7 @@ variable "vpc_id" {
 }
 
 locals {
-  ami_name = var.ami_name == "" ? var.build_config.name : var.ami_name
+  ami_name = var.ami_name == "" ? var.shared.name : var.ami_name
 
   image_filter_name = "ubuntu/images/${var.ami_virtualization_type}-ssd/ubuntu-focal-20.04-amd64-server-*"
 
@@ -496,13 +496,13 @@ locals {
     ],
 
     # user-defined extra arguments for Ansible
-    var.build_config.ansible.extra_arguments
+    var.shared.ansible.extra_arguments
   )
 
-  version_description = templatefile(var.build_config.templates.versions, {
-    build_config = var.build_config
-    name         = var.build_config.name
-    version      = "{{ isotime }}"
-    timestamp    = "{{ isotime }}"
+  version_description = templatefile(var.shared.templates.versions, {
+    shared    = var.shared
+    name      = var.shared.name
+    version   = "{{ isotime }}"
+    timestamp = "{{ isotime }}"
   })
 }

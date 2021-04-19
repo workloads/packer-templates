@@ -1,5 +1,5 @@
 # these variables are shared across all images
-build_config = {
+shared = {
   ansible = {
     # Environment variables to set before running Ansible
     # When in doubt, edit `ansible/ansible.cfg` instead of `ansible_env_vars`

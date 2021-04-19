@@ -33,7 +33,7 @@ variable "azure_tags" {
 }
 
 # shared configuration
-variable "build_config" {
+variable "shared" {
   type = object({
     ansible = object({
       ansible_env_vars = list(string)
@@ -229,10 +229,10 @@ locals {
   //  azure_tags = var.azure_tags == {} ? local.generated_azure_tags : var.azure_tags
 
   # set `image_name_prefix` to shared value, unless it is user-specified
-  managed_image_name = var.managed_image_name == "" ? var.build_config.name : var.managed_image_name
+  managed_image_name = var.managed_image_name == "" ? var.shared.name : var.managed_image_name
 
   # set `image_version` to generated value, unless it is user-defined
-  managed_image_version = var.managed_image_version == "" ? formatdate(var.build_config.image_version_date_format, timestamp()) : var.managed_image_version
+  managed_image_version = var.managed_image_version == "" ? formatdate(var.shared.image_version_date_format, timestamp()) : var.managed_image_version
 
   managed_image_name_full = "${local.managed_image_name}-${local.managed_image_version}"
 
@@ -245,6 +245,6 @@ locals {
     ],
 
     # user-defined extra arguments for Ansible
-    var.build_config.ansible.extra_arguments
+    var.shared.ansible.extra_arguments
   )
 }
