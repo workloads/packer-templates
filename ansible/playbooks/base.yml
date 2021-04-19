@@ -43,6 +43,32 @@
     - ansible_os_family == "Debian"
     - toggles.os.remove_packages
 
+# see https://docs.ansible.com/ansible/2.10/modules/package_module.html
+- name: Install Target-specific Packages for `{{ build_target }}`
+  apt:
+    force_apt_get: true
+    name: "{{ packages[build_target].to_install }}"
+    state: present
+    update_cache: true
+  when:
+    - packages[build_target] is defined
+    - packages[build_target].to_install is defined
+    - toggles.os.install_packages[build_target]
+
+# see https://docs.ansible.com/ansible/2.10/modules/package_module.html
+- name: Remove Target-specific Packages for `{{ build_target }}`
+  apt:
+    autoclean: true
+    autoremove: true
+    force_apt_get: true
+    name: "{{ packages[build_target].to_remove }}"
+    state: absent
+    update_cache: true
+  when:
+    - packages[build_target] is defined
+    - packages[build_target].to_remove is defined
+    - toggles.os.remove_packages[build_target]
+
 # see https://docs.ansible.com/ansible/2.10/modules/copy_module.html
 # TODO: fix the `src` in a better way
 - name: Copy Version Files
