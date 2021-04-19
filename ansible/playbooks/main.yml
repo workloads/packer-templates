@@ -1,6 +1,6 @@
 ---
 
-- name: "Provision Packer Image"
+- name: "Provision Packer Image for Target `{{ build_target }}`"
   hosts: default
   become: true
   vars:
