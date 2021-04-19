@@ -3,14 +3,14 @@ ansible_playbooks = ./ansible/playbooks
 generated_dir     = ./generated/vagrant
 vagrant_box_name ?= "ubuntu-hashicorp"
 
-	# unsupported helper to remove "generated" directory
+# unsupported helper to remove "generated" directory
 .SILENT .PHONY: _clean
 _clean:
 	rm \
  		-rf \
  		$(generated_dir)
 
-	# unsupported helper to open "generated" directory
+# unsupported helper to open "generated" directory
 .SILENT .PHONY: _gen
 _gen:
 	open $(generated_dir)
@@ -18,7 +18,7 @@ _gen:
 # Lints Ansible playbook(s)
 .PHONY: _lint_ansible
 _lint_ansible:
-	@: $(if $(target),,$(call missing_target))
+	$(if $(target),,$(call missing_target))
 # run minimal Packer build to generate Ansible configuration files
 	packer \
 		build \
@@ -38,7 +38,7 @@ _lint_ansible:
 		-v \
 		"main.yml"
 
- # Lints YAML files
+# Lints YAML files
 .PHONY: _lint_yaml
 _lint_yaml:
 	yamllint \

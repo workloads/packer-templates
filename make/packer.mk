@@ -101,7 +101,7 @@ endif
 # see https://www.packer.io/docs/commands/build
 .PHONY: build
 build: # Builds an Image with Packer
-	@: $(if $(target),,$(call missing_target))
+	$(if $(target),,$(call missing_target))
 	packer \
 		build \
 			$(packer_debug) \
@@ -120,7 +120,7 @@ build: # Builds an Image with Packer
 # see https://www.packer.io/docs/commands/init
 .PHONY: init
 init: # Installs and upgrades Packer Plugins
-	@: $(if $(target),,$(call missing_target))
+	$(if $(target),,$(call missing_target))
 	packer \
 		init \
 			-upgrade \
@@ -130,7 +130,7 @@ init: # Installs and upgrades Packer Plugins
 # and https://www.packer.io/docs/commands/validate
 .PHONY: lint
 lint: # Formats and validates Packer Template
-	@: $(if $(target),,$(call missing_target))
+	$(if $(target),,$(call missing_target))
 	packer \
 		fmt \
 			-recursive \

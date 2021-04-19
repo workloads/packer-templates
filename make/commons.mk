@@ -9,7 +9,7 @@ endef
 
 .SILENT .PHONY: clear
 clear:
-	@clear
+	clear
 
 .SILENT .PHONY: help
 help: # Displays this help text
@@ -28,15 +28,27 @@ help: # Displays this help text
 		-t
 	$(info )
 
-# function to print version information when binary (temp variable $(1)) is available
+# convenience function to print version information when binary (temp variable $(1)) is available
 define print_version_if_available
-	echo "  * \`$(1)\` version:" $(if $(shell which $(1)),"\`$(shell $(1) $(2))\`", "\`not available\`")
+	echo "  * \`$(1)\` version:" $(if $(shell which $(1)),"\`$(shell $(1) $(2))\`", "not available")
+endef
+
+# convenience function to pretty-print version information when `az` binary is available
+define print_az_version_if_available
+	# expected output: `2.22.0`
+	echo "  * \`az\` version: \`"$(if $(shell which az),$(shell az version --output=json --query="[\"azure-cli\"][0]")"\`", "not available")
+endef
+
+# convenience function to pretty-print version information when `gcloud` binary is available
+define print_gcloud_version_if_available
+	# expected output: `321.0.0`
+	echo "  * \`gcloud\` version: \`"$(if $(shell which gcloud),$(shell gcloud version --format="value(\"Google Cloud SDK\")")"\`", "not available")
 endef
 
 # helper to print version information
 .SILENT .PHONY: env-info
 env-info: # Prints Version Information
-	@echo "* Output of \`make env-info\`:\r\n"
+	echo "* Output of \`make env-info\`:"
 
 	# TODO: consider adding a `foreach` for this function
 
@@ -49,17 +61,13 @@ env-info: # Prints Version Information
 	# expected output: `Vagrant 2.2.15`
 	$(call print_version_if_available,"vagrant", "--version")
 
-	# expected output: `Oracle VM [...] 6.1.18r142142`
 	$(call print_version_if_available,"VBoxHeadless", "--version")
+	# expected output: `6.1.18r142142`
+	$(call print_version_if_available,"vboxmanage", "--version")
 
 	# expected output: `aws-cli/2.1.36 [..]`
 	$(call print_version_if_available,"aws", "--version")
 
-	# expected output: `{"azure-cli": "2.22.0", [...] }`
-	$(call print_version_if_available,"az", "version")
+	$(call print_az_version_if_available)
 
-	# expected output: `Google Cloud SDK 321.0.0 [...]`
-	$(call print_version_if_available,"gcloud", "--version")
-
-	# expected output: `4.32.0`
-	$(call print_version_if_available,"inspec", "--version")
+	$(call print_gcloud_version_if_available)
