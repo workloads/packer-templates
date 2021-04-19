@@ -115,4 +115,3 @@ build {
     output         = var.build_config.checksum_output
   }
 }
-
