@@ -1,5 +1,5 @@
 # configuration
-MAKEFLAGS      = --no-builtin-rules --warn-undefined-variables
+MAKEFLAGS      = --no-builtin-rules --silent --warn-undefined-variables
 SHELL         := sh
 
 .DEFAULT_GOAL := help

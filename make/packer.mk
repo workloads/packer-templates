@@ -102,7 +102,7 @@ endif
 .PHONY: build
 build: # Builds an Image with Packer
 	@: $(if $(target),,$(call missing_target))
-	@packer \
+	packer \
 		build \
 			$(packer_debug) \
 			$(packer_except) \
@@ -121,7 +121,7 @@ build: # Builds an Image with Packer
 .PHONY: init
 init: # Installs and upgrades Packer Plugins
 	@: $(if $(target),,$(call missing_target))
-	@packer \
+	packer \
 		init \
 			-upgrade \
 			"./packer/$(target)"
@@ -131,7 +131,7 @@ init: # Installs and upgrades Packer Plugins
 .PHONY: lint
 lint: # Formats and validates Packer Template
 	@: $(if $(target),,$(call missing_target))
-	@packer \
+	packer \
 		fmt \
 			-recursive \
 			"./packer/_shared/" \
