@@ -47,7 +47,8 @@
     name: docker
     state: present
     system: true
-  when: toggles.docker.create_group
+  when:
+    - toggles.docker.create_group
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/user_module.html
 - name: Add `docker` User
@@ -56,4 +57,5 @@
     name: docker
     group: docker
     system: true
-  when: toggles.docker.create_user
+  when:
+    - toggles.docker.create_user

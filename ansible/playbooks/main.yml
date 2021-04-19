@@ -10,7 +10,7 @@
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/fail_module.html
     - name: Verify Ansible version meets requirements
       fail:
-        msg: Need v{{ ansible_required_version }}, got v{{ ansible_version.full}}
+        msg: "Need v{{ ansible_required_version }}, got v{{ ansible_version.full}}"
       when: ansible_version.full < ansible_required_version
 
   collections:
@@ -25,8 +25,6 @@
     # SSH hardening must be omitted when in a Vagrant context
     - role: ssh_hardening
       when: build_target != "vagrant"
-
-# check exit status if ansible fails
 
   tasks:
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_vars_module.html
@@ -45,21 +43,25 @@
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
     - name: Manage OS Packages
       include: base.yml
-      when: toggles.enable_os
+      when:
+        - toggles.enable_os
 
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
     - name: Manage Docker Packages
       include: docker.yml
-      when: toggles.enable_docker
+      when:
+        - toggles.enable_docker
 
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
     - name: Manage Podman Packages
       include: podman.yml
-      when: toggles.enable_podman
+      when:
+        - toggles.enable_podman
 
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
     - name: Manage HashiCorp Packages
       include: hashicorp.yml
-      when: toggles.enable_hashicorp
+      when:
+        - toggles.enable_hashicorp
 
 # TODO: optimize system settings
