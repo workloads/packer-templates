@@ -4,7 +4,7 @@ SHELL         := sh
 
 .DEFAULT_GOAL := help
 .ONESHELL     :
-.SHELLFLAGS   := -eu -o pipefail -c
+.SHELLFLAGS   := -eu -c
 
 # NOTE: specify files in the order they should be loaded
 # NOTE: this allows for a more logical `help` experience
