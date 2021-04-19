@@ -19,7 +19,7 @@
     - toggles.os.update_apt_cache
 
 # see https://docs.ansible.com/ansible/2.10/modules/package_module.html
-- name: Install Packages
+- name: Install generic Packages
   apt:
     force_apt_get: true
     name: "{{ packages.to_install }}"
@@ -31,7 +31,7 @@
     - toggles.os.install_packages
 
 # see https://docs.ansible.com/ansible/2.10/modules/package_module.html
-- name: Remove Packages
+- name: Remove generic Packages
   apt:
     autoclean: true
     autoremove: true
