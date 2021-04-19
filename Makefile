@@ -17,4 +17,6 @@ include make/packer.mk
 
 # Targets for Terraform interactions
 include make/terraform.mk
+
+# (unsupported) helpers and convenience functions
 include make/helpers.mk
