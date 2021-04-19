@@ -176,7 +176,13 @@ variable "source_path" {
 variable "teardown_method" {
   type        = string
   description = "Whether to halt, suspend, or destroy the box when the build has completed."
-  default     = "halt"
+  default     = "destroy"
+}
+
+# `target` as received from `make`
+variable "target" {
+  type        = string
+  description = "Build Target as received from `make`."
 }
 
 # see https://www.packer.io/docs/builders/vagrant#template
@@ -201,4 +207,16 @@ locals {
     version      = local.box_version
     timestamp    = local.box_version_timestamp
   })
+
+  # concatenate repository-defined extra arguments for Ansible with user-defined ones
+  # see https://www.packer.io/docs/provisioners/ansible#ansible_env_vars
+  ansible_extra_arguments = concat(
+    # repository-defined extra arguments for Ansible
+    [
+      "--extra-vars", "build_target=${var.target}"
+    ],
+
+    # user-defined extra arguments for Ansible
+    var.build_config.ansible.extra_arguments
+  )
 }

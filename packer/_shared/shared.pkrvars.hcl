@@ -85,11 +85,11 @@ build_config = {
   packages = {
     # package definitions (name and version) for Docker(-related) products
     docker = [
-      { # see https://docs.docker.com/release-notes/
+      { # see https://docs.docker.com/engine/release-notes/
         name    = "docker-ce"
-        version = "5:20.10.5*"
+        version = "5:20.10.6*"
       },
-      { # see https://docs.docker.com/release-notes/
+      { # see https://github.com/containerd/containerd/releases/
         name    = "containerd.io"
         version = "*"
       }
@@ -99,11 +99,11 @@ build_config = {
     hashicorp = [
       { # see https://releases.hashicorp.com/boundary/
         name    = "boundary"
-        version = "0.1.8"
+        version = "0.2.0"
       },
       { # see https://releases.hashicorp.com/consul/
         name    = "consul"
-        version = "1.9.4"
+        version = "1.9.5"
       },
       { # see https://releases.hashicorp.com/nomad/
         name    = "nomad"
@@ -175,7 +175,7 @@ build_config = {
   # toggles to enable and disable various operations
   toggles = {
     # feature flags to enable (complete) playbooks
-    enable_debug_statements = false
+    enable_debug_statements = true
     enable_docker           = true
     enable_hashicorp        = true
     enable_os               = true

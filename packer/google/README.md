@@ -46,7 +46,7 @@ To log in, execute the `gcloud auth login` command and follow the instructions p
 
 > `make` commands must be run from the root directory.
 
-The Azure workflow described in [image.pkr.hcl](image.pkr.hcl) requires an TODO to operate.
+The Google Cloud workflow described in [image.pkr.hcl](image.pkr.hcl) requires an TODO to operate.
 
 To ease in the creation of this, this repository includes a Terraform workflow (in `./terraform/google`) that can create the prerequisite resources.
 

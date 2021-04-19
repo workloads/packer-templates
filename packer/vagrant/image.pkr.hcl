@@ -3,17 +3,20 @@ packer {
   # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#version-constraint-syntax
   required_version = ">= 1.7.2"
 
-#  required_plugins {
-#    vagrant = {
-#      version = "0.0.1"
-#      source  = "github.com/hashicorp/vagrant"
-#    }
-#
-#    ansible = {
-#      version = "0.0.1"
-#      source  = "github.com/hashicorp/ansible"
-#    }
-#  }
+  # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#specifying-plugin-requirements
+  required_plugins {
+    # see https://github.com/hashicorp/packer-plugin-vagrant/releases/
+    vagrant = {
+      version = "0.0.2"
+      source  = "github.com/hashicorp/vagrant"
+    }
+
+    # see https://github.com/hashicorp/packer-plugin-ansible/releases/
+    ansible = {
+      version = "0.0.2"
+      source  = "github.com/hashicorp/ansible"
+    }
+  }
 }
 
 # see https://www.packer.io/docs/builders/vagrant
@@ -37,6 +40,7 @@ source "vagrant" "image" {
 # see https://www.packer.io/docs/builders/file
 source "file" "image_configuration" {
   content = templatefile(var.build_config.templates.configuration, {
+    timestamp     = formatdate(var.build_config.image_version_date_format, timestamp())
     configuration = yamlencode(var.build_config)
   })
 
@@ -69,7 +73,7 @@ build {
   provisioner "ansible" {
     ansible_env_vars = var.build_config.ansible.ansible_env_vars
     command          = var.build_config.ansible.command
-    extra_arguments  = var.build_config.ansible.extra_arguments
+    extra_arguments  = local.ansible_extra_arguments
     galaxy_file      = var.build_config.ansible.galaxy_file
     playbook_file    = var.build_config.ansible.playbook_file
   }
@@ -94,8 +98,8 @@ build {
   }
 
   # see https://www.packer.io/docs/post-processors/checksum#checksum-post-processor
-  #post-processor "checksum" {
-  #  checksum_types = var.build_config.checksum_types
-  #  output         = var.build_config.checksum_output
-  #}
+  post-processor "checksum" {
+    checksum_types = var.build_config.checksum_types
+    output         = var.build_config.checksum_output
+  }
 }

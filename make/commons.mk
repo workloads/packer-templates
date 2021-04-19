@@ -9,7 +9,7 @@ endef
 
 .SILENT .PHONY: clear
 clear:
-	@clear
+	clear
 
 .SILENT .PHONY: help
 help: # Displays this help text
@@ -27,3 +27,49 @@ help: # Displays this help text
 		-s ";" \
 		-t
 	$(info )
+
+# convenience function to print version information when binary (temp variable $(1)) is available
+define print_version_if_available
+	echo "  * \`$(1)\` version:" $(if $(shell which $(1)),"\`$(shell $(1) $(2))\`", "not available")
+endef
+
+# convenience function to pretty-print version information when `az` binary is available
+define print_az_version_if_available
+	# expected output: `2.22.0`
+	echo "  * \`az\` version: \`"$(if $(shell which az),$(shell az version --output=json --query="[\"azure-cli\"][0]")"\`", "not available")
+endef
+
+# convenience function to pretty-print version information when `gcloud` binary is available
+define print_gcloud_version_if_available
+	# expected output: `321.0.0`
+	echo "  * \`gcloud\` version: \`"$(if $(shell which gcloud),$(shell gcloud version --format="value(\"Google Cloud SDK\")")"\`", "not available")
+endef
+
+# helper to print version information
+.SILENT .PHONY: env-info
+env-info: # Prints Version Information
+	echo "* Output of \`make env-info\`:"
+
+	# TODO: consider adding a `foreach` for this function
+
+	# expected output: `1.7.2`
+	$(call print_version_if_available,"packer", "--version")
+
+	# expected output: `Terraform v0.15.0`
+	$(call print_version_if_available,"terraform", "--version")
+
+	# expected output: `Vagrant 2.2.15`
+	$(call print_version_if_available,"vagrant", "--version")
+
+	# expected output: `6.1.18r142142`
+	$(call print_version_if_available,"vboxmanage", "--version")
+
+	# expected output: `aws-cli/2.1.36 [..]`
+	$(call print_version_if_available,"aws", "--version")
+
+	# expected output: `4.32.0`
+	$(call print_version_if_available,"inspec", "version")
+
+	$(call print_az_version_if_available)
+
+	$(call print_gcloud_version_if_available)

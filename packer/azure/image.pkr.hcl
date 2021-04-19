@@ -3,16 +3,20 @@ packer {
   # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#version-constraint-syntax
   required_version = ">= 1.7.2"
 
-//  required_plugins {
+  # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#specifying-plugin-requirements
+  required_plugins {
+    # see https://github.com/hashicorp/packer-plugin-azure/releases/
 //    azure = {
 //      version = "0.0.1"
 //      source  = "github.com/hashicorp/azure"
 //    }
-//
-//    ansible = {
-//      version = "0.0.1"
-//      source  = "github.com/hashicorp/ansible"
-//    }
+
+    # see https://github.com/hashicorp/packer-plugin-ansible/releases/
+    ansible = {
+      version = "0.0.2"
+      source  = "github.com/hashicorp/ansible"
+    }
+  }
 }
 
 # see https://www.packer.io/docs/builders/azure/arm
@@ -53,6 +57,7 @@ source "azure-arm" "image" {
 # see https://www.packer.io/docs/builders/file
 source "file" "image_configuration" {
   content = templatefile(var.build_config.templates.configuration, {
+    timestamp     = formatdate(var.build_config.image_version_date_format, timestamp())
     configuration = yamlencode(var.build_config)
   })
 
@@ -74,6 +79,7 @@ build {
   ]
 }
 
+
 build {
   name = "provisioners"
 
@@ -85,7 +91,7 @@ build {
   provisioner "ansible" {
     ansible_env_vars = var.build_config.ansible.ansible_env_vars
     command          = var.build_config.ansible.command
-    extra_arguments  = var.build_config.ansible.extra_arguments
+    extra_arguments  = local.ansible_extra_arguments
     galaxy_file      = var.build_config.ansible.galaxy_file
     playbook_file    = var.build_config.ansible.playbook_file
   }

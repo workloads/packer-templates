@@ -1,17 +1,27 @@
 ---
 
-- name: "Provision Packer Image"
+- name: "Provision Packer Image for Target `{{ build_target }}`"
   hosts: default
   become: true
   vars:
     ansible_required_version: "2.10.7"
+  vars_files:
+    - "../../generated/generated-configuration.yml"
 
   pre_tasks:
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/fail_module.html
     - name: Verify Ansible version meets requirements
       fail:
-        msg: Need v{{ ansible_required_version }}, got v{{ ansible_version.full}}
+        msg: "Need v{{ ansible_required_version }}, got v{{ ansible_version.full}}"
       when: ansible_version.full < ansible_required_version
+
+    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/debug_module.html
+    - name: Print `ansible_env`
+      debug:
+        var: ansible_env
+      when:
+        - toggle.enable_debug_statements is defined
+        - toggle.enable_debug_statements
 
   collections:
     # see https://github.com/dev-sec/ansible-collection-hardening/
@@ -22,40 +32,33 @@
     - os_hardening
 
     # see https://github.com/dev-sec/ansible-collection-hardening/tree/master/roles/ssh_hardening
-    - ssh_hardening
+    # SSH hardening must be omitted when in a Vagrant context
+    - role: ssh_hardening
+      when: build_target != "vagrant"
 
   tasks:
-    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_vars_module.html
-    - name: Include Packer-generated Variables
-      include_vars:
-        file: ../../generated/generated-configuration.yml
-
-    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/debug_module.html
-    - name: Print `ansible_env`
-      debug:
-        var: ansible_env
-      when:
-        - toggle.enable_debug_statements is defined
-        - toggle.enable_debug_statements
-
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
     - name: Manage OS Packages
       include: base.yml
-      when: toggles.enable_os
+      when:
+        - toggles.enable_os
 
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
     - name: Manage Docker Packages
       include: docker.yml
-      when: toggles.enable_docker
+      when:
+        - toggles.enable_docker
 
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
     - name: Manage Podman Packages
       include: podman.yml
-      when: toggles.enable_podman
+      when:
+        - toggles.enable_podman
 
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
     - name: Manage HashiCorp Packages
       include: hashicorp.yml
-      when: toggles.enable_hashicorp
+      when:
+        - toggles.enable_hashicorp
 
 # TODO: optimize system settings

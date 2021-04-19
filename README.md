@@ -8,8 +8,8 @@
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Usage](#usage)
-    - [Supported Providers](#supported-providers)
     - [Workflow](#workflow)
+    - [Supported Providers](#supported-providers)
   - [Notes](#notes)
   - [Author Information](#author-information)
   - [License](#license)
@@ -17,7 +17,7 @@
 ## Requirements
 
 - Packer `1.7.2` or newer
-- Terraform `0.14.10` or newer
+- Terraform `0.15.0` or newer
 - Ansible `2.10.7` or newer
 
 Ansible is used for system-level operations (e.g.: installing and removing packages).
@@ -31,17 +31,6 @@ This repository contains Packer templates for multiple providers.
 The primary way of interacting with this repository is `make` via the included [Makefile](Makefile).
 
 This allows for a consistent execution of the underlying workflows.
-
-### Supported Providers
-
-This repository supports the following providers:
-
-| target    | local documentation                                  | Packer Builder  | Terraform Provider |
-|-----------|------------------------------------------------------|-----------------|--------------------|
-| `aws`     | [packer/aws/README.md](packer/aws/README.md)         | `amazon-ebs`    | n/a                |
-| `azure`   | [packer/azure/README.md](packer/azure/README.md)     | `azure-arm`     | `azurerm`          |
-| `google`  | [packer/google/README.md](packer/google/README.md)   | `googlecompute` | `google`           |
-| `vagrant` | [packer/vagrant/README.md](packer/vagrant/README.md) | `vagrant`       | n/a                |
 
 ### Workflow
 
@@ -62,6 +51,17 @@ Usage differs slightly for each provider and is therefore broken out into separa
 See the `packer/` (and `terraform/`) sub-directories for more information.
 
 > All workflows _can_ be executed manually, though this is not advisable. See the [Makefile](Makefile) for more information.
+
+### Supported Providers
+
+This repository supports the following providers:
+
+| target    | local documentation                                  | Packer Builder  | Terraform Provider |
+|-----------|------------------------------------------------------|-----------------|--------------------|
+| `aws`     | [packer/aws/README.md](packer/aws/README.md)         | `amazon-ebs`    | n/a                |
+| `azure`   | [packer/azure/README.md](packer/azure/README.md)     | `azure-arm`     | `azurerm`          |
+| `google`  | [packer/google/README.md](packer/google/README.md)   | `googlecompute` | `google`           |
+| `vagrant` | [packer/vagrant/README.md](packer/vagrant/README.md) | `vagrant`       | n/a                |
 
 ## Notes
 

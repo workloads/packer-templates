@@ -4,17 +4,19 @@ packer {
   required_version = ">= 1.7.2"
 
   # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#specifying-plugin-requirements
-//  required_plugins {
-//    amazon = {
-//      version = ">= 0.0.1"
-//      source  = "github.com/hashicorp/amazon"
-//    }
-//
-//    ansible = {
-//      version = ">= 0.0.1"
-//      source  = "github.com/hashicorp/ansible"
-//    }
-//  }
+  required_plugins {
+    # see # see https://github.com/hashicorp/packer-plugin-amazon/releases/
+    amazon = {
+      version = ">= 0.0.1"
+      source  = "github.com/hashicorp/amazon"
+    }
+
+    # see https://github.com/hashicorp/packer-plugin-ansible/releases/
+    ansible = {
+      version = "0.0.2"
+      source  = "github.com/hashicorp/ansible"
+    }
+  }
 }
 
 # see https://www.packer.io/docs/datasources/amazon/ami
@@ -53,6 +55,7 @@ source "amazon-ebs" "image" {
 # see https://www.packer.io/docs/builders/file
 source "file" "image_configuration" {
   content = templatefile(var.build_config.templates.configuration, {
+    timestamp     = formatdate(var.build_config.image_version_date_format, timestamp())
     configuration = yamlencode(var.build_config)
   })
 
@@ -85,7 +88,7 @@ build {
   provisioner "ansible" {
     ansible_env_vars = var.build_config.ansible.ansible_env_vars
     command          = var.build_config.ansible.command
-    extra_arguments  = var.build_config.ansible.extra_arguments
+    extra_arguments  = local.ansible_extra_arguments
     galaxy_file      = var.build_config.ansible.galaxy_file
     playbook_file    = var.build_config.ansible.playbook_file
   }

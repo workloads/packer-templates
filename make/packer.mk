@@ -89,6 +89,9 @@ else
 packer_timestamp_ui =
 endif
 
+# expose build target to Packer
+packer_var_target = -var "target=$(target)"
+
 ifdef var-file
 packer_var_file = -var-file=$(var-file)
 else
@@ -98,8 +101,8 @@ endif
 # see https://www.packer.io/docs/commands/build
 .PHONY: build
 build: # Builds an Image with Packer
-	@: $(if $(target),,$(call missing_target))
-	@packer \
+	$(if $(target),,$(call missing_target))
+	packer \
 		build \
 			$(packer_debug) \
 			$(packer_except) \
@@ -109,6 +112,7 @@ build: # Builds an Image with Packer
 			$(packer_on_error) \
 			$(packer_parallel_builds) \
 			$(packer_timestamp_ui) \
+			$(packer_var_target) \
 			$(packer_shared_var_file) \
 			$(packer_var_file) \
 			"./packer/$(target)"
@@ -116,8 +120,8 @@ build: # Builds an Image with Packer
 # see https://www.packer.io/docs/commands/init
 .PHONY: init
 init: # Installs and upgrades Packer Plugins
-	@: $(if $(target),,$(call missing_target))
-	@packer \
+	$(if $(target),,$(call missing_target))
+	packer \
 		init \
 			-upgrade \
 			"./packer/$(target)"
@@ -126,8 +130,8 @@ init: # Installs and upgrades Packer Plugins
 # and https://www.packer.io/docs/commands/validate
 .PHONY: lint
 lint: # Formats and validates Packer Template
-	@: $(if $(target),,$(call missing_target))
-	@packer \
+	$(if $(target),,$(call missing_target))
+	packer \
 		fmt \
 			-recursive \
 			"./packer/_shared/" \
@@ -141,6 +145,7 @@ lint: # Formats and validates Packer Template
 		validate \
 			$(packer_except) \
 			$(packer_only) \
+			$(packer_var_target) \
 			$(packer_shared_var_file) \
 			$(packer_var_file) \
 			"./packer/$(target)"
