@@ -26,6 +26,7 @@
     state: present
     update_cache: true
   when:
+    - packages.to_install is defined
     - ansible_os_family == "Debian"
     - toggles.os.install_packages
 
