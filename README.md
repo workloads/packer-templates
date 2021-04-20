@@ -32,6 +32,22 @@ The primary way of interacting with this repository is `make` via the included [
 
 This allows for a consistent execution of the underlying workflows.
 
+The currently supported options are:
+
+```text
+PACKER TEMPLATES
+
+help               Displays this help text
+env-info           Prints Version Information
+build              Builds an Image with Packer
+init               Installs and upgrades Packer Plugins
+lint               Formats and validates Packer Template
+terraform-plan     Plans prerequisite resources with Terraform
+terraform-apply    Creates prerequisite resources with Terraform
+terraform-destroy  Destroys prerequisite resources with Terraform
+terraform-init     Initializes Terraform
+```
+
 ### Workflow
 
 The workflow for (most) targets is as follows:
