@@ -32,6 +32,91 @@ variable "azure_tags" {
   default     = {}
 }
 
+# see https://www.packer.io/docs/builders/azure/arm#cloud_environment_name
+variable "cloud_environment_name" {
+  type        = string
+  description = "Specify a Cloud Environment Name."
+  default     = "Public"
+}
+
+# see https://www.packer.io/docs/builders/azure/arm#custom_data_file
+variable "custom_data_file" {
+  type        = string
+  description = "Specify a file containing custom data to inject into the cloud-init process."
+  default     = ""
+}
+
+# see https://www.packer.io/docs/builders/azure/arm#image_publisher
+variable "image_publisher" {
+  type        = string
+  description = "Name of the publisher to use for your base image."
+  default     = "Canonical"
+}
+
+# see https://www.packer.io/docs/builders/azure/arm#image_offer
+variable "image_offer" {
+  type        = string
+  description = "Name of the publisher's offer to use for your base image."
+  default     = "0001-com-ubuntu-server-focal"
+}
+
+# see https://www.packer.io/docs/builders/azure/arm#image_sku
+variable "image_sku" {
+  type        = string
+  description = "SKU of the image offer to use for your base image."
+  default     = "20_04-lts"
+}
+
+# see https://www.packer.io/docs/builders/azure/arm#image_version
+variable "image_version" {
+  type        = string
+  description = "Specify a specific version of an OS to boot from."
+  default     = "latest"
+}
+
+# see https://www.packer.io/docs/builders/azure/arm#location
+variable "location" {
+  type        = string
+  description = "Azure datacenter in which your VM will build."
+
+  # this value is set in `terraform-generated.auto.pkrvars.hcl`
+}
+
+# see https://www.packer.io/docs/builders/azure/arm#managed_image_name
+variable "managed_image_name" {
+  type        = string
+  description = "Name to use for the image."
+  default     = ""
+}
+
+variable "managed_image_version" {
+  type        = string
+  description = "Version to use for the image."
+  default     = ""
+}
+
+# see https://www.packer.io/docs/builders/azure/arm#vm_size
+variable "vm_size" {
+  type        = string
+  description = "Size of the VM used for building."
+  default     = "Standard_A1"
+}
+
+# see https://www.packer.io/docs/builders/azure/arm#managed_image_resource_group_name
+variable "managed_image_resource_group_name" {
+  type        = string
+  description = "Resource group under which the final artifact will be stored."
+
+  # this value is set in `terraform-generated.auto.pkrvars.hcl`
+}
+
+# see https://www.packer.io/docs/builders/azure/arm#os_type
+variable "os_type" {
+  type        = string
+  description = "OS Type to use for configuration of authentication credentials."
+  default     = "Linux"
+}
+
 # shared configuration
 variable "shared" {
   type = object({
@@ -123,91 +208,6 @@ variable "shared" {
   description = "Shared Configuration for all Images"
 
   # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
-}
-
-# see https://www.packer.io/docs/builders/azure/arm#cloud_environment_name
-variable "cloud_environment_name" {
-  type        = string
-  description = "Specify a Cloud Environment Name."
-  default     = "Public"
-}
-
-# see https://www.packer.io/docs/builders/azure/arm#custom_data_file
-variable "custom_data_file" {
-  type        = string
-  description = "Specify a file containing custom data to inject into the cloud-init process."
-  default     = ""
-}
-
-# see https://www.packer.io/docs/builders/azure/arm#image_publisher
-variable "image_publisher" {
-  type        = string
-  description = "Name of the publisher to use for your base image."
-  default     = "Canonical"
-}
-
-# see https://www.packer.io/docs/builders/azure/arm#image_offer
-variable "image_offer" {
-  type        = string
-  description = "Name of the publisher's offer to use for your base image."
-  default     = "0001-com-ubuntu-server-focal"
-}
-
-# see https://www.packer.io/docs/builders/azure/arm#image_sku
-variable "image_sku" {
-  type        = string
-  description = "SKU of the image offer to use for your base image."
-  default     = "20_04-lts"
-}
-
-# see https://www.packer.io/docs/builders/azure/arm#image_version
-variable "image_version" {
-  type        = string
-  description = "Specify a specific version of an OS to boot from."
-  default     = "latest"
-}
-
-# see https://www.packer.io/docs/builders/azure/arm#location
-variable "location" {
-  type        = string
-  description = "Azure datacenter in which your VM will build."
-
-  # this value is set in `terraform-generated.auto.pkrvars.hcl`
-}
-
-# see https://www.packer.io/docs/builders/azure/arm#managed_image_name
-variable "managed_image_name" {
-  type        = string
-  description = "Name to use for the image."
-  default     = ""
-}
-
-variable "managed_image_version" {
-  type        = string
-  description = "Version to use for the image."
-  default     = ""
-}
-
-# see https://www.packer.io/docs/builders/azure/arm#vm_size
-variable "vm_size" {
-  type        = string
-  description = "Size of the VM used for building."
-  default     = "Standard_A1"
-}
-
-# see https://www.packer.io/docs/builders/azure/arm#managed_image_resource_group_name
-variable "managed_image_resource_group_name" {
-  type        = string
-  description = "Resource group under which the final artifact will be stored."
-
-  # this value is set in `terraform-generated.auto.pkrvars.hcl`
-}
-
-# see https://www.packer.io/docs/builders/azure/arm#os_type
-variable "os_type" {
-  type        = string
-  description = "OS Type to use for configuration of authentication credentials."
-  default     = "Linux"
 }
 
 # `target` as received from `make`

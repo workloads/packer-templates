@@ -42,6 +42,28 @@ variable "box_version" {
   default     = ""
 }
 
+# see https://www.packer.io/docs/builders/vagrant#no_release
+variable "no_release" {
+  type        = bool
+  description = "If set to true, does not release the version on Vagrant Cloud, making it active."
+  default     = true
+}
+
+# see https://www.packer.io/docs/builders/vagrant#output_dir
+variable "output_dir" {
+  type        = string
+  description = "The directory to create that will contain your output box."
+  default     = "generated/vagrant"
+}
+
+# see https://www.packer.io/docs/builders/vagrant#provider
+variable "provider" {
+  type        = string
+  description = "The Vagrant provider."
+  default     = "virtualbox"
+}
+
+
 # shared configuration
 variable "shared" {
   type = object({
@@ -133,27 +155,6 @@ variable "shared" {
   description = "Shared Configuration for all Images"
 
   # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
-}
-
-# see https://www.packer.io/docs/builders/vagrant#no_release
-variable "no_release" {
-  type        = bool
-  description = "If set to true, does not release the version on Vagrant Cloud, making it active."
-  default     = true
-}
-
-# see https://www.packer.io/docs/builders/vagrant#output_dir
-variable "output_dir" {
-  type        = string
-  description = "The directory to create that will contain your output box."
-  default     = "generated/vagrant"
-}
-
-# see https://www.packer.io/docs/builders/vagrant#provider
-variable "provider" {
-  type        = string
-  description = "The Vagrant provider."
-  default     = "virtualbox"
 }
 
 # see https://www.packer.io/docs/builders/vagrant#skip_add
