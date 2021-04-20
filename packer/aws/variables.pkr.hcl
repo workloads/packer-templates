@@ -249,7 +249,7 @@ variable "iam_instance_profile" {
   default     = ""
 }
 
-# NOTE: the `filters` of `image` is defined in the `locals` stanza at the bottom of this file
+# the `filters` of `image` is defined in the `locals` stanza at the bottom of this file
 variable "image" {
   type = object({
     most_recent = bool

@@ -45,8 +45,8 @@ source "azure-arm" "image" {
   use_azure_cli_auth = var.use_azure_cli_auth
 
   # authentication with explicitly defined credentials
-  # NOTE: to use this section, disable the `use_azure_cli_auth` property and
-  # NOTE: enable the `subscription_id`, `client_id`, and `client_secret` properties
+  # to use this section, disable the `use_azure_cli_auth` property and
+  # enable the `subscription_id`, `client_id`, and `client_secret` properties
   # subscription_id = var.subscription_id
   # client_id       = var.client_id
   # client_secret   = var.client_secret
