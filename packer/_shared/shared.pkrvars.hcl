@@ -249,6 +249,18 @@ shared = {
       update_apt_cache = true
     }
 
+    # osquery-specific feature flags
+    osquery = {
+      # add osquery APT repository
+      add_apt_repository = true
+
+      # install packages for osquery
+      install_packages = true
+
+      # remove osquery directories
+      remove_directories = true
+    }
+
     # Podman-specific feature flags
     podman = {
       # add Podman APT repository
