@@ -120,7 +120,7 @@ shared = {
       },
       { # see https://releases.hashicorp.com/vault/
         name    = "vault"
-        version = "1.7.0"
+        version = "1.7.1"
       }
     ]
 
