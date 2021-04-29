@@ -3,8 +3,8 @@
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_key_module.html
 - name: Add APT Key for osquery Repository
   apt_key:
-    keyserver: "keyserver.ubuntu.com"
-    id: 1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B
+    keyserver: "{{ apt_repos.osquery.key_server }}"
+    id: "{{ apt_repos.osquery.key }}"
     state: present
   when:
     - ansible_os_family == "Debian"
@@ -14,7 +14,7 @@
 - name: Add APT repository for osquery Packages
   apt_repository:
     filename: osquery
-    repo: "deb [arch=amd64] https://pkg.osquery.io/deb deb main"
+    repo: "deb [arch=amd64] {{ apt_repos.osquery.url }} deb main"
     state: present
     update_cache: true
   when:

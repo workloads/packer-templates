@@ -24,9 +24,29 @@ shared = {
 
   # TODO: make `podman` smarter
   apt_repos = {
-    docker    = "https://download.docker.com"
-    hashicorp = "https://apt.releases.hashicorp.com"
-    podman    = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/"
+    docker = {
+      key        = null
+      key_server = null
+      url        = "https://download.docker.com"
+    }
+
+    hashicorp = {
+      key        = null
+      key_server = null
+      url        = "https://apt.releases.hashicorp.com"
+    }
+
+    osquery = {
+      key        = "1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B"
+      key_server = "keyserver.ubuntu.com"
+      url        = "https://pkg.osquery.io/deb"
+    }
+
+    podman = {
+      key        = null
+      key_server = null
+      url        = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/"
+    }
   }
 
   checksum_output = "generated/{{.BuildName}}_{{.BuilderType}}_{{.ChecksumType}}.checksum"

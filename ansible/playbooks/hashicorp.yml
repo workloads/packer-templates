@@ -12,7 +12,7 @@
 - name: Add APT Key for HashiCorp Repository
   apt_key:
     state: present
-    url: "{{ apt_repos.hashicorp }}/gpg"
+    url: "{{ apt_repos.hashicorp.url }}/gpg"
   when:
     - ansible_os_family == "Debian"
     - toggles.hashicorp.add_apt_repository
@@ -21,7 +21,7 @@
 - name: Add APT repository for HashiCorp Packages
   apt_repository:
     filename: hashicorp
-    repo: "deb [arch=amd64] {{ apt_repos.hashicorp }} {{ ansible_distribution_release | lower }} main"
+    repo: "deb [arch=amd64] {{ apt_repos.hashicorp.url }} {{ ansible_distribution_release | lower }} main"
     state: present
     update_cache: true
   when:

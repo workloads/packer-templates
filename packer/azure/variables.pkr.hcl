@@ -128,7 +128,11 @@ variable "shared" {
       playbook_file    = string
     })
 
-    apt_repos = map(string)
+    apt_repos = map(object({
+      key        = string
+      key_server = string
+      url        = string
+    }))
 
     checksum_output = string
     checksum_types  = list(string)

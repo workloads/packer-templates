@@ -12,7 +12,7 @@
 - name: Add APT Key for Podman Repository
   apt_key:
     state: present
-    url: "{{ apt_repos.podman }}/Release.key"
+    url: "{{ apt_repos.podman.url }}/Release.key"
   when:
     - ansible_os_family == "Debian"
     - toggles.podman.add_apt_repository
@@ -21,7 +21,7 @@
 - name: Add APT repository for Podman Packages
   apt_repository:
     filename: podman
-    repo: "deb [arch=amd64] {{ apt_repos.podman }} stable"
+    repo: "deb [arch=amd64] {{ apt_repos.podman.url }} stable"
     state: present
     update_cache: true
   when:

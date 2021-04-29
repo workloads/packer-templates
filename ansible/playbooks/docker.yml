@@ -11,7 +11,7 @@
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_key_module.html
 - name: Add APT Key for Docker Repository
   apt_key:
-    url: "{{ apt_repos.docker }}/linux/ubuntu/gpg"
+    url: "{{ apt_repos.docker.url }}/linux/ubuntu/gpg"
     state: present
   when:
     - ansible_os_family == "Debian"
