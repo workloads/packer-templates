@@ -54,6 +54,7 @@ shared = {
   # Formatting sequence to use for date formats
   image_version_date_format = "YYYYMMDD-hhmmss"
 
+  # InSpec-specific settings
   inspec = {
     # see https://www.packer.io/docs/provisioners/inspec#attributes
     attributes = []
@@ -81,6 +82,14 @@ shared = {
 
   # Shared name for Images
   name = "ubuntu-hashicorp"
+
+  # osquery-specific settings
+  osquery = {
+    directories = [
+      "/var/log/osquery",
+      "/var/osquery/osquery.db"
+    ]
+  }
 
   packages = {
     # package definitions (name and version) for Docker(-related) products
