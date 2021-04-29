@@ -26,31 +26,31 @@ source "vagrant" "image" {
   add_force                    = var.add_force
   box_name                     = local.box_name
   box_version                  = var.box_version
-  communicator                 = var.build_config.communicator.type
+  communicator                 = var.shared.communicator.type
   output_dir                   = var.output_dir
   provider                     = var.provider
   skip_add                     = var.skip_add
   source_path                  = var.source_path
-  ssh_clear_authorized_keys    = var.build_config.communicator.ssh_clear_authorized_keys
-  ssh_disable_agent_forwarding = var.build_config.communicator.ssh_disable_agent_forwarding
+  ssh_clear_authorized_keys    = var.shared.communicator.ssh_clear_authorized_keys
+  ssh_disable_agent_forwarding = var.shared.communicator.ssh_disable_agent_forwarding
   teardown_method              = var.teardown_method
   template                     = var.template
 }
 
 # see https://www.packer.io/docs/builders/file
 source "file" "image_configuration" {
-  content = templatefile(var.build_config.templates.configuration, {
-    timestamp     = formatdate(var.build_config.image_version_date_format, timestamp())
-    configuration = yamlencode(var.build_config)
+  content = templatefile(var.shared.templates.configuration, {
+    timestamp     = formatdate(var.shared.image_version_date_format, timestamp())
+    configuration = yamlencode(var.shared)
   })
 
-  target = var.build_config.generated_files.configuration
+  target = var.shared.generated_files.configuration
 }
 
 # see https://www.packer.io/docs/builders/file
 source "file" "version_description" {
   content = local.version_description
-  target  = var.build_config.generated_files.versions
+  target  = var.shared.generated_files.versions
 }
 
 build {
@@ -71,22 +71,22 @@ build {
 
   # see https://www.packer.io/docs/provisioners/ansible
   provisioner "ansible" {
-    ansible_env_vars = var.build_config.ansible.ansible_env_vars
-    command          = var.build_config.ansible.command
+    ansible_env_vars = var.shared.ansible.ansible_env_vars
+    command          = var.shared.ansible.command
     extra_arguments  = local.ansible_extra_arguments
-    galaxy_file      = var.build_config.ansible.galaxy_file
-    playbook_file    = var.build_config.ansible.playbook_file
+    galaxy_file      = var.shared.ansible.galaxy_file
+    playbook_file    = var.shared.ansible.playbook_file
   }
 
   # see https://www.packer.io/docs/provisioners/inspec
   #provisioner "inspec" {
-  #  attributes           = var.build_config.inspec.attributes
-  #  attributes_directory = var.build_config.inspec.attributes_directory
-  #  backend              = var.build_config.inspec.backend
-  #  command              = var.build_config.inspec.command
-  #  inspec_env_vars      = var.build_config.inspec.inspec_env_vars
-  #  profile              = var.build_config.inspec.profile
-  #  user                 = var.build_config.inspec.user
+  #  attributes           = var.shared.inspec.attributes
+  #  attributes_directory = var.shared.inspec.attributes_directory
+  #  backend              = var.shared.inspec.backend
+  #  command              = var.shared.inspec.command
+  #  inspec_env_vars      = var.shared.inspec.inspec_env_vars
+  #  profile              = var.shared.inspec.profile
+  #  user                 = var.shared.inspec.user
   #}
 
   # see https://www.packer.io/docs/post-processors/vagrant-cloud
@@ -99,7 +99,7 @@ build {
 
   # see https://www.packer.io/docs/post-processors/checksum#checksum-post-processor
   post-processor "checksum" {
-    checksum_types = var.build_config.checksum_types
-    output         = var.build_config.checksum_output
+    checksum_types = var.shared.checksum_types
+    output         = var.shared.checksum_output
   }
 }

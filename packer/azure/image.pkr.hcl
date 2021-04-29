@@ -6,10 +6,10 @@ packer {
   # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#specifying-plugin-requirements
   required_plugins {
     # see https://github.com/hashicorp/packer-plugin-azure/releases/
-//    azure = {
-//      version = "0.0.1"
-//      source  = "github.com/hashicorp/azure"
-//    }
+    //    azure = {
+    //      version = "0.0.1"
+    //      source  = "github.com/hashicorp/azure"
+    //    }
 
     # see https://github.com/hashicorp/packer-plugin-ansible/releases/
     ansible = {
@@ -28,7 +28,7 @@ source "azure-arm" "image" {
   azure_tags = {}
 
   cloud_environment_name            = var.cloud_environment_name
-  communicator                      = var.build_config.communicator.type
+  communicator                      = var.shared.communicator.type
   custom_data_file                  = var.custom_data_file
   image_offer                       = var.image_offer
   image_publisher                   = var.image_publisher
@@ -38,15 +38,15 @@ source "azure-arm" "image" {
   managed_image_name                = local.managed_image_name_full
   managed_image_resource_group_name = var.managed_image_resource_group_name
   os_type                           = var.os_type
-  ssh_clear_authorized_keys         = var.build_config.communicator.ssh_clear_authorized_keys
-  ssh_disable_agent_forwarding      = var.build_config.communicator.ssh_disable_agent_forwarding
+  ssh_clear_authorized_keys         = var.shared.communicator.ssh_clear_authorized_keys
+  ssh_disable_agent_forwarding      = var.shared.communicator.ssh_disable_agent_forwarding
 
   # authentication with `az` CLI supplied credentials
   use_azure_cli_auth = var.use_azure_cli_auth
 
   # authentication with explicitly defined credentials
-  # NOTE: to use this section, disable the `use_azure_cli_auth` property and
-  # NOTE: enable the `subscription_id`, `client_id`, and `client_secret` properties
+  # to use this section, disable the `use_azure_cli_auth` property and
+  # enable the `subscription_id`, `client_id`, and `client_secret` properties
   # subscription_id = var.subscription_id
   # client_id       = var.client_id
   # client_secret   = var.client_secret
@@ -56,18 +56,18 @@ source "azure-arm" "image" {
 
 # see https://www.packer.io/docs/builders/file
 source "file" "image_configuration" {
-  content = templatefile(var.build_config.templates.configuration, {
-    timestamp     = formatdate(var.build_config.image_version_date_format, timestamp())
-    configuration = yamlencode(var.build_config)
+  content = templatefile(var.shared.templates.configuration, {
+    timestamp     = formatdate(var.shared.image_version_date_format, timestamp())
+    configuration = yamlencode(var.shared)
   })
 
-  target = var.build_config.generated_files.configuration
+  target = var.shared.generated_files.configuration
 }
 
 # see https://www.packer.io/docs/builders/file
 source "file" "version_description" {
   content = local.managed_image_version
-  target  = var.build_config.generated_files.versions
+  target  = var.shared.generated_files.versions
 }
 
 build {
@@ -89,11 +89,11 @@ build {
 
   # see https://www.packer.io/docs/provisioners/ansible
   provisioner "ansible" {
-    ansible_env_vars = var.build_config.ansible.ansible_env_vars
-    command          = var.build_config.ansible.command
+    ansible_env_vars = var.shared.ansible.ansible_env_vars
+    command          = var.shared.ansible.command
     extra_arguments  = local.ansible_extra_arguments
-    galaxy_file      = var.build_config.ansible.galaxy_file
-    playbook_file    = var.build_config.ansible.playbook_file
+    galaxy_file      = var.shared.ansible.galaxy_file
+    playbook_file    = var.shared.ansible.playbook_file
   }
 
   # carry out deprovisioning steps: https://www.packer.io/docs/builders/azure/arm#linux
@@ -111,7 +111,7 @@ build {
 
   # see https://www.packer.io/docs/post-processors/checksum#checksum-post-processor
   post-processor "checksum" {
-    checksum_types = var.build_config.checksum_types
-    output         = var.build_config.checksum_output
+    checksum_types = var.shared.checksum_types
+    output         = var.shared.checksum_output
   }
 }

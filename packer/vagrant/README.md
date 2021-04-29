@@ -6,6 +6,7 @@
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Overview](#overview)
+    - [Build Options](#build-options)
   - [Vagrant](#vagrant)
   - [Vagrant Cloud](#vagrant-cloud)
 
@@ -22,6 +23,14 @@
 | build target    | `vagrant`                              |
 | build command   | `make build target=vagrant`            |
 | lint command    | `make lint target=vagrant`             |
+
+### Build Options
+
+The following Vagrant-specific build options are available:
+
+|                 |                                                    |
+|-----------------|----------------------------------------------------|
+| `enable-vagrant-cloud` | set this to enable pushing to Vagrant Cloud |
 
 > `make` commands must be run from the root directory.
 

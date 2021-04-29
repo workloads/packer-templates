@@ -88,99 +88,6 @@ variable "availability_zone" {
 # see https://www.packer.io/docs/builders/amazon/ebs#block_duration_minutes
 # TODO: add support for variable "block_duration_minutes"
 
-# shared configuration
-variable "build_config" {
-  type = object({
-    ansible = object({
-      ansible_env_vars = list(string)
-      command          = string
-      extra_arguments  = list(string)
-      galaxy_file      = string
-      playbook_file    = string
-    })
-
-    apt_repos = map(string)
-
-    checksum_output = string
-    checksum_types  = list(string)
-
-    communicator = object({
-      ssh_clear_authorized_keys    = bool
-      ssh_disable_agent_forwarding = bool
-      ssh_username                 = string
-      type                         = string
-    })
-
-    generated_files = object({
-      configuration = string
-      versions      = string
-    })
-
-    image_version_date_format = string
-
-    inspec = object({
-      attributes           = list(string)
-      attributes_directory = string
-      backend              = string
-      command              = string
-      inspec_env_vars      = list(string)
-      profile              = string
-      user                 = string
-    })
-
-    name = string
-
-    packages = object({
-      docker = list(object({
-        name    = string
-        version = string
-      }))
-
-      hashicorp = list(object({
-        name    = string
-        version = string
-      }))
-
-      hashicorp_nomad_plugins = list(object({
-        name    = string
-        version = string
-      }))
-
-      podman = list(object({
-        name    = string
-        version = string
-      }))
-
-      to_install = list(string)
-      to_remove  = list(string)
-    })
-
-    templates = object({
-      configuration = string
-      versions      = string
-    })
-
-    toggles = object({
-      enable_debug_statements = bool
-      enable_docker           = bool
-      enable_hashicorp        = bool
-      enable_os               = bool
-      enable_podman           = bool
-
-      docker            = map(bool)
-      hashicorp         = map(bool)
-      hashicorp_enabled = map(bool)
-      misc              = map(bool)
-      os                = map(bool)
-      podman            = map(bool)
-    })
-  })
-
-  description = "Shared Configuration for all Images"
-
-  # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
-}
-
 # see https://www.packer.io/docs/builders/amazon/ebs#aws_polling
 # TODO: add support for block variable "aws_polling"
 
@@ -249,7 +156,7 @@ variable "iam_instance_profile" {
   default     = ""
 }
 
-# NOTE: the `filters` of `image` is defined in the `locals` stanza at the bottom of this file
+# the `filters` of `image` is defined in the `locals` stanza at the bottom of this file
 variable "image" {
   type = object({
     most_recent = bool
@@ -353,6 +260,99 @@ variable "security_group_ids" {
   type        = list(string)
   description = "A list of security groups as to assign to the instance."
   default     = []
+}
+
+# shared configuration
+variable "shared" {
+  type = object({
+    ansible = object({
+      ansible_env_vars = list(string)
+      command          = string
+      extra_arguments  = list(string)
+      galaxy_file      = string
+      playbook_file    = string
+    })
+
+    apt_repos = map(string)
+
+    checksum_output = string
+    checksum_types  = list(string)
+
+    communicator = object({
+      ssh_clear_authorized_keys    = bool
+      ssh_disable_agent_forwarding = bool
+      ssh_username                 = string
+      type                         = string
+    })
+
+    generated_files = object({
+      configuration = string
+      versions      = string
+    })
+
+    image_version_date_format = string
+
+    inspec = object({
+      attributes           = list(string)
+      attributes_directory = string
+      backend              = string
+      command              = string
+      inspec_env_vars      = list(string)
+      profile              = string
+      user                 = string
+    })
+
+    name = string
+
+    packages = object({
+      docker = list(object({
+        name    = string
+        version = string
+      }))
+
+      hashicorp = list(object({
+        name    = string
+        version = string
+      }))
+
+      hashicorp_nomad_plugins = list(object({
+        name    = string
+        version = string
+      }))
+
+      podman = list(object({
+        name    = string
+        version = string
+      }))
+
+      to_install = list(string)
+      to_remove  = list(string)
+    })
+
+    templates = object({
+      configuration = string
+      versions      = string
+    })
+
+    toggles = object({
+      enable_debug_statements = bool
+      enable_docker           = bool
+      enable_hashicorp        = bool
+      enable_os               = bool
+      enable_podman           = bool
+
+      docker            = map(bool)
+      hashicorp         = map(bool)
+      hashicorp_enabled = map(bool)
+      misc              = map(bool)
+      os                = map(bool)
+      podman            = map(bool)
+    })
+  })
+
+  description = "Shared Configuration for all Images"
+
+  # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#shared_credentials_file
@@ -483,7 +483,7 @@ variable "vpc_id" {
 }
 
 locals {
-  ami_name = var.ami_name == "" ? var.build_config.name : var.ami_name
+  ami_name = var.ami_name == "" ? var.shared.name : var.ami_name
 
   image_filter_name = "ubuntu/images/${var.ami_virtualization_type}-ssd/ubuntu-focal-20.04-amd64-server-*"
 
@@ -496,13 +496,13 @@ locals {
     ],
 
     # user-defined extra arguments for Ansible
-    var.build_config.ansible.extra_arguments
+    var.shared.ansible.extra_arguments
   )
 
-  version_description = templatefile(var.build_config.templates.versions, {
-    build_config = var.build_config
-    name         = var.build_config.name
-    version      = "{{ isotime }}"
-    timestamp    = "{{ isotime }}"
+  version_description = templatefile(var.shared.templates.versions, {
+    shared    = var.shared
+    name      = var.shared.name
+    version   = "{{ isotime }}"
+    timestamp = "{{ isotime }}"
   })
 }

@@ -6,8 +6,8 @@ SHELL         := sh
 .ONESHELL     :
 .SHELLFLAGS   := -eu -c
 
-# NOTE: specify files in the order they should be loaded
-# NOTE: this allows for a more logical `help` experience
+# Specify files in the order they should be loaded
+# This allows for a more logical `help` experience
 
 # common Targets
 include make/commons.mk

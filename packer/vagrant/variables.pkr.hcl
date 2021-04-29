@@ -42,8 +42,30 @@ variable "box_version" {
   default     = ""
 }
 
+# see https://www.packer.io/docs/builders/vagrant#no_release
+variable "no_release" {
+  type        = bool
+  description = "If set to true, does not release the version on Vagrant Cloud, making it active."
+  default     = true
+}
+
+# see https://www.packer.io/docs/builders/vagrant#output_dir
+variable "output_dir" {
+  type        = string
+  description = "The directory to create that will contain your output box."
+  default     = "generated/vagrant"
+}
+
+# see https://www.packer.io/docs/builders/vagrant#provider
+variable "provider" {
+  type        = string
+  description = "The Vagrant provider."
+  default     = "virtualbox"
+}
+
+
 # shared configuration
-variable "build_config" {
+variable "shared" {
   type = object({
     ansible = object({
       ansible_env_vars = list(string)
@@ -135,27 +157,6 @@ variable "build_config" {
   # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
 }
 
-# see https://www.packer.io/docs/builders/vagrant#no_release
-variable "no_release" {
-  type        = bool
-  description = "If set to true, does not release the version on Vagrant Cloud, making it active."
-  default     = true
-}
-
-# see https://www.packer.io/docs/builders/vagrant#output_dir
-variable "output_dir" {
-  type        = string
-  description = "The directory to create that will contain your output box."
-  default     = "generated/vagrant"
-}
-
-# see https://www.packer.io/docs/builders/vagrant#provider
-variable "provider" {
-  type        = string
-  description = "The Vagrant provider."
-  default     = "virtualbox"
-}
-
 # see https://www.packer.io/docs/builders/vagrant#skip_add
 variable "skip_add" {
   type        = bool
@@ -194,18 +195,18 @@ variable "template" {
 
 locals {
   # set `box_name` to shared value, unless it is user-specified
-  box_name = var.box_name == "" ? var.build_config.name : var.box_name
+  box_name = var.box_name == "" ? var.shared.name : var.box_name
   box_tag  = "${var.box_organization}/${local.box_name}"
 
   # set `box_version` to generated value, unless it is user-defined
-  box_version_timestamp = formatdate(var.build_config.image_version_date_format, timestamp())
+  box_version_timestamp = formatdate(var.shared.image_version_date_format, timestamp())
   box_version           = var.box_version == "" ? local.box_version_timestamp : var.box_version
 
-  version_description = templatefile(var.build_config.templates.versions, {
-    build_config = var.build_config
-    name         = local.box_tag
-    version      = local.box_version
-    timestamp    = local.box_version_timestamp
+  version_description = templatefile(var.shared.templates.versions, {
+    shared    = var.shared
+    name      = local.box_tag
+    version   = local.box_version
+    timestamp = local.box_version_timestamp
   })
 
   # concatenate repository-defined extra arguments for Ansible with user-defined ones
@@ -217,6 +218,6 @@ locals {
     ],
 
     # user-defined extra arguments for Ansible
-    var.build_config.ansible.extra_arguments
+    var.shared.ansible.extra_arguments
   )
 }

@@ -9,6 +9,7 @@
   - [Requirements](#requirements)
   - [Usage](#usage)
     - [Workflow](#workflow)
+    - [Build Options](#build-options)
     - [Supported Providers](#supported-providers)
   - [Notes](#notes)
   - [Author Information](#author-information)
@@ -32,6 +33,22 @@ The primary way of interacting with this repository is `make` via the included [
 
 This allows for a consistent execution of the underlying workflows.
 
+The currently supported options are:
+
+```text
+PACKER TEMPLATES
+
+help               Displays this help text
+env-info           Prints Version Information
+build              Builds an Image with Packer
+init               Installs and upgrades Packer Plugins
+lint               Formats and validates Packer Template
+terraform-plan     Plans prerequisite resources with Terraform
+terraform-apply    Creates prerequisite resources with Terraform
+terraform-destroy  Destroys prerequisite resources with Terraform
+terraform-init     Initializes Terraform
+```
+
 ### Workflow
 
 The workflow for (most) targets is as follows:
@@ -51,6 +68,62 @@ Usage differs slightly for each provider and is therefore broken out into separa
 See the `packer/` (and `terraform/`) sub-directories for more information.
 
 > All workflows _can_ be executed manually, though this is not advisable. See the [Makefile](Makefile) for more information.
+
+### Build Options
+
+The following generic build options are available:
+
+#### `debug`
+
+Disables parallelization and enables debug mode.
+See [here](https://www.packer.io/docs/commands/build#debug) for more information.
+
+#### `enable-inspec`
+
+Enable the InSpec Provisioner and image validation against included baselines.
+See [here](https://www.packer.io/docs/provisioners/inspec) for more information.
+
+#### `except`
+
+Run all builds, provisioners and post-processors except those with the given comma-separated names.
+See [here](https://www.packer.io/docs/commands/build#except-foo-bar-baz) for more information.
+
+#### `force`
+
+Forces a builder to run when artifacts from a previous build prevent a build from running.
+See [here](https://www.packer.io/docs/commands/build#force) for more information.
+
+#### `machine-readable`
+
+Enable a fully machine-readable output setting, allowing you to use Packer in automated environments.
+See [here](https://www.packer.io/docs/commands#machine-readable-output) for more information.
+
+#### `only`
+
+Only run the builds with the given comma-separated names.
+See [here](https://www.packer.io/docs/commands/build#only-foo-bar-baz) for more information.
+
+#### `on-error`
+
+Selects what to do when the build fails during provisioning.
+See [here](https://www.packer.io/docs/commands/build#on-error-cleanup) for more information.
+
+#### `parallel-builds`
+
+Limit the number of builds to run in parallel.
+See [here](https://www.packer.io/docs/commands/build#parallel-builds-n) for more information.
+
+#### `timestamp-ui`
+
+Enable prefixing of each ui output with an RFC3339 timestamp.
+See [here](https://www.packer.io/docs/commands/build#timestamp-ui) for more information.
+
+#### `var-file`
+
+Set template variables from a file.
+See [here](https://www.packer.io/docs/commands/build#var-file) for more information.
+
+Additional Build Options may be available, depending on the target.
 
 ### Supported Providers
 
