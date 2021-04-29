@@ -1,0 +1,44 @@
+---
+
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_key_module.html
+- name: Add APT Key for osquery Repository
+  apt_key:
+    keyserver: "keyserver.ubuntu.com"
+    id: 1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B
+    state: present
+  when:
+    - ansible_os_family == "Debian"
+    - toggles.osquery.add_apt_repository
+
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_repository_module.html
+- name: Add APT repository for osquery Packages
+  apt_repository:
+    filename: osquery
+    repo: "deb [arch=amd64] https://pkg.osquery.io/deb deb main"
+    state: present
+    update_cache: true
+  when:
+    - ansible_os_family == "Debian"
+    - toggles.osquery.add_apt_repository
+
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
+- name: Install osquery Packages
+  apt:
+    force_apt_get: true
+    install_recommends: true
+    name: "{{ item.name }}={{ item.version | default('*') }}"
+    state: present
+    update_cache: true
+  with_items: "{{ packages.osquery }}"
+  when:
+    - ansible_os_family == "Debian"
+    - toggles.osquery.install_packages
+
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/file_module.html
+- name: delete osquery directories
+  file:
+    path: {{ item }}
+    state: absent
+  with_items: "{{ osquery.directories }}"
+  when:
+    - toggles.osquery.remove_directories

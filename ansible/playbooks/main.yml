@@ -61,4 +61,10 @@
       when:
         - toggles.enable_hashicorp
 
+    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
+    - name: Manage osquery Packages
+      include: osquery.yml
+      when:
+        - toggles.enable_osquery
+
 # TODO: optimize system settings
