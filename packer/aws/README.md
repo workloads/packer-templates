@@ -50,3 +50,7 @@ This operating system is expected to be supported for a long period.
 Support for additional operating systems is currently out of scope, as we want to limit complexity of this repository.
 
 If you would like to customize this repository to fit your requirements, start by modifying the `amazon-ami` Data Source in [packer/aws/image.pkr.hcl](image.pkr.hcl).
+
+### Image Tagging
+
+We have chosen to follow AWS-recommended [best-practices](https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/adopt-a-standardized-approach-for-tag-names.html) for tagging the resulting image(s).
