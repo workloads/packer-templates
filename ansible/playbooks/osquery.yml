@@ -26,7 +26,7 @@
   apt:
     force_apt_get: true
     install_recommends: true
-    name: "{{ item.name }}={{ item.version | default('*') }}"
+    name: "osquery"
     state: present
     update_cache: true
   with_items: "{{ packages.osquery }}"
