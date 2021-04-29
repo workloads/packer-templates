@@ -499,6 +499,19 @@ locals {
     var.shared.ansible.extra_arguments
   )
 
+  tags_common = {
+    "Name"              = local.ami_name
+    "image:source-id"   = data.amazon-ami.image.id
+    "image:source-name" = data.amazon-ami.image.name
+  }
+
+  tags_versions = {
+
+  }
+
+  # assemble tags from common tags and version information
+  tags = merge(local.tags_common, local.tags_versions)
+
   version_description = templatefile(var.shared.templates.versions, {
     shared    = var.shared
     name      = var.shared.name

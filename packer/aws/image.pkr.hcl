@@ -47,7 +47,7 @@ source "amazon-ebs" "image" {
   ssh_username                 = var.shared.communicator.ssh_username
   source_ami                   = data.amazon-ami.image.id
   subnet_id                    = var.subnet_id
-  tags                         = var.tags
+  tags                         = local.tags
 
   # TODO: add support for variable "vault_aws_engine"
 }
