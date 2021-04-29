@@ -103,6 +103,16 @@ shared = {
   # Shared name for Images
   name = "ubuntu-hashicorp"
 
+  # OS-specific settings
+  os = {
+    directories = {
+      to_remove = [
+        "/etc/machine-id",
+        "/var/lib/dbus/machine-id"
+      ]
+    }
+  }
+
   # osquery-specific settings
   osquery = {
     directories = [
