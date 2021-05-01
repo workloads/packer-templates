@@ -11,8 +11,8 @@
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_key_module.html
 - name: Add APT Key for Docker Repository
   apt_key:
-    keyring: "{{ apt_repos.docker.keyring }}"
-    url: "{{ apt_repos.docker.url }}/linux/ubuntu/gpg"
+    keyring: "{{ docker.repository.keyring }}"
+    url: "{{ docker.repository.url }}/gpg"
     state: present
   when:
     - ansible_os_family == "Debian"
@@ -22,7 +22,7 @@
 - name: Add APT repository for Docker Packages
   apt_repository:
     filename: docker
-    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-ce-archive-keyring.gpg] {{ apt_repos.docker.url }}/linux/ubuntu {{ ansible_distribution_release | lower }} stable"
+    repo: "deb [arch=amd64 signed-by={{ docker.repository.keyring }}] {{ docker.repository.url }} {{ ansible_distribution_release | lower }} stable"
     state: present
     update_cache: true
   when:
@@ -38,7 +38,7 @@
     state: present
     update_cache: true
   with_items:
-    - "{{ packages.docker }}"
+    - "{{ docker.packages }}"
   when:
     - ansible_os_family == "Debian"
     - docker.toggles.install_packages

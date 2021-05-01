@@ -100,10 +100,8 @@ variable "shared" {
       }))
 
       repository = object({
-        key        = string
-        key_server = string
-        keyring    = string
-        url        = string
+        keyring = string
+        url     = string
       })
 
       toggles = map(bool)
@@ -179,10 +177,7 @@ variable "shared" {
       }))
 
       repository = object({
-        key        = string
-        key_server = string
-        keyring    = string
-        url        = string
+        url = string
       })
 
       toggles = map(bool)

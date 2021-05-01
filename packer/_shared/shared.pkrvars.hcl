@@ -63,10 +63,8 @@ shared = {
     ]
 
     repository = {
-      key        = null
-      key_server = null
-      keyring    = "/usr/share/keyrings/docker-ce-archive-keyring.gpg"
-      url        = "https://download.docker.com"
+      keyring = "/usr/share/keyrings/docker-ce-archive-keyring.gpg"
+      url     = "https://download.docker.com/linux/ubuntu"
     }
 
     toggles = {
@@ -247,10 +245,7 @@ shared = {
 
     # TODO: make `url` smarter
     repository = {
-      key        = null
-      key_server = null
-      keyring    = null
-      url        = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/"
+      url = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/"
     }
 
     toggles = {

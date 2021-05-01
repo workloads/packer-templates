@@ -67,7 +67,7 @@
     - "{{ packages.hashicorp }}"
   when:
     - toggles.hashicorp_enabled[item.name]
-    - toggles.docker.create_group
+    - docker.toggles.create_group
     - toggles.hashicorp.create_groups
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/group_module.html
@@ -118,7 +118,6 @@
     system: true
   when:
     - toggles.hashicorp_enabled.nomad is defined
-    - toggles.docker.install_packages
     - toggles.hashicorp.create_users
     - toggles.hashicorp.add_nomad_user_to_docker
 
