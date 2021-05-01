@@ -45,12 +45,12 @@ source "amazon-ebs" "image" {
     max_attempts  = var.aws_polling.max_attempts
   }
 
-  communicator  = var.shared.communicator.type
-  ena_support   = var.ena_support
-  encrypt_boot  = var.encrypt_boot
-  instance_type = var.instance_type
-  kms_key_id    = var.kms_key_id
-  region        = var.region
+  communicator       = var.shared.communicator.type
+  ena_support        = var.ena_support
+  encrypt_boot       = var.encrypt_boot
+  instance_type      = var.instance_type
+  kms_key_id         = var.kms_key_id
+  region             = var.region
   region_kms_key_ids = var.region_kms_key_ids
 
   security_group_filter {
