@@ -178,6 +178,14 @@ shared = {
       }
     ]
 
+    # package definitions (name and version) for osquery
+    osquery = [
+      { # see https://osquery.io/downloads/official/
+        name    = "osquery"
+        version = "4.8.0"
+      }
+    ]
+
     # package definitions (name and version) for Podman
     podman = [
       { # see https://releases.hashicorp.com/nomad-driver-podman/
@@ -226,6 +234,7 @@ shared = {
     enable_docker           = true
     enable_hashicorp        = true
     enable_os               = true
+    enable_osquery          = true
     enable_podman           = false
 
     # Docker-specific feature flags
