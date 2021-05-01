@@ -199,6 +199,11 @@ variable "shared" {
         to_remove = list(string)
       })
 
+      packages = object({
+        to_install = list(string)
+        to_remove  = list(string)
+      })
+
       toggles = map(bool)
     })
 

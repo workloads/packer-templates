@@ -15,7 +15,7 @@
     url: "{{ apt_repos.hashicorp.url }}/gpg"
   when:
     - ansible_os_family == "Debian"
-    - toggles.hashicorp.add_repository
+    - hashicorp.toggles.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_repository_module.html
 - name: Add APT repository for HashiCorp Packages
@@ -26,7 +26,7 @@
     update_cache: true
   when:
     - ansible_os_family == "Debian"
-    - toggles.hashicorp.add_repository
+    - hashicorp.toggles.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
 - name: Install HashiCorp Packages
@@ -41,7 +41,7 @@
   when:
     - ansible_os_family == "Debian"
     - toggles.hashicorp_enabled[item.name]
-    - toggles.hashicorp.install_packages
+    - hashicorp.toggles.install_packages
 
 # TODO: ensure these packages are available
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
@@ -55,7 +55,7 @@
 #  with_items:
 #    - "{{ packages.hashicorp_nomad_plugins }}"
 #  when:
-#    - toggles.hashicorp.install_nomad_plugins
+#    - hashicorp.toggles.install_nomad_plugins
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/group_module.html
 - name: Add Groups for HashiCorp Packages
@@ -68,7 +68,7 @@
   when:
     - toggles.hashicorp_enabled[item.name]
     - docker.toggles.create_group
-    - toggles.hashicorp.create_groups
+    - hashicorp.toggles.create_groups
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/group_module.html
 - name: Add Groups for HashiCorp Packages
@@ -77,7 +77,7 @@
     state: present
     system: true
   when:
-    - toggles.hashicorp.create_groups
+    - hashicorp.toggles.create_groups
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/user_module.html
 - name: Add Users for HashiCorp Packages
@@ -90,7 +90,7 @@
     - "{{ packages.hashicorp }}"
   when:
     - toggles.hashicorp_enabled[item.name]
-    - toggles.hashicorp.create_users
+    - hashicorp.toggles.create_users
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/user_module.html
 - name: Add Users to `hashicorp` Group
@@ -105,8 +105,8 @@
   when:
     - toggles.hashicorp_enabled[item.name] is defined
     - toggles.hashicorp_enabled[item.name]
-    - toggles.hashicorp.create_users
-    - toggles.hashicorp.create_groups
+    - hashicorp.toggles.create_users
+    - hashicorp.toggles.create_groups
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/user_module.html
 - name: Add `nomad` User to `docker` Group
@@ -118,8 +118,8 @@
     system: true
   when:
     - toggles.hashicorp_enabled.nomad is defined
-    - toggles.hashicorp.create_users
-    - toggles.hashicorp.add_nomad_user_to_docker
+    - hashicorp.toggles.create_users
+    - hashicorp.toggles.add_nomad_user_to_docker
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/template_module.html
 - name: Copy Unit Files for HashiCorp Packages
@@ -130,7 +130,7 @@
     - "{{ packages.hashicorp }}"
   when:
     - toggles.hashicorp_enabled[item.name]
-    - toggles.hashicorp.copy_unit_files
+    - hashicorp.toggles.copy_unit_files
 
 # see https://docs.ansible.com/ansible/2.10/modules/systemd_module.html
 - name: Start Services for HashiCorp Packages
@@ -142,5 +142,5 @@
     - "{{ packages.hashicorp }}"
   when:
     - toggles.hashicorp_enabled[item.name]
-    - toggles.hashicorp.enable_services
-    - toggles.hashicorp.start_services
+    - hashicorp.toggles.enable_services
+    - hashicorp.toggles.start_services

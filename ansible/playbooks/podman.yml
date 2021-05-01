@@ -15,7 +15,7 @@
     url: "{{ apt_repos.podman.url }}/Release.key"
   when:
     - ansible_os_family == "Debian"
-    - toggles.podman.add_repository
+    - podman.toggles.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_repository_module.html
 - name: Add APT repository for Podman Packages
@@ -26,7 +26,7 @@
     update_cache: true
   when:
     - ansible_os_family == "Debian"
-    - toggles.podman.add_repository
+    - podman.toggles.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
 - name: Install Podman Packages
@@ -40,4 +40,4 @@
     - "{{ packages.podman }}"
   when:
     - ansible_os_family == "Debian"
-    - toggles.podman.install_packages
+    - podman.toggles.install_packages
