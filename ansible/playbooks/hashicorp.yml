@@ -5,8 +5,8 @@
   debug:
     msg: "included hashicorp.yml"
   when:
-    - toggle.enable_debug_statements is defined
-    - toggle.enable_debug_statements
+    - enable_debug_statements is defined
+    - enable_debug_statements
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_key_module.html
 - name: Add APT Key for HashiCorp Repository
