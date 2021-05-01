@@ -16,7 +16,7 @@
     state: present
   when:
     - ansible_os_family == "Debian"
-    - toggles.docker.add_apt_repository
+    - docker.toggles.add_apt_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_repository_module.html
 - name: Add APT repository for Docker Packages
@@ -27,7 +27,7 @@
     update_cache: true
   when:
     - ansible_os_family == "Debian"
-    - toggles.docker.add_apt_repository
+    - docker.toggles.add_apt_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
 - name: Install Docker Packages
@@ -41,7 +41,7 @@
     - "{{ packages.docker }}"
   when:
     - ansible_os_family == "Debian"
-    - toggles.docker.install_packages
+    - docker.toggles.install_packages
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/group_module.html
 - name: Add `docker` Group
@@ -50,7 +50,7 @@
     state: present
     system: true
   when:
-    - toggles.docker.create_group
+    - docker.toggles.create_group
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/user_module.html
 - name: Add `docker` User
@@ -60,4 +60,4 @@
     group: docker
     system: true
   when:
-    - toggles.docker.create_user
+    - docker.toggles.create_user
