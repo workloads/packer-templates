@@ -77,6 +77,7 @@ variable "shared" {
     apt_repos = map(object({
       key        = string
       key_server = string
+      keyring    = string
       url        = string
     }))
 

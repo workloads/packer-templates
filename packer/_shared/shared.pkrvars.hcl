@@ -22,29 +22,33 @@ shared = {
     playbook_file = "./ansible/playbooks/main.yml"
   }
 
-  # TODO: make `podman` smarter
   apt_repos = {
     docker = {
       key        = null
       key_server = null
+      keyring    = "/usr/share/keyrings/docker-ce-archive-keyring.gpg"
       url        = "https://download.docker.com"
     }
 
     hashicorp = {
       key        = null
       key_server = null
+      keyring    = null
       url        = "https://apt.releases.hashicorp.com"
     }
 
     osquery = {
       key        = "1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B"
       key_server = "keyserver.ubuntu.com"
+      keyring    = null
       url        = "https://pkg.osquery.io/deb"
     }
 
+    # TODO: make `podman` smarter
     podman = {
       key        = null
       key_server = null
+      keyring    = null
       url        = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/"
     }
   }
