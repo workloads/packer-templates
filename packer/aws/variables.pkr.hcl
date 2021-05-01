@@ -329,6 +329,7 @@ variable "shared" {
 
     os = object({
       directories = object({
+        ansible   = list(string)
         to_remove = list(string)
       })
     })

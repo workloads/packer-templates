@@ -106,6 +106,10 @@ shared = {
   # OS-specific settings
   os = {
     directories = {
+      ansible = [
+        "/tmp/ansible"
+      ]
+
       to_remove = [
         "/etc/machine-id",
         "/var/lib/dbus/machine-id"
