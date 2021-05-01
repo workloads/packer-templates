@@ -246,11 +246,6 @@ variable "shared" {
       configuration = string
       versions      = string
     })
-
-    toggles = object({
-      hashicorp_enabled = map(bool)
-      misc              = map(bool)
-    })
   })
 
   description = "Shared Configuration for all Images"

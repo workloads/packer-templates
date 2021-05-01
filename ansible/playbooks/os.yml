@@ -12,6 +12,7 @@
 - name: Create temporary Ansible Directory
   file:
     path: "{{ item }}"
+    mode: 0644
     state: absent
   with_items:
     - "{{ os.directories.ansible }}"
@@ -86,4 +87,4 @@
     force: true
     src: "../../{{ generated_files.versions }}"
   when:
-    - misc.toggles.copy_versions_files
+    - os.toggles.copy_versions_file

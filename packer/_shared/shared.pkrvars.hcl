@@ -228,6 +228,7 @@ shared = {
 
     # OS-specific feature flags
     toggles = {
+      copy_versions_file = true
       install_packages   = true
       remove_directories = true
       remove_packages    = true
