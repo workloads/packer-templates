@@ -65,6 +65,6 @@
     - name: Manage osquery Packages
       include: osquery.yml
       when:
-        - toggles.enable_osquery
+        - osquery.enabled
 
 # TODO: optimize system settings

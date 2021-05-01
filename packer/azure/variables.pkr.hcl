@@ -172,7 +172,23 @@ variable "shared" {
     })
 
     osquery = object({
+      enabled = bool
+
       directories = list(string)
+
+      packages = list(object({
+        name    = string
+        version = string
+      }))
+
+      repository = object({
+        key        = string
+        key_server = string
+        keyring    = string
+        url        = string
+      })
+
+      toggles = map(bool)
     })
 
     packages = object({
@@ -187,11 +203,6 @@ variable "shared" {
       }))
 
       hashicorp_nomad_plugins = list(object({
-        name    = string
-        version = string
-      }))
-
-      osquery = list(object({
         name    = string
         version = string
       }))
@@ -215,7 +226,6 @@ variable "shared" {
       enable_docker           = bool
       enable_hashicorp        = bool
       enable_os               = bool
-      enable_osquery          = bool
       enable_podman           = bool
 
       docker            = map(bool)
@@ -223,7 +233,6 @@ variable "shared" {
       hashicorp_enabled = map(bool)
       misc              = map(bool)
       os                = map(bool)
-      osquery           = map(bool)
       podman            = map(bool)
     })
   })

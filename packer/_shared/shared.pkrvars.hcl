@@ -37,13 +37,6 @@ shared = {
       url        = "https://apt.releases.hashicorp.com"
     }
 
-    osquery = {
-      key        = "1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B"
-      key_server = "keyserver.ubuntu.com"
-      keyring    = null
-      url        = "https://pkg.osquery.io/deb"
-    }
-
     # TODO: make `podman` smarter
     podman = {
       key        = null
@@ -123,10 +116,37 @@ shared = {
 
   # osquery-specific settings
   osquery = {
+    enabled = true
+
     directories = [
       "/var/log/osquery",
       "/var/osquery/osquery.db"
     ]
+
+    packages = [
+      { # see https://osquery.io/downloads/official/
+        name    = "osquery"
+        version = "4.8.0"
+      }
+    ]
+
+    repository = {
+      key        = "1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B"
+      key_server = "keyserver.ubuntu.com"
+      keyring    = null
+      url        = "https://pkg.osquery.io/deb"
+    }
+
+    toggles = {
+      # add osquery APT repository
+      add_apt_repository = true
+
+      # install packages for osquery
+      install_packages = true
+
+      # remove osquery directories
+      remove_directories = true
+    }
   }
 
   packages = {
@@ -178,14 +198,6 @@ shared = {
       }
     ]
 
-    # package definitions (name and version) for osquery
-    osquery = [
-      { # see https://osquery.io/downloads/official/
-        name    = "osquery"
-        version = "4.8.0"
-      }
-    ]
-
     # package definitions (name and version) for Podman
     podman = [
       { # see https://releases.hashicorp.com/nomad-driver-podman/
@@ -234,7 +246,6 @@ shared = {
     enable_docker           = true
     enable_hashicorp        = true
     enable_os               = true
-    enable_osquery          = true
     enable_podman           = false
 
     # Docker-specific feature flags
@@ -295,18 +306,6 @@ shared = {
       remove_directories = true
       remove_packages    = true
       update_apt_cache   = true
-    }
-
-    # osquery-specific feature flags
-    osquery = {
-      # add osquery APT repository
-      add_apt_repository = true
-
-      # install packages for osquery
-      install_packages = true
-
-      # remove osquery directories
-      remove_directories = true
     }
 
     # Podman-specific feature flags
