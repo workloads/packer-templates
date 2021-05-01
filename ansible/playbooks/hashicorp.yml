@@ -36,7 +36,8 @@
     name: "{{ item.name }}={{ item.version | default('*') }}"
     state: present
     update_cache: true
-  with_items: "{{ packages.hashicorp }}"
+  with_items:
+    - "{{ packages.hashicorp }}"
   when:
     - ansible_os_family == "Debian"
     - toggles.hashicorp_enabled[item.name]
@@ -51,7 +52,8 @@
 #    name: "{{ item.name }}={{ item.version | default('*') }}"
 #    state: present
 #    update_cache: true
-#  with_items: "{{ packages.hashicorp_nomad_plugins }}"
+#  with_items:
+#    - "{{ packages.hashicorp_nomad_plugins }}"
 #  when:
 #    - toggles.hashicorp.install_nomad_plugins
 
@@ -61,7 +63,8 @@
     name: "{{ item.name }}"
     state: present
     system: true
-  with_items: "{{ packages.hashicorp }}"
+  with_items:
+    - "{{ packages.hashicorp }}"
   when:
     - toggles.hashicorp_enabled[item.name]
     - toggles.docker.create_group
@@ -83,7 +86,8 @@
     group: "{{ item.name }}"
     name: "{{ item.name }}"
     system: true
-  with_items: "{{ packages.hashicorp }}"
+  with_items:
+    - "{{ packages.hashicorp }}"
   when:
     - toggles.hashicorp_enabled[item.name]
     - toggles.hashicorp.create_users
@@ -96,7 +100,8 @@
       - hashicorp
     name: "{{ item.name }}"
     system: true
-  with_items: "{{ packages.hashicorp }}"
+  with_items:
+    - "{{ packages.hashicorp }}"
   when:
     - toggles.hashicorp_enabled[item.name] is defined
     - toggles.hashicorp_enabled[item.name]
@@ -122,7 +127,8 @@
   template:
     dest: "/lib/systemd/system/{{ item.name }}.service"
     src: "{{ item.name }}.service"
-  with_items: "{{ packages.hashicorp }}"
+  with_items:
+    - "{{ packages.hashicorp }}"
   when:
     - toggles.hashicorp_enabled[item.name]
     - toggles.hashicorp.copy_unit_files
@@ -133,7 +139,8 @@
     enabled: true
     state: started
     name: "{{ item.name }}"
-  with_items: "{{ packages.hashicorp }}"
+  with_items:
+    - "{{ packages.hashicorp }}"
   when:
     - toggles.hashicorp_enabled[item.name]
     - toggles.hashicorp.enable_services

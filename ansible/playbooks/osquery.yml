@@ -29,7 +29,8 @@
     name: "osquery"
     state: present
     update_cache: true
-  with_items: "{{ packages.osquery }}"
+  with_items:
+    - "{{ packages.osquery }}"
   when:
     - ansible_os_family == "Debian"
     - toggles.osquery.install_packages
@@ -39,6 +40,7 @@
   file:
     path: "{{ item }}"
     state: absent
-  with_items: "{{ osquery.directories }}"
+  with_items:
+    - "{{ osquery.directories }}"
   when:
     - toggles.osquery.remove_directories

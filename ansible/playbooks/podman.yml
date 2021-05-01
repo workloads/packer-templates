@@ -36,7 +36,8 @@
     name: "{{ item.name }}={{ item.version | default('*') }}"
     state: present
     update_cache: true
-  with_items: "{{ packages.podman }}"
+  with_items:
+    - "{{ packages.podman }}"
   when:
     - ansible_os_family == "Debian"
     - toggles.podman.install_packages
