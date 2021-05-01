@@ -84,6 +84,13 @@ shared = {
   hashicorp = {
     enabled = true
 
+    enabled_products = {
+      boundary = false
+      consul   = true
+      nomad    = true
+      vault    = false
+    }
+
     # package definitions (name and version) for HashiCorp Nomad Plugins
     nomad_plugins = [
       { # see https://releases.hashicorp.com/nomad-driver-podman/
@@ -119,6 +126,10 @@ shared = {
         version = "1.7.0"
       }
     ]
+
+    repository = {
+      url = "https://apt.releases.hashicorp.com"
+    }
 
     # HashiCorp-specific feature flags
     toggles = {
