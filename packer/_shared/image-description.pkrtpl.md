@@ -20,18 +20,18 @@ This image (version: `${version}`) was built on ${timestamp}.
 %{ endfor ~}
 %{ endif }
 
-%{ if shared.toggles.enable_docker && shared.toggles.docker.install_packages }
+%{ if shared.docker.enabled && shared.docker.toggles.install_packages }
 ## Docker packages:
 
-%{ for item in shared.packages.docker ~}
+%{ for item in shared.docker.packages ~}
 - `${item.name}` (version: `${item.version}`)
 %{ endfor ~}
 %{ endif }
 
-%{ if shared.toggles.enable_podman && shared.toggles.podman.install_packages }
+%{ if shared.podman.enabled && shared.podman.toggles.install_packages }
 ## Podman packages:
 
-%{ for item in shared.packages.podman ~}
+%{ for item in shared.podman.packages ~}
 - `${item.name}` (version: `${item.version}`)
 %{ endfor ~}
 %{ endif }

@@ -309,6 +309,24 @@ variable "shared" {
       type                         = string
     })
 
+    docker = object({
+      enabled = bool
+
+      packages = list(object({
+        name    = string
+        version = string
+      }))
+
+      repository = object({
+        key        = string
+        key_server = string
+        keyring    = string
+        url        = string
+      })
+
+      toggles = map(bool)
+    })
+
     generated_files = object({
       configuration = string
       versions      = string
@@ -356,11 +374,6 @@ variable "shared" {
     })
 
     packages = object({
-      docker = list(object({
-        name    = string
-        version = string
-      }))
-
       hashicorp = list(object({
         name    = string
         version = string
@@ -371,13 +384,26 @@ variable "shared" {
         version = string
       }))
 
-      podman = list(object({
+      to_install = list(string)
+      to_remove  = list(string)
+    })
+
+    podman = object({
+      enabled = bool
+
+      packages = list(object({
         name    = string
         version = string
       }))
 
-      to_install = list(string)
-      to_remove  = list(string)
+      repository = object({
+        key        = string
+        key_server = string
+        keyring    = string
+        url        = string
+      })
+
+      toggles = map(bool)
     })
 
     templates = object({
@@ -387,17 +413,13 @@ variable "shared" {
 
     toggles = object({
       enable_debug_statements = bool
-      enable_docker           = bool
       enable_hashicorp        = bool
       enable_os               = bool
-      enable_podman           = bool
 
-      docker            = map(bool)
       hashicorp         = map(bool)
       hashicorp_enabled = map(bool)
       misc              = map(bool)
       os                = map(bool)
-      podman            = map(bool)
     })
   })
 

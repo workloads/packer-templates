@@ -23,26 +23,11 @@ shared = {
   }
 
   apt_repos = {
-    docker = {
-      key        = null
-      key_server = null
-      keyring    = "/usr/share/keyrings/docker-ce-archive-keyring.gpg"
-      url        = "https://download.docker.com"
-    }
-
     hashicorp = {
       key        = null
       key_server = null
       keyring    = null
       url        = "https://apt.releases.hashicorp.com"
-    }
-
-    # TODO: make `podman` smarter
-    podman = {
-      key        = null
-      key_server = null
-      keyring    = null
-      url        = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/"
     }
   }
 
@@ -61,6 +46,42 @@ shared = {
 
     # Which communicator to use when initializing a build.
     type = "ssh"
+  }
+
+  docker = {
+    enabled = true
+
+    packages = [
+      { # see https://docs.docker.com/engine/release-notes/
+        name    = "docker-ce"
+        version = "5:20.10.6*"
+      },
+      { # see https://github.com/containerd/containerd/releases/
+        name    = "containerd.io"
+        version = "*"
+      }
+    ]
+
+    repository = {
+      key        = null
+      key_server = null
+      keyring    = "/usr/share/keyrings/docker-ce-archive-keyring.gpg"
+      url        = "https://download.docker.com"
+    }
+
+    toggles = {
+      # add Docker APT repository
+      add_apt_repository = true
+
+      # create `docker` Group
+      create_group = true
+
+      # create `docker` User
+      create_user = true
+
+      # install Docker Packages
+      install_packages = true
+    }
   }
 
   generated_files = {
@@ -150,18 +171,6 @@ shared = {
   }
 
   packages = {
-    # package definitions (name and version) for Docker(-related) products
-    docker = [
-      { # see https://docs.docker.com/engine/release-notes/
-        name    = "docker-ce"
-        version = "5:20.10.6*"
-      },
-      { # see https://github.com/containerd/containerd/releases/
-        name    = "containerd.io"
-        version = "*"
-      }
-    ]
-
     # package definitions (name and version) for HashiCorp products
     hashicorp = [
       { # see https://releases.hashicorp.com/boundary/
@@ -178,7 +187,7 @@ shared = {
       },
       { # see https://releases.hashicorp.com/vault/
         name    = "vault"
-        version = "1.7.1"
+        version = "1.7.0"
       }
     ]
 
@@ -195,14 +204,6 @@ shared = {
       { # see https://releases.hashicorp.com/nomad-autoscaler/
         name    = "nomad-autoscaler"
         version = "0.3.0"
-      }
-    ]
-
-    # package definitions (name and version) for Podman
-    podman = [
-      { # see https://releases.hashicorp.com/nomad-driver-podman/
-        name    = "podman"
-        version = "3.0.0"
       }
     ]
 
@@ -233,6 +234,34 @@ shared = {
     ]
   }
 
+  # podman-specific settings
+  podman = {
+    enabled = false
+
+    packages = [
+      { # see https://releases.hashicorp.com/nomad-driver-podman/
+        name    = "podman"
+        version = "3.0.0"
+      }
+    ]
+
+    # TODO: make `url` smarter
+    repository = {
+      key        = null
+      key_server = null
+      keyring    = null
+      url        = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/"
+    }
+
+    toggles = {
+      # add Podman APT repository
+      add_apt_repository = true
+
+      # install packages for Podman
+      install_packages = true
+    }
+  }
+
   templates = {
     # these paths are relative to the Packer Builder target
     configuration = "../_shared/generated-configuration.pkrtpl.yml"
@@ -243,18 +272,8 @@ shared = {
   toggles = {
     # feature flags to enable (complete) playbooks
     enable_debug_statements = true
-    enable_docker           = true
     enable_hashicorp        = true
     enable_os               = true
-    enable_podman           = false
-
-    # Docker-specific feature flags
-    docker = {
-      add_apt_repository = true
-      create_group       = true
-      create_user        = true
-      install_packages   = true
-    }
 
     # HashiCorp-specific feature flags
     hashicorp = {
@@ -306,15 +325,6 @@ shared = {
       remove_directories = true
       remove_packages    = true
       update_apt_cache   = true
-    }
-
-    # Podman-specific feature flags
-    podman = {
-      # add Podman APT repository
-      add_apt_repository = true
-
-      # install packages for Podman
-      install_packages = true
     }
   }
 }
