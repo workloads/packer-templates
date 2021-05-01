@@ -40,7 +40,7 @@
     - "{{ hashicorp.packages }}"
   when:
     - ansible_os_family == "Debian"
-    - hashicorp.toggles.enabled_products[item.name]
+    - hashicorp.enabled_products[item.name]
     - hashicorp.toggles.install_packages
 
 # TODO: ensure these packages are available
@@ -66,7 +66,7 @@
   with_items:
     - "{{ packages.hashicorp }}"
   when:
-    - hashicorp.toggles.enabled_products[item.name]
+    - hashicorp.enabled_products[item.name]
     - docker.toggles.create_group
     - hashicorp.toggles.create_groups
 
@@ -89,7 +89,7 @@
   with_items:
     - "{{ packages.hashicorp }}"
   when:
-    - hashicorp.toggles.enabled_products[item.name]
+    - hashicorp.enabled_products[item.name]
     - hashicorp.toggles.create_users
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/user_module.html
@@ -103,8 +103,8 @@
   with_items:
     - "{{ packages.hashicorp }}"
   when:
-    - hashicorp.toggles.enabled_products[item.name] is defined
-    - hashicorp.toggles.enabled_products[item.name]
+    - hashicorp.enabled_products[item.name] is defined
+    - hashicorp.enabled_products[item.name]
     - hashicorp.toggles.create_users
     - hashicorp.toggles.create_groups
 
@@ -129,7 +129,7 @@
   with_items:
     - "{{ packages.hashicorp }}"
   when:
-    - hashicorp.toggles.enabled_products[item.name]
+    - hashicorp.enabled_products[item.name]
     - hashicorp.toggles.copy_unit_files
 
 # see https://docs.ansible.com/ansible/2.10/modules/systemd_module.html
@@ -141,6 +141,6 @@
   with_items:
     - "{{ packages.hashicorp }}"
   when:
-    - hashicorp.toggles.enabled_products[item.name]
+    - hashicorp.enabled_products[item.name]
     - hashicorp.toggles.enable_services
     - hashicorp.toggles.start_services
