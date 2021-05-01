@@ -63,7 +63,6 @@ variable "provider" {
   default     = "virtualbox"
 }
 
-
 # shared configuration
 variable "shared" {
   type = object({
@@ -75,7 +74,11 @@ variable "shared" {
       playbook_file    = string
     })
 
-    apt_repos = map(string)
+    apt_repos = map(object({
+      key        = string
+      key_server = string
+      url        = string
+    }))
 
     checksum_output = string
     checksum_types  = list(string)
@@ -105,6 +108,12 @@ variable "shared" {
     })
 
     name = string
+
+    os = object({
+      directories = object({
+        to_remove = list(string)
+      })
+    })
 
     packages = object({
       docker = list(object({

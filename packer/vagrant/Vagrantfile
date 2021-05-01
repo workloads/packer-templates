@@ -32,8 +32,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.communicator   = VM_COMMUNICATOR
   config.vm.hostname       = VM_HOSTNAME
 
-  # TODO: add support for port-forwarding (see #10)
-
   # Source Vagrant Box
   config.vm.define 'source', autostart: false do |source|
     source.vm.box = '{{.SourceBox}}'
@@ -48,7 +46,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # TODO: add private and public networking
 
-  # TODO: add port-forwarding
+  # TODO: add support for port-forwarding (see #10)
 
   config.vm.post_up_message = VM_POST_UP_MESSAGE
 

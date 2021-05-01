@@ -163,6 +163,12 @@ variable "shared" {
 
     name = string
 
+    os = object({
+      directories = object({
+        to_remove = list(string)
+      })
+    })
+
     packages = object({
       docker = list(object({
         name    = string
