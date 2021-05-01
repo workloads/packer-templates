@@ -37,7 +37,7 @@
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/file_module.html
 - name: delete osquery directories
   file:
-    path: {{ item }}
+    path: "{{ item }}"
     state: absent
   with_items: "{{ osquery.directories }}"
   when:

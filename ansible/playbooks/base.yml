@@ -83,7 +83,7 @@
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/file_module.html
 - name: delete extraneous directories
   file:
-    path: {{ item }}
+    path: "{{ item }}"
     state: absent
   with_items: "{{ os.directories.to_remove }}"
   when:
