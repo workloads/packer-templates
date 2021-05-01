@@ -37,19 +37,32 @@ source "amazon-ebs" "image" {
   # the following configuration represents a minimally viable selection
   # for all options see: https://www.packer.io/docs/builders/amazon/ebs
 
-  ami_description              = var.ami_description
-  ami_name                     = local.ami_name
-  communicator                 = var.shared.communicator.type
-  instance_type                = var.instance_type
-  region                       = var.region
+  ami_description = var.ami_description
+  ami_name        = local.ami_name
+
+  aws_polling {
+    delay_seconds = var.aws_polling.delay_seconds
+    max_attempts  = var.aws_polling.max_attempts
+  }
+
+  communicator  = var.shared.communicator.type
+  ena_support   = var.ena_support
+  encrypt_boot  = var.encrypt_boot
+  instance_type = var.instance_type
+  kms_key_id    = var.kms_key_id
+  region        = var.region
+  region_kms_key_ids = var.region_kms_key_ids
+
+  security_group_filter {
+    filters = var.security_group_filter
+  }
+
   ssh_clear_authorized_keys    = var.shared.communicator.ssh_clear_authorized_keys
   ssh_disable_agent_forwarding = var.shared.communicator.ssh_disable_agent_forwarding
   ssh_username                 = var.shared.communicator.ssh_username
   source_ami                   = data.amazon-ami.image.id
   subnet_id                    = var.subnet_id
   tags                         = local.tags
-
-  # TODO: add support for variable "vault_aws_engine"
 }
 
 # see https://www.packer.io/docs/builders/file

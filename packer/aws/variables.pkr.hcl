@@ -72,9 +72,6 @@ variable "associate_public_ip_address" {
   default     = false
 }
 
-# see https://www.packer.io/docs/builders/amazon/ebs#assume_role
-# TODO: add support for block variable "assume_role"
-
 # see https://www.packer.io/docs/builders/amazon/ebs#availability_zone
 variable "availability_zone" {
   type        = string
@@ -83,13 +80,21 @@ variable "availability_zone" {
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#aws_polling
-# TODO: add support for block variable "aws_polling"
+variable "aws_polling" {
+  type = object({
+    delay_seconds = number
+    max_attempts  = number
+  })
+
+  description = "Polling configuration for the AWS waiter."
+  default = {
+    delay_seconds = 30
+    max_attempts  = 50
+  }
+}
 
 # see https://www.packer.io/docs/builders/amazon/ebs#block_duration_minutes
 # TODO: add support for variable "block_duration_minutes"
-
-# see https://www.packer.io/docs/builders/amazon/ebs#aws_polling
-# TODO: add support for block variable "aws_polling"
 
 # see https://www.packer.io/docs/builders/amazon/ebs#custom_endpoint_ec2
 variable "custom_endpoint_ec2" {
@@ -127,13 +132,18 @@ variable "enable_t2_unlimited" {
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#ena_support
-# TODO: add support for variable "ena_support"
+variable "ena_support" {
+  type        = bool
+  description = "Enable enhanced networking (ENA but not SriovNetSupport) on HVM-compatible AMIs."
+  default     = false
+}
 
 # see https://www.packer.io/docs/builders/amazon/ebs#encrypt_boot
-# TODO: add support for variable "encrypt_boot"
-
-# see https://www.packer.io/docs/builders/amazon/ebs#engine_name
-# TODO: add support for variable "engine_name"
+variable "encrypt_boot" {
+  type        = bool
+  description = "Whether or not to encrypt the resulting AMI when copying a provisioned instance to an AMI."
+  default     = null
+}
 
 # see https://www.packer.io/docs/builders/amazon/ebs#force_delete_snapshot
 variable "force_delete_snapshot" {
@@ -189,7 +199,11 @@ variable "instance_type" {
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#kms_key_id
-# TODO: add support for variable "kms_key_id"
+variable "kms_key_id" {
+  type        = string
+  description = "ID, alias or ARN of the KMS key to use for AMI encryption."
+  default     = null
+}
 
 # see https://www.packer.io/docs/builders/amazon/ebs#launch_block_device_mappings
 # TODO: add support for block variable "launch_block_device_mappings"
@@ -226,10 +240,11 @@ variable "region" {
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#region_kms_key_ids
-# TODO: add support for variable "region_kms_key_ids"
-
-# see https://www.packer.io/docs/builders/amazon/ebs#role_arn
-# TODO: add support for variable "role_arn"
+variable "region_kms_key_ids" {
+  type        = map(string)
+  description = "Regions to copy the AMI to, along with the custom KMS Key ID(Alias or ARN) to use for encryption for that region."
+  default     = {}
+}
 
 # see https://www.packer.io/docs/builders/amazon/ebs#run_tags
 variable "run_tags" {
@@ -253,7 +268,11 @@ variable "secret_key" {
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#security_group_filter
-# TODO: add support for block variable "security_group_filter"
+variable "security_group_filter" {
+  type        = map(string)
+  description = "Filters used to populate the `security_group_ids` field."
+  default     = {}
+}
 
 # see https://www.packer.io/docs/builders/amazon/ebs#security_group_ids
 variable "security_group_ids" {
@@ -360,10 +379,11 @@ variable "shared" {
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#shared_credentials_file
-# variable "shared_credentials_file" {
-#  type        = string
-#  description = "Path to a credentials file to load credentials from."
-# }
+variable "shared_credentials_file" {
+  type        = string
+  description = "Path to a credentials file to load credentials from."
+  default     = null
+}
 
 # see https://www.packer.io/docs/builders/amazon/ebs#shutdown_behavior
 variable "shutdown_behavior" {
@@ -460,18 +480,12 @@ variable "target" {
   description = "Build Target as received from `make`."
 }
 
-# see https://www.packer.io/docs/builders/amazon/ebs#temporary_iam_instance_profile_policy_document
-# TODO: add support for variable "temporary_iam_instance_profile_policy_document"
-
 # see https://www.packer.io/docs/builders/amazon/ebs#token
 variable "token" {
   type        = string
   description = "The access token to use."
   default     = null
 }
-
-# see https://www.packer.io/docs/builders/amazon/ebs#vault_aws_engine
-# TODO: add support for block variable "vault_aws_engine"
 
 variable "version_description" {
   type        = string
