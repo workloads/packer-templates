@@ -291,9 +291,10 @@ shared = {
 
     # OS-specific feature flags
     os = {
-      install_packages = true
-      remove_packages  = true
-      update_apt_cache = true
+      install_packages   = true
+      remove_directories = true
+      remove_packages    = true
+      update_apt_cache   = true
     }
 
     # osquery-specific feature flags
