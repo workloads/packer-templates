@@ -12,7 +12,7 @@
 
 ## Requirements
 
-- Vagrant `2.2.10` or newer
+- Vagrant `2.2.16` or newer
 
 ## Overview
 

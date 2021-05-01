@@ -58,7 +58,7 @@ env-info: # Prints Version Information
 	# expected output: `Terraform v0.15.0`
 	$(call print_version_if_available,"terraform", "--version")
 
-	# expected output: `Vagrant 2.2.15`
+	# expected output: `Vagrant 2.2.16`
 	$(call print_version_if_available,"vagrant", "--version")
 
 	# expected output: `6.1.18r142142`
