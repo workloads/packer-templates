@@ -389,7 +389,6 @@ variable "shared" {
       repository = object({
         key        = string
         key_server = string
-        keyring    = string
         url        = string
       })
 

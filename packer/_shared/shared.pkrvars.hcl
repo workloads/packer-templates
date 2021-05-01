@@ -266,7 +266,6 @@ shared = {
     repository = {
       key        = "1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B"
       key_server = "keyserver.ubuntu.com"
-      keyring    = null
       url        = "https://pkg.osquery.io/deb"
     }
 
