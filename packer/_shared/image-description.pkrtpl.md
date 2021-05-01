@@ -4,18 +4,18 @@ This image (version: `${version}`) was built on ${timestamp}.
 
 ---
 
-%{ if shared.toggles.enable_hashicorp && shared.toggles.hashicorp.install_packages }
+%{ if shared.hashicorp.enabled && shared.hashicorp.toggles.install_packages }
 ## HashiCorp Packages:
 
-%{ for item in shared.packages.hashicorp }
+%{ for item in shared.hashicorp.packages }
 - `${item.name}` (version: `${item.version}`)
 %{ endfor }
 %{ endif }
 
-%{ if shared.toggles.enable_hashicorp && shared.toggles.hashicorp.install_nomad_plugins }
+%{ if shared.hashicorp.enabled && shared.hashicorp.toggles.install_nomad_plugins }
 ## HashiCorp Nomad Plugins:
 
-%{ for item in shared.packages.hashicorp_nomad_plugins ~}
+%{ for item in shared.hashicorp.nomad_plugins ~}
 - `${item.name}` (version: `${item.version}`)
 %{ endfor ~}
 %{ endif }

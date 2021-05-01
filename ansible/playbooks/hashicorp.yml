@@ -15,7 +15,7 @@
     url: "{{ apt_repos.hashicorp.url }}/gpg"
   when:
     - ansible_os_family == "Debian"
-    - toggles.hashicorp.add_apt_repository
+    - toggles.hashicorp.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_repository_module.html
 - name: Add APT repository for HashiCorp Packages
@@ -26,7 +26,7 @@
     update_cache: true
   when:
     - ansible_os_family == "Debian"
-    - toggles.hashicorp.add_apt_repository
+    - toggles.hashicorp.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
 - name: Install HashiCorp Packages

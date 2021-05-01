@@ -38,31 +38,31 @@
 
   tasks:
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
-    - name: Manage OS Packages
-      include: base.yml
+    - name: Manage OS Operations
+      include: os.yml
       when:
         - os.enabled
 
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
-    - name: Manage Docker Packages
+    - name: Manage Docker Operations
       include: docker.yml
       when:
         - docker.enabled
 
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
-    - name: Manage Podman Packages
+    - name: Manage Podman Operations
       include: podman.yml
       when:
         - podman.enabled
 
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
-    - name: Manage HashiCorp Packages
+    - name: Manage HashiCorp Operations
       include: hashicorp.yml
       when:
         - hashicorp.enabled
 
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
-    - name: Manage osquery Packages
+    - name: Manage osquery Operations
       include: osquery.yml
       when:
         - osquery.enabled

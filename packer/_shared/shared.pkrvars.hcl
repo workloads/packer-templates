@@ -1,5 +1,8 @@
 # these variables are shared across all images
 shared = {
+  # feature flag to enable debug statements
+  enable_debug_statements = true
+
   ansible = {
     # Environment variables to set before running Ansible
     # When in doubt, edit `ansible/ansible.cfg` instead of `ansible_env_vars`
@@ -20,15 +23,6 @@ shared = {
 
     # The playbook to be run by Ansible.
     playbook_file = "./ansible/playbooks/main.yml"
-  }
-
-  apt_repos = {
-    hashicorp = {
-      key        = null
-      key_server = null
-      keyring    = null
-      url        = "https://apt.releases.hashicorp.com"
-    }
   }
 
   checksum_output = "generated/{{.BuildName}}_{{.BuilderType}}_{{.ChecksumType}}.checksum"
@@ -68,8 +62,8 @@ shared = {
     }
 
     toggles = {
-      # add Docker APT repository
-      add_apt_repository = true
+      # add Docker APT / YUM repository
+      add_repository = true
 
       # create `docker` Group
       create_group = true
@@ -85,6 +79,76 @@ shared = {
   generated_files = {
     configuration = "generated/generated-configuration.yml"
     versions      = "generated/version-information.md"
+  }
+
+  hashicorp = {
+    enabled = true
+
+    # package definitions (name and version) for HashiCorp Nomad Plugins
+    nomad_plugins = [
+      { # see https://releases.hashicorp.com/nomad-driver-podman/
+        name    = "nomad-driver-podman"
+        version = "0.2.0"
+      },
+      { # see https://releases.hashicorp.com/nomad-driver-lxc/
+        name    = "nomad-driver-lxc"
+        version = "0.1.0"
+      },
+      { # see https://releases.hashicorp.com/nomad-autoscaler/
+        name    = "nomad-autoscaler"
+        version = "0.3.0"
+      }
+    ]
+
+    # package definitions (name and version) for HashiCorp products
+    packages = [
+      { # see https://releases.hashicorp.com/boundary/
+        name    = "boundary"
+        version = "0.2.0"
+      },
+      { # see https://releases.hashicorp.com/consul/
+        name    = "consul"
+        version = "1.9.5"
+      },
+      { # see https://releases.hashicorp.com/nomad/
+        name    = "nomad"
+        version = "1.0.4"
+      },
+      { # see https://releases.hashicorp.com/vault/
+        name    = "vault"
+        version = "1.7.0"
+      }
+    ]
+
+    # HashiCorp-specific feature flags
+    toggles = {
+      # add HashiCorp APT / YUM repository
+      add_repository = true
+
+      # add `nomad` user to `docker` group
+      add_nomad_user_to_docker = true
+
+      # copy unit files for enabled products
+      copy_unit_files = true
+
+      # create users for enabled products
+      create_users = true
+
+      # create groups for enabled products
+      create_groups = true
+
+      # enable services for enabled products
+      enable_services = true
+
+      # install Nomad plugins
+      install_nomad_plugins = true
+
+      # install packages for enabled products
+      install_packages = true
+
+      # start services for enabled products
+      start_services = true
+    }
   }
 
   # Formatting sequence to use for date formats
@@ -121,6 +185,8 @@ shared = {
 
   # OS-specific settings
   os = {
+    enabled = true
+
     directories = {
       ansible = [
         "/tmp/ansible"
@@ -130,6 +196,42 @@ shared = {
         "/etc/machine-id",
         "/var/lib/dbus/machine-id"
       ]
+    }
+
+    packages = {
+      # packages that should be installed
+      to_install = [
+        "apt-transport-https",
+        "ca-certificates",
+        "curl",
+        "gnupg",
+        "jq",
+        "libcap2",
+        "lsb-release",
+        "sudo",
+        "unzip",
+      ]
+
+      # packages that should be removed
+      to_remove = [
+        # see https://packages.ubuntu.com/focal/dosfstools
+        "dosfstools",
+        "ftp",
+        "fuse",
+        "ntfs-3g",
+        "open-iscsi",
+        "pastebinit",
+        "snapd",
+        "ubuntu-release-upgrader-core"
+      ]
+    }
+
+    # OS-specific feature flags
+    toggles = {
+      install_packages   = true
+      remove_directories = true
+      remove_packages    = true
+      update_apt_cache   = true
     }
   }
 
@@ -157,8 +259,8 @@ shared = {
     }
 
     toggles = {
-      # add osquery APT repository
-      add_apt_repository = true
+      # add osquery APT / YUM repository
+      add_repository = true
 
       # install packages for osquery
       install_packages = true
@@ -166,70 +268,6 @@ shared = {
       # remove osquery directories
       remove_directories = true
     }
-  }
-
-  packages = {
-    # package definitions (name and version) for HashiCorp products
-    hashicorp = [
-      { # see https://releases.hashicorp.com/boundary/
-        name    = "boundary"
-        version = "0.2.0"
-      },
-      { # see https://releases.hashicorp.com/consul/
-        name    = "consul"
-        version = "1.9.5"
-      },
-      { # see https://releases.hashicorp.com/nomad/
-        name    = "nomad"
-        version = "1.0.4"
-      },
-      { # see https://releases.hashicorp.com/vault/
-        name    = "vault"
-        version = "1.7.0"
-      }
-    ]
-
-    # package definitions (name and version) for HashiCorp Nomad Plugins
-    hashicorp_nomad_plugins = [
-      { # see https://releases.hashicorp.com/nomad-driver-podman/
-        name    = "nomad-driver-podman"
-        version = "0.2.0"
-      },
-      { # see https://releases.hashicorp.com/nomad-driver-lxc/
-        name    = "nomad-driver-lxc"
-        version = "0.1.0"
-      },
-      { # see https://releases.hashicorp.com/nomad-autoscaler/
-        name    = "nomad-autoscaler"
-        version = "0.3.0"
-      }
-    ]
-
-    # packages that should be installed
-    to_install = [
-      "apt-transport-https",
-      "ca-certificates",
-      "curl",
-      "gnupg",
-      "jq",
-      "libcap2",
-      "lsb-release",
-      "sudo",
-      "unzip",
-    ]
-
-    # packages that should be removed
-    to_remove = [
-      # see https://packages.ubuntu.com/focal/dosfstools
-      "dosfstools",
-      "ftp",
-      "fuse",
-      "ntfs-3g",
-      "open-iscsi",
-      "pastebinit",
-      "snapd",
-      "ubuntu-release-upgrader-core"
-    ]
   }
 
   # podman-specific settings
@@ -249,8 +287,8 @@ shared = {
     }
 
     toggles = {
-      # add Podman APT repository
-      add_apt_repository = true
+      # add Podman APT / YUM repository
+      add_repository = true
 
       # install packages for Podman
       install_packages = true
@@ -265,41 +303,6 @@ shared = {
 
   # toggles to enable and disable various operations
   toggles = {
-    # feature flags to enable (complete) playbooks
-    enable_debug_statements = true
-    enable_hashicorp        = true
-    enable_os               = true
-
-    # HashiCorp-specific feature flags
-    hashicorp = {
-      # add HashiCorp APT repository
-      add_apt_repository = true
-
-      # add `nomad` user to `docker` group
-      add_nomad_user_to_docker = true
-
-      # copy unit files for enabled products
-      copy_unit_files = true
-
-      # create users for enabled products
-      create_users = true
-
-      # create groups for enabled products
-      create_groups = true
-
-      # enable services for enabled products
-      enable_services = true
-
-      # install Nomad plugins
-      install_nomad_plugins = true
-
-      # install packages for enabled products
-      install_packages = true
-
-      # start services for enabled products
-      start_services = true
-    }
-
     # feature flags for product-specific operations
     hashicorp_enabled = {
       boundary = false
@@ -312,14 +315,6 @@ shared = {
     misc = {
       # copy files with version information to image
       copy_versions_files = true
-    }
-
-    # OS-specific feature flags
-    os = {
-      install_packages   = true
-      remove_directories = true
-      remove_packages    = true
-      update_apt_cache   = true
     }
   }
 }

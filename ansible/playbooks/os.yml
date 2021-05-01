@@ -3,7 +3,7 @@
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/debug_module.html
 - name: debug
   debug:
-    msg: "included base.yml"
+    msg: "included os.yml"
   when:
     - enable_debug_statements is defined
     - enable_debug_statements
@@ -24,19 +24,19 @@
     upgrade: "yes"
   when:
     - ansible_os_family == "Debian"
-    - toggles.os.update_apt_cache
+    - os.toggles.update_apt_cache
 
 # see https://docs.ansible.com/ansible/2.10/modules/package_module.html
 - name: Install generic Packages
   apt:
     force_apt_get: true
-    name: "{{ packages.to_install }}"
+    name: "{{ os.packages.to_install }}"
     state: present
     update_cache: true
   when:
-    - packages.to_install is defined
+    - os.packages.to_install is defined
     - ansible_os_family == "Debian"
-    - toggles.os.install_packages
+    - os.toggles.install_packages
 
 # see https://docs.ansible.com/ansible/2.10/modules/package_module.html
 - name: Remove generic Packages
@@ -44,12 +44,12 @@
     autoclean: true
     autoremove: true
     force_apt_get: true
-    name: "{{ packages.to_remove }}"
+    name: "{{ os.packages.to_remove }}"
     state: absent
     update_cache: true
   when:
     - ansible_os_family == "Debian"
-    - toggles.os.remove_packages
+    - os.toggles.remove_packages
 
 # see https://docs.ansible.com/ansible/2.10/modules/package_module.html
 - name: Install Target-specific Packages for `{{ build_target }}`
@@ -59,9 +59,9 @@
     state: present
     update_cache: true
   when:
-    - packages[build_target] is defined
-    - packages[build_target].to_install is defined
-    - toggles.os.install_packages[build_target]
+    - os.packages[build_target] is defined
+    - os.packages[build_target].to_install is defined
+    - os.toggles.install_packages[build_target]
 
 # see https://docs.ansible.com/ansible/2.10/modules/package_module.html
 - name: Remove Target-specific Packages for `{{ build_target }}`
@@ -73,9 +73,9 @@
     state: absent
     update_cache: true
   when:
-    - packages[build_target] is defined
-    - packages[build_target].to_remove is defined
-    - toggles.os.remove_packages[build_target]
+    - os.packages[build_target] is defined
+    - os.packages[build_target].to_remove is defined
+    - os.toggles.remove_packages[build_target]
 
 # see https://docs.ansible.com/ansible/2.10/modules/copy_module.html
 # TODO: fix the `src` in a better way
@@ -97,4 +97,4 @@
     - "{{ os.directories.ansible }}"
     - "{{ os.directories.to_remove }}"
   when:
-    - toggles.os.remove_directories
+    - os.toggles.remove_directories

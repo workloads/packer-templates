@@ -284,6 +284,8 @@ variable "security_group_ids" {
 # shared configuration
 variable "shared" {
   type = object({
+    enable_debug_statements = bool
+
     ansible = object({
       ansible_env_vars = list(string)
       command          = string
@@ -291,13 +293,6 @@ variable "shared" {
       galaxy_file      = string
       playbook_file    = string
     })
-
-    apt_repos = map(object({
-      key        = string
-      key_server = string
-      keyring    = string
-      url        = string
-    }))
 
     checksum_output = string
     checksum_types  = list(string)
@@ -330,6 +325,22 @@ variable "shared" {
       versions      = string
     })
 
+    hashicorp = object({
+      enabled = bool
+
+      nomad_plugins = list(object({
+        name    = string
+        version = string
+      }))
+
+      packages = list(object({
+        name    = string
+        version = string
+      }))
+
+      toggles = map(bool)
+    })
+
     image_version_date_format = string
 
     inspec = object({
@@ -345,10 +356,14 @@ variable "shared" {
     name = string
 
     os = object({
+      enabled = bool
+
       directories = object({
         ansible   = list(string)
         to_remove = list(string)
       })
+
+      toggles = map(bool)
     })
 
     osquery = object({
@@ -369,21 +384,6 @@ variable "shared" {
       })
 
       toggles = map(bool)
-    })
-
-    packages = object({
-      hashicorp = list(object({
-        name    = string
-        version = string
-      }))
-
-      hashicorp_nomad_plugins = list(object({
-        name    = string
-        version = string
-      }))
-
-      to_install = list(string)
-      to_remove  = list(string)
     })
 
     podman = object({
@@ -407,14 +407,8 @@ variable "shared" {
     })
 
     toggles = object({
-      enable_debug_statements = bool
-      enable_hashicorp        = bool
-      enable_os               = bool
-
-      hashicorp         = map(bool)
       hashicorp_enabled = map(bool)
       misc              = map(bool)
-      os                = map(bool)
     })
   })
 

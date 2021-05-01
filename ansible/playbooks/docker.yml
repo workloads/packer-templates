@@ -16,7 +16,7 @@
     state: present
   when:
     - ansible_os_family == "Debian"
-    - docker.toggles.add_apt_repository
+    - docker.toggles.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_repository_module.html
 - name: Add APT repository for Docker Packages
@@ -27,7 +27,7 @@
     update_cache: true
   when:
     - ansible_os_family == "Debian"
-    - docker.toggles.add_apt_repository
+    - docker.toggles.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
 - name: Install Docker Packages
