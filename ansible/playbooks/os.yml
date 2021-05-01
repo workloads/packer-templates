@@ -86,15 +86,4 @@
     force: true
     src: "../../{{ generated_files.versions }}"
   when:
-    - toggles.misc.copy_versions_files
-
-# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/file_module.html
-- name: delete extraneous directories
-  file:
-    path: "{{ item }}"
-    state: absent
-  with_items:
-    - "{{ os.directories.ansible }}"
-    - "{{ os.directories.to_remove }}"
-  when:
-    - os.toggles.remove_directories
+    - misc.toggles.copy_versions_files
