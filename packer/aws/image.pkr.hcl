@@ -21,8 +21,7 @@ packer {
 # see https://www.packer.io/docs/datasources/amazon/ami
 data "amazon-ami" "image" {
   filters = {
-    name = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
-    # local.image_filter_name
+    name                = "ubuntu/images/${var.ami_virtualization_type}-ssd/ubuntu-focal-20.04-amd64-server-*"
     root-device-type    = "ebs"
     virtualization-type = var.ami_virtualization_type
   }

@@ -210,6 +210,14 @@ variable "region_kms_key_ids" {
   default     = {}
 }
 
+# see https://www.packer.io/docs/builders/amazon/ebs#run_tags
+# this value will be enriched with the contents of local.tags_base
+variable "run_tags" {
+  type        = map(string)
+  description = "Key/value pair tags to apply to the instance that is that is launched to create the EBS volumes."
+  default     = {}
+}
+
 # see https://www.packer.io/docs/builders/amazon/ebs#security_group_filter
 variable "security_group_filter" {
   type        = map(string)
@@ -466,9 +474,8 @@ variable "vpc_id" {
 }
 
 locals {
+  # TODO: add `timestamp`
   ami_name = var.ami_name == "" ? var.shared.name : var.ami_name
-
-  image_filter_name = "ubuntu/images/${var.ami_virtualization_type}-ssd/ubuntu-focal-20.04-amd64-server-*"
 
   # concatenate repository-defined extra arguments for Ansible with user-defined ones
   # see https://www.packer.io/docs/provisioners/ansible#ansible_env_vars
@@ -482,16 +489,12 @@ locals {
     var.shared.ansible.extra_arguments
   )
 
-  run_tags = {
-    "Name"          = local.ami_name
-    "image:builder" = "Packer"
-  }
-
-  tags_common = {
-    "Name"              = local.ami_name
-    "image:builder"     = "Packer"
-    "image:source-id"   = data.amazon-ami.image.id
-    "image:source-name" = data.amazon-ami.image.name
+  tags_base = {
+    "Name"                = local.ami_name
+    "image:builder"       = "Packer"
+    "image:source-id"     = data.amazon-ami.image.id
+    "image:source-name"   = data.amazon-ami.image.name
+    "image:source-region" = var.region
   }
 
   tags_versions = {
@@ -502,11 +505,13 @@ locals {
     shared    = var.shared
     name      = var.shared.name
     version   = "{{ isotime }}"
-    timestamp = "{{ isotime }}"
+    timestamp = "{{ timestamp }}"
   })
 }
 
 locals {
+  run_tags = merge(local.tags_base, var.run_tags)
+
   # assemble tags from common tags and version information
-  tags = merge(local.tags_common, local.tags_versions)
+  tags = merge(local.tags_base, local.tags_versions)
 }
