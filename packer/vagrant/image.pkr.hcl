@@ -20,7 +20,7 @@ packer {
 
 # see https://www.packer.io/docs/builders/vagrant
 source "vagrant" "image" {
-  # the following configuration represents a minimally viable selection
+  # the following configuration represents a curated variable selection
   # for all options see: https://www.packer.io/docs/builders/vagrant
   add_force                    = var.add_force
   box_name                     = local.box_name

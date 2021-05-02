@@ -33,7 +33,7 @@ data "amazon-ami" "image" {
 
 # see https://www.packer.io/docs/builders/amazon/ebs
 source "amazon-ebs" "image" {
-  # the following configuration represents a minimally viable selection
+  # the following configuration represents a curated variable selection
   # for all options see: https://www.packer.io/docs/builders/amazon/ebs
 
   ami_description             = var.ami_description
@@ -72,6 +72,7 @@ source "amazon-ebs" "image" {
     filters = var.security_group_filter
   }
 
+  security_group_ids           = var.security_group_ids
   shutdown_behavior            = var.shutdown_behavior
   skip_create_ami              = var.skip_create_ami
   skip_credential_validation   = var.skip_credential_validation
