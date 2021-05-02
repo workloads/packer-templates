@@ -569,13 +569,15 @@ locals {
 
   }
 
-  # assemble tags from common tags and version information
-  tags = merge(local.tags_common, local.tags_versions)
-
   version_description = templatefile(var.shared.templates.versions, {
     shared    = var.shared
     name      = var.shared.name
     version   = "{{ isotime }}"
     timestamp = "{{ isotime }}"
   })
+}
+
+locals {
+  # assemble tags from common tags and version information
+  tags = merge(local.tags_common, local.tags_versions)
 }
