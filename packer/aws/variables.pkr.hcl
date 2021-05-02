@@ -1,12 +1,5 @@
 # This file is automatically loaded by Packer
 
-# see https://www.packer.io/docs/builders/amazon/ebs#access_key
-variable "access_key" {
-  type        = string
-  description = "The access key used to communicate with AWS."
-  default     = null
-}
-
 # see https://www.packer.io/docs/builders/amazon/ebs#ami_block_device_mappings
 # TODO: add support for block variable "ami_block_device_mappings"
 
@@ -99,14 +92,7 @@ variable "aws_polling" {
 variable "custom_endpoint_ec2" {
   type        = string
   description = "This option is useful if you use a cloud provider whose API is compatible with AWS EC2."
-  default     = ""
-}
-
-# see https://www.packer.io/docs/builders/amazon/ebs#decode_authorization_messages
-variable "decode_authorization_messages" {
-  type        = bool
-  description = "Enable automatic decoding of any encoded authorization (error) messages."
-  default     = false
+  default     = null
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#disable_stop_instance
@@ -162,7 +148,7 @@ variable "force_deregister" {
 variable "iam_instance_profile" {
   type        = string
   description = "The name of an IAM instance profile to launch the EC2 instance with."
-  default     = ""
+  default     = null
 }
 
 # the `filters` of `image` is defined in the `locals` stanza at the bottom of this file
@@ -183,13 +169,6 @@ variable "image" {
   }
 }
 
-# see https://www.packer.io/docs/builders/amazon/ebs#insecure_skip_tls_verify
-variable "insecure_skip_tls_verify" {
-  type        = bool
-  description = "This allows skipping TLS verification of the AWS EC2 endpoint."
-  default     = false
-}
-
 # see https://www.packer.io/docs/builders/amazon/ebs#instance_type
 variable "instance_type" {
   type        = string
@@ -206,20 +185,6 @@ variable "kms_key_id" {
 
 # see https://www.packer.io/docs/builders/amazon/ebs#launch_block_device_mappings
 # TODO: add support for block variable "launch_block_device_mappings"
-
-# see https://www.packer.io/docs/builders/amazon/ebs#max_retries
-variable "max_retries" {
-  type        = number
-  description = "This is the maximum number of times an API call is retried."
-  default     = 3
-}
-
-# see https://www.packer.io/docs/builders/amazon/ebs#mfa_code
-variable "mfa_code" {
-  type        = string
-  description = "The MFA TOTP code."
-  default     = null
-}
 
 # see https://www.packer.io/docs/builders/amazon/ebs#no_ephemeral
 # TODO: add support for variable "no_ephemeral" when Windows support is added
@@ -243,27 +208,6 @@ variable "region_kms_key_ids" {
   type        = map(string)
   description = "Regions to copy the AMI to, along with the custom KMS Key ID(Alias or ARN) to use for encryption for that region."
   default     = {}
-}
-
-# see https://www.packer.io/docs/builders/amazon/ebs#run_tags
-variable "run_tags" {
-  type        = map(string)
-  description = "Key/value pair tags to apply to the instance that is that is launched to create the EBS volumes."
-  default     = {}
-}
-
-# see https://www.packer.io/docs/builders/amazon/ebs#run_volume_tags
-variable "run_volume_tags" {
-  type        = map(string)
-  description = "Tags to apply to the volumes that are launched to create the AMI."
-  default     = {}
-}
-
-# see https://www.packer.io/docs/builders/amazon/ebs#secret_key
-variable "secret_key" {
-  type        = string
-  description = "The secret key used to communicate with AWS."
-  default     = null
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#security_group_filter
@@ -325,7 +269,7 @@ variable "shared" {
     })
 
     hashicorp = object({
-      enabled = bool
+      enabled          = bool
       enabled_products = map(bool)
 
       nomad_plugins = list(object({
@@ -420,13 +364,6 @@ variable "shared" {
   # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
 }
 
-# see https://www.packer.io/docs/builders/amazon/ebs#shared_credentials_file
-variable "shared_credentials_file" {
-  type        = string
-  description = "Path to a credentials file to load credentials from."
-  default     = null
-}
-
 # see https://www.packer.io/docs/builders/amazon/ebs#shutdown_behavior
 variable "shutdown_behavior" {
   type        = string
@@ -488,13 +425,6 @@ variable "snapshot_groups" {
   default     = []
 }
 
-# see https://www.packer.io/docs/builders/amazon/ebs#snapshot_tags
-variable "snapshot_tags" {
-  type        = map(string)
-  description = "Key/value pair tags to apply to snapshot."
-  default     = {}
-}
-
 # see https://www.packer.io/docs/builders/amazon/ebs#snapshot_users
 variable "snapshot_users" {
   type        = list(string)
@@ -520,13 +450,6 @@ variable "tags" {
 variable "target" {
   type        = string
   description = "Build Target as received from `make`."
-}
-
-# see https://www.packer.io/docs/builders/amazon/ebs#token
-variable "token" {
-  type        = string
-  description = "The access token to use."
-  default     = null
 }
 
 variable "version_description" {
@@ -559,8 +482,14 @@ locals {
     var.shared.ansible.extra_arguments
   )
 
+  run_tags = {
+    "Name"          = local.ami_name
+    "image:builder" = "Packer"
+  }
+
   tags_common = {
     "Name"              = local.ami_name
+    "image:builder"     = "Packer"
     "image:source-id"   = data.amazon-ami.image.id
     "image:source-name" = data.amazon-ami.image.name
   }
