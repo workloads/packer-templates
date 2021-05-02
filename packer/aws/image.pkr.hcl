@@ -29,6 +29,7 @@ data "amazon-ami" "image" {
 
   most_recent = var.image.most_recent
   owners      = var.image.owners
+  region      = var.region
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs
