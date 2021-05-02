@@ -50,7 +50,6 @@ variable "ami_users" {
   type        = list(string)
   description = "A list of account IDs that have access to launch the resulting AMI(s)."
   default     = []
-
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#ami_virtualization_type
