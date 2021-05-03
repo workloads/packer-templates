@@ -35,3 +35,14 @@ terraform-init: # Initializes Terraform
 		-chdir="./terraform/$(target)" \
 		init \
 			-upgrade
+
+.PHONY: terraform-lint
+terraform-lint: # Formats and validates Terraform
+	$(if $(target),,$(call missing_target))
+	terraform \
+		-chdir="./terraform/$(target)" \
+		fmt \
+	&& \
+	terraform \
+		-chdir="./terraform/$(target)" \
+		validate
