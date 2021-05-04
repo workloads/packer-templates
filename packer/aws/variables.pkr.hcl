@@ -20,7 +20,7 @@ variable "ami_groups" {
 # see https://www.packer.io/docs/builders/amazon/ebs#ami_name
 variable "ami_name" {
   type        = string
-  description = "The name of the resulting AMI that will appear when managing AMIs in the AWS console or via APIs."
+  description = "(Required) The name of the resulting AMI that will appear when managing AMIs in the AWS console or via APIs."
   default     = ""
 }
 

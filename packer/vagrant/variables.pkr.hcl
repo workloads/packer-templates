@@ -213,7 +213,7 @@ variable "skip_add" {
 # see https://www.packer.io/docs/builders/vagrant#source_path
 variable "source_path" {
   type        = string
-  description = "Name of the Vagrant Box to use for your base image"
+  description = "(Required) Name of the Vagrant Box to use for your base image"
 
   # see https://app.vagrantup.com/ubuntu/boxes/focal64
   default = "ubuntu/focal64"

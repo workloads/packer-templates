@@ -49,21 +49,21 @@ variable "custom_data_file" {
 # see https://www.packer.io/docs/builders/azure/arm#image_publisher
 variable "image_publisher" {
   type        = string
-  description = "Name of the publisher to use for your base image."
+  description = "(Required) Name of the publisher to use for your base image."
   default     = "Canonical"
 }
 
 # see https://www.packer.io/docs/builders/azure/arm#image_offer
 variable "image_offer" {
   type        = string
-  description = "Name of the publisher's offer to use for your base image."
+  description = "(Required) Name of the publisher's offer to use for your base image."
   default     = "0001-com-ubuntu-server-focal"
 }
 
 # see https://www.packer.io/docs/builders/azure/arm#image_sku
 variable "image_sku" {
   type        = string
-  description = "SKU of the image offer to use for your base image."
+  description = "(Required) SKU of the image offer to use for your base image."
   default     = "20_04-lts"
 }
 
