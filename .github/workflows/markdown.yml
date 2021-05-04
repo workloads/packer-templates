@@ -19,6 +19,7 @@ jobs:
       - name: Check Links
         uses: gaurav-nelson/github-action-markdown-link-check@v1
         with:
-          use-verbose-mode: yes
           check-modified-files-only: no
+          config-file: ".markdown-link-check.json"
           file-extension: ".md"
+          use-verbose-mode: yes
