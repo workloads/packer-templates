@@ -1,0 +1,24 @@
+---
+
+name: "Docs Quality: Link Checker"
+
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+
+jobs:
+  markdown:
+    name: markdown
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Check Links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-verbose-mode: yes
+          check-modified-files-only: no
+          file-extension: ".md"
