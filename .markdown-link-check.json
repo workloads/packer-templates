@@ -7,7 +7,10 @@
       "pattern": "^https://github.com/operatehappy/packer-hashicorp/graphs/contributors"
     },
     {
-      "pattern": "^[image,variables].pkr.hcl"
+      "pattern": "^image.pkr.hcl"
+    },
+    {
+      "pattern": "^variables.pkr.hcl"
     }
   ],
   "timeout": "30s",
