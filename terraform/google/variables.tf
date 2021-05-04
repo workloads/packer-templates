@@ -10,5 +10,6 @@ variable "org_id" {
 }
 
 locals {
-  project_id = "${var.project_name}-${random_string.string.id}"
+  project_id   = "${var.project_name}-${random_string.string.id}"
+  project_name = var.project_name
 }
