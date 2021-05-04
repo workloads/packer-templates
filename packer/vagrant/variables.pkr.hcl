@@ -108,7 +108,7 @@ variable "shared" {
     })
 
     hashicorp = object({
-      enabled = bool
+      enabled          = bool
       enabled_products = map(bool)
 
       nomad_plugins = list(object({
