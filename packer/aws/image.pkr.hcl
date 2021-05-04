@@ -131,10 +131,4 @@ build {
     galaxy_file      = var.shared.ansible.galaxy_file
     playbook_file    = var.shared.ansible.playbook_file
   }
-
-  # see https://www.packer.io/docs/post-processors/checksum#checksum-post-processor
-  post-processor "checksum" {
-    checksum_types = var.shared.checksum_types
-    output         = var.shared.checksum_output
-  }
 }
