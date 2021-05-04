@@ -300,7 +300,7 @@ variable "shared" {
     })
 
     image_version_date_format     = string
-    image_description_date_format = string
+    image_information_date_format = string
 
     inspec = object({
       attributes           = list(string)
@@ -522,9 +522,6 @@ locals {
     version   = "{{ isotime }}"
     timestamp = "{{ timestamp }}"
   })
-
-  # add target to filename
-  version_description_filename = replace(var.shared.generated_files.versions, ".md", "-${var.target}.md")
 }
 
 locals {

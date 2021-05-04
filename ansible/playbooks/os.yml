@@ -80,7 +80,7 @@
 
 # see https://docs.ansible.com/ansible/2.10/modules/copy_module.html
 # TODO: fix the `src` in a better way
-- name: Copy Version Files
+- name: Copy Image Information Files
   copy:
     backup: false
     dest: "/tmp"

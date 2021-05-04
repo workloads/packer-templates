@@ -129,7 +129,7 @@ variable "shared" {
     })
 
     image_version_date_format     = string
-    image_description_date_format = string
+    image_information_date_format = string
 
     inspec = object({
       attributes           = list(string)
@@ -244,7 +244,7 @@ locals {
   # set `box_name` to shared value, unless it is user-specified
   box_name              = var.box_name == "" ? var.shared.name : var.box_name
   box_tag               = "${var.box_organization}/${local.box_name}"
-  box_version_timestamp = formatdate(var.shared.image_description_date_format, timestamp())
+  box_version_timestamp = formatdate(var.shared.image_information_date_format, timestamp())
 
   # set `box_version` to generated value, unless it is user-defined
   box_version = var.box_version == "" ? formatdate(var.shared.image_version_date_format, timestamp()) : var.box_version
@@ -255,9 +255,6 @@ locals {
     version   = local.box_version
     timestamp = local.box_version_timestamp
   })
-
-  # add target to filename
-  version_description_filename = replace(var.shared.generated_files.versions, ".md", "-${var.target}.md")
 
   # concatenate repository-defined extra arguments for Ansible with user-defined ones
   # see https://www.packer.io/docs/provisioners/ansible#ansible_env_vars
