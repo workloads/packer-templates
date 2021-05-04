@@ -254,7 +254,7 @@ variable "shared" {
 
   description = "Shared Configuration for all Images"
 
-  # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
+  # The default for this is specified in `../_shared/shared.pkrvars.hcl`
 }
 
 # `target` as received from `make`

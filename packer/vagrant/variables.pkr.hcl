@@ -200,7 +200,7 @@ variable "shared" {
 
   description = "Shared Configuration for all Images"
 
-  # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
+  # The default for this is specified in `../_shared/shared.pkrvars.hcl`
 }
 
 # see https://www.packer.io/docs/builders/vagrant#skip_add
