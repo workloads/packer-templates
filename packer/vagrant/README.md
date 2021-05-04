@@ -28,9 +28,9 @@
 
 The following Vagrant-specific build options are available:
 
-|                 |                                                    |
-|-----------------|----------------------------------------------------|
-| `enable-vagrant-cloud` | set this to enable pushing to Vagrant Cloud |
+|                         |                                                    |
+|-------------------------|----------------------------------------------------|
+| `enable-vagrant-cloud`  | set this to enable pushing to Vagrant Cloud        |
 
 > `make` commands must be run from the root directory.
 
