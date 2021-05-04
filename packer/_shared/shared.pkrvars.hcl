@@ -163,7 +163,8 @@ shared = {
   }
 
   # Formatting sequence to use for date formats
-  image_version_date_format = "YYYYMMDD-hhmmss"
+  image_description_date_format = "YYYY-MM-DD 'at' hh:mm:ss"
+  image_version_date_format     = "YYYYMMDD-hhmmss"
 
   # InSpec-specific settings
   inspec = {

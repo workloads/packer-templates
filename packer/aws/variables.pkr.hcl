@@ -299,7 +299,8 @@ variable "shared" {
       toggles = map(bool)
     })
 
-    image_version_date_format = string
+    image_version_date_format     = string
+    image_description_date_format = string
 
     inspec = object({
       attributes           = list(string)
