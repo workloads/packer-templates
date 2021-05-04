@@ -104,7 +104,7 @@ source "file" "image_configuration" {
 # see https://www.packer.io/docs/builders/file
 source "file" "version_description" {
   content = local.version_description
-  target  = var.shared.generated_files.versions
+  target  = local.version_description_filename
 }
 
 build {

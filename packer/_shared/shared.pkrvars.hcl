@@ -25,7 +25,7 @@ shared = {
     playbook_file = "./ansible/playbooks/main.yml"
   }
 
-  checksum_output = "generated/{{.BuildName}}_{{.BuilderType}}_{{.ChecksumType}}.checksum"
+  checksum_output = "generated/image-checksum-{{ .BuilderType }}.txt"
   checksum_types  = ["sha256"]
 
   communicator = {
@@ -78,7 +78,7 @@ shared = {
 
   generated_files = {
     configuration = "generated/generated-configuration.yml"
-    versions      = "generated/version-information.md"
+    versions      = "generated/image-information.md"
   }
 
   hashicorp = {

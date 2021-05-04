@@ -522,6 +522,9 @@ locals {
     version   = "{{ isotime }}"
     timestamp = "{{ timestamp }}"
   })
+
+  # add target to filename
+  version_description_filename = replace(var.shared.generated_files.versions, ".md", "-${var.target}.md")
 }
 
 locals {

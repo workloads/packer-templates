@@ -256,6 +256,9 @@ locals {
     timestamp = local.box_version_timestamp
   })
 
+  # add target to filename
+  version_description_filename = replace(var.shared.generated_files.versions, ".md", "-${var.target}.md")
+
   # concatenate repository-defined extra arguments for Ansible with user-defined ones
   # see https://www.packer.io/docs/provisioners/ansible#ansible_env_vars
   ansible_extra_arguments = concat(

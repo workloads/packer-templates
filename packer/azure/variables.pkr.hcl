@@ -303,4 +303,7 @@ locals {
     version   = local.managed_image_version
     timestamp = local.managed_image_description_timestamp
   })
+
+  # add target to filename
+  version_description_filename = replace(var.shared.generated_files.versions, ".md", "-${var.target}.md")
 }
