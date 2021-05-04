@@ -6,6 +6,7 @@
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Overview](#overview)
+    - [Overrides](#overrides)
   - [Authentication](#authentication)
   - [Prerequisites](#prerequisites)
   - [Images](#images)
@@ -25,6 +26,16 @@
 | lint command    | `make lint target=azure`               |
 
 > `make` commands must be run from the root directory.
+
+### Overrides
+
+Any variables can be overridden by populating a file called `overrides.auto.pkrvars.hcl` with an identical key-value pair.
+
+For example, to set the [Managed Image Name](https://www.packer.io/docs/builders/azure/arm#managed_image_name) (variable name `managed_image_name`) to a value of `stack`, add the following:
+
+```ini
+managed_image_name=stack
+```
 
 ## Authentication
 
