@@ -68,7 +68,8 @@ variable "associate_public_ip_address" {
 variable "availability_zone" {
   type        = string
   description = "Destination availability zone to launch instance in."
-  default     = ""
+
+  # The default for this should be specified in `./overrides.auto.pkrvars.hcl`
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#aws_polling
@@ -445,6 +446,18 @@ variable "subnet_id" {
   type        = string
   description = "If using VPC, the ID of the subnet, such as subnet-12345def, where Packer will launch the EC2 instance. This field is required if you are using an non-default VPC."
   default     = ""
+}
+
+variable "source_image_family" {
+  type        = string
+  description = "Family to filter AMI search on"
+  default     = "ubuntu"
+}
+
+variable "source_image_name" {
+  type        = string
+  description = "Name to filter AMI search on"
+  default     = "ubuntu-focal-20.04-amd64-server-*"
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#tags

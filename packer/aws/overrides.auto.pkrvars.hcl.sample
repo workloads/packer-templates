@@ -1,0 +1,2 @@
+availability_zone = "us-east-1c"
+region            = "us-east-1"
