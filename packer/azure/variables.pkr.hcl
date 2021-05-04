@@ -276,12 +276,13 @@ locals {
   //  generated_azure_tags =
   //  azure_tags = var.azure_tags == {} ? local.generated_azure_tags : var.azure_tags
 
+  managed_image_description_timestamp = formatdate(var.shared.image_description_date_format, timestamp())
+
   # set `image_name_prefix` to shared value, unless it is user-specified
   managed_image_name = var.managed_image_name == "" ? var.shared.name : var.managed_image_name
 
   # set `image_version` to generated value, unless it is user-defined
-  managed_image_version = var.managed_image_version == "" ? formatdate(var.shared.image_version_date_format, timestamp()) : var.managed_image_version
-
+  managed_image_version   = var.managed_image_version == "" ? formatdate(var.shared.image_version_date_format, timestamp()) : var.managed_image_version
   managed_image_name_full = "${local.managed_image_name}-${local.managed_image_version}"
 
   # concatenate repository-defined extra arguments for Ansible with user-defined ones
@@ -295,4 +296,11 @@ locals {
     # user-defined extra arguments for Ansible
     var.shared.ansible.extra_arguments
   )
+
+  version_description = templatefile(var.shared.templates.versions, {
+    shared    = var.shared
+    name      = local.managed_image_name_full
+    version   = local.managed_image_version
+    timestamp = local.managed_image_description_timestamp
+  })
 }

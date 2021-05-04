@@ -242,12 +242,12 @@ variable "template" {
 
 locals {
   # set `box_name` to shared value, unless it is user-specified
-  box_name = var.box_name == "" ? var.shared.name : var.box_name
-  box_tag  = "${var.box_organization}/${local.box_name}"
+  box_name              = var.box_name == "" ? var.shared.name : var.box_name
+  box_tag               = "${var.box_organization}/${local.box_name}"
+  box_version_timestamp = formatdate(var.shared.image_description_date_format, timestamp())
 
   # set `box_version` to generated value, unless it is user-defined
-  box_version_timestamp = formatdate(var.shared.image_description_date_format, timestamp())
-  box_version           = var.box_version == "" ? formatdate(var.shared.image_version_date_format, timestamp()) : var.box_version
+  box_version = var.box_version == "" ? formatdate(var.shared.image_version_date_format, timestamp()) : var.box_version
 
   version_description = templatefile(var.shared.templates.versions, {
     shared    = var.shared
