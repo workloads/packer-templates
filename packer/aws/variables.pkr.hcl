@@ -194,14 +194,15 @@ variable "kms_key_id" {
 variable "profile" {
   type        = string
   description = "The profile to use in the shared credentials file for AWS."
-  default     = ""
+  default     = null
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#region
 variable "region" {
   type        = string
   description = "The name of the region in which to launch the EC2 instance to create the AMI."
-  default     = null
+
+  # The default for this should be specified in `./overrides.auto.pkrvars.hcl`
 }
 
 # see https://www.packer.io/docs/builders/amazon/ebs#region_kms_key_ids

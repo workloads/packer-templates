@@ -79,7 +79,7 @@ variable "location" {
   type        = string
   description = "Azure datacenter in which your VM will build."
 
-  # this value is set in `terraform-generated.auto.pkrvars.hcl`
+  # The default for this is specified in `./generated.auto.pkrvars.hcl`
 }
 
 # see https://www.packer.io/docs/builders/azure/arm#managed_image_name
@@ -107,7 +107,7 @@ variable "managed_image_resource_group_name" {
   type        = string
   description = "Resource group under which the final artifact will be stored."
 
-  # this value is set in `terraform-generated.auto.pkrvars.hcl`
+  # The default for this is specified in `./generated.auto.pkrvars.hcl`
 }
 
 # see https://www.packer.io/docs/builders/azure/arm#os_type
