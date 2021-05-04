@@ -516,11 +516,13 @@ locals {
 
   }
 
+  version_timestamp = formatdate(var.shared.image_information_date_format, timestamp())
+
   version_description = templatefile(var.shared.templates.versions, {
     shared    = var.shared
     name      = var.shared.name
     version   = "{{ isotime }}"
-    timestamp = "{{ timestamp }}"
+    timestamp = local.version_timestamp
   })
 }
 
