@@ -5,7 +5,7 @@ locals {
   })
 }
 
-# Packer needs to know the Resource Group, so we use the Terraform `templatefile` function
+# Packer needs to know the Project ID, so we use the Terraform `templatefile` function
 # to render a file in the Packer directory (as opposed to manually defining the value)
 # see https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file
 resource "local_file" "terraform_data_for_packer" {
