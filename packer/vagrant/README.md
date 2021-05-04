@@ -7,6 +7,7 @@
   - [Requirements](#requirements)
   - [Overview](#overview)
     - [Build Options](#build-options)
+    - [Overrides](#overrides)
   - [Vagrant](#vagrant)
   - [Vagrant Cloud](#vagrant-cloud)
 
@@ -33,6 +34,16 @@ The following Vagrant-specific build options are available:
 | `enable-vagrant-cloud`  | set this to enable pushing to Vagrant Cloud        |
 
 > `make` commands must be run from the root directory.
+
+### Overrides
+
+Any variables can be overridden by populating a file called `overrides.auto.pkrvars.hcl` with an identical key-value pair.
+
+For example, to set the [Box Name](https://www.packer.io/docs/builders/vagrant#box_name) (variable name `box_name`) to a value of `stack`, add the following:
+
+```ini
+box_name=stack
+```
 
 ## Vagrant
 

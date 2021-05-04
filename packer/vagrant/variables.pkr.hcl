@@ -247,7 +247,7 @@ locals {
 
   # set `box_version` to generated value, unless it is user-defined
   box_version_timestamp = formatdate(var.shared.image_description_date_format, timestamp())
-  box_version           = var.box_version == "" ? local.box_version_timestamp : var.box_version
+  box_version           = var.box_version == "" ? formatdate(var.shared.image_version_date_format, timestamp()) : var.box_version
 
   version_description = templatefile(var.shared.templates.versions, {
     shared    = var.shared
