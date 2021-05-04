@@ -7,8 +7,8 @@ on:
   pull_request:
 
 jobs:
-  markdown:
-    name: markdown
+  markdown-links-checker:
+    name: markdown-links-checker
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
