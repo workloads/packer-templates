@@ -276,7 +276,7 @@ locals {
   //  generated_azure_tags =
   //  azure_tags = var.azure_tags == {} ? local.generated_azure_tags : var.azure_tags
 
-  managed_image_description_timestamp = formatdate(var.shared.image_description_date_format, timestamp())
+  managed_image_information_timestamp = formatdate(var.shared.image_information_date_format, timestamp())
 
   # set `image_name_prefix` to shared value, unless it is user-specified
   managed_image_name = var.managed_image_name == "" ? var.shared.name : var.managed_image_name

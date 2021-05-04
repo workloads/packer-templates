@@ -6,7 +6,7 @@ VAGRANTFILE_API_VERSION = '2'
 # see https://www.vagrantup.com/docs/vagrantfile/vagrant_version
 Vagrant.require_version '>= 2.2.16'
 
-OUTPUT_VM_BOX     = '{{.BoxName}}'
+OUTPUT_VM_BOX     = '{{ .BoxName }}'
 OUTPUT_VM_BOX_URL = 'file://package.box'
 
 # see https://www.vagrantup.com/docs/vagrantfile/ssh_settings
@@ -34,7 +34,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Source Vagrant Box
   config.vm.define 'source', autostart: false do |source|
-    source.vm.box = '{{.SourceBox}}'
+    source.vm.box = '{{ .SourceBox }}'
   end
 
   # Packer-built Output Vagrant Box
