@@ -520,7 +520,7 @@ locals {
 
   version_description = templatefile(var.shared.templates.versions, {
     shared    = var.shared
-    name      = var.shared.name
+    name      = local.ami_name
     version   = "{{ isotime }}"
     timestamp = local.version_timestamp
   })
