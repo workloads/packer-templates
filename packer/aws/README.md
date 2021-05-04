@@ -6,6 +6,7 @@
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Overview](#overview)
+    - [Overrides](#overrides)
   - [Authentication](#authentication)
   - [Images](#images)
   - [Notes](#notes)
@@ -25,6 +26,16 @@
 | lint command    | `make lint target=aws`                 |
 
 > `make` commands must be run from the root directory.
+
+### Overrides
+
+Any variables can be overridden by populating a file called `overrides.auto.pkrvars.hcl` with an identical key-value pair.
+
+For example, to set the [AMI Name](https://www.packer.io/docs/builders/amazon/ebs#ami_name) (variable name `ami_name`) to a value of `stack`, add the following:
+
+```ini
+ami_name=stack
+```
 
 ## Authentication
 
