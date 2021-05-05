@@ -1,4 +1,3 @@
-# see https://www.packer.io/docs/templates/hcl_templates/blocks/packer
 packer {
   # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#version-constraint-syntax
   required_version = ">= 1.7.2"
@@ -21,7 +20,7 @@ packer {
 
 # see https://www.packer.io/docs/builders/azure/arm
 source "azure-arm" "image" {
-  # the following configuration represents a minimally viable selection
+  # the following configuration represents a curated variable selection
   # for all options see: https://www.packer.io/docs/builders/azure/arm
 
   # TODO: add support for azure_tags
@@ -57,7 +56,7 @@ source "azure-arm" "image" {
 # see https://www.packer.io/docs/builders/file
 source "file" "image_configuration" {
   content = templatefile(var.shared.templates.configuration, {
-    timestamp     = formatdate(var.shared.image_version_date_format, timestamp())
+    timestamp     = formatdate(var.shared.image_information_date_format, timestamp())
     configuration = yamlencode(var.shared)
   })
 
@@ -65,8 +64,8 @@ source "file" "image_configuration" {
 }
 
 # see https://www.packer.io/docs/builders/file
-source "file" "version_description" {
-  content = local.managed_image_version
+source "file" "image_information" {
+  content = local.version_description
   target  = var.shared.generated_files.versions
 }
 
@@ -75,7 +74,7 @@ build {
 
   sources = [
     "source.file.image_configuration",
-    "source.file.version_description"
+    "source.file.image_information"
   ]
 }
 
@@ -107,11 +106,5 @@ build {
     ]
 
     inline_shebang = "/bin/sh -x"
-  }
-
-  # see https://www.packer.io/docs/post-processors/checksum#checksum-post-processor
-  post-processor "checksum" {
-    checksum_types = var.shared.checksum_types
-    output         = var.shared.checksum_output
   }
 }

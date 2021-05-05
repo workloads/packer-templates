@@ -1,0 +1,18 @@
+{
+  "ignorePatterns": [
+    {
+      "pattern": "^https://github.com/operatehappy/packer-hashicorp/issues"
+    },
+    {
+      "pattern": "^https://github.com/operatehappy/packer-hashicorp/graphs/contributors"
+    },
+    {
+      "pattern": "^image.pkr.hcl"
+    },
+    {
+      "pattern": "^variables.pkr.hcl"
+    }
+  ],
+  "timeout": "30s",
+  "retryOn429": true
+}

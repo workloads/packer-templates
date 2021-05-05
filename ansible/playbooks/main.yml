@@ -20,8 +20,8 @@
       debug:
         var: ansible_env
       when:
-        - toggle.enable_debug_statements is defined
-        - toggle.enable_debug_statements
+        - enable_debug_statements is defined
+        - enable_debug_statements
 
   collections:
     # see https://github.com/dev-sec/ansible-collection-hardening/
@@ -38,27 +38,36 @@
 
   tasks:
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
-    - name: Manage OS Packages
-      include: base.yml
+    - name: Manage OS Operations
+      include: os.yml
       when:
-        - toggles.enable_os
+        - os.enabled
 
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
-    - name: Manage Docker Packages
+    - name: Manage Docker Operations
       include: docker.yml
       when:
-        - toggles.enable_docker
+        - docker.enabled
 
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
-    - name: Manage Podman Packages
+    - name: Manage Podman Operations
       include: podman.yml
       when:
-        - toggles.enable_podman
+        - podman.enabled
 
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
-    - name: Manage HashiCorp Packages
+    - name: Manage HashiCorp Operations
       include: hashicorp.yml
       when:
-        - toggles.enable_hashicorp
+        - hashicorp.enabled
 
-# TODO: optimize system settings
+    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
+    - name: Manage osquery Operations
+      include: osquery.yml
+      when:
+        - osquery.enabled
+
+  post_tasks:
+    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
+    - name: Manage Final Tasks
+      include: post.yml

@@ -6,6 +6,7 @@
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Overview](#overview)
+    - [Overrides](#overrides)
   - [Authentication](#authentication)
   - [Images](#images)
   - [Notes](#notes)
@@ -25,6 +26,16 @@
 | lint command    | `make lint target=aws`                 |
 
 > `make` commands must be run from the root directory.
+
+### Overrides
+
+Any variables can be overridden by populating a file called `overrides.auto.pkrvars.hcl` with an identical key-value pair.
+
+For example, to set the [AMI Name](https://www.packer.io/docs/builders/amazon/ebs#ami_name) (variable name `ami_name`) to a value of `stack`, add the following:
+
+```ini
+ami_name=stack
+```
 
 ## Authentication
 
@@ -50,3 +61,7 @@ This operating system is expected to be supported for a long period.
 Support for additional operating systems is currently out of scope, as we want to limit complexity of this repository.
 
 If you would like to customize this repository to fit your requirements, start by modifying the `amazon-ami` Data Source in [packer/aws/image.pkr.hcl](image.pkr.hcl).
+
+### Image Tagging
+
+We have chosen to follow AWS-recommended [best-practices](https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/adopt-a-standardized-approach-for-tag-names.html) for tagging the resulting image(s).

@@ -49,21 +49,21 @@ variable "custom_data_file" {
 # see https://www.packer.io/docs/builders/azure/arm#image_publisher
 variable "image_publisher" {
   type        = string
-  description = "Name of the publisher to use for your base image."
+  description = "(Required) Name of the publisher to use for your base image."
   default     = "Canonical"
 }
 
 # see https://www.packer.io/docs/builders/azure/arm#image_offer
 variable "image_offer" {
   type        = string
-  description = "Name of the publisher's offer to use for your base image."
+  description = "(Required) Name of the publisher's offer to use for your base image."
   default     = "0001-com-ubuntu-server-focal"
 }
 
 # see https://www.packer.io/docs/builders/azure/arm#image_sku
 variable "image_sku" {
   type        = string
-  description = "SKU of the image offer to use for your base image."
+  description = "(Required) SKU of the image offer to use for your base image."
   default     = "20_04-lts"
 }
 
@@ -79,7 +79,7 @@ variable "location" {
   type        = string
   description = "Azure datacenter in which your VM will build."
 
-  # this value is set in `terraform-generated.auto.pkrvars.hcl`
+  # The default for this is specified in `./generated.auto.pkrvars.hcl`
 }
 
 # see https://www.packer.io/docs/builders/azure/arm#managed_image_name
@@ -107,7 +107,7 @@ variable "managed_image_resource_group_name" {
   type        = string
   description = "Resource group under which the final artifact will be stored."
 
-  # this value is set in `terraform-generated.auto.pkrvars.hcl`
+  # The default for this is specified in `./generated.auto.pkrvars.hcl`
 }
 
 # see https://www.packer.io/docs/builders/azure/arm#os_type
@@ -120,6 +120,8 @@ variable "os_type" {
 # shared configuration
 variable "shared" {
   type = object({
+    enable_debug_statements = bool
+
     ansible = object({
       ansible_env_vars = list(string)
       command          = string
@@ -127,8 +129,6 @@ variable "shared" {
       galaxy_file      = string
       playbook_file    = string
     })
-
-    apt_repos = map(string)
 
     checksum_output = string
     checksum_types  = list(string)
@@ -140,12 +140,50 @@ variable "shared" {
       type                         = string
     })
 
+    docker = object({
+      enabled = bool
+
+      packages = list(object({
+        name    = string
+        version = string
+      }))
+
+      repository = object({
+        keyring = string
+        url     = string
+      })
+
+      toggles = map(bool)
+    })
+
     generated_files = object({
       configuration = string
       versions      = string
     })
 
-    image_version_date_format = string
+    hashicorp = object({
+      enabled          = bool
+      enabled_products = map(bool)
+
+      nomad_plugins = list(object({
+        name    = string
+        version = string
+      }))
+
+      packages = list(object({
+        name    = string
+        version = string
+      }))
+
+      repository = object({
+        url = string
+      })
+
+      toggles = map(bool)
+    })
+
+    image_version_date_format     = string
+    image_information_date_format = string
 
     inspec = object({
       attributes           = list(string)
@@ -159,55 +197,65 @@ variable "shared" {
 
     name = string
 
-    packages = object({
-      docker = list(object({
+    os = object({
+      enabled = bool
+
+      directories = object({
+        ansible   = list(string)
+        to_remove = list(string)
+      })
+
+      packages = object({
+        to_install = list(string)
+        to_remove  = list(string)
+      })
+
+      toggles = map(bool)
+    })
+
+    osquery = object({
+      enabled = bool
+
+      directories = list(string)
+
+      packages = list(object({
         name    = string
         version = string
       }))
 
-      hashicorp = list(object({
+      repository = object({
+        key        = string
+        key_server = string
+        url        = string
+      })
+
+      toggles = map(bool)
+    })
+
+    podman = object({
+      enabled = bool
+
+      packages = list(object({
         name    = string
         version = string
       }))
 
-      hashicorp_nomad_plugins = list(object({
-        name    = string
-        version = string
-      }))
+      repository = object({
+        url = string
+      })
 
-      podman = list(object({
-        name    = string
-        version = string
-      }))
-
-      to_install = list(string)
-      to_remove  = list(string)
+      toggles = map(bool)
     })
 
     templates = object({
       configuration = string
       versions      = string
     })
-
-    toggles = object({
-      enable_debug_statements = bool
-      enable_docker           = bool
-      enable_hashicorp        = bool
-      enable_os               = bool
-      enable_podman           = bool
-
-      docker            = map(bool)
-      hashicorp         = map(bool)
-      hashicorp_enabled = map(bool)
-      misc              = map(bool)
-      os                = map(bool)
-      podman            = map(bool)
-    })
   })
 
   description = "Shared Configuration for all Images"
 
-  # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
+  # The default for this is specified in `../_shared/shared.pkrvars.hcl`
 }
 
 # `target` as received from `make`
@@ -228,12 +276,13 @@ locals {
   //  generated_azure_tags =
   //  azure_tags = var.azure_tags == {} ? local.generated_azure_tags : var.azure_tags
 
+  managed_image_information_timestamp = formatdate(var.shared.image_information_date_format, timestamp())
+
   # set `image_name_prefix` to shared value, unless it is user-specified
   managed_image_name = var.managed_image_name == "" ? var.shared.name : var.managed_image_name
 
   # set `image_version` to generated value, unless it is user-defined
-  managed_image_version = var.managed_image_version == "" ? formatdate(var.shared.image_version_date_format, timestamp()) : var.managed_image_version
-
+  managed_image_version   = var.managed_image_version == "" ? formatdate(var.shared.image_version_date_format, timestamp()) : var.managed_image_version
   managed_image_name_full = "${local.managed_image_name}-${local.managed_image_version}"
 
   # concatenate repository-defined extra arguments for Ansible with user-defined ones
@@ -247,4 +296,11 @@ locals {
     # user-defined extra arguments for Ansible
     var.shared.ansible.extra_arguments
   )
+
+  version_description = templatefile(var.shared.templates.versions, {
+    shared    = var.shared
+    name      = local.managed_image_name_full
+    version   = local.managed_image_version
+    timestamp = local.managed_image_information_timestamp
+  })
 }

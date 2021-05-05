@@ -5,28 +5,29 @@
   debug:
     msg: "included docker.yml"
   when:
-    - toggle.enable_debug_statements is defined
-    - toggle.enable_debug_statements
+    - enable_debug_statements is defined
+    - enable_debug_statements
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_key_module.html
 - name: Add APT Key for Docker Repository
   apt_key:
-    url: "{{ apt_repos.docker }}/linux/ubuntu/gpg"
+    keyring: "{{ docker.repository.keyring }}"
+    url: "{{ docker.repository.url }}/gpg"
     state: present
   when:
     - ansible_os_family == "Debian"
-    - toggles.docker.add_apt_repository
+    - docker.toggles.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_repository_module.html
 - name: Add APT repository for Docker Packages
   apt_repository:
     filename: docker
-    repo: "deb [arch=amd64] {{ apt_repos.docker }}/linux/ubuntu {{ ansible_distribution_release | lower }} stable"
+    repo: "deb [arch=amd64 signed-by={{ docker.repository.keyring }}] {{ docker.repository.url }} {{ ansible_distribution_release | lower }} stable"
     state: present
     update_cache: true
   when:
     - ansible_os_family == "Debian"
-    - toggles.docker.add_apt_repository
+    - docker.toggles.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
 - name: Install Docker Packages
@@ -36,10 +37,11 @@
     name: "{{ item.name }}={{ item.version | default('*') }}"
     state: present
     update_cache: true
-  with_items: "{{ packages.docker }}"
+  with_items:
+    - "{{ docker.packages }}"
   when:
     - ansible_os_family == "Debian"
-    - toggles.docker.install_packages
+    - docker.toggles.install_packages
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/group_module.html
 - name: Add `docker` Group
@@ -48,7 +50,7 @@
     state: present
     system: true
   when:
-    - toggles.docker.create_group
+    - docker.toggles.create_group
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/user_module.html
 - name: Add `docker` User
@@ -58,4 +60,4 @@
     group: docker
     system: true
   when:
-    - toggles.docker.create_user
+    - docker.toggles.create_user

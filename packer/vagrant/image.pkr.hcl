@@ -1,4 +1,3 @@
-# see https://www.packer.io/docs/templates/hcl_templates/blocks/packer
 packer {
   # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#version-constraint-syntax
   required_version = ">= 1.7.2"
@@ -7,7 +6,7 @@ packer {
   required_plugins {
     # see https://github.com/hashicorp/packer-plugin-vagrant/releases/
     vagrant = {
-      version = "0.0.2"
+      version = "0.0.3"
       source  = "github.com/hashicorp/vagrant"
     }
 
@@ -21,7 +20,7 @@ packer {
 
 # see https://www.packer.io/docs/builders/vagrant
 source "vagrant" "image" {
-  # the following configuration represents a minimally viable selection
+  # the following configuration represents a curated variable selection
   # for all options see: https://www.packer.io/docs/builders/vagrant
   add_force                    = var.add_force
   box_name                     = local.box_name
@@ -48,7 +47,7 @@ source "file" "image_configuration" {
 }
 
 # see https://www.packer.io/docs/builders/file
-source "file" "version_description" {
+source "file" "image_information" {
   content = local.version_description
   target  = var.shared.generated_files.versions
 }
@@ -58,7 +57,7 @@ build {
 
   sources = [
     "source.file.image_configuration",
-    "source.file.version_description"
+    "source.file.image_information"
   ]
 }
 

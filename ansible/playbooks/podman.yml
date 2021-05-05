@@ -5,28 +5,28 @@
   debug:
     msg: "included podman.yml"
   when:
-    - toggle.enable_debug_statements is defined
-    - toggle.enable_debug_statements
+    - enable_debug_statements is defined
+    - enable_debug_statements
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_key_module.html
 - name: Add APT Key for Podman Repository
   apt_key:
     state: present
-    url: "{{ apt_repos.podman }}/Release.key"
+    url: "{{ apt_repos.podman.url }}/Release.key"
   when:
     - ansible_os_family == "Debian"
-    - toggles.podman.add_apt_repository
+    - podman.toggles.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_repository_module.html
 - name: Add APT repository for Podman Packages
   apt_repository:
     filename: podman
-    repo: "deb [arch=amd64] {{ apt_repos.podman }} stable"
+    repo: "deb [arch=amd64] {{ apt_repos.podman.url }} stable"
     state: present
     update_cache: true
   when:
     - ansible_os_family == "Debian"
-    - toggles.podman.add_apt_repository
+    - podman.toggles.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
 - name: Install Podman Packages
@@ -36,7 +36,8 @@
     name: "{{ item.name }}={{ item.version | default('*') }}"
     state: present
     update_cache: true
-  with_items: "{{ packages.podman }}"
+  with_items:
+    - "{{ packages.podman }}"
   when:
     - ansible_os_family == "Debian"
-    - toggles.podman.install_packages
+    - podman.toggles.install_packages

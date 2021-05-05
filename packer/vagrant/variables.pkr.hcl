@@ -63,10 +63,11 @@ variable "provider" {
   default     = "virtualbox"
 }
 
-
 # shared configuration
 variable "shared" {
   type = object({
+    enable_debug_statements = bool
+
     ansible = object({
       ansible_env_vars = list(string)
       command          = string
@@ -74,8 +75,6 @@ variable "shared" {
       galaxy_file      = string
       playbook_file    = string
     })
-
-    apt_repos = map(string)
 
     checksum_output = string
     checksum_types  = list(string)
@@ -87,12 +86,50 @@ variable "shared" {
       type                         = string
     })
 
+    docker = object({
+      enabled = bool
+
+      packages = list(object({
+        name    = string
+        version = string
+      }))
+
+      repository = object({
+        keyring = string
+        url     = string
+      })
+
+      toggles = map(bool)
+    })
+
     generated_files = object({
       configuration = string
       versions      = string
     })
 
-    image_version_date_format = string
+    hashicorp = object({
+      enabled          = bool
+      enabled_products = map(bool)
+
+      nomad_plugins = list(object({
+        name    = string
+        version = string
+      }))
+
+      packages = list(object({
+        name    = string
+        version = string
+      }))
+
+      repository = object({
+        url = string
+      })
+
+      toggles = map(bool)
+    })
+
+    image_version_date_format     = string
+    image_information_date_format = string
 
     inspec = object({
       attributes           = list(string)
@@ -106,55 +143,65 @@ variable "shared" {
 
     name = string
 
-    packages = object({
-      docker = list(object({
+    os = object({
+      enabled = bool
+
+      directories = object({
+        ansible   = list(string)
+        to_remove = list(string)
+      })
+
+      packages = object({
+        to_install = list(string)
+        to_remove  = list(string)
+      })
+
+      toggles = map(bool)
+    })
+
+    osquery = object({
+      enabled = bool
+
+      directories = list(string)
+
+      packages = list(object({
         name    = string
         version = string
       }))
 
-      hashicorp = list(object({
+      repository = object({
+        key        = string
+        key_server = string
+        url        = string
+      })
+
+      toggles = map(bool)
+    })
+
+    podman = object({
+      enabled = bool
+
+      packages = list(object({
         name    = string
         version = string
       }))
 
-      hashicorp_nomad_plugins = list(object({
-        name    = string
-        version = string
-      }))
+      repository = object({
+        url = string
+      })
 
-      podman = list(object({
-        name    = string
-        version = string
-      }))
-
-      to_install = list(string)
-      to_remove  = list(string)
+      toggles = map(bool)
     })
 
     templates = object({
       configuration = string
       versions      = string
     })
-
-    toggles = object({
-      enable_debug_statements = bool
-      enable_docker           = bool
-      enable_hashicorp        = bool
-      enable_os               = bool
-      enable_podman           = bool
-
-      docker            = map(bool)
-      hashicorp         = map(bool)
-      hashicorp_enabled = map(bool)
-      misc              = map(bool)
-      os                = map(bool)
-      podman            = map(bool)
-    })
   })
 
   description = "Shared Configuration for all Images"
 
-  # The default for this is specified in ./packer/_shared/shared.pkrvars.hcl
+  # The default for this is specified in `../_shared/shared.pkrvars.hcl`
 }
 
 # see https://www.packer.io/docs/builders/vagrant#skip_add
@@ -167,7 +214,7 @@ variable "skip_add" {
 # see https://www.packer.io/docs/builders/vagrant#source_path
 variable "source_path" {
   type        = string
-  description = "Name of the Vagrant Box to use for your base image"
+  description = "(Required) Name of the Vagrant Box to use for your base image"
 
   # see https://app.vagrantup.com/ubuntu/boxes/focal64
   default = "ubuntu/focal64"
@@ -195,12 +242,12 @@ variable "template" {
 
 locals {
   # set `box_name` to shared value, unless it is user-specified
-  box_name = var.box_name == "" ? var.shared.name : var.box_name
-  box_tag  = "${var.box_organization}/${local.box_name}"
+  box_name              = var.box_name == "" ? var.shared.name : var.box_name
+  box_tag               = "${var.box_organization}/${local.box_name}"
+  box_version_timestamp = formatdate(var.shared.image_information_date_format, timestamp())
 
   # set `box_version` to generated value, unless it is user-defined
-  box_version_timestamp = formatdate(var.shared.image_version_date_format, timestamp())
-  box_version           = var.box_version == "" ? local.box_version_timestamp : var.box_version
+  box_version = var.box_version == "" ? formatdate(var.shared.image_version_date_format, timestamp()) : var.box_version
 
   version_description = templatefile(var.shared.templates.versions, {
     shared    = var.shared

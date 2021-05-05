@@ -2,14 +2,15 @@
 *.retry
 
 ### Packer ###
-packer_cache/
 *.log
 output-*
-credentials.auto.pkrvars.hcl
+packer_cache/
+generated/*
 
 ### Packer (user-generated) ###
-generated/*
+credentials.auto.pkrvars.hcl
 generated.auto.pkrvars.hcl
+overrides.auto.pkrvars.hcl
 
 ### Terraform ###
 .terraform/

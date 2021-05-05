@@ -5,28 +5,28 @@
   debug:
     msg: "included hashicorp.yml"
   when:
-    - toggle.enable_debug_statements is defined
-    - toggle.enable_debug_statements
+    - enable_debug_statements is defined
+    - enable_debug_statements
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_key_module.html
 - name: Add APT Key for HashiCorp Repository
   apt_key:
     state: present
-    url: "{{ apt_repos.hashicorp }}/gpg"
+    url: "{{ hashicorp.repository.url }}/gpg"
   when:
     - ansible_os_family == "Debian"
-    - toggles.hashicorp.add_apt_repository
+    - hashicorp.toggles.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_repository_module.html
 - name: Add APT repository for HashiCorp Packages
   apt_repository:
     filename: hashicorp
-    repo: "deb [arch=amd64] {{ apt_repos.hashicorp }} {{ ansible_distribution_release | lower }} main"
+    repo: "deb [arch=amd64] {{ hashicorp.repository.url }} {{ ansible_distribution_release | lower }} main"
     state: present
     update_cache: true
   when:
     - ansible_os_family == "Debian"
-    - toggles.hashicorp.add_apt_repository
+    - hashicorp.toggles.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
 - name: Install HashiCorp Packages
@@ -36,11 +36,12 @@
     name: "{{ item.name }}={{ item.version | default('*') }}"
     state: present
     update_cache: true
-  with_items: "{{ packages.hashicorp }}"
+  with_items:
+    - "{{ hashicorp.packages }}"
   when:
     - ansible_os_family == "Debian"
-    - toggles.hashicorp_enabled[item.name]
-    - toggles.hashicorp.install_packages
+    - hashicorp.enabled_products[item.name]
+    - hashicorp.toggles.install_packages
 
 # TODO: ensure these packages are available
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
@@ -51,9 +52,10 @@
 #    name: "{{ item.name }}={{ item.version | default('*') }}"
 #    state: present
 #    update_cache: true
-#  with_items: "{{ packages.hashicorp_nomad_plugins }}"
+#  with_items:
+#    - "{{ packages.hashicorp_nomad_plugins }}"
 #  when:
-#    - toggles.hashicorp.install_nomad_plugins
+#    - hashicorp.toggles.install_nomad_plugins
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/group_module.html
 - name: Add Groups for HashiCorp Packages
@@ -61,11 +63,12 @@
     name: "{{ item.name }}"
     state: present
     system: true
-  with_items: "{{ packages.hashicorp }}"
+  with_items:
+    - "{{ hashicorp.packages }}"
   when:
-    - toggles.hashicorp_enabled[item.name]
-    - toggles.docker.create_group
-    - toggles.hashicorp.create_groups
+    - hashicorp.enabled_products[item.name]
+    - docker.toggles.create_group
+    - hashicorp.toggles.create_groups
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/group_module.html
 - name: Add Groups for HashiCorp Packages
@@ -74,7 +77,7 @@
     state: present
     system: true
   when:
-    - toggles.hashicorp.create_groups
+    - hashicorp.toggles.create_groups
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/user_module.html
 - name: Add Users for HashiCorp Packages
@@ -83,10 +86,11 @@
     group: "{{ item.name }}"
     name: "{{ item.name }}"
     system: true
-  with_items: "{{ packages.hashicorp }}"
+  with_items:
+    - "{{ hashicorp.packages }}"
   when:
-    - toggles.hashicorp_enabled[item.name]
-    - toggles.hashicorp.create_users
+    - hashicorp.enabled_products[item.name]
+    - hashicorp.toggles.create_users
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/user_module.html
 - name: Add Users to `hashicorp` Group
@@ -96,12 +100,13 @@
       - hashicorp
     name: "{{ item.name }}"
     system: true
-  with_items: "{{ packages.hashicorp }}"
+  with_items:
+    - "{{ hashicorp.packages }}"
   when:
-    - toggles.hashicorp_enabled[item.name] is defined
-    - toggles.hashicorp_enabled[item.name]
-    - toggles.hashicorp.create_users
-    - toggles.hashicorp.create_groups
+    - hashicorp.enabled_products[item.name] is defined
+    - hashicorp.enabled_products[item.name]
+    - hashicorp.toggles.create_users
+    - hashicorp.toggles.create_groups
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/user_module.html
 - name: Add `nomad` User to `docker` Group
@@ -113,19 +118,19 @@
     system: true
   when:
     - toggles.hashicorp_enabled.nomad is defined
-    - toggles.docker.install_packages
-    - toggles.hashicorp.create_users
-    - toggles.hashicorp.add_nomad_user_to_docker
+    - hashicorp.toggles.create_users
+    - hashicorp.toggles.add_nomad_user_to_docker
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/template_module.html
 - name: Copy Unit Files for HashiCorp Packages
   template:
     dest: "/lib/systemd/system/{{ item.name }}.service"
     src: "{{ item.name }}.service"
-  with_items: "{{ packages.hashicorp }}"
+  with_items:
+    - "{{ hashicorp.packages }}"
   when:
-    - toggles.hashicorp_enabled[item.name]
-    - toggles.hashicorp.copy_unit_files
+    - hashicorp.enabled_products[item.name]
+    - hashicorp.toggles.copy_unit_files
 
 # see https://docs.ansible.com/ansible/2.10/modules/systemd_module.html
 - name: Start Services for HashiCorp Packages
@@ -133,8 +138,9 @@
     enabled: true
     state: started
     name: "{{ item.name }}"
-  with_items: "{{ packages.hashicorp }}"
+  with_items:
+    - "{{ hashicorp.packages }}"
   when:
-    - toggles.hashicorp_enabled[item.name]
-    - toggles.hashicorp.enable_services
-    - toggles.hashicorp.start_services
+    - hashicorp.enabled_products[item.name]
+    - hashicorp.toggles.enable_services
+    - hashicorp.toggles.start_services

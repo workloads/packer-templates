@@ -52,7 +52,7 @@ To ease in the creation of this, this repository includes a Terraform workflow (
 
 For a seamless Packer experience, it is recommended to execute the Terraform workflow before the Packer workflow.
 
-Alternatively, you can manually create an Azure Resource Group as well as the `./packer/google/generated.auto.pkrvars.hcl` file.
+Alternatively, you can manually create a Google Cloud Project as well as the `./packer/google/generated.auto.pkrvars.hcl` file.
 
 > NOTE: For an initial run, Terraform needs to be initialized using `make terraform-init target=google`
 

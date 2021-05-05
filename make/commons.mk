@@ -39,6 +39,12 @@ define print_az_version_if_available
 	echo "  * \`az\` version: \`"$(if $(shell which az),$(shell az version --output=json --query="[\"azure-cli\"][0]")"\`", "not available")
 endef
 
+# convenience function to pretty-print version information when `ansible` binary is available
+define print_ansible_version_if_available
+	# expected output: `ansible 2.10.7`
+	echo "  * \`ansible\` version: \`"$(if $(shell which ansible),$(shell ansible --version | head -n 1)"\`", "not available")
+endef
+
 # convenience function to pretty-print version information when `gcloud` binary is available
 define print_gcloud_version_if_available
 	# expected output: `321.0.0`
@@ -55,10 +61,12 @@ env-info: # Prints Version Information
 	# expected output: `1.7.2`
 	$(call print_version_if_available,"packer", "--version")
 
-	# expected output: `Terraform v0.15.0`
+	# expected output: `Terraform v0.15.1`
 	$(call print_version_if_available,"terraform", "--version")
 
-	# expected output: `Vagrant 2.2.15`
+	$(call print_ansible_version_if_available)
+
+	# expected output: `Vagrant 2.2.16`
 	$(call print_version_if_available,"vagrant", "--version")
 
 	# expected output: `6.1.18r142142`
