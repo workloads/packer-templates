@@ -56,8 +56,6 @@ endef
 env-info: # Prints Version Information
 	echo "* Output of \`make env-info\`:"
 
-	# TODO: consider adding a `foreach` for this function
-
 	# expected output: `1.7.2`
 	$(call print_version_if_available,"packer", "--version")
 

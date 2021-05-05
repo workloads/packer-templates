@@ -293,8 +293,8 @@ shared = {
       }
     ]
 
-    # TODO: make `url` smarter
     repository = {
+      # TODO: make `url` smarter
       url = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/"
     }
 

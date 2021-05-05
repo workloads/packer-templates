@@ -1,8 +1,5 @@
 # This file is automatically loaded by Packer
 
-# see https://www.packer.io/docs/builders/amazon/ebs#ami_block_device_mappings
-# TODO: add support for block variable "ami_block_device_mappings"
-
 # see https://www.packer.io/docs/builders/amazon/ebs#ami_description
 variable "ami_description" {
   type        = string
@@ -85,9 +82,6 @@ variable "aws_polling" {
     max_attempts  = 50
   }
 }
-
-# see https://www.packer.io/docs/builders/amazon/ebs#block_duration_minutes
-# TODO: add support for variable "block_duration_minutes"
 
 # see https://www.packer.io/docs/builders/amazon/ebs#custom_endpoint_ec2
 variable "custom_endpoint_ec2" {
@@ -183,12 +177,6 @@ variable "kms_key_id" {
   description = "ID, alias or ARN of the KMS key to use for AMI encryption."
   default     = null
 }
-
-# see https://www.packer.io/docs/builders/amazon/ebs#launch_block_device_mappings
-# TODO: add support for block variable "launch_block_device_mappings"
-
-# see https://www.packer.io/docs/builders/amazon/ebs#no_ephemeral
-# TODO: add support for variable "no_ephemeral" when Windows support is added
 
 # see https://www.packer.io/docs/builders/amazon/ebs#profile
 variable "profile" {
