@@ -31,7 +31,7 @@ source "googlecompute" "image" {
   enable_vtpm                  = var.enable_vtpm
   enable_integrity_monitoring  = var.enable_integrity_monitoring
   image_name                   = var.image_name
-  image_information            = var.image_information
+  image_description            = var.image_information
   image_labels                 = local.image_labels
   image_licenses               = var.image_licenses
   image_storage_locations      = var.image_storage_locations

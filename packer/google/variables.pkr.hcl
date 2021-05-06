@@ -346,7 +346,7 @@ locals {
   ],
 
   # user-defined extra arguments for Ansible
-  var.shared.ansible.extra_arguments
+  var.shared.ansible.extra_arguments)
 
   # see https://www.packer.io/docs/builders/googlecompute#image_labels
   image_labels = {
