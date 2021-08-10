@@ -12,10 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        directory: [
-          "./packer/_shared/shared.pkrvars.hcl",
-          "./packer/azure/image.pkr.hcl",
-          "./packer/vagrant/image.pkr.hcl"
+        path: [
+          "./packer/amazon",
+          "./packer/azure",
+          "./packer/google",
+          "./packer/vagrant"
         ]
 
     steps:
@@ -28,11 +29,11 @@ jobs:
         uses: hashicorp/packer-github-actions@master
         with:
           command: fmt
-          target: "${{ matrix.directory }}"
+          target: "${{ matrix.path }}"
 
 #      - name: Validate Template
 #        uses: hashicorp/packer-github-actions@master
 #        with:
 #          command: validate
-#          target: "${{ matrix.directory }}/image.pkr.hcl"
+#          target: "${{ matrix.path }}/image.pkr.hcl"
 #          arguments: "-var-file=packer/_shared/shared.pkrvars.hcl"
