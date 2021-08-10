@@ -90,13 +90,13 @@ build {
   ]
 
   # see https://www.packer.io/docs/provisioners/ansible
-  //  provisioner "ansible" {
-  //    ansible_env_vars = var.shared.ansible.ansible_env_vars
-  //    command          = var.shared.ansible.command
-  //    #extra_arguments  = local.ansible_extra_arguments
-  //    galaxy_file   = var.shared.ansible.galaxy_file
-  //    playbook_file = var.shared.ansible.playbook_file
-  //  }
+  provisioner "ansible" {
+    ansible_env_vars = var.shared.ansible.ansible_env_vars
+    command          = var.shared.ansible.command
+    extra_arguments  = local.ansible_extra_arguments
+    galaxy_file      = var.shared.ansible.galaxy_file
+    playbook_file    = var.shared.ansible.playbook_file
+  }
 
   # see https://www.packer.io/docs/provisioners/inspec
   # provisioner "inspec" {
