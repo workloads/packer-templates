@@ -85,6 +85,7 @@
     backup: false
     dest: "/tmp"
     force: true
+    mode: "0644"
     src: "../../{{ generated_files.versions }}"
   when:
     - os.toggles.copy_versions_file

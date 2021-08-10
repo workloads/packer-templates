@@ -95,7 +95,7 @@ shared = {
     nomad_plugins = [
       { # see https://releases.hashicorp.com/nomad-driver-podman/
         name    = "nomad-driver-podman"
-        version = "0.2.0"
+        version = "0.3.0"
       },
       { # see https://releases.hashicorp.com/nomad-driver-lxc/
         name    = "nomad-driver-lxc"
@@ -103,7 +103,7 @@ shared = {
       },
       { # see https://releases.hashicorp.com/nomad-autoscaler/
         name    = "nomad-autoscaler"
-        version = "0.3.0"
+        version = "0.3.3"
       }
     ]
 
@@ -111,19 +111,19 @@ shared = {
     packages = [
       { # see https://releases.hashicorp.com/boundary/
         name    = "boundary"
-        version = "0.2.0"
+        version = "0.5.0"
       },
       { # see https://releases.hashicorp.com/consul/
         name    = "consul"
-        version = "1.9.5"
+        version = "1.10.1"
       },
       { # see https://releases.hashicorp.com/nomad/
         name    = "nomad"
-        version = "1.0.4"
+        version = "1.1.3"
       },
       { # see https://releases.hashicorp.com/vault/
         name    = "vault"
-        version = "1.7.0"
+        version = "1.8.1"
       }
     ]
 
@@ -260,7 +260,7 @@ shared = {
     packages = [
       { # see https://osquery.io/downloads/official/
         name    = "osquery"
-        version = "4.8.0"
+        version = "4.9.0"
       }
     ]
 
@@ -287,14 +287,14 @@ shared = {
     enabled = false
 
     packages = [
-      { # see https://releases.hashicorp.com/nomad-driver-podman/
+      { # see https://podman.io/releases/
         name    = "podman"
-        version = "3.0.0"
+        version = "3.2.3"
       }
     ]
 
-    # TODO: make `url` smarter
     repository = {
+      # TODO: make `url` smarter
       url = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/"
     }
 

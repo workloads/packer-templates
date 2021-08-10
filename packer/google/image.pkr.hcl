@@ -4,10 +4,10 @@ packer {
 
   # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#specifying-plugin-requirements
   required_plugins {
-    # see https://github.com/hashicorp/packer-plugin-vagrant/releases/
-    vagrant = {
+    # see https://github.com/hashicorp/packer-plugin-googlecompute/releases/
+    googlecompute = {
       version = "1.0.0"
-      source  = "github.com/hashicorp/vagrant"
+      source  = "github.com/hashicorp/googlecompute"
     }
 
     # see https://github.com/hashicorp/packer-plugin-ansible/releases/
@@ -18,28 +18,43 @@ packer {
   }
 }
 
-# see https://www.packer.io/docs/builders/vagrant
-source "vagrant" "image" {
+# see https://www.packer.io/docs/builders/googlecompute
+source "googlecompute" "image" {
   # the following configuration represents a curated variable selection
-  # for all options see: https://www.packer.io/docs/builders/vagrant
-  add_force                    = var.add_force
-  box_name                     = local.box_name
-  box_version                  = var.box_version
+  # for all options see: https://www.packer.io/docs/builders/googlecompute
   communicator                 = var.shared.communicator.type
-  output_dir                   = var.output_dir
-  provider                     = var.provider
-  skip_add                     = var.skip_add
-  source_path                  = var.source_path
+  disk_name                    = var.disk_name
+  disk_size                    = var.disk_size
+  disk_type                    = var.disk_type
+  project_id                   = var.project_id
+  enable_secure_boot           = var.enable_secure_boot
+  enable_vtpm                  = var.enable_vtpm
+  enable_integrity_monitoring  = var.enable_integrity_monitoring
+  image_name                   = var.image_name
+  image_description            = var.image_information
+  image_labels                 = local.image_labels
+  image_licenses               = var.image_licenses
+  image_storage_locations      = var.image_storage_locations
+  machine_type                 = var.machine_type
+  min_cpu_platform             = var.min_cpu_platform
+  network                      = var.network
+  omit_external_ip             = var.omit_external_ip
+  preemptible                  = var.preemptible
+  scopes                       = var.scopes
+  skip_create_image            = var.skip_create_image
   ssh_clear_authorized_keys    = var.shared.communicator.ssh_clear_authorized_keys
   ssh_disable_agent_forwarding = var.shared.communicator.ssh_disable_agent_forwarding
-  teardown_method              = var.teardown_method
-  template                     = var.template
+  ssh_username                 = var.shared.communicator.ssh_username
+  source_image                 = var.source_image
+  region                       = var.region
+  use_internal_ip              = var.use_internal_ip
+  zone                         = var.zone
 }
 
 # see https://www.packer.io/docs/builders/file
 source "file" "image_configuration" {
   content = templatefile(var.shared.templates.configuration, {
-    timestamp     = formatdate(var.shared.image_version_date_format, timestamp())
+    timestamp     = formatdate(var.shared.image_information_date_format, timestamp())
     configuration = yamlencode(var.shared)
   })
 
@@ -47,9 +62,15 @@ source "file" "image_configuration" {
 }
 
 # see https://www.packer.io/docs/builders/file
+#source "file" "image_information" {
+#  content = local.version_description
+#  target  = var.shared.generated_files.versions
+#}
+
+# see https://www.packer.io/docs/builders/file
 source "file" "image_information" {
   content = local.version_description
-  target  = var.shared.generated_files.versions
+  target  = local.version_description_filename
 }
 
 build {
@@ -57,7 +78,7 @@ build {
 
   sources = [
     "source.file.image_configuration",
-    "source.file.image_information"
+    #"source.file.image_information"
   ]
 }
 
@@ -65,7 +86,7 @@ build {
   name = "provisioners"
 
   sources = [
-    "source.vagrant.image"
+    "source.googlecompute.image"
   ]
 
   # see https://www.packer.io/docs/provisioners/ansible
@@ -78,7 +99,7 @@ build {
   }
 
   # see https://www.packer.io/docs/provisioners/inspec
-  #provisioner "inspec" {
+  # provisioner "inspec" {
   #  attributes           = var.shared.inspec.attributes
   #  attributes_directory = var.shared.inspec.attributes_directory
   #  backend              = var.shared.inspec.backend
@@ -87,18 +108,4 @@ build {
   #  profile              = var.shared.inspec.profile
   #  user                 = var.shared.inspec.user
   #}
-
-  # see https://www.packer.io/docs/post-processors/vagrant-cloud
-  post-processor "vagrant-cloud" {
-    box_tag             = local.box_tag
-    no_release          = var.no_release
-    version             = local.box_version
-    version_description = local.version_description
-  }
-
-  # see https://www.packer.io/docs/post-processors/checksum#checksum-post-processor
-  post-processor "checksum" {
-    checksum_types = var.shared.checksum_types
-    output         = var.shared.checksum_output
-  }
 }
