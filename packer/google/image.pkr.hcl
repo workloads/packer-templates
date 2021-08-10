@@ -99,7 +99,7 @@ build {
   //  }
 
   # see https://www.packer.io/docs/provisioners/inspec
-  #provisioner "inspec" {
+  # provisioner "inspec" {
   #  attributes           = var.shared.inspec.attributes
   #  attributes_directory = var.shared.inspec.attributes_directory
   #  backend              = var.shared.inspec.backend
