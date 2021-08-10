@@ -126,6 +126,7 @@
   template:
     dest: "/lib/systemd/system/{{ item.name }}.service"
     src: "{{ item.name }}.service"
+    mode: "0644"
   with_items:
     - "{{ hashicorp.packages }}"
   when:
