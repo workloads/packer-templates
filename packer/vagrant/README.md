@@ -61,4 +61,4 @@ To enable building for and deploying to [Vagrant Cloud](https://app.vagrantup.co
 make build target=vagrant enable-vagrant-cloud=1
 ```
 
-️> `make` commands must be run from the root directory.
+> `make` commands must be run from the root directory.
