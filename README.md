@@ -8,6 +8,7 @@
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Usage](#usage)
+    - [Helpers](#helpers)
     - [Workflow](#workflow)
     - [Build Options](#build-options)
     - [Supported Providers](#supported-providers)
@@ -48,6 +49,23 @@ terraform-apply    Creates prerequisite resources with Terraform
 terraform-destroy  Destroys prerequisite resources with Terraform
 terraform-init     Initializes Terraform
 ```
+
+### Helpers
+
+The [Makefile](Makefile) includes several unsupported helper targets that _may_ be useful when developing in this repository.
+
+| target          | description documentation                          |
+|-----------------|----------------------------------------------------|
+| `_clean`        | (Forcefully) Removes the `generated` directory     |
+| `_gen`          | Opens the `generated` directory (macOS only)       |
+| `_lint_ansible` | Lints Ansible Playbooks using `ansible-lint`       |
+| `_lint_yaml`    | Lints YAML files using `yamllint`                  |
+| `_lint`         | Executes `_lint_yaml`, followed by `_lint_ansible` |
+| `_ssh`          | Executes `vagrant ssh`                             |
+| `_up`           | Executes `vagrant up`                              |
+| `_vb`           | Opens "VirtualBox.app" (macOS only)                |
+
+Unsupported targets are prefixed by an underscore (`_`).
 
 ### Workflow
 
