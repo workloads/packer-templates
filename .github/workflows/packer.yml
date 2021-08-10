@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         path: [
-          "./packer/amazon",
+          "./packer/aws",
           "./packer/azure",
           "./packer/google",
           "./packer/vagrant"
