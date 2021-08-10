@@ -340,12 +340,12 @@ locals {
   # concatenate repository-defined extra arguments for Ansible with user-defined ones
   # see https://www.packer.io/docs/provisioners/ansible#ansible_env_vars
   ansible_extra_arguments = concat(
-  # repository-defined extra arguments for Ansible
-  [
-    "--extra-vars", "build_target=${var.target}"
-  ],
+    # repository-defined extra arguments for Ansible
+    [
+      "--extra-vars", "build_target=${var.target}"
+    ],
 
-  # user-defined extra arguments for Ansible
+    # user-defined extra arguments for Ansible
   var.shared.ansible.extra_arguments)
 
   # see https://www.packer.io/docs/builders/googlecompute#image_labels

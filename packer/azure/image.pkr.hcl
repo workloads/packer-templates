@@ -5,14 +5,14 @@ packer {
   # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#specifying-plugin-requirements
   required_plugins {
     # see https://github.com/hashicorp/packer-plugin-azure/releases/
-    //    azure = {
-    //      version = "0.0.1"
-    //      source  = "github.com/hashicorp/azure"
-    //    }
+    azure = {
+      version = "1.0.1"
+      source  = "github.com/hashicorp/azure"
+    }
 
     # see https://github.com/hashicorp/packer-plugin-ansible/releases/
     ansible = {
-      version = "0.0.2"
+      version = "1.0.0"
       source  = "github.com/hashicorp/ansible"
     }
   }
