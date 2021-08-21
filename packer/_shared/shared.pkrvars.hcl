@@ -322,11 +322,5 @@ shared = {
       nomad    = true
       vault    = false
     }
-
-    # miscellaneous feature flags
-    misc = {
-      # copy files with version information to image
-      copy_versions_files = true
-    }
   }
 }
