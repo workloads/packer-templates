@@ -118,7 +118,8 @@
     name: nomad
     system: true
   when:
-    - toggles.hashicorp_enabled.nomad is defined
+    - hashicorp.enabled_products.nomad is defined
+    - hashicorp.enabled_products.nomad is true
     - hashicorp.toggles.create_users
     - hashicorp.toggles.add_nomad_user_to_docker
 
@@ -143,6 +144,7 @@
   with_items:
     - "{{ hashicorp.packages }}"
   when:
-    - hashicorp.enabled_products[item.name]
-    - hashicorp.toggles.enable_services
+  - hashicorp.enabled_products.nomad is defined
+  - hashicorp.enabled_products.nomad is true
+  - hashicorp.toggles.enable_services
     - hashicorp.toggles.start_services

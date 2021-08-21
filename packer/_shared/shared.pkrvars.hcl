@@ -314,15 +314,4 @@ shared = {
     configuration = "../_shared/generated-configuration.pkrtpl.yml"
     versions      = "../_shared/image-description.pkrtpl.md"
   }
-
-  # toggles to enable and disable various operations
-  toggles = {
-    # feature flags for product-specific operations
-    hashicorp_enabled = {
-      boundary = false
-      consul   = true
-      nomad    = true
-      vault    = false
-    }
-  }
 }
