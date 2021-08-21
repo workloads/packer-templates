@@ -162,12 +162,12 @@ variable "shared" {
     osquery = object({
       enabled = bool
 
-      directories = list(string)
-
       packages = list(object({
         name    = string
         version = string
       }))
+
+      paths = list(string)
 
       repository = object({
         key        = string
