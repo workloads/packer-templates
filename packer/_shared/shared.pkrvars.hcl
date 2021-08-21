@@ -217,6 +217,7 @@ shared = {
         "auditd",
         "ca-certificates",
         "curl",
+        "chrony", # see https://chrony.tuxfamily.org
         "gnupg",
         "jq",
         "libcap2",
@@ -232,6 +233,7 @@ shared = {
         "ftp",
         "fuse",
         "ntfs-3g",
+        "ntp",
         "open-iscsi",
         "pastebinit",
         "snapd",
