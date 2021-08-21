@@ -18,8 +18,8 @@
 
 ## Requirements
 
-- Packer `1.7.2` or newer
-- Terraform `0.15.1` or newer
+- Packer `1.7.4` or newer
+- Terraform `1.0.5` or newer
 - Ansible `2.10.7` or newer
 
 Ansible is used for system-level operations (e.g.: installing and removing packages).
@@ -160,7 +160,7 @@ This repository takes input and inspiration from a handful of community projects
 
 The authors would like to thank the following parties for their inspiration and contributions:
 
-* [@ansible-community](https://github.com/ansible-community?q=hashicorp) 
+* [@ansible-community](https://github.com/ansible-community?q=hashicorp)
 * [Mark Lewis](https://github.com/ml4/base)
 * [Mike Nomitch](https://github.com/glenngillen/nomatic-stack)
 
