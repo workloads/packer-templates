@@ -238,6 +238,12 @@ shared = {
         "snapd",
         "ubuntu-release-upgrader-core"
       ]
+
+      aws = {
+        to_install = [
+          "amazon-ssm-agent"
+        ]
+      }
     }
 
     # OS-specific feature flags
