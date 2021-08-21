@@ -19,7 +19,7 @@
     - docker.toggles.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_repository_module.html
-- name: Add APT repository for Docker Packages
+- name: Add APT Repository for Docker Packages
   apt_repository:
     filename: docker
     repo: "deb [arch=amd64 signed-by={{ docker.repository.keyring }}] {{ docker.repository.url }} {{ ansible_distribution_release | lower }} stable"

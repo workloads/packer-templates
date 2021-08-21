@@ -1,7 +1,7 @@
 ---
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/file_module.html
-- name: delete extraneous directories
+- name: Remove Extraneous Directories
   file:
     path: "{{ item }}"
     state: absent

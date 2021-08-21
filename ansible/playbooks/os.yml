@@ -9,7 +9,7 @@
     - enable_debug_statements
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/file_module.html
-- name: Create temporary Ansible Directory
+- name: Create Temporary Ansible Directory
   file:
     path: "{{ item }}"
     mode: 0644
@@ -28,7 +28,7 @@
     - os.toggles.update_apt_cache
 
 # see https://docs.ansible.com/ansible/2.10/modules/package_module.html
-- name: Install generic Packages
+- name: Install Generic Packages
   apt:
     force_apt_get: true
     name: "{{ os.packages.to_install }}"
@@ -40,7 +40,7 @@
     - os.toggles.install_packages
 
 # see https://docs.ansible.com/ansible/2.10/modules/package_module.html
-- name: Remove generic Packages
+- name: Remove Generic Packages
   apt:
     autoclean: true
     autoremove: true
