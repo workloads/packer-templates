@@ -36,11 +36,11 @@
     - osquery.toggles.install_packages
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/file_module.html
-- name: delete osquery directories
+- name: delete osquery paths
   file:
     path: "{{ item }}"
     state: absent
   with_items:
-    - "{{ osquery.directories }}"
+    - "{{ osquery.paths }}"
   when:
-    - osquery.toggles.remove_directories
+    - osquery.toggles.remove_paths

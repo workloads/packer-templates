@@ -252,7 +252,7 @@ shared = {
   osquery = {
     enabled = true
 
-    directories = [
+    paths = [
       "/var/log/osquery",
       "/var/osquery/osquery.db"
     ]
@@ -277,8 +277,8 @@ shared = {
       # install packages for osquery
       install_packages = true
 
-      # remove osquery directories
-      remove_directories = true
+      # remove osquery-specific paths
+      remove_paths = true
     }
   }
 
