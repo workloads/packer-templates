@@ -58,6 +58,7 @@
     create_home: true
     name: docker
     group: docker
+    shell: /sbin/nologin.txt
     system: true
   when:
     - docker.toggles.create_user

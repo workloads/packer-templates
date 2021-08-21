@@ -85,6 +85,7 @@
     comment: "HashiCorp {{ item.name | capitalize }}"
     group: "{{ item.name }}"
     name: "{{ item.name }}"
+    shell: /sbin/nologin.txt
     system: true
   with_items:
     - "{{ hashicorp.packages }}"
