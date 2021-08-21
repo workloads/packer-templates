@@ -111,7 +111,7 @@ shared = {
     packages = [
       { # see https://releases.hashicorp.com/boundary/
         name    = "boundary"
-        version = "0.5.0"
+        version = "0.5.1"
       },
       { # see https://releases.hashicorp.com/consul/
         name    = "consul"
