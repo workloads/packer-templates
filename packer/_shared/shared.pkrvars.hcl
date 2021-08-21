@@ -214,6 +214,7 @@ shared = {
       # packages that should be installed
       to_install = [
         "apt-transport-https",
+        "auditd",
         "ca-certificates",
         "curl",
         "gnupg",
