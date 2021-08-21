@@ -78,6 +78,15 @@
     - os.packages[build_target].to_remove is defined
     - os.toggles.remove_packages[build_target]
 
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/template_module.html
+- name: Copy `nologin` Message File
+  template:
+    dest: "/etc/nologin"
+    src: "nologin.txt"
+    mode: "0644"
+  when:
+    - os.toggles.copy_nologin_file
+
 # see https://docs.ansible.com/ansible/2.10/modules/copy_module.html
 # TODO: fix the `src` in a better way
 - name: Copy Image Information Files
