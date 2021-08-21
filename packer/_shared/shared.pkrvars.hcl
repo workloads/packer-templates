@@ -219,7 +219,7 @@ shared = {
         "chrony", # see https://chrony.tuxfamily.org
         "curl", # see https://curl.se
         "gnupg",
-        "jq",
+        "jq", # see https://stedolan.github.io/jq/
         "libcap2",
         "lsb-release",
         "sudo",
