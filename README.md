@@ -54,7 +54,7 @@ terraform-init     Initializes Terraform
 
 The [Makefile](Makefile) includes several unsupported helper targets that _may_ be useful when developing in this repository.
 
-| target          | description documentation                          |
+| target          | description                                        |
 |-----------------|----------------------------------------------------|
 | `_clean`        | (Forcefully) Removes the `generated` directory     |
 | `_gen`          | Opens the `generated` directory (macOS only)       |
