@@ -216,8 +216,8 @@ shared = {
         "apt-transport-https",
         "auditd",
         "ca-certificates",
-        "curl",
         "chrony", # see https://chrony.tuxfamily.org
+        "curl", # see https://curl.se
         "gnupg",
         "jq",
         "libcap2",
@@ -228,8 +228,7 @@ shared = {
 
       # packages that should be removed
       to_remove = [
-        # see https://packages.ubuntu.com/focal/dosfstools
-        "dosfstools",
+        "dosfstools", # see https://packages.ubuntu.com/focal/dosfstools
         "ftp",
         "fuse",
         "ntfs-3g",
