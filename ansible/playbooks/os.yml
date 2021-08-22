@@ -12,8 +12,8 @@
 - name: Create Temporary Ansible Directory
   file:
     path: "{{ item }}"
-    mode: 0644
-    state: absent
+    mode: "0644"
+    state: directory
   with_items:
     - "{{ os.directories.ansible }}"
 
