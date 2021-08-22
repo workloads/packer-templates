@@ -20,7 +20,8 @@ This image (version: `${version}`) was built on ${timestamp}.
 ## Docker packages:
 
 %{ for item in shared.docker.packages ~}
-- `${item.name}` (version: `${item.version}`)%{ endfor ~}
+- `${item.name}` (version: `${item.version}`)
+%{ endfor ~}
 %{ endif }
 %{ if shared.podman.enabled && shared.podman.toggles.install_packages }
 ## Podman packages:
