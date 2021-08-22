@@ -3,6 +3,9 @@ shared = {
   # feature flag to enable debug statements
   enable_debug_statements = true
 
+  # feature flag to enable post validation
+  enable_post_validation  = false
+
   ansible = {
     # Environment variables to set before running Ansible
     # When in doubt, edit `ansible/ansible.cfg` instead of `ansible_env_vars`

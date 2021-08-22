@@ -4,3 +4,8 @@ collections:
   # see https://galaxy.ansible.com/devsec/hardening
   - name: devsec.hardening
     version: "7.9.0"
+
+roles:
+  # see https://galaxy.ansible.com/naftulikay/degoss
+  - name: naftulikay.degoss
+    version: "v3.1.0"

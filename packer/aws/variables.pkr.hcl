@@ -226,6 +226,7 @@ variable "security_group_ids" {
 variable "shared" {
   type = object({
     enable_debug_statements = bool
+    enable_post_validation  = bool
 
     ansible = object({
       ansible_env_vars = list(string)
