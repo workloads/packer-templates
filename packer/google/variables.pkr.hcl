@@ -246,6 +246,12 @@ variable "shared" {
         to_remove  = list(string)
       })
 
+      shell_helpers = object({
+        destination = string
+        base_url    = string
+        helpers     = list(string)
+      })
+
       toggles = map(bool)
     })
 

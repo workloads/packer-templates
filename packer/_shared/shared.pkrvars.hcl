@@ -246,6 +246,14 @@ shared = {
       }
     }
 
+    shell_helpers = {
+      destination = "/opt/shell-helpers"
+      base_url    = "https://raw.githubusercontent.com/operatehappy/shell-helpers/main/"
+      helpers = [
+        "colors.sh"
+      ]
+    }
+
     # OS-specific feature flags
     toggles = {
       copy_nologin_file  = true
