@@ -257,6 +257,11 @@ shared = {
     }
   }
 
+  # Prompt-specific settings
+  prompt = {
+    enabled = true
+  }
+
   # osquery-specific settings
   osquery = {
     enabled = true

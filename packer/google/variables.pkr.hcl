@@ -283,6 +283,10 @@ variable "shared" {
       toggles = map(bool)
     })
 
+    prompt = object({
+      enabled = bool
+    })
+
     templates = object({
       configuration = string
       versions      = string

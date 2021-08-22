@@ -48,6 +48,12 @@
         - os.enabled
 
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
+    - name: Manage Prompt Operations
+      include: prompt.yml
+      when:
+        - prompt.enabled
+
+    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
     - name: Manage Docker Operations
       include: docker.yml
       when:
