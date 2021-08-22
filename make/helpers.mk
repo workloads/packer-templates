@@ -35,6 +35,8 @@ _lint_ansible:
 	cd $(ansible_playbooks) \
 	&& \
 	ansible-lint \
+		-f "rich" \
+		--progressive \
 		-v \
 		"main.yml"
 
