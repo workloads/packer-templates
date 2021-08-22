@@ -54,16 +54,17 @@ terraform-init     Initializes Terraform
 
 The [Makefile](Makefile) includes several unsupported helper targets that _may_ be useful when developing in this repository.
 
-| target          | description                                        |
-|-----------------|----------------------------------------------------|
-| `_clean`        | (Forcefully) Removes the `generated` directory     |
-| `_gen`          | Opens the `generated` directory (macOS only)       |
-| `_lint_ansible` | Lints Ansible Playbooks using `ansible-lint`       |
-| `_lint_yaml`    | Lints YAML files using `yamllint`                  |
-| `_lint`         | Executes `_lint_yaml`, followed by `_lint_ansible` |
-| `_ssh`          | Executes `vagrant ssh`                             |
-| `_up`           | Executes `vagrant up`                              |
-| `_vb`           | Opens "VirtualBox.app" (macOS only)                |
+| target                  | description                                            |
+|-------------------------|--------------------------------------------------------|
+| `_clean`                | (Forcefully) Removes the `generated` directory         |
+| `_gen`                  | Opens the `generated` directory (macOS only)           |
+| `_install_ansible_reqs` | Fetch and Install Ansible Galaxy Collections and Roles |
+| `_lint_ansible`         | Lints Ansible Playbooks using `ansible-lint`           |
+| `_lint_yaml`            | Lints YAML files using `yamllint`                      |
+| `_lint`                 | Executes `_lint_yaml`, followed by `_lint_ansible`     |
+| `_ssh`                  | Executes `vagrant ssh`                                 |
+| `_up`                   | Executes `vagrant up`                                  |
+| `_vb`                   | Opens "VirtualBox.app" (macOS only)                    |
 
 Unsupported targets are prefixed by an underscore (`_`).
 
