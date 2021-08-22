@@ -217,7 +217,7 @@ shared = {
         "auditd",
         "ca-certificates",
         "chrony", # see https://chrony.tuxfamily.org
-        "curl", # see https://curl.se
+        "curl",   # see https://curl.se
         "gnupg",
         "jq", # see https://stedolan.github.io/jq/
         "libcap2",
@@ -253,6 +253,7 @@ shared = {
       install_packages   = true
       remove_directories = true
       remove_packages    = true
+      shell_helpers      = true
       update_apt_cache   = true
     }
   }
