@@ -144,7 +144,7 @@
   with_items:
     - "{{ hashicorp.packages }}"
   when:
-    - hashicorp.enabled_products.nomad is defined
-    - hashicorp.enabled_products.nomad is true
+    - hashicorp.enabled_products[item.name] is defined
+    - hashicorp.enabled_products[item.name] is true
     - hashicorp.toggles.enable_services
     - hashicorp.toggles.start_services
