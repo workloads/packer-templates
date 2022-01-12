@@ -12,7 +12,7 @@ packer {
 
     # see https://github.com/hashicorp/packer-plugin-ansible/releases/
     ansible = {
-      version = "1.0.0"
+      version = "1.0.1"
       source  = "github.com/hashicorp/ansible"
     }
   }

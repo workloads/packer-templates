@@ -6,13 +6,13 @@ packer {
   required_plugins {
     # see https://github.com/hashicorp/packer-plugin-googlecompute/releases/
     googlecompute = {
-      version = "1.0.0"
+      version = "1.0.9"
       source  = "github.com/hashicorp/googlecompute"
     }
 
     # see https://github.com/hashicorp/packer-plugin-ansible/releases/
     ansible = {
-      version = "1.0.0"
+      version = "1.0.1"
       source  = "github.com/hashicorp/ansible"
     }
   }
