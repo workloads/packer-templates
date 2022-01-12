@@ -1,9 +1,9 @@
 terraform {
   required_providers {
-    # see https://registry.terraform.io/providers/hashicorp/google/3.79.0
+    # see https://registry.terraform.io/providers/hashicorp/google/4.6.0
     google = {
       source  = "hashicorp/google"
-      version = "3.79.0"
+      version = "4.6.0"
     }
 
     # see https://registry.terraform.io/providers/hashicorp/local/2.1.0
@@ -19,5 +19,5 @@ terraform {
     }
   }
 
-  required_version = "1.0.4"
+  required_version = "1.1.3"
 }
