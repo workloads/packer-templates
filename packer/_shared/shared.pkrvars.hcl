@@ -4,7 +4,7 @@ shared = {
   enable_debug_statements = true
 
   # feature flag to enable post validation
-  enable_post_validation  = false
+  enable_post_validation = false
 
   ansible = {
     # Environment variables to set before running Ansible
@@ -106,7 +106,7 @@ shared = {
       },
       { # see https://releases.hashicorp.com/nomad-autoscaler/
         name    = "nomad-autoscaler"
-        version = "0.3.3"
+        version = "0.3.4"
       }
     ]
 
@@ -114,19 +114,19 @@ shared = {
     packages = [
       { # see https://releases.hashicorp.com/boundary/
         name    = "boundary"
-        version = "0.5.1"
+        version = "0.7.3"
       },
       { # see https://releases.hashicorp.com/consul/
         name    = "consul"
-        version = "1.10.1"
+        version = "1.11.1"
       },
       { # see https://releases.hashicorp.com/nomad/
         name    = "nomad"
-        version = "1.1.3"
+        version = "1.2.3"
       },
       { # see https://releases.hashicorp.com/vault/
         name    = "vault"
-        version = "1.8.1"
+        version = "1.9.2"
       }
     ]
 

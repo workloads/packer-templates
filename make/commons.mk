@@ -64,7 +64,7 @@ env-info: # Prints Version Information
 
 	$(call print_ansible_version_if_available)
 
-	# expected output: `Vagrant 2.2.16`
+	# expected output: `Vagrant 2.2.19`
 	$(call print_version_if_available,"vagrant", "--version")
 
 	# expected output: `6.1.18r142142`
