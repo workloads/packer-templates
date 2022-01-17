@@ -45,6 +45,12 @@ define print_ansible_version_if_available
 	echo "  * \`ansible\` version: \`"$(if $(shell which ansible),$(shell ansible --version | head -n 1)"\`", "not available")
 endef
 
+# convenience function to pretty-print version information when `envconsul` binary is available
+define print_envconsul_version_if_available
+	# expected output: `envconsul v0.12.1 (265f933)`
+	echo "  * \`envconsul\` version: \`"$(if $(shell which envconsul),$(shell envconsul -once --version)"\`", "not available")
+endef
+
 # convenience function to pretty-print version information when `gcloud` binary is available
 define print_gcloud_version_if_available
 	# expected output: `321.0.0`
@@ -61,6 +67,8 @@ env-info: # Prints Version Information
 
 	# expected output: `Terraform v1.1.1`
 	$(call print_version_if_available,"terraform", "--version")
+
+	$(call print_envconsul_version_if_available)
 
 	$(call print_ansible_version_if_available)
 
