@@ -179,7 +179,7 @@ To dynamically retrieve environment variables such as provider authentication cr
 
 Envconsul expects configuration to be available at [./envconsul.hcl](./envconsul.hcl) and is configured with sane defaults.
 
-To provide connection information and credentials to (HCP) Consul and (HCP) Vault, [direnv](https://direnv.net) may be used. See [./envrc.sample](./envrc.sample) for a sample configuration.
+To provide connection information and credentials to (HCP) Consul and (HCP) Vault, [direnv](https://direnv.net) may be used. See [./.envrc.sample](./.envrc.sample) for a sample configuration.
 
 ## Author Information
 
