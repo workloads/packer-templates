@@ -21,6 +21,7 @@
 - Packer `1.7.8` or newer
 - Terraform `1.1.3` or newer
 - Ansible `2.12.1` or newer
+- direnv `2.30.3` or newer
 
 Ansible is used for system-level operations (e.g.: installing and removing packages).
 
@@ -97,6 +98,11 @@ The following generic build options are available:
 Disables parallelization and enables debug mode.
 See [here](https://www.packer.io/docs/commands/build#debug) for more information.
 
+### `enable-envconsul`
+
+Enables transparent support for [envconsul](https://github.com/hashicorp/envconsul).
+See [here](#envconsul) for more information.
+
 #### `enable-inspec`
 
 Enable the InSpec Provisioner and image validation against included baselines.
@@ -164,6 +170,14 @@ The authors would like to thank the following parties for their inspiration and 
 * [@ansible-community](https://github.com/ansible-community?q=hashicorp)
 * [Mark Lewis](https://github.com/ml4/base)
 * [Mike Nomitch](https://github.com/glenngillen/nomatic-stack)
+
+### envconsul
+
+To dynamically retrieve environment variables such as provider authentication credentials and region information, [envconsul](https://github.com/hashicorp/envconsul) may be used.
+
+Envconsul expects configuration to be available at [./envconsul.hcl](./envconsul.hcl) and is configured with sane defaults.
+
+To provide connection information and credentials to (HCP) Consul and (HCP) Vault, [direnv](https://direnv.net) may be used. See [./envrc.sample](./envrc.sample) for a sample configuration.
 
 ## Author Information
 
