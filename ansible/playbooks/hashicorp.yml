@@ -85,6 +85,7 @@
     comment: "HashiCorp {{ item.name | capitalize }}"
     group: "{{ item.name }}"
     name: "{{ item.name }}"
+    shell: /sbin/nologin.txt
     system: true
   with_items:
     - "{{ hashicorp.packages }}"
@@ -117,7 +118,8 @@
     name: nomad
     system: true
   when:
-    - toggles.hashicorp_enabled.nomad is defined
+    - hashicorp.enabled_products.nomad is defined
+    - hashicorp.enabled_products.nomad is true
     - hashicorp.toggles.create_users
     - hashicorp.toggles.add_nomad_user_to_docker
 
@@ -125,7 +127,7 @@
 - name: Copy Unit Files for HashiCorp Packages
   template:
     dest: "/lib/systemd/system/{{ item.name }}.service"
-    src: "{{ item.name }}.service"
+    src: "units/{{ item.name }}.service"
     mode: "0644"
   with_items:
     - "{{ hashicorp.packages }}"
@@ -142,6 +144,7 @@
   with_items:
     - "{{ hashicorp.packages }}"
   when:
-    - hashicorp.enabled_products[item.name]
+    - hashicorp.enabled_products[item.name] is defined
+    - hashicorp.enabled_products[item.name] is true
     - hashicorp.toggles.enable_services
     - hashicorp.toggles.start_services

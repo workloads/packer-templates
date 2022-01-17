@@ -11,7 +11,7 @@
     - osquery.toggles.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_repository_module.html
-- name: Add APT repository for osquery Packages
+- name: Add APT Repository for osquery Packages
   apt_repository:
     filename: osquery
     repo: "deb [arch=amd64] {{ osquery.repository.url }} deb main"
@@ -36,11 +36,11 @@
     - osquery.toggles.install_packages
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/file_module.html
-- name: delete osquery directories
+- name: Remove osquery Paths
   file:
     path: "{{ item }}"
     state: absent
   with_items:
-    - "{{ osquery.directories }}"
+    - "{{ osquery.paths }}"
   when:
-    - osquery.toggles.remove_directories
+    - osquery.toggles.remove_paths

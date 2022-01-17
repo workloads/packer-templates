@@ -121,6 +121,7 @@ variable "os_type" {
 variable "shared" {
   type = object({
     enable_debug_statements = bool
+    enable_post_validation  = bool
 
     ansible = object({
       ansible_env_vars = list(string)
@@ -210,18 +211,24 @@ variable "shared" {
         to_remove  = list(string)
       })
 
+      shell_helpers = object({
+        destination = string
+        base_url    = string
+        helpers     = list(string)
+      })
+
       toggles = map(bool)
     })
 
     osquery = object({
       enabled = bool
 
-      directories = list(string)
-
       packages = list(object({
         name    = string
         version = string
       }))
+
+      paths = list(string)
 
       repository = object({
         key        = string
@@ -245,6 +252,10 @@ variable "shared" {
       })
 
       toggles = map(bool)
+    })
+
+    prompt = object({
+      enabled = bool
     })
 
     templates = object({

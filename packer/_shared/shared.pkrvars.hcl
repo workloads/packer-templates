@@ -3,6 +3,9 @@ shared = {
   # feature flag to enable debug statements
   enable_debug_statements = true
 
+  # feature flag to enable post validation
+  enable_post_validation = false
+
   ansible = {
     # Environment variables to set before running Ansible
     # When in doubt, edit `ansible/ansible.cfg` instead of `ansible_env_vars`
@@ -103,7 +106,7 @@ shared = {
       },
       { # see https://releases.hashicorp.com/nomad-autoscaler/
         name    = "nomad-autoscaler"
-        version = "0.3.3"
+        version = "0.3.4"
       }
     ]
 
@@ -111,19 +114,19 @@ shared = {
     packages = [
       { # see https://releases.hashicorp.com/boundary/
         name    = "boundary"
-        version = "0.5.0"
+        version = "0.7.3"
       },
       { # see https://releases.hashicorp.com/consul/
         name    = "consul"
-        version = "1.10.1"
+        version = "1.11.1"
       },
       { # see https://releases.hashicorp.com/nomad/
         name    = "nomad"
-        version = "1.1.3"
+        version = "1.2.3"
       },
       { # see https://releases.hashicorp.com/vault/
         name    = "vault"
-        version = "1.8.1"
+        version = "1.9.2"
       }
     ]
 
@@ -214,10 +217,12 @@ shared = {
       # packages that should be installed
       to_install = [
         "apt-transport-https",
+        "auditd",
         "ca-certificates",
-        "curl",
+        "chrony", # see https://chrony.tuxfamily.org
+        "curl",   # see https://curl.se
         "gnupg",
-        "jq",
+        "jq", # see https://stedolan.github.io/jq/
         "libcap2",
         "lsb-release",
         "sudo",
@@ -226,33 +231,54 @@ shared = {
 
       # packages that should be removed
       to_remove = [
-        # see https://packages.ubuntu.com/focal/dosfstools
-        "dosfstools",
+        "dosfstools", # see https://packages.ubuntu.com/focal/dosfstools
         "ftp",
         "fuse",
         "ntfs-3g",
+        "ntp",
         "open-iscsi",
         "pastebinit",
         "snapd",
         "ubuntu-release-upgrader-core"
       ]
+
+      aws = {
+        to_install = [
+          "amazon-ssm-agent"
+        ]
+      }
+    }
+
+    shell_helpers = {
+      destination = "/opt/shell-helpers"
+      base_url    = "https://raw.githubusercontent.com/operatehappy/shell-helpers/main/"
+      helpers = [
+        "colors.sh"
+      ]
     }
 
     # OS-specific feature flags
     toggles = {
+      copy_nologin_file  = true
       copy_versions_file = true
       install_packages   = true
       remove_directories = true
       remove_packages    = true
+      shell_helpers      = true
       update_apt_cache   = true
     }
+  }
+
+  # Prompt-specific settings
+  prompt = {
+    enabled = true
   }
 
   # osquery-specific settings
   osquery = {
     enabled = true
 
-    directories = [
+    paths = [
       "/var/log/osquery",
       "/var/osquery/osquery.db"
     ]
@@ -277,8 +303,8 @@ shared = {
       # install packages for osquery
       install_packages = true
 
-      # remove osquery directories
-      remove_directories = true
+      # remove osquery-specific paths
+      remove_paths = true
     }
   }
 
@@ -311,22 +337,5 @@ shared = {
     # these paths are relative to the Packer Builder target
     configuration = "../_shared/generated-configuration.pkrtpl.yml"
     versions      = "../_shared/image-description.pkrtpl.md"
-  }
-
-  # toggles to enable and disable various operations
-  toggles = {
-    # feature flags for product-specific operations
-    hashicorp_enabled = {
-      boundary = false
-      consul   = true
-      nomad    = true
-      vault    = false
-    }
-
-    # miscellaneous feature flags
-    misc = {
-      # copy files with version information to image
-      copy_versions_files = true
-    }
   }
 }

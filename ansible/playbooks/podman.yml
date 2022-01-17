@@ -18,7 +18,7 @@
     - podman.toggles.add_repository
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_repository_module.html
-- name: Add APT repository for Podman Packages
+- name: Add APT Repository for Podman Packages
   apt_repository:
     filename: podman
     repo: "deb [arch=amd64] {{ apt_repos.podman.url }} stable"

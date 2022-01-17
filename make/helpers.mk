@@ -15,6 +15,14 @@ _clean:
 _gen:
 	open $(generated_dir)
 
+# Fetch and Install Ansible Galaxy Collections and Roles
+.PHONY: _install_ansible_reqs
+_install_ansible_reqs:
+	ansible-galaxy \
+		install \
+			--role-file="ansible/requirements.yml" \
+			--force
+
 # Lints Ansible playbook(s)
 .PHONY: _lint_ansible
 _lint_ansible:
@@ -35,6 +43,8 @@ _lint_ansible:
 	cd $(ansible_playbooks) \
 	&& \
 	ansible-lint \
+		-f "rich" \
+		--progressive \
 		-v \
 		"main.yml"
 

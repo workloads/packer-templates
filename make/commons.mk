@@ -56,25 +56,28 @@ endef
 env-info: # Prints Version Information
 	echo "* Output of \`make env-info\`:"
 
-	# expected output: `1.7.2`
+	# expected output: `1.7.8`
 	$(call print_version_if_available,"packer", "--version")
 
-	# expected output: `Terraform v0.15.1`
+	# expected output: `Terraform v1.1.1`
 	$(call print_version_if_available,"terraform", "--version")
 
 	$(call print_ansible_version_if_available)
 
-	# expected output: `Vagrant 2.2.16`
+	# expected output: `Vagrant 2.2.19`
 	$(call print_version_if_available,"vagrant", "--version")
 
-	# expected output: `6.1.18r142142`
+	# expected output: `6.1.30r142142`
 	$(call print_version_if_available,"vboxmanage", "--version")
 
-	# expected output: `aws-cli/2.1.36 [..]`
+	# expected output: `aws-cli/2.4.10 [..]`
 	$(call print_version_if_available,"aws", "--version")
 
-	# expected output: `4.32.0`
+	# expected output: `4.52.9`
 	$(call print_version_if_available,"inspec", "version")
+
+	# expected output: `2.30.3`
+	$(call print_version_if_available,"direnv", "--version")
 
 	$(call print_az_version_if_available)
 

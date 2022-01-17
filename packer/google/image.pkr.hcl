@@ -1,18 +1,18 @@
 packer {
   # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#version-constraint-syntax
-  required_version = ">= 1.7.4"
+  required_version = ">= 1.7.8"
 
   # see https://www.packer.io/docs/templates/hcl_templates/blocks/packer#specifying-plugin-requirements
   required_plugins {
     # see https://github.com/hashicorp/packer-plugin-googlecompute/releases/
     googlecompute = {
-      version = "1.0.0"
+      version = "1.0.9"
       source  = "github.com/hashicorp/googlecompute"
     }
 
     # see https://github.com/hashicorp/packer-plugin-ansible/releases/
     ansible = {
-      version = "1.0.0"
+      version = "1.0.1"
       source  = "github.com/hashicorp/ansible"
     }
   }

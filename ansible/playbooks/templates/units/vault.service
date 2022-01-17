@@ -1,5 +1,5 @@
 [Unit]
-Description="HashiCorp Vault"
+Description="HashiCorp Vault Server"
 Documentation=https://www.vaultproject.io/docs/
 Requires=network-online.target
 After=network-online.target
@@ -12,10 +12,11 @@ StartLimitBurst=3
 [Service]
 User=vault
 Group=vault
+Environment=GOMAXPROCS=nproc
 ExecStart=/usr/bin/vault server -config=/etc/vault.d/
 ExecReload=/bin/kill --signal HUP $MAINPID
 KillMode=process
-KillSignal=SIGINT
+KillSignal=SIGTERM
 Restart=on-failure
 RestartSec=2
 LimitNOFILE=65536

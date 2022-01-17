@@ -18,9 +18,9 @@
 
 ## Requirements
 
-- Packer `1.7.2` or newer
-- Terraform `0.15.1` or newer
-- Ansible `2.10.7` or newer
+- Packer `1.7.8` or newer
+- Terraform `1.1.3` or newer
+- Ansible `2.12.1` or newer
 
 Ansible is used for system-level operations (e.g.: installing and removing packages).
 
@@ -54,16 +54,17 @@ terraform-init     Initializes Terraform
 
 The [Makefile](Makefile) includes several unsupported helper targets that _may_ be useful when developing in this repository.
 
-| target          | description documentation                          |
-|-----------------|----------------------------------------------------|
-| `_clean`        | (Forcefully) Removes the `generated` directory     |
-| `_gen`          | Opens the `generated` directory (macOS only)       |
-| `_lint_ansible` | Lints Ansible Playbooks using `ansible-lint`       |
-| `_lint_yaml`    | Lints YAML files using `yamllint`                  |
-| `_lint`         | Executes `_lint_yaml`, followed by `_lint_ansible` |
-| `_ssh`          | Executes `vagrant ssh`                             |
-| `_up`           | Executes `vagrant up`                              |
-| `_vb`           | Opens "VirtualBox.app" (macOS only)                |
+| target                  | description                                            |
+|-------------------------|--------------------------------------------------------|
+| `_clean`                | (Forcefully) Removes the `generated` directory         |
+| `_gen`                  | Opens the `generated` directory (macOS only)           |
+| `_install_ansible_reqs` | Fetch and Install Ansible Galaxy Collections and Roles |
+| `_lint_ansible`         | Lints Ansible Playbooks using `ansible-lint`           |
+| `_lint_yaml`            | Lints YAML files using `yamllint`                      |
+| `_lint`                 | Executes `_lint_yaml`, followed by `_lint_ansible`     |
+| `_ssh`                  | Executes `vagrant ssh`                                 |
+| `_up`                   | Executes `vagrant up`                                  |
+| `_vb`                   | Opens "VirtualBox.app" (macOS only)                    |
 
 Unsupported targets are prefixed by an underscore (`_`).
 
@@ -158,7 +159,11 @@ This repository supports the following providers:
 
 This repository takes input and inspiration from a handful of community projects.
 
-The authors would like to thank [@ansible-community](https://github.com/ansible-community?q=hashicorp) and [Mark Lewis](https://github.com/ml4/base) in particular.
+The authors would like to thank the following parties for their inspiration and contributions:
+
+* [@ansible-community](https://github.com/ansible-community?q=hashicorp)
+* [Mark Lewis](https://github.com/ml4/base)
+* [Mike Nomitch](https://github.com/glenngillen/nomatic-stack)
 
 ## Author Information
 
