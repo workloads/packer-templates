@@ -156,12 +156,13 @@ Additional Build Options may be available, depending on the target.
 
 This repository supports the following providers:
 
-| target    | local documentation                                  | Packer Builder  | Terraform Provider |
-|-----------|------------------------------------------------------|-----------------|--------------------|
-| `aws`     | [packer/aws/README.md](packer/aws/README.md)         | `amazon-ebs`    | n/a                |
-| `azure`   | [packer/azure/README.md](packer/azure/README.md)     | `azure-arm`     | `azurerm`          |
-| `google`  | [packer/google/README.md](packer/google/README.md)   | `googlecompute` | `google`           |
-| `vagrant` | [packer/vagrant/README.md](packer/vagrant/README.md) | `vagrant`       | n/a                |
+| target         | local documentation                                            | Packer Builder  | Terraform Provider |
+|----------------|----------------------------------------------------------------|-----------------|--------------------|
+| `aws`          | [packer/aws/README.md](packer/aws/README.md)                   | `amazon-ebs`    | n/a                |
+| `azure`        | [packer/azure/README.md](packer/azure/README.md)               | `azure-arm`     | `azurerm`          |
+| `digitalocean` | [packer/digitalocean/README.md](packer/digitalocean/README.md) | `digitalocean`  | `digitalocean`     |
+| `google`       | [packer/google/README.md](packer/google/README.md)             | `googlecompute` | `google`           |
+| `vagrant`      | [packer/vagrant/README.md](packer/vagrant/README.md)           | `vagrant`       | n/a                |
 
 ## Notes
 
