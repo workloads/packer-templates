@@ -8,6 +8,8 @@ endif
 .PHONY: terraform-plan
 terraform-plan: # Plans prerequisite resources with Terraform
 	$(if $(target),,$(call missing_target))
+	$(envconsul_toggle) \
+	\
 	terraform \
 		-chdir="./terraform/$(target)" \
 		plan \
@@ -15,6 +17,8 @@ terraform-plan: # Plans prerequisite resources with Terraform
 .PHONY: terraform-apply
 terraform-apply: # Creates prerequisite resources with Terraform
 	$(if $(target),,$(call missing_target))
+	$(envconsul_toggle) \
+	\
 	terraform \
 		-chdir="./terraform/$(target)" \
 		apply \
@@ -23,6 +27,8 @@ terraform-apply: # Creates prerequisite resources with Terraform
 .PHONY: terraform-destroy
 terraform-destroy: # Destroys prerequisite resources with Terraform
 	$(if $(target),,$(call missing_target))
+	$(envconsul_toggle) \
+	\
 	terraform \
 		-chdir="./terraform/$(target)" \
 		destroy \
@@ -31,6 +37,8 @@ terraform-destroy: # Destroys prerequisite resources with Terraform
 .PHONY: terraform-init
 terraform-init: # Initializes Terraform
 	$(if $(target),,$(call missing_target))
+	$(envconsul_toggle) \
+	\
 	terraform \
 		-chdir="./terraform/$(target)" \
 		init \

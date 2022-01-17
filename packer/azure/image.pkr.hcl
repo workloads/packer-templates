@@ -6,7 +6,7 @@ packer {
   required_plugins {
     # see https://github.com/hashicorp/packer-plugin-azure/releases/
     azure = {
-      version = "1.0.1"
+      version = "1.0.5"
       source  = "github.com/hashicorp/azure"
     }
 

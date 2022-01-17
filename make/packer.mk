@@ -102,6 +102,8 @@ endif
 .PHONY: build
 build: # Builds an Image with Packer
 	$(if $(target),,$(call missing_target))
+	$(envconsul_toggle) \
+  \
 	packer \
 		build \
 			$(packer_debug) \
