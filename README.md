@@ -27,6 +27,8 @@ Ansible is used for system-level operations (e.g.: installing and removing packa
 
 Terraform is used as a helper, only. It is possible (though not advised) to manually create the resources needed.
 
+Direnv is used as a helper to programmatically load environment variables.
+
 ## Usage
 
 This repository contains Packer templates for multiple providers.
