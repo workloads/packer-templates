@@ -1,7 +1,15 @@
 # configuration
-ansible_playbooks = ./ansible/playbooks
-generated_dir     = ./generated/vagrant
-vagrant_box_name ?= "ubuntu-hashicorp"
+ansible_playbooks  = ./ansible/playbooks
+envconsul_config   = ./envconsul.hcl
+envconsul_loglevel = trace
+generated_dir      = ./generated/vagrant
+vagrant_box_name   ?= "ubuntu-hashicorp"
+
+ifdef enable-envconsul
+envconsul_toggle = envconsul -log-level $(envconsul_loglevel) -config="$(envconsul_config)"
+else
+envconsul_toggle =
+endif
 
 # unsupported helper to remove "generated" directory
 .SILENT .PHONY: _clean
