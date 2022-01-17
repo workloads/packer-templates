@@ -1,12 +1,4 @@
 {
-  "ignorePatterns": [
-    {
-      "pattern": "^https://github.com/operatehappy/packer-hashicorp/issues"
-    },
-    {
-      "pattern": "^https://github.com/operatehappy/packer-hashicorp/graphs/contributors"
-    }
-  ],
   "timeout": "30s",
   "retryOn429": true
 }
