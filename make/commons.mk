@@ -65,7 +65,7 @@ env-info: # Prints Version Information
 	# expected output: `1.7.8`
 	$(call print_version_if_available,"packer", "--version")
 
-	# expected output: `Terraform v1.1.1`
+	# expected output: `Terraform v1.1.5`
 	$(call print_version_if_available,"terraform", "--version")
 
 	$(call print_envconsul_version_if_available)

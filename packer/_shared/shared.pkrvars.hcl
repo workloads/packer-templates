@@ -51,7 +51,7 @@ shared = {
     packages = [
       { # see https://docs.docker.com/engine/release-notes/
         name    = "docker-ce"
-        version = "5:20.10.6*"
+        version = "5:20.10.12*"
       },
       { # see https://github.com/containerd/containerd/releases/
         name    = "containerd.io"
@@ -106,7 +106,7 @@ shared = {
       },
       { # see https://releases.hashicorp.com/nomad-autoscaler/
         name    = "nomad-autoscaler"
-        version = "0.3.4"
+        version = "0.3.5"
       }
     ]
 
@@ -114,19 +114,19 @@ shared = {
     packages = [
       { # see https://releases.hashicorp.com/boundary/
         name    = "boundary"
-        version = "0.7.3"
+        version = "0.7.4"
       },
       { # see https://releases.hashicorp.com/consul/
         name    = "consul"
-        version = "1.11.1"
+        version = "1.11.2"
       },
       { # see https://releases.hashicorp.com/nomad/
         name    = "nomad"
-        version = "1.2.3"
+        version = "1.2.5"
       },
       { # see https://releases.hashicorp.com/vault/
         name    = "vault"
-        version = "1.9.2"
+        version = "1.9.3"
       }
     ]
 
@@ -286,7 +286,7 @@ shared = {
     packages = [
       { # see https://osquery.io/downloads/official/
         name    = "osquery"
-        version = "4.9.0"
+        version = "5.1.0"
       }
     ]
 
@@ -315,7 +315,7 @@ shared = {
     packages = [
       { # see https://podman.io/releases/
         name    = "podman"
-        version = "3.2.3"
+        version = "3.3.0"
       }
     ]
 
