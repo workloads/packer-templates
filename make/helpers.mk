@@ -23,17 +23,16 @@ _clean:
 _gen:
 	open $(generated_dir)
 
-# Fetch and Install Ansible Galaxy Collections and Roles
-.PHONY: _install_ansible_reqs
-_install_ansible_reqs:
+.PHONY: ansible-init
+ansible-init: # Fetch and Install Ansible Galaxy Collections and Roles
 	ansible-galaxy \
 		install \
 			--role-file="ansible/requirements.yml" \
 			--force
 
 # Lints Ansible playbook(s)
-.PHONY: _lint_ansible
-_lint_ansible:
+.PHONY: ansible-lint
+ansible-lint:
 	$(if $(target),,$(call missing_target))
 # run minimal Packer build to generate Ansible configuration files
 	packer \
@@ -57,14 +56,14 @@ _lint_ansible:
 		"main.yml"
 
 # Lints YAML files
-.PHONY: _lint_yaml
-_lint_yaml:
+.PHONY: yaml-lint
+yaml-lint:
 	yamllint \
 		--config-file ".yamllint" \
 		"."
 
 .PHONY: _lint
-_lint: _lint_yaml _lint_ansible
+_lint: yaml-lint ansible-lint
 
 # unsupported helper to execute `vagrant ssh`
 .SILENT .PHONY: _ssh
