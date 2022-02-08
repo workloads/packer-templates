@@ -62,7 +62,7 @@ endef
 env-info: # Prints Version Information
 	echo "* Output of \`make env-info\`:"
 
-	# expected output: `1.7.8`
+	# expected output: `1.7.10`
 	$(call print_version_if_available,"packer", "--version")
 
 	# expected output: `Terraform v1.1.5`

@@ -18,8 +18,7 @@
 
 ## Requirements
 
-- Packer `1.7.8` or newer
-- Terraform `1.1.4` or newer
+- Packer `1.7.10` or newer
 - Terraform `1.1.5` or newer
 - Ansible `2.12.1` or newer
 - (optionally) direnv `2.30.3` or newer
