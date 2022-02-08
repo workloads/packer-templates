@@ -51,6 +51,8 @@ terraform-plan     Plans prerequisite resources with Terraform
 terraform-apply    Creates prerequisite resources with Terraform
 terraform-destroy  Destroys prerequisite resources with Terraform
 terraform-init     Initializes Terraform
+terraform-lint     Formats and validates Terraform
+ansible-init       Fetch and Install Ansible Galaxy Collections and Roles
 ```
 
 ### Helpers
