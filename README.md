@@ -4,17 +4,29 @@
 
 ## Table of Contents
 
-- [Packer Templates: HashiCorp Products](#packer-templates-hashicorp-products)
-  - [Table of Contents](#table-of-contents)
-  - [Requirements](#requirements)
-  - [Usage](#usage)
-    - [Helpers](#helpers)
-    - [Workflow](#workflow)
-    - [Build Options](#build-options)
-    - [Supported Providers](#supported-providers)
-  - [Notes](#notes)
-  - [Author Information](#author-information)
-  - [License](#license)
+<!-- TOC -->
+* [Packer Templates: HashiCorp Products](#packer-templates--hashicorp-products)
+  * [Table of Contents](#table-of-contents)
+  * [Requirements](#requirements)
+  * [Usage](#usage)
+    * [Helpers](#helpers)
+    * [Workflow](#workflow)
+    * [Build Options](#build-options)
+      * [`debug`](#debug)
+      * [`enable-inspec`](#enable-inspec)
+      * [`except`](#except)
+      * [`force`](#force)
+      * [`machine-readable`](#machine-readable)
+      * [`only`](#only)
+      * [`on-error`](#on-error)
+      * [`parallel-builds`](#parallel-builds)
+      * [`timestamp-ui`](#timestamp-ui)
+      * [`var-file`](#var-file)
+    * [Supported Providers](#supported-providers)
+  * [Notes](#notes)
+  * [Author Information](#author-information)
+  * [License](#license)
+<!-- TOC -->
 
 ## Requirements
 
@@ -100,11 +112,6 @@ The following generic build options are available:
 Disables parallelization and enables debug mode.
 See [here](https://www.packer.io/docs/commands/build#debug) for more information.
 
-### `enable-envconsul`
-
-Enables transparent support for [envconsul](https://github.com/hashicorp/envconsul).
-See [here](#envconsul) for more information.
-
 #### `enable-inspec`
 
 Enable the InSpec Provisioner and image validation against included baselines.
@@ -173,17 +180,9 @@ The authors would like to thank the following parties for their inspiration and 
 * [Mark Lewis](https://github.com/ml4/base)
 * [Mike Nomitch](https://github.com/glenngillen/nomatic-stack)
 
-### envconsul
-
-To dynamically retrieve environment variables such as provider authentication credentials and region information, [envconsul](https://github.com/hashicorp/envconsul) may be used.
-
-Envconsul expects configuration to be available at [./envconsul.hcl](./envconsul.hcl) and is configured with sane defaults.
-
-To provide connection information and credentials to (HCP) Consul and (HCP) Vault, [direnv](https://direnv.net) may be used. See [./.envrc.sample](./.envrc.sample) for a sample configuration.
-
 ## Author Information
 
-This repository is maintained by the contributors listed on [GitHub](https://github.com/operatehappy/packer-hashicorp/graphs/contributors).
+This repository is maintained by the contributors listed on [GitHub](https://github.com/workloads/packer-images/graphs/contributors).
 
 ## License
 
