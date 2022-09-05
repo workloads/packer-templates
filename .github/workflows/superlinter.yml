@@ -36,4 +36,5 @@ jobs:
           VALIDATE_MARKDOWN: true
           VALIDATE_SHELL_SHFMT: true
           VALIDATE_TERRAFORM: true
+          VALIDATE_TERRAFORM_TFLINT: true
           VALIDATE_YAML: true
