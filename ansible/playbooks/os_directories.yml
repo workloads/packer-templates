@@ -11,7 +11,7 @@
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
 - name: Create (generic) Directories
   ansible.builtin.file:
-    name: "{{ os.directories.Linux.to_install }}"
+    name: "{{ os.directories.Linux.to_create }}"
     state: present
   when:
     - ansible_os_family == "Amazon"
@@ -33,14 +33,14 @@
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
 - name: Create (distribution-specific) Directories
   ansible.builtin.file:
-    name: "{{ os.directories[ansible_os_family].to_install }}"
+    name: "{{ os.directories[ansible_os_family].to_create }}"
     state: absent
   when:
     - ansible_os_family == "Amazon"
       or ansible_os_family == "Debian"
       or ansible_os_family == "RedHat"
     - os.toggles.create_directories
-    - os.directories.to_install[ansible_os_family] is defined
+    - os.directories.to_create[ansible_os_family] is defined
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
 - name: Remove (distribution-specific) Directories
