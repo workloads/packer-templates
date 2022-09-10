@@ -1,6 +1,6 @@
 ---
 
-# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/debug_module.html
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
 - name: debug
   ansible.builtin.debug:
     msg: "included os_packages.yml"
