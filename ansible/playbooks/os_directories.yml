@@ -1,7 +1,7 @@
 ---
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
-- name: debug
+- name: Debug
   ansible.builtin.debug:
     msg: "included os_packages.yml"
   when:
@@ -13,6 +13,7 @@
   ansible.builtin.file:
     name: "{{ os.directories.Linux.to_create }}"
     state: directory
+    mode: "0644"
   when:
     - ansible_os_family == "Amazon"
       or ansible_os_family == "Debian"
@@ -24,6 +25,7 @@
   ansible.builtin.file:
     name: "{{ os.directories[ansible_os_family].to_create }}"
     state: directory
+    mode: "0644"
   when:
     - ansible_os_family == "Amazon"
       or ansible_os_family == "Debian"

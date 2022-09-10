@@ -33,6 +33,9 @@ _lint_yaml:
 		--config-file ".yaml-lint.yml" \
 		.
 
+.PHONY: _lint
+_lint: _lint_yaml _lint_ansible
+
 # unsupported helper to open "VirtualBox.app" (macOS only)
 .SILENT .PHONY: _vb
 _vb:
