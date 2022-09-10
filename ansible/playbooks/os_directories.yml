@@ -12,35 +12,24 @@
 - name: Create (generic) Directories
   ansible.builtin.file:
     name: "{{ os.directories.Linux.to_create }}"
-    state: present
+    state: directory
   when:
     - ansible_os_family == "Amazon"
       or ansible_os_family == "Debian"
       or ansible_os_family == "RedHat"
     - os.toggles.create_directories
-
-# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
-- name: Remove (generic) Directories
-  ansible.builtin.file:
-    name: "{{ os.directories.Linux.to_remove }}"
-    state: absent
-  when:
-    - ansible_os_family == "Amazon"
-      or ansible_os_family == "Debian"
-      or ansible_os_family == "RedHat"
-    - os.toggles.remove_directories
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
 - name: Create (distribution-specific) Directories
   ansible.builtin.file:
     name: "{{ os.directories[ansible_os_family].to_create }}"
-    state: absent
+    state: directory
   when:
     - ansible_os_family == "Amazon"
       or ansible_os_family == "Debian"
       or ansible_os_family == "RedHat"
     - os.toggles.create_directories
-    - os.directories.to_create[ansible_os_family] is defined
+    - os.directories is defined and os.directories[ansible_os_family] is defined
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
 - name: Remove (distribution-specific) Directories
@@ -52,4 +41,4 @@
       or ansible_os_family == "Debian"
       or ansible_os_family == "RedHat"
     - os.toggles.remove_directories
-    - os.directories.to_remove[ansible_os_family] is defined
+    - os.directories is defined and os.directories[ansible_os_family] is defined

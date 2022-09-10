@@ -9,14 +9,13 @@
     - enable_debug_statements
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
-- name: Remove Extraneous Directories
+- name: Remove (generic) Directories
   ansible.builtin.file:
-    path: "{{ item }}"
+    name: "{{ os.directories.Linux.to_remove }}"
     state: absent
-  with_items:
-    - "{{ os.directories.ansible }}"
-    - "{{ os.directories.to_remove }}"
   when:
+    - ansible_os_family == "Amazon"
+      or ansible_os_family == "Debian"
+      or ansible_os_family == "RedHat"
     - post_cleanup is defined and post_cleanup.enabled
-    - os is defined and os.enabled
     - os.toggles.remove_directories
