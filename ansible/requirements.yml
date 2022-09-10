@@ -1,11 +1,38 @@
 ---
 
-collections:
-  # see https://galaxy.ansible.com/devsec/hardening
-  - name: devsec.hardening
-    version: "7.9.0"
-
+# see https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html
 roles:
-  # see https://galaxy.ansible.com/naftulikay/degoss
-  - name: naftulikay.degoss
-    version: "v3.1.0"
+  - # CIS-based role for Amazon Linux 2
+    # see https://github.com/ansible-lockdown/AMAZON2-CIS
+    name: ansible-lockdown.amazon2_cis
+    src: git@github.com:ansible-lockdown/AMAZON2-CIS.git
+    scm: git
+    version: "1.0.0" # see https://github.com/ansible-lockdown/AMAZON2-CIS/releases
+
+  - # CIS-based role for RHEL 8
+    # see https://galaxy.ansible.com/MindPointGroup/rhel8_cis
+    name: ansible-lockdown.rhel8_cis
+    src: git@github.com:ansible-lockdown/RHEL8-CIS.git
+    scm: git
+    version: "2.1.0" # see https://github.com/ansible-lockdown/RHEL8-CIS/releases
+
+  - # CIS-based role for Ubuntu 22.04
+    # see https://github.com/ansible-lockdown/UBUNTU22-CIS
+    name: ansible-lockdown.ubuntu22_cis
+    src: git@github.com:ansible-lockdown/UBUNTU22-CIS.git
+    scm: git
+    version: "main" # see https://github.com/ansible-lockdown/UBUNTU22-CIS/releases
+
+  - # CIS-based role for Windows Server 2019
+    # see https://galaxy.ansible.com/MindPointGroup/windows_2019_cis
+    name: ansible-lockdown.windows_2019_cis
+    src: git@github.com:ansible-lockdown/Windows-2019-CIS.git
+    scm: git
+    version: "1.1.1" # see https://github.com/ansible-lockdown/Windows-2019-CIS/releases
+
+  - # CIS-based role for Windows Server 2022
+    # see https://galaxy.ansible.com/MindPointGroup/windows_2022_cis
+    name: ansible-lockdown.windows_2022_cis
+    src: git@github.com:ansible-lockdown/Windows-2022-CIS.git
+    scm: git
+    version: "main" # see https://github.com/ansible-lockdown/Windows-2022-CIS/releases
