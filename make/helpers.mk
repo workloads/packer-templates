@@ -33,13 +33,6 @@ _lint_yaml:
 		--config-file ".yaml-lint.yml" \
 		.
 
-# unsupported helper to execute `vagrant up`
-.SILENT .PHONY: _up
-_up:
-	cd $(dist_dir) \
-	&& \
-	vagrant up
-
 # unsupported helper to open "VirtualBox.app" (macOS only)
 .SILENT .PHONY: _vb
 _vb:

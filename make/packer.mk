@@ -26,7 +26,7 @@ endif
 
 # see https://www.packer.io/docs/commands/init
 .PHONY: init
-init: # Installs and upgrades Packer Plugins      Usage: `make init target=<provider> os=<os>`
+init: # Installs and upgrades Packer Plugins      Usage: `make init target=<target> os=<os> os=<os>`
 	$(if $(target),,$(call missing_target))
 	$(if $(os),,$(call missing_os))
 	packer \
@@ -42,7 +42,7 @@ init: # Installs and upgrades Packer Plugins      Usage: `make init target=<prov
 
 # see https://www.packer.io/docs/commands/build
 .PHONY: build
-build: # Builds an Image with Packer               Usage: `make build target=<provider>`
+build: # Builds an Image with Packer               Usage: `make build target=<target> os=<os>`
 	$(if $(target),,$(call missing_target))
 	$(if $(os),,$(call missing_os))
 	packer \
@@ -58,7 +58,7 @@ build: # Builds an Image with Packer               Usage: `make build target=<pr
 # see https://www.packer.io/docs/commands/fmt
 # and https://www.packer.io/docs/commands/validate
 .PHONY: lint
-lint: # Formats and validates Packer Template     Usage: `make lint target=<provider>`
+lint: # Formats and validates Packer Template     Usage: `make lint target=<target> os=<os>`
 	$(if $(target),,$(call missing_target))
 	$(if $(os),,$(call missing_os))
 	packer \
