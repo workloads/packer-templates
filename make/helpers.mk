@@ -1,82 +1,42 @@
-# configuration
-ansible_playbooks  = ./ansible/playbooks
-envconsul_config   = ./envconsul.hcl
-envconsul_loglevel = trace
-generated_dir      = ./generated/vagrant
-vagrant_box_name   ?= "ubuntu-hashicorp"
+# convenience function to alert user to missing target
+define missing_target
+	$(error Missing target. Specify with `target=<target>`)
+endef
 
-ifdef enable-envconsul
-envconsul_toggle = envconsul -log-level $(envconsul_loglevel) -config="$(envconsul_config)"
-else
-envconsul_toggle =
-endif
+# convenience function to alert user to missing os
+define missing_os
+	$(error Missing OS. Specify with `os=<os>`)
+endef
 
-# unsupported helper to remove "generated" directory
-.SILENT .PHONY: _clean
-_clean:
+.SILENT .PHONY: clean
+clean: # Remove "distributables" directory
 	rm \
  		-rf \
- 		$(generated_dir)
+ 		$(dist_dir)/
 
-# unsupported helper to open "generated" directory
-.SILENT .PHONY: _gen
-_gen:
-	open $(generated_dir)
-
-# Fetch and Install Ansible Galaxy Collections and Roles
-.PHONY: _install_ansible_reqs
-_install_ansible_reqs:
+.PHONY: roles
+roles: # Install Ansible Collections and Roles
 	ansible-galaxy \
 		install \
-			--role-file="ansible/requirements.yml" \
+			--role-file "ansible/requirements.yml" \
 			--force
 
-# Lints Ansible playbook(s)
-.PHONY: _lint_ansible
-_lint_ansible:
-	$(if $(target),,$(call missing_target))
-# run minimal Packer build to generate Ansible configuration files
-	packer \
-		build \
-			$(packer_debug) \
-			-only "*.file.image_configuration" \
-			-force \
-			$(packer_machine_readable) \
-			$(packer_timestamp_ui) \
-			$(packer_var_target) \
-			$(packer_shared_var_file) \
-			$(packer_var_file) \
-			"./packer/$(target)" \
-	&& \
-	cd $(ansible_playbooks) \
-	&& \
-	ansible-lint \
-		-f "rich" \
-		--progressive \
-		-v \
-		"main.yml"
+# unsupported helper to open "distributables" directory
+.SILENT .PHONY: _dist
+_dist:
+	open $(dist_dir)
 
 # Lints YAML files
 .PHONY: _lint_yaml
 _lint_yaml:
 	yamllint \
-		--config-file ".yamllint" \
-		"."
-
-.PHONY: _lint
-_lint: _lint_yaml _lint_ansible
-
-# unsupported helper to execute `vagrant ssh`
-.SILENT .PHONY: _ssh
-_ssh:
-	cd $(generated_dir) \
-	&& \
-	vagrant ssh $(vagrant_box_name)
+		--config-file ".yaml-lint.yml" \
+		.
 
 # unsupported helper to execute `vagrant up`
 .SILENT .PHONY: _up
 _up:
-	cd $(generated_dir) \
+	cd $(dist_dir) \
 	&& \
 	vagrant up
 

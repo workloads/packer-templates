@@ -1,153 +1,84 @@
-# configuration for Packer-specific variables
-
-# Debug mode enabled for builds.
-debug ?=
-
-ifdef debug
-packer_debug = -debug
-else
-packer_debug =
-endif
-
-# Toggle to enable the InSpec provisioner
-ifdef enable-inspec
-except_inspec =
-else
-except_inspec = provisioner.inspec
-endif
-
-# Toggle to enable the Vagrant Cloud post-processor
-ifdef enable-vagrant-cloud
-
-# Verify that the current target is Vagrant
-ifneq ($(target),vagrant)
-$(error Vagrant Cloud post-processing support can only be enabled for Vagrant builds)
-endif
-
-except_vagrant_cloud =
-else
-except_vagrant_cloud = vagrant-cloud
-endif
-
-# Run all builds and post-processors other than these.
-except ?=
-
-ifdef except
-packer_except = -except="$(except), $(except_vagrant_cloud), $(except_inspec)"
-else
-packer_except = -except="$(except_vagrant_cloud), $(except_inspec)"
-endif
-
-# Force a build to continue if artifacts exist, deletes existing artifacts.
-ifdef force
-packer_force = -force
-else
-packer_force =
-endif
-
-# Ignore the shared variables file
-ifndef ignore-shared-vars
-packer_shared_var_file = -var-file="./packer/_shared/shared.pkrvars.hcl"
-else
-packer_shared_var_file =
-endif
-
-# Produce machine-readable output.
-ifdef machine-readable
-packer_machine_readable = -machine-readable
-else
-packer_machine_readable =
-endif
-
-# Build only the specified builds.
-only ?=
-
-ifdef only
-packer_only = -only=$(only)
-else
-packer_only =
-endif
-
-# If the build fails do: clean up (default), abort, ask, or run-cleanup-provisioner.
-ifdef on-error
-packer_on_error = -on-error=$(on-error)
-else
-packer_on_error = -on-error=cleanup
-endif
-
-# Number of builds to run in parallel. 1 disables parallelization. 0 means no limit
-ifdef parallel-builds
-packer_parallel_builds = -parallel-builds=$(parallel-builds)
-else
-packer_parallel_builds = -parallel-builds=0
-endif
-
-# Enable prefixing of each ui output with an RFC3339 timestamp.
-ifdef timestamp-ui
-packer_timestamp_ui = -timestamp-ui
-else
-packer_timestamp_ui =
-endif
-
 # expose build target to Packer
-packer_var_target = -var "target=$(target)"
+arg_var_dist_dir = -var "dist_dir=$(dist_dir)"
+arg_var_os       = -var "os=$(os)"
+arg_var_target   = -var "target=$(target)"
 
-ifdef var-file
-packer_var_file = -var-file=$(var-file)
+# enable debug mode for builds
+ifdef debug
+arg_debug = -debug
 else
-packer_var_file =
+arg_debug =
 endif
 
-# see https://www.packer.io/docs/commands/build
-.PHONY: build
-build: # Builds an Image with Packer
-	$(if $(target),,$(call missing_target))
-	$(envconsul_toggle) \
-  \
-	packer \
-		build \
-			$(packer_debug) \
-			$(packer_except) \
-			$(packer_only) \
-			$(packer_force) \
-			$(packer_machine_readable) \
-			$(packer_on_error) \
-			$(packer_parallel_builds) \
-			$(packer_timestamp_ui) \
-			$(packer_var_target) \
-			$(packer_shared_var_file) \
-			$(packer_var_file) \
-			"./packer/$(target)"
+# force a build to continue if artifacts exist, deletes existing artifacts.
+ifdef force
+arg_force = -force
+else
+arg_force =
+endif
+
+# produce machine-readable output.
+ifdef machine-readable
+arg_machine_readable = -machine-readable
+else
+arg_machine_readable =
+endif
 
 # see https://www.packer.io/docs/commands/init
 .PHONY: init
-init: # Installs and upgrades Packer Plugins
+init: # Installs and upgrades Packer Plugins      Usage: `make init target=<provider> os=<os>`
 	$(if $(target),,$(call missing_target))
+	$(if $(os),,$(call missing_os))
 	packer \
 		init \
 			-upgrade \
-			"./packer/$(target)"
+			$(arg_debug) \
+			$(arg_force) \
+			$(arg_machine_readable) \
+			$(arg_var_dist_dir) \
+			$(arg_var_os) \
+      $(arg_var_target) \
+			"$(packer_dir)/$(target)"
+
+# see https://www.packer.io/docs/commands/build
+.PHONY: build
+build: # Builds an Image with Packer               Usage: `make build target=<provider>`
+	$(if $(target),,$(call missing_target))
+	$(if $(os),,$(call missing_os))
+	packer \
+		build \
+			$(arg_debug) \
+			$(arg_force) \
+			$(arg_machine_readable) \
+			$(arg_var_dist_dir) \
+			$(arg_var_os) \
+      $(arg_var_target) \
+			"$(packer_dir)/$(target)"
 
 # see https://www.packer.io/docs/commands/fmt
 # and https://www.packer.io/docs/commands/validate
 .PHONY: lint
-lint: # Formats and validates Packer Template
+lint: # Formats and validates Packer Template     Usage: `make lint target=<provider>`
 	$(if $(target),,$(call missing_target))
+	$(if $(os),,$(call missing_os))
 	packer \
 		fmt \
-			-recursive \
-			"./packer/_shared/" \
-	&& \
-	packer \
-		fmt \
-			-recursive \
-			"./packer/$(target)" \
+			$(arg_debug) \
+			$(arg_force) \
+			$(arg_machine_readable) \
+			$(arg_var_dist_dir) \
+			$(arg_var_os) \
+      $(arg_var_target) \
+      -diff \
+      -recursive \
+			"$(packer_dir)/$(target)/" \
 	&& \
 	packer \
 		validate \
-			$(packer_except) \
-			$(packer_only) \
-			$(packer_var_target) \
-			$(packer_shared_var_file) \
-			$(packer_var_file) \
-			"./packer/$(target)"
+			$(arg_debug) \
+			$(arg_force) \
+			$(arg_machine_readable) \
+			$(arg_var_dist_dir) \
+			$(arg_var_os) \
+      $(arg_var_target) \
+			"$(packer_dir)/$(target)/"

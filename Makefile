@@ -6,6 +6,12 @@ SHELL         := sh
 .ONESHELL     :
 .SHELLFLAGS   := -eu -c
 
+color_off    = $(shell tput sgr0)
+color_bright = $(shell tput bold)
+
+dist_dir     = dist
+packer_dir   = packer
+
 # Specify files in the order they should be loaded
 # This allows for a more logical `help` experience
 
