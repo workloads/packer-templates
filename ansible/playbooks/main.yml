@@ -1,87 +1,64 @@
 ---
 
-- name: "Provision Packer Image for Target `{{ build_target }}`"
+- name: "Provision Packer Image for Target `{{ packer_builder_type }}`"
   hosts: default
   become: true
   vars:
-    ansible_required_version: "2.11.3"
-
-    # `os_hardening` specific configuration, see https://github.com/dev-sec/ansible-collection-hardening/tree/master/roles/os_hardening
-    os_auditd_enabled: false
+    ansible_required_version: "2.13.3"
 
   vars_files:
-    - "../../generated/generated-configuration.yml"
+    - "{{ configuration }}"
 
   pre_tasks:
-    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/fail_module.html
+    # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fail_module.html
     - name: Verify Ansible Version meets requirements
-      fail:
+      ansible.builtin.fail:
         msg: "Need v{{ ansible_required_version }}, got v{{ ansible_version.full }}"
       when: ansible_version.full < ansible_required_version
 
     # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/debug_module.html
     - name: Print `ansible_env`
-      debug:
+      ansible.builtin.debug:
         var: ansible_env
       when:
         - enable_debug_statements is defined
         - enable_debug_statements
 
-  collections:
-    # see https://github.com/dev-sec/ansible-collection-hardening/
-    - devsec.hardening
+    # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
+    - name: Print `ansible_facts`
+      ansible.builtin.debug:
+        var: ansible_facts
+      when:
+        - enable_debug_statements is defined
+        - enable_debug_statements
+        - enable_facts_statement
 
   roles:
-    # see https://github.com/dev-sec/ansible-collection-hardening/tree/master/roles/os_hardening
-    - os_hardening
-
-    # see https://github.com/dev-sec/ansible-collection-hardening/tree/master/roles/ssh_hardening
-    # SSH hardening must be omitted when in a Vagrant context
-    - role: ssh_hardening
-      when: build_target != "vagrant"
+    - role: ansible-lockdown.ubuntu22_cis
+      when:
+        # see https://releases.ubuntu.com/22.04/
+        ansible_distribution == 'Ubuntu'
+        and ansible_distribution_release == 'jammy'
+        and enable_cis_hardening == true
 
   tasks:
-    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
+    # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
     - name: Manage OS Operations
-      include: os.yml
+      ansible.builtin.include_tasks:
+        file: os.yml
       when:
-        - os.enabled
+        - os is defined and os.enabled
 
-    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
-    - name: Manage Prompt Operations
-      include: prompt.yml
+    # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
+    - name: Manage CLI Prompt Operations
+      ansible.builtin.include_tasks:
+        file: prompt.yml
       when:
-        - prompt.enabled
+        - prompt is defined and prompt.enabled
 
-    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
-    - name: Manage Docker Operations
-      include: docker.yml
-      when:
-        - docker.enabled
-
-    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
-    - name: Manage Podman Operations
-      include: podman.yml
-      when:
-        - podman.enabled
-
-    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
-    - name: Manage HashiCorp Operations
-      include: hashicorp.yml
-      when:
-        - hashicorp.enabled
-
-    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
-    - name: Manage osquery Operations
-      include: osquery.yml
-      when:
-        - osquery.enabled
-
-  post_tasks:
-    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
-    - name: Manage Validation Operations
-      include: post_validation.yml
-
-    # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/include_module.html
+    # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
     - name: Manage Cleanup Tasks
-      include: post_cleanup.yml
+      ansible.builtin.include_tasks:
+        file: post_cleanup.yml
+      when:
+        - post_cleanup is defined and post_cleanup.enabled
