@@ -2,19 +2,21 @@
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/debug_module.html
 - name: debug
-  debug:
+  ansible.builtin.debug:
     msg: "included post_cleanup.yml"
   when:
     - enable_debug_statements is defined
     - enable_debug_statements
 
-# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/file_module.html
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
 - name: Remove Extraneous Directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   with_items:
     - "{{ os.directories.ansible }}"
     - "{{ os.directories.to_remove }}"
   when:
+    - post_cleanup is defined and post_cleanup.enabled
+    - os is defined and os.enabled
     - os.toggles.remove_directories

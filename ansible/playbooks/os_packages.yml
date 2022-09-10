@@ -1,0 +1,75 @@
+---
+
+# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/debug_module.html
+- name: debug
+  ansible.builtin.debug:
+    msg: "included os_packages.yml"
+  when:
+    - enable_debug_statements is defined
+    - enable_debug_statements
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
+- name: Update and Clean Apt Cache
+  ansible.builtin.apt:
+    autoclean: true
+    autoremove: true
+    update_cache: true
+  when:
+    - ansible_os_family == "Debian"
+    - os.toggles.update_apt_cache
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/yum_module.html
+- name: Update and Clean Yum Cache
+  ansible.builtin.yum:
+    autoremove: true
+    update_cache: true
+  when:
+    - ansible_os_family == "Amazon"
+      or ansible_os_family == "RedHat"
+    - os.toggles.update_yum_cache
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_module.html
+- name: Install (generic) Linux Packages
+  ansible.builtin.package:
+    name: "{{ os.packages.Linux.to_install }}"
+    state: present
+  when:
+    - ansible_os_family == "Amazon"
+      or ansible_os_family == "Debian"
+      or ansible_os_family == "RedHat"
+    - os.toggles.install_packages
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_module.html
+- name: Remove (generic) Linux Packages
+  ansible.builtin.package:
+    name: "{{ os.packages.Linux.to_remove }}"
+    state: absent
+  when:
+    - ansible_os_family == "Amazon"
+      or ansible_os_family == "Debian"
+      or ansible_os_family == "RedHat"
+    - os.toggles.remove_packages
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_module.html
+- name: Install (distribution-specific) Linux Packages
+  ansible.builtin.package:
+    name: "{{ os.packages[ansible_os_family].to_install }}"
+    state: absent
+  when:
+    - ansible_os_family == "Amazon"
+      or ansible_os_family == "Debian"
+      or ansible_os_family == "RedHat"
+    - os.toggles.install_packages
+    - os.packages.to_install[ansible_os_family] is defined
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_module.html
+- name: Remove (distribution-specific) Linux Packages
+  ansible.builtin.package:
+    name: "{{ os.packages[ansible_os_family].to_remove }}"
+    state: absent
+  when:
+    - ansible_os_family == "Amazon"
+      or ansible_os_family == "Debian"
+      or ansible_os_family == "RedHat"
+    - os.toggles.remove_packages
+    - os.packages.to_remove[ansible_os_family] is defined

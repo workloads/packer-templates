@@ -2,99 +2,31 @@
 
 # see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/debug_module.html
 - name: debug
-  debug:
+  ansible.builtin.debug:
     msg: "included os.yml"
   when:
     - enable_debug_statements is defined
     - enable_debug_statements
 
-# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/file_module.html
-- name: Create Temporary Ansible Directory
-  file:
-    path: "{{ item }}"
-    mode: "0644"
-    state: directory
-  with_items:
-    - "{{ os.directories.ansible }}"
-
-# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/apt_module.html
-- name: Update APT Cache
-  apt:
-    force_apt_get: true
-    update_cache: true
-    upgrade: "yes"
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
+- name: Manage OS Package Operations
+  ansible.builtin.include_tasks:
+    file: os_packages.yml
   when:
-    - ansible_os_family == "Debian"
-    - os.toggles.update_apt_cache
+    - os is defined and os.enabled
 
-# see https://docs.ansible.com/ansible/2.10/modules/package_module.html
-- name: Install Generic Packages
-  apt:
-    force_apt_get: true
-    name: "{{ os.packages.to_install }}"
-    state: present
-    update_cache: true
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
+- name: Manage OS Directories Operations
+  ansible.builtin.include_tasks:
+    file: os_directories.yml
   when:
-    - os.packages.to_install is defined
-    - ansible_os_family == "Debian"
-    - os.toggles.install_packages
+    - os is defined and os.enabled
 
-# see https://docs.ansible.com/ansible/2.10/modules/package_module.html
-- name: Remove Generic Packages
-  apt:
-    autoclean: true
-    autoremove: true
-    force_apt_get: true
-    name: "{{ os.packages.to_remove }}"
-    state: absent
-    update_cache: true
-  when:
-    - ansible_os_family == "Debian"
-    - os.toggles.remove_packages
-
-# see https://docs.ansible.com/ansible/2.10/modules/package_module.html
-- name: Install Target-specific Packages for `{{ build_target }}`
-  apt:
-    force_apt_get: true
-    name: "{{ packages[build_target].to_install }}"
-    state: present
-    update_cache: true
-  when:
-    - os.packages[build_target] is defined
-    - os.packages[build_target].to_install is defined
-    - os.toggles.install_packages[build_target]
-
-# see https://docs.ansible.com/ansible/2.10/modules/package_module.html
-- name: Remove Target-specific Packages for `{{ build_target }}`
-  apt:
-    autoclean: true
-    autoremove: true
-    force_apt_get: true
-    name: "{{ packages[build_target].to_remove }}"
-    state: absent
-    update_cache: true
-  when:
-    - os.packages[build_target] is defined
-    - os.packages[build_target].to_remove is defined
-    - os.toggles.remove_packages[build_target]
-
-# see https://docs.ansible.com/ansible/2.10/collections/ansible/builtin/template_module.html
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html
 - name: Copy `nologin` Message File
-  template:
+  ansible.builtin.template:
     dest: "/etc/nologin"
     src: "nologin.txt"
     mode: "0644"
   when:
     - os.toggles.copy_nologin_file
-
-# see https://docs.ansible.com/ansible/2.10/modules/copy_module.html
-# TODO: fix the `src` in a better way
-- name: Copy Image Information Files
-  copy:
-    backup: false
-    dest: "/tmp"
-    force: true
-    mode: "0644"
-    src: "../../{{ generated_files.versions }}"
-  when:
-    - os.toggles.copy_versions_file
