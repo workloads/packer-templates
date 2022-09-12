@@ -7,7 +7,7 @@
     ansible_required_version: "2.13.3"
 
   vars_files:
-    - "{{ configuration }}"
+    - "{{ ConfigFile }}"
 
   pre_tasks:
     # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fail_module.html
