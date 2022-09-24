@@ -17,8 +17,7 @@ packer {
 }
 
 locals {
-  box_name    = "${var.os}-${var.target}"
-  box_tag     = "${var.vagrant_cloud_organization}/${local.box_name}"
+  box_tag     = "${var.vagrant_cloud_organization}/${local.image.name}"
   box_version = local.sources[var.os][var.target].source.version
 }
 
@@ -28,7 +27,7 @@ source "vagrant" "virtualbox" {
   # for all options see: https://developer.hashicorp.com/packer/plugins/builders/vagrant#optional
 
   add_force                    = var.add_force
-  box_name                     = local.box_name
+  box_name                     = local.image.name
   box_version                  = local.box_version
   checksum                     = local.sources[var.os][var.target].source.checksum
   communicator                 = "ssh"
@@ -43,11 +42,12 @@ source "vagrant" "virtualbox" {
   template        = "./packer/${var.target}/Vagrantfile"
 }
 
+# see https://developer.hashicorp.com/packer/docs/templates/hcl_templates/blocks/build
 build {
   name = "1-provisioners"
 
   sources = [
-    "source.vagrant.template"
+    "source.vagrant.virtualbox",
   ]
 
   # see https://developer.hashicorp.com/packer/plugins/provisioners/ansible/ansible

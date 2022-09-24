@@ -1,9 +1,8 @@
-# Image `${name}`
+# Image `${image.name}` (`v${image.version}`)
 
 This image was built on ${timestamp}.
 
 --------------------------------------------------------------------------------
-
 %{ if can(shared.tools.docker) }
 ## Docker Packages:
 
@@ -27,7 +26,7 @@ This image was built on ${timestamp}.
 %{ if can(config.official) && can(config.version) }- `${name}`, version `${config.version}` (HashiCorp-maintained)%{ endif ~}
 %{ if !can(config.official) && can(config.url) }- `${name}`, ([source](${config.url}))%{ endif ~}
 %{~ endfor ~}
-%{ endif }
+%{ endif ~}
 
 %{ if can(shared.tools.osquery) }
 ## osquery Packages:
