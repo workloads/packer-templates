@@ -1,0 +1,48 @@
+---
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
+- name: "({{ plugin_name | upper }}) Debug"
+  ansible.builtin.debug:
+    msg: "included tools_nomad_plugins.yml"
+  when:
+    - enable_debug_statements is defined
+    - enable_debug_statements
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
+- name: "({{ plugin_name | upper }}) Create Directory for Nomad Plugins"
+  ansible.builtin.file:
+    path: "{{ destination }}"
+    state: directory
+    mode: "0644"
+  when:
+    - destination is defined
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/set_fact_module.html
+- name: "({{ repo_name | upper }}) set Ansible Facts for HashiCorp-maintained Plugin Binary"
+  ansible.builtin.set_fact:
+    plugin_url: "{{ hashicorp_base_url }}/{{ plugin_name }}/{{ plugin_config.version }}/{{ plugin_name }}_{{ plugin_config.version }}"
+  when:
+    - plugin_config is defined
+    - plugin_config.official is true
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/get_url_module.html
+- name: "({{ plugin_name | upper }}) Get HashiCorp-maintained Plugin Binary"
+  ansible.builtin.get_url:
+    checksum: "sha256:{{ plugin_url }}_SHA256SUMS"
+    dest: "{{ destination }}/"
+    mode: "0644"
+    url: "{{ plugin_url }}_linux_{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}.zip"
+  when:
+    - destination is defined
+    - plugin_url is defined
+    - plugin_config.official is true
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/get_url_module.html
+- name: "({{ plugin_name | upper }}) Get community-maintained Plugin Binary"
+  ansible.builtin.get_url:
+    dest: "{{ destination }}/"
+    mode: "0644"
+    url: "{{ plugin_config.url }}"
+  when:
+    - plugin_config is defined
+    - plugin_config.url is defined

@@ -1,0 +1,54 @@
+---
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
+- name: Debug
+  ansible.builtin.debug:
+    msg: "included tools.yml"
+  when:
+    - enable_debug_statements is defined
+    - enable_debug_statements
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
+- name: Manage Tool Repositories Operations
+  ansible.builtin.include_tasks:
+    file: tools_repositories.yml
+  vars:
+    repo_name: "{{ item.key }}"
+    repo_config: "{{ item.value }}"
+
+    # `.asc` is the required extension for armored keys
+    repo_gpg_file: "{{ item.key }}.asc"
+    repo_keyring_directory: "/usr/share/keyrings"
+
+  loop: "{{ tools | dict2items }}"
+  when:
+    - tools is defined
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
+- name: Manage Nomad Plugin Operations
+  ansible.builtin.include_tasks:
+    file: tools_nomad_plugins.yml
+  vars:
+    destination: "{{ nomad_plugins.destination }}"
+    hashicorp_base_url: "{{ nomad_plugins.hashicorp_base_url }}"
+    plugin_name: "{{ item.key }}"
+    plugin_config: "{{ item.value }}"
+
+  loop: "{{ nomad_plugins.plugins | dict2items }}"
+  when:
+    - nomad_plugins is defined
+    - nomad_plugins.plugins is defined
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
+- name: Manage User Operations
+  ansible.builtin.include_tasks:
+    file: tools_users.yml
+  vars:
+    destination: "{{ nomad_plugins.destination }}"
+    hashicorp_base_url: "{{ nomad_plugins.hashicorp_base_url }}"
+    plugin_name: "{{ item.key }}"
+    plugin_config: "{{ item.value }}"
+
+  loop: "{{ users | dict2items }}"
+  when:
+    - users is defined

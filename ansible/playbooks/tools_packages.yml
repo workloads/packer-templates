@@ -1,0 +1,26 @@
+---
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
+- name: Debug
+  ansible.builtin.debug:
+    msg: "included tools_packages.yml"
+  when:
+    - enable_debug_statements is defined
+    - enable_debug_statements
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
+- name: Install Apt Packages
+  ansible.builtin.apt:
+    install_recommends: true
+    name: "{{ item.name }}={{ item.version | default('*') }}"
+    state: present
+  with_items:
+    - "{{ tool }}"
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/yum_module.html
+- name: Install YUM Packages
+  ansible.builtin.yum:
+    name: "{{ item.name }}-{{ item.version | default('*') }}"
+    state: present
+  with_items:
+    - "{{ tool }}"

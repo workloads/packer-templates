@@ -50,11 +50,11 @@
         - os is defined and os.enabled
 
     # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
-    - name: Manage CLI Prompt Operations
+    - name: Manage Tooling Tasks
       ansible.builtin.include_tasks:
-        file: prompt.yml
+        file: tools.yml
       when:
-        - prompt is defined and prompt.enabled
+        - tools is defined
 
     # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
     - name: Manage Cleanup Tasks
