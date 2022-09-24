@@ -16,7 +16,6 @@ packer {
   }
 }
 
-# see https://www.packer.io/plugins/builders/vagrant
 locals {
   box_name    = "${var.os}-${var.target}"
   box_tag     = "${var.vagrant_cloud_organization}/${local.box_name}"
@@ -24,7 +23,7 @@ locals {
 }
 
 # see https://developer.hashicorp.com/packer/plugins/builders/vagrant
-source "vagrant" "template" {
+source "vagrant" "virtualbox" {
   # the following configuration represents a curated variable selection
   # for all options see: https://developer.hashicorp.com/packer/plugins/builders/vagrant#optional
 
@@ -51,7 +50,7 @@ build {
     "source.vagrant.template"
   ]
 
-  # see https://www.packer.io/plugins/provisioners/ansible/ansible
+  # see https://developer.hashicorp.com/packer/plugins/provisioners/ansible/ansible
   provisioner "ansible" {
     ansible_env_vars   = var.shared.ansible.ansible_env_vars
     command            = var.shared.ansible.command
@@ -61,9 +60,11 @@ build {
     skip_version_check = var.shared.ansible.skip_version_check
   }
 
-  # see https://www.packer.io/docs/post-processors/checksum#checksum-post-processor
+  # see https://developer.hashicorp.com/packer/docs/post-processors/checksum#checksum-post-processor
   post-processor "checksum" {
-    checksum_types = var.shared.checksum_types
-    output         = local.templates.checksum.output
+    checksum_types      = var.shared.checksum_types
+    keep_input_artifact = true
+    output              = local.templates.checksum.output
+  }
   }
 }

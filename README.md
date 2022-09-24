@@ -85,7 +85,7 @@ The following generic build options are available:
 
 #### `debug`
 
-Disables parallelization and enables debug mode.
+Enables debug mode and disables parallelization.
 See [here](https://developer.hashicorp.com/packer/docs/debugging) for more information.
 
 #### `force`

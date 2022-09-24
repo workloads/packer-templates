@@ -48,12 +48,7 @@ init: # Installs and upgrades Packer Plugins      Usage: `make init target=<targ
 	packer \
 		init \
 			-upgrade \
-			$(arg_force) \
 			$(arg_machine_readable) \
-			$(arg_timestamp) \
-			$(arg_var_dist_dir) \
-			$(arg_var_os) \
-      $(arg_var_target) \
 			"$(packer_dir)/$(target)"
 
 # see https://www.packer.io/docs/commands/build
@@ -82,9 +77,6 @@ lint: # Formats and validates Packer Template     Usage: `make lint target=<targ
 	packer \
 		fmt \
 			$(arg_machine_readable) \
-			$(arg_var_dist_dir) \
-			$(arg_var_os) \
-      $(arg_var_target) \
       -diff \
       -recursive \
 			"$(packer_dir)/$(target)/" \
