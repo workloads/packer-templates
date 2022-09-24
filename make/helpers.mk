@@ -33,6 +33,15 @@ _lint_yaml:
 		--config-file ".yaml-lint.yml" \
 		.
 
+# Lints Ansible files
+.PHONY: _lint_ansible
+_lint_ansible:
+	ansible-lint \
+		--exclude "../../../.ansible" \
+		--profile "production" \
+		--progressive \
+		"ansible/playbooks/main.yml"
+
 .PHONY: _lint
 _lint: _lint_yaml _lint_ansible
 

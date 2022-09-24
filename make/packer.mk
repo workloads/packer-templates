@@ -24,6 +24,15 @@ else
 arg_machine_readable =
 endif
 
+# enable Vagrant Cloud functionality
+ifdef vagrant-cloud
+arg_vagrant_cloud =
+else
+arg_vagrant_cloud = vagrant-cloud
+endif
+
+arg_except = -except="$(arg_vagrant_cloud)"
+
 # see https://www.packer.io/docs/commands/init
 .PHONY: init
 init: # Installs and upgrades Packer Plugins      Usage: `make init target=<target> os=<os> os=<os>`
@@ -33,6 +42,7 @@ init: # Installs and upgrades Packer Plugins      Usage: `make init target=<targ
 		init \
 			-upgrade \
 			$(arg_debug) \
+			$(arg_except) \
 			$(arg_force) \
 			$(arg_machine_readable) \
 			$(arg_var_dist_dir) \
@@ -48,6 +58,7 @@ build: # Builds an Image with Packer               Usage: `make build target=<ta
 	packer \
 		build \
 			$(arg_debug) \
+			$(arg_except) \
 			$(arg_force) \
 			$(arg_machine_readable) \
 			$(arg_var_dist_dir) \
@@ -64,6 +75,7 @@ lint: # Formats and validates Packer Template     Usage: `make lint target=<targ
 	packer \
 		fmt \
 			$(arg_debug) \
+			$(arg_except) \
 			$(arg_force) \
 			$(arg_machine_readable) \
 			$(arg_var_dist_dir) \
@@ -76,6 +88,7 @@ lint: # Formats and validates Packer Template     Usage: `make lint target=<targ
 	packer \
 		validate \
 			$(arg_debug) \
+			$(arg_except) \
 			$(arg_force) \
 			$(arg_machine_readable) \
 			$(arg_var_dist_dir) \
