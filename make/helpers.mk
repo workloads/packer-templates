@@ -45,6 +45,13 @@ _lint_ansible:
 .PHONY: _lint
 _lint: _lint_yaml _lint_ansible
 
+# unsupported helper to force-kill (stuck) VirtualBox processes
+# `9`  = signal number
+# `-f` = match against the full argument list instead of just process names
+.SILENT .PHONY: _kill_vb
+_kill_vb:
+	pkill -9 -f "VBox"
+
 # unsupported helper to open "VirtualBox.app" (macOS only)
 .SILENT .PHONY: _vb
 _vb:
