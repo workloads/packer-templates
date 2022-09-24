@@ -17,7 +17,6 @@ packer {
 }
 
 locals {
-  box_tag     = "${var.vagrant_cloud_organization}/${local.image.name}"
   box_version = local.sources[var.os][var.target].source.version
 }
 
@@ -66,5 +65,14 @@ build {
     keep_input_artifact = true
     output              = local.templates.checksum.output
   }
+
+  # see https://developer.hashicorp.com/packer/plugins/post-processors/vagrant/vagrant-cloud
+  post-processor "vagrant-cloud" {
+    access_token        = local.vagrant_cloud_access_token
+    box_tag             = "${var.vagrant_cloud_organization}/${local.image.name}"
+    no_release          = var.vagrant_cloud_no_release
+    keep_input_artifact = var.vagrant_cloud_keep_input_artifact
+    version             = local.box_version
+    version_description = local.information_input
   }
 }
