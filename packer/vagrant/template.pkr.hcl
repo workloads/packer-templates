@@ -36,9 +36,8 @@ source "vagrant" "virtualbox" {
   source_path                  = local.sources[var.os][var.target].source.path
   ssh_clear_authorized_keys    = var.shared.communicator.ssh_clear_authorized_keys
   ssh_disable_agent_forwarding = var.shared.communicator.ssh_disable_agent_forwarding
-  #ssh_username                 = local.sources[var.os][var.target].username
-  teardown_method = var.teardown_method
-  template        = "./packer/${var.target}/Vagrantfile"
+  teardown_method              = var.teardown_method
+  template                     = "./packer/${var.target}/Vagrantfile"
 }
 
 # see https://developer.hashicorp.com/packer/docs/templates/hcl_templates/blocks/build
