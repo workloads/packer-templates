@@ -1,6 +1,10 @@
 # Image `${image.name}` (`v${image.version}`)
 
-This image was built on ${timestamp}.
+|           |                      |
+|-----------|----------------------|
+| version   | `${image.version}`   |
+| timestamp | `${image.timestamp}` |
+%{ if can(image.dev_mode) ~}| dev-mode  | ⚠️ enabled           |%{ endif ~}
 
 --------------------------------------------------------------------------------
 %{ if can(shared.tools.docker) }

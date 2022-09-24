@@ -25,7 +25,7 @@ variable "skip_add" {
 variable "teardown_method" {
   type        = string
   description = "Action to take when the build process has completed."
-  default     = "halt"
+  default     = "destroy"
 }
 
 locals {
