@@ -1,13 +1,13 @@
 packer {
   required_plugins {
-    # see https://www.packer.io/plugins/builders/vagrant
+    # see https://developer.hashicorp.com/packer/plugins/builders/vagrant
     vagrant = {
       # see https://github.com/hashicorp/packer-plugin-vagrant/releases/
       version = ">= 1.0.3"
       source  = "github.com/hashicorp/vagrant"
     }
 
-    # see https://www.packer.io/plugins/provisioners/ansible/ansible
+    # see https://developer.hashicorp.com/packer/plugins/provisioners/ansible/ansible
     ansible = {
       # see https://github.com/hashicorp/packer-plugin-ansible/releases/
       version = ">= 1.0.3"
@@ -17,14 +17,21 @@ packer {
 }
 
 # see https://www.packer.io/plugins/builders/vagrant
+locals {
+  box_name    = "${var.os}-${var.target}"
+  box_tag     = "${var.vagrant_cloud_organization}/${local.box_name}"
+  box_version = local.sources[var.os][var.target].source.version
+}
+
+# see https://developer.hashicorp.com/packer/plugins/builders/vagrant
 source "vagrant" "template" {
   # the following configuration represents a curated variable selection
-  # for all options see: https://www.packer.io/plugins/builders/vagrant#optional
+  # for all options see: https://developer.hashicorp.com/packer/plugins/builders/vagrant#optional
 
   add_force                    = var.add_force
-  box_name                     = "todo-renameme"
-  box_version                  = local.sources[var.os][var.target].source.version
-  checksum                     = "sha256:${local.sources[var.os][var.target].source.checksum}"
+  box_name                     = local.box_name
+  box_version                  = local.box_version
+  checksum                     = local.sources[var.os][var.target].source.checksum
   communicator                 = "ssh"
   output_dir                   = "${var.dist_dir}/${var.target}"
   provider                     = "virtualbox"

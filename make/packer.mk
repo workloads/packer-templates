@@ -1,7 +1,7 @@
 # expose build target to Packer
-arg_var_dist_dir = -var "dist_dir=$(dist_dir)"
-arg_var_os       = -var "os=$(os)"
-arg_var_target   = -var "target=$(target)"
+arg_var_dist_dir = -var 'dist_dir=$(dist_dir)'
+arg_var_os       = -var 'os=$(os)'
+arg_var_target   = -var 'target=$(target)'
 
 # enable debug mode for builds
 ifdef debug
@@ -24,6 +24,13 @@ else
 arg_machine_readable =
 endif
 
+# enable prepending of timestamp for build steps
+ifdef timestamp
+arg_timestamp = -timestamp-ui
+else
+arg_timestamp =
+endif
+
 # enable Vagrant Cloud functionality
 ifdef vagrant-cloud
 arg_vagrant_cloud =
@@ -41,10 +48,9 @@ init: # Installs and upgrades Packer Plugins      Usage: `make init target=<targ
 	packer \
 		init \
 			-upgrade \
-			$(arg_debug) \
-			$(arg_except) \
 			$(arg_force) \
 			$(arg_machine_readable) \
+			$(arg_timestamp) \
 			$(arg_var_dist_dir) \
 			$(arg_var_os) \
       $(arg_var_target) \
@@ -61,6 +67,7 @@ build: # Builds an Image with Packer               Usage: `make build target=<ta
 			$(arg_except) \
 			$(arg_force) \
 			$(arg_machine_readable) \
+			$(arg_timestamp) \
 			$(arg_var_dist_dir) \
 			$(arg_var_os) \
       $(arg_var_target) \
@@ -74,9 +81,6 @@ lint: # Formats and validates Packer Template     Usage: `make lint target=<targ
 	$(if $(os),,$(call missing_os))
 	packer \
 		fmt \
-			$(arg_debug) \
-			$(arg_except) \
-			$(arg_force) \
 			$(arg_machine_readable) \
 			$(arg_var_dist_dir) \
 			$(arg_var_os) \
@@ -87,9 +91,6 @@ lint: # Formats and validates Packer Template     Usage: `make lint target=<targ
 	&& \
 	packer \
 		validate \
-			$(arg_debug) \
-			$(arg_except) \
-			$(arg_force) \
 			$(arg_machine_readable) \
 			$(arg_var_dist_dir) \
 			$(arg_var_os) \

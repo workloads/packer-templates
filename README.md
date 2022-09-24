@@ -86,17 +86,22 @@ The following generic build options are available:
 #### `debug`
 
 Disables parallelization and enables debug mode.
-See [here](https://www.packer.io/docs/commands/build#debug) for more information.
+See [here](https://developer.hashicorp.com/packer/docs/debugging) for more information.
 
 #### `force`
 
 Forces a builder to run when artifacts from a previous build prevent a build from running.
-See [here](https://www.packer.io/docs/commands/build#force) for more information.
+See [here](https://developer.hashicorp.com/packer/docs/commands/build#force) for more information.
 
 #### `machine-readable`
 
 Enable a fully machine-readable output setting, allowing you to use Packer in automated environments.
-See [here](https://www.packer.io/docs/commands#machine-readable-output) for more information.
+See [here](https://developer.hashicorp.com/packer/docs/commands#machine-readable-output) for more information.
+
+#### `timestamp`
+
+Prefix all build steps with an RFC3339-formatted timestamp.
+See [here](https://developer.hashicorp.com/packer/docs/commands/build#timestamp-ui) for more information.
 
 Additional Build Options may be available, depending on the target.
 
