@@ -114,6 +114,7 @@ This repository supports the following providers:
 | `aws`     | [packer/aws/README.md](./packer/aws/README.md)         | `amazon-ebs`    |
 | `azure`   | [packer/azure/README.md](./packer/azure/README.md)     | `azure-arm`     |
 | `google`  | [packer/google/README.md](./packer/google/README.md)   | `googlecompute` |
+| `null`    | [packer/null/README.md](./packer/null/README.md)       | n/a             |
 | `vagrant` | [packer/vagrant/README.md](./packer/vagrant/README.md) | `vagrant`       |
 
 ## Notes
