@@ -48,3 +48,8 @@ roles:
     src: "git@github.com:ansible-lockdown/Windows-2022-CIS.git"
     scm: "git"
     version: "main"  # see: https://github.com/ansible-lockdown/Windows-2022-CIS/releases
+
+  -
+    # see https://galaxy.ansible.com/gantsign/golang
+    name: "gantsign.golang"
+    version: "3.0.1"

@@ -88,6 +88,10 @@ The following generic build options are available:
 Enables debug mode and disables parallelization.
 See [here](https://developer.hashicorp.com/packer/docs/debugging) for more information.
 
+#### `dev`
+
+Enables _developer-mode_ and configures developer-friendly tooling.
+
 #### `force`
 
 Forces a builder to run when artifacts from a previous build prevent a build from running.

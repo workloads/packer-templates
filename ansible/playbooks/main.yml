@@ -34,6 +34,13 @@
         - enable_facts_statement
 
   roles:
+    - role: gantsign.golang
+      vars:
+        golang_version: "{{ developer.go.version }}"
+        golang_install_dir: "{{ developer.go.install_dir_prefix }}/{{ developer.go.version }}"
+      when:
+        - developer_mode is true
+
     - role: ansible-lockdown.ubuntu22_cis
       when:
         # see https://releases.ubuntu.com/22.04/
@@ -55,6 +62,13 @@
         file: tools.yml
       when:
         - tools is defined
+
+    # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
+    - name: Manage Developer Mode Tasks
+      ansible.builtin.include_tasks:
+        file: developer.yml
+      when:
+        - developer_mode is true
 
     # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
     - name: Manage Cleanup Tasks

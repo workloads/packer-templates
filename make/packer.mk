@@ -10,6 +10,13 @@ else
 arg_debug =
 endif
 
+# enable dev mode and configure corresponding packages
+ifdef dev
+arg_var_developer_mode = -var 'developer_mode=true'
+else
+arg_var_developer_mode = -var 'developer_mode=false'
+endif
+
 # force a build to continue if artifacts exist, deletes existing artifacts.
 ifdef force
 arg_force = -force
@@ -63,6 +70,7 @@ build: # Builds an Image with Packer               Usage: `make build target=<ta
 			$(arg_force) \
 			$(arg_machine_readable) \
 			$(arg_timestamp) \
+			$(arg_var_developer_mode) \
 			$(arg_var_dist_dir) \
 			$(arg_var_os) \
       $(arg_var_target) \
@@ -84,6 +92,7 @@ lint: # Formats and validates Packer Template     Usage: `make lint target=<targ
 	packer \
 		validate \
 			$(arg_machine_readable) \
+			$(arg_var_developer_mode) \
 			$(arg_var_dist_dir) \
 			$(arg_var_os) \
       $(arg_var_target) \

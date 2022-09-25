@@ -1,10 +1,10 @@
 # Image `${image.name}` (`v${image.version}`)
 
-|           |                      |
-|-----------|----------------------|
-| version   | `${image.version}`   |
-| timestamp | `${image.timestamp}` |
-%{ if can(image.dev_mode) ~}| dev-mode  | ⚠️ enabled           |%{ endif ~}
+|                |                      |
+|----------------|----------------------|
+| version        | `${image.version}`   |
+| timestamp      | `${image.timestamp}` |
+%{ if can(image.developer_mode) ~}| Developer Mode | ⚠️ enabled           |%{ endif ~}
 
 --------------------------------------------------------------------------------
 %{ if can(shared.tools.docker) }

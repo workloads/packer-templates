@@ -5,9 +5,9 @@
 
 # Advanced Users only: Dev Mode installs packages that are helpful
 # when developing on one or more of the installed HashiCorp products;
-variable "dev_mode" {
+variable "developer_mode" {
   type        = bool
-  description = "Toggle to enable Dev Mode and configure developer-friendly tooling."
+  description = "Toggle to enable Developer Mode and configure developer-friendly tooling."
   default     = false
 }
 
@@ -35,6 +35,23 @@ variable "shared" {
     communicator = object({
       ssh_clear_authorized_keys    = bool
       ssh_disable_agent_forwarding = bool
+    })
+
+    developer = object({
+      go = object({
+        version            = string
+        install_dir_prefix = string
+
+        modules = object({
+          get     = list(string)
+          install = list(string)
+        })
+      })
+
+      packages = object({
+        to_install = list(string)
+        to_remove  = list(string)
+      })
     })
 
     os = object({
@@ -103,6 +120,36 @@ variable "shared" {
 
       # If true, SSH agent forwarding will be disabled.
       ssh_disable_agent_forwarding = true
+    }
+
+    # Developer Mode-specific configuration
+    developer = {
+      # Developer-Mode packages to lifecycle
+      packages = {
+        to_install = []
+
+        to_remove = []
+      }
+
+      # Go-specific configuration
+      go = {
+        version = "1.19.1"
+
+        # parent directory for all Go installations
+        # individual versions will be installed into
+        # version-specific directories: `/opt/go/1.19.1`
+        install_dir_prefix = "/opt/go/"
+
+        modules = {
+          # modules that can be fetched using `go get`
+          get = []
+
+          # modules that can be fetched using `go install`
+          install = [
+            "github.com/go-delve/delve/cmd/dlv@latest"
+          ]
+        }
+      }
     }
 
     # OS-specific configuration
@@ -381,6 +428,10 @@ locals {
     # Ubuntu 22.04 LTS (Jammy Jellyfish)
     # see https://releases.ubuntu.com/22.04/
     ubuntu22 = {
+      null = {
+        tools = {}
+      }
+
       vagrant = {
         communicator = "ssh"
 
@@ -444,7 +495,7 @@ locals {
 
   # Packer Image-specific configuration
   image = {
-    name    = var.dev_mode ? "${var.os}-${var.target}-dev" : "${var.os}-${var.target}"
+    name    = var.developer_mode ? "${var.os}-${var.target}-dev" : "${var.os}-${var.target}"
     version = local.timestamp.iso
   }
 
@@ -463,9 +514,9 @@ source "file" "configuration" {
     # then YAML-encode it for consumption through Ansible
     configuration = yamlencode(
       merge(var.shared, {
-        dev_mode      = var.dev_mode,
-        nomad_plugins = local.nomad_plugins,
-        tools         = local.sources[var.os][var.target].tools,
+        developer_mode = var.developer_mode,
+        nomad_plugins  = local.nomad_plugins,
+        tools          = local.sources[var.os][var.target].tools,
       })
     )
   })
@@ -478,8 +529,8 @@ locals {
   # and for provider-specific cases such as Vagrant Cloud Box Descriptions
   information_input = templatefile(local.templates.information.input, {
     image = merge(local.image, {
-      dev_mode  = var.dev_mode,
-      timestamp = local.timestamp.human,
+      developer_mode = var.developer_mode,
+      timestamp      = local.timestamp.human,
     })
 
     shared = merge(var.shared, {

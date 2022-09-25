@@ -1,0 +1,19 @@
+---
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
+- name: Debug
+  ansible.builtin.debug:
+    msg: "included developer.yml"
+  when:
+    - enable_debug_statements is defined
+    - enable_debug_statements
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_module.html
+- name: Install Developer Linux Packages
+  ansible.builtin.package:
+    name: "{{ developer.packages.to_install }}"
+    state: present
+  when:
+    - ansible_os_family == "Amazon"
+      or ansible_os_family == "Debian"
+      or ansible_os_family == "RedHat"
