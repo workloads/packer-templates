@@ -43,10 +43,9 @@
 
     - role: ansible-lockdown.ubuntu22_cis
       when:
-        # see https://releases.ubuntu.com/22.04/
-        ansible_distribution == 'Ubuntu'
-        and ansible_distribution_release == 'jammy'
-        and enable_cis_hardening == true
+        - ansible_distribution == 'Ubuntu'
+          and ansible_distribution_release == 'jammy'
+          and enable_cis_hardening is true
 
   tasks:
     # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
