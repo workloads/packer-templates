@@ -376,7 +376,7 @@ locals {
           #{
           #  # see https://releases.hashicorp.com/tfc-agent/
           #  name    = "tfc-agent"
-          #  version = "1.3.0"
+          #  version = "1.4.0"
           #},
           {
             # see https://releases.hashicorp.com/vault/
