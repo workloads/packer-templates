@@ -41,11 +41,7 @@ variable "shared" {
       go = object({
         version            = string
         install_dir_prefix = string
-
-        modules = object({
-          get     = list(string)
-          install = list(string)
-        })
+        modules            = list(string)
       })
 
       packages = object({
@@ -140,15 +136,9 @@ variable "shared" {
         # version-specific directories: `/opt/go/1.19.1`
         install_dir_prefix = "/opt/go/"
 
-        modules = {
-          # modules that can be fetched using `go get`
-          get = []
-
-          # modules that can be fetched using `go install`
-          install = [
-            "github.com/go-delve/delve/cmd/dlv@latest"
-          ]
-        }
+        modules = [
+          "github.com/go-delve/delve/cmd/dlv@latest"
+        ]
       }
     }
 
@@ -491,12 +481,6 @@ locals {
       input  = "../templates/information.pkrtpl.md"
       output = "${var.dist_dir}/README.md"
     }
-  }
-
-  # Packer Image-specific configuration
-  image = {
-    name    = var.developer_mode ? "${var.os}-${var.target}-dev" : "${var.os}-${var.target}"
-    version = local.timestamp.iso
   }
 
   timestamp = {

@@ -76,6 +76,24 @@ build: # Builds an Image with Packer               Usage: `make build target=<ta
       $(arg_var_target) \
 			"$(packer_dir)/$(target)"
 
+# see https://developer.hashicorp.com/packer/docs/commands/console
+.PHONY: console
+console: # Starts Packer Console                     Usage: `make console target=<target> os=<os>`
+	$(if $(target),,$(call missing_target))
+	$(if $(os),,$(call missing_os))
+	packer \
+		console \
+			$(arg_debug) \
+			$(arg_except) \
+			$(arg_force) \
+			$(arg_machine_readable) \
+			$(arg_timestamp) \
+			$(arg_var_developer_mode) \
+			$(arg_var_dist_dir) \
+			$(arg_var_os) \
+      $(arg_var_target) \
+			"$(packer_dir)/$(target)"
+
 # see https://developer.hashicorp.com/packer/docs/commands/fmt
 # and https://developer.hashicorp.com/packer/docs/commands/validate
 .PHONY: lint
