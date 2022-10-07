@@ -83,12 +83,6 @@ console: # Starts Packer Console                     Usage: `make console target
 	$(if $(os),,$(call missing_os))
 	packer \
 		console \
-			$(arg_debug) \
-			$(arg_except) \
-			$(arg_force) \
-			$(arg_machine_readable) \
-			$(arg_timestamp) \
-			$(arg_var_developer_mode) \
 			$(arg_var_dist_dir) \
 			$(arg_var_os) \
       $(arg_var_target) \
