@@ -14,7 +14,7 @@
 
 ## Requirements
 
-- Vagrant `2.3.0` or newer
+- Vagrant `2.3.1` or newer
 
 ## Overview
 
