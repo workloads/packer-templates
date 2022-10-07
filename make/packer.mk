@@ -47,7 +47,7 @@ endif
 
 arg_except = -except="$(arg_vagrant_cloud)"
 
-# see https://www.packer.io/docs/commands/init
+# see https://developer.hashicorp.com/packer/docs/commands/init
 .PHONY: init
 init: # Installs and upgrades Packer Plugins      Usage: `make init target=<target> os=<os> os=<os>`
 	$(if $(target),,$(call missing_target))
@@ -58,7 +58,7 @@ init: # Installs and upgrades Packer Plugins      Usage: `make init target=<targ
 			$(arg_machine_readable) \
 			"$(packer_dir)/$(target)"
 
-# see https://www.packer.io/docs/commands/build
+# see https://developer.hashicorp.com/packer/docs/commands/build
 .PHONY: build
 build: # Builds an Image with Packer               Usage: `make build target=<target> os=<os>`
 	$(if $(target),,$(call missing_target))
@@ -76,8 +76,8 @@ build: # Builds an Image with Packer               Usage: `make build target=<ta
       $(arg_var_target) \
 			"$(packer_dir)/$(target)"
 
-# see https://www.packer.io/docs/commands/fmt
-# and https://www.packer.io/docs/commands/validate
+# see https://developer.hashicorp.com/packer/docs/commands/fmt
+# and https://developer.hashicorp.com/packer/docs/commands/validate
 .PHONY: lint
 lint: # Formats and validates Packer Template     Usage: `make lint target=<target> os=<os>`
 	$(if $(target),,$(call missing_target))

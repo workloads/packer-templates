@@ -113,13 +113,14 @@ Additional Build Options may be available, depending on the target.
 
 This repository supports the following providers:
 
-| target    | local documentation                                    | Packer Builder  |
-|-----------|--------------------------------------------------------|-----------------|
-| `aws`     | [packer/aws/README.md](./packer/aws/README.md)         | `amazon-ebs`    |
-| `azure`   | [packer/azure/README.md](./packer/azure/README.md)     | `azure-arm`     |
-| `google`  | [packer/google/README.md](./packer/google/README.md)   | `googlecompute` |
-| `null`    | [packer/null/README.md](./packer/null/README.md)       | n/a             |
-| `vagrant` | [packer/vagrant/README.md](./packer/vagrant/README.md) | `vagrant`       |
+| target         | local documentation                                    | Packer Builder                                                                         |
+|----------------|--------------------------------------------------------|----------------------------------------------------------------------------------------|
+| `aws`          | [packer/aws](./packer/aws/README.md)                   | [`amazon-ebs`](https://developer.hashicorp.com/packer/plugins/builders/amazon/ebs)]    |
+| `azure`        | [packer/azure](./packer/azure/README.md)               | [`azure-arm`](https://developer.hashicorp.com/packer/plugins/builders/azure/arm)       |
+| `digitalocean` | [packer/digitalocean](./packer/digitalocean/README.md) | [`digitalocean`](https://developer.hashicorp.com/packer/plugins/builders/digitalocean) |
+| `google`       | [packer/google](./packer/google/README.md)             | [`googlecompute`](https://developer.hashicorp.com/packer/plugins/builders/azure/arm)   |
+| `null`         | [packer/null](./packer/null/README.md)                 | n/a                                                                                    |
+| `vagrant`      | [packer/vagrant](./packer/vagrant/README.md)           | [`vagrant`](https://developer.hashicorp.com/packer/plugins/builders/vagrant)         |
 
 ## Notes
 
