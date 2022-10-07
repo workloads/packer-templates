@@ -340,12 +340,12 @@ locals {
           {
             # see https://releases.hashicorp.com/boundary-worker/
             name    = "boundary-worker-hcp"
-            version = "0.10.5+hcp-*"
+            version = "0.11.0+hcp-*"
           },
           {
             # see https://releases.hashicorp.com/consul/
             name    = "consul"
-            version = "1.13.2-*"
+            version = "1.14.0-*"
           },
           {
             # see https://releases.hashicorp.com/hcdiag/
@@ -355,7 +355,7 @@ locals {
           {
             # see https://releases.hashicorp.com/nomad/
             name    = "nomad"
-            version = "1.3.5-*"
+            version = "1.4.1-*"
           },
           {
             # see https://releases.hashicorp.com/nomad-autoscaler/
@@ -371,7 +371,7 @@ locals {
           {
             # see https://releases.hashicorp.com/vault/
             name    = "vault"
-            version = "1.11.3-*"
+            version = "1.12.0-*"
           }
         ]
       }
