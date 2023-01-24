@@ -126,7 +126,7 @@ This repository supports the following providers:
 
 This repository takes input and inspiration from a handful of community projects.
 
-The authors would like to thank the following parties for their inspiration and contributions:
+The authors would like to thank the following parties for their contributions:
 
 * [@ansible-community](https://github.com/ansible-community?q=hashicorp)
 * [Mark Lewis](https://github.com/ml4/base)
