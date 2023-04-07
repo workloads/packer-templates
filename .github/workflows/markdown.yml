@@ -16,15 +16,15 @@ jobs:
     steps:
       # see https://github.com/actions/checkout
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: "actions/checkout@v3"
         with:
           fetch-depth: 1
 
       # see https://github.com/gaurav-nelson/github-action-markdown-link-check
       - name: Check Links in Markdown files
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        uses: "gaurav-nelson/github-action-markdown-link-check@v1"
         with:
-          check-modified-files-only: "no"
+          check-modified-files-only: no
           config-file: ".markdown-link-check.json"
           file-extension: ".md"
-          use-verbose-mode: "yes"
+          use-verbose-mode: yes
