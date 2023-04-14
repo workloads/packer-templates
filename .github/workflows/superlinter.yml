@@ -15,14 +15,14 @@ jobs:
     steps:
       # see https://github.com/actions/checkout/releases/tag/v3.5.2
       - name: Checkout Repository
-        uses: "checkout@v3.5.2" # v3.5.2
+        uses: "actions/checkout@v3.5.2" # v3.5.2
         with:
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
 
-      # see https://github.com/github/v5.0.0
+      # see https://github.com/github/super-linter/releases/tag/v5.0.0
       - name: Lint Code with Super-Linter
-        uses: "super-linter@v5.0.0" # v5.0.0
+        uses: "github/super-linter@v5.0.0" # v5.0.0
         env:
           # see https://github.com/github/super-linter#environment-variables
           VALIDATE_ALL_CODEBASE: true
