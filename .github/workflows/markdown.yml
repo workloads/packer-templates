@@ -20,7 +20,7 @@ jobs:
         with:
           fetch-depth: 1
 
-      # see https://github.com/gaurav-nelson/github-action-markdown-link-check
+      # see https://github.com/gaurav-nelson/github-action-markdown-link-check/releases/tag/1.0.15
       - name: Check Links in Markdown files
         uses: "github-action-markdown-link-check@1.0.15" # 1.0.15
         with:
