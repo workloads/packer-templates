@@ -1,5 +1,5 @@
 # This is a Terraform-managed file; manual changes will be overwritten.
-# see https://github.com/workloads/github-organization/blob/main/templates/workflows/markdown.yml
+# see https://github.com/workloads/github-organization/blob/main/templates/workflows/markdown.tftpl.yml
 
 ---
 
