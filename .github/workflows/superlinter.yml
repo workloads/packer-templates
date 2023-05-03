@@ -25,7 +25,6 @@ jobs:
         uses: "super-linter/super-linter/slim@45fc0d88288beee4701c62761281edfee85655d7" # ref: `tags/v5.0.0`
         env:
           # see https://github.com/github/super-linter#environment-variables
-          # see https://github.com/github/super-linter#environment-variables
           VALIDATE_ALL_CODEBASE: true
           CSS_FILE_NAME: ".stylelintrc.json"
           DEFAULT_BRANCH: "main"
