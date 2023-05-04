@@ -7,7 +7,7 @@ name: "Documentation: Link Checker"
 
 # yamllint disable-line rule:truthy
 on:
-  pull_request:
+  push:
 
 jobs:
   markdown:
