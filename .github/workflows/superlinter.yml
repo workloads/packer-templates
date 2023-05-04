@@ -2,6 +2,7 @@
 # see https://github.com/workloads/github-organization/blob/main/templates/workflows/superlinter.tftpl.yml
 
 ---
+
 name: "Code Quality: Super-Linter"
 
 # yamllint disable-line rule:truthy
