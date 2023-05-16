@@ -12,7 +12,12 @@ on:
 jobs:
   super-linter:
     name: Super-Linter
+
+    # only run if workflows are enabled
+    if: ${{ vars.ENABLE_WORKFLOWS == 'true' }}
+
     runs-on: ubuntu-latest
+
     steps:
       # see https://github.com/actions/checkout/releases/tag/v3.5.2
       - name: Checkout Repository
