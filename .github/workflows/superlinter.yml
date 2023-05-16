@@ -10,20 +10,7 @@ on:
   push:
 
 # see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
-permissions:
-  actions: none
-  checks: none
-  contents: read
-  deployments: none
-  id-token: none
-  issues: none
-  discussions: none
-  packages: none
-  pages: none
-  pull-requests: read
-  repository-projects: none
-  security-events: none
-  statuses: write
+permissions: read-all
 
 jobs:
   super-linter:
@@ -31,6 +18,10 @@ jobs:
 
     # only run if workflows are enabled
     if: ${{ vars.ENABLE_WORKFLOWS == 'true' }}
+
+    # see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
+    permissions:
+      statuses: write
 
     runs-on: ubuntu-latest
 
