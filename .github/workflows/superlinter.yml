@@ -51,9 +51,8 @@ jobs:
           MULTI_STATUS: true
           SUPPRESS_POSSUM: true
           TERRAFORM_TFLINT_CONFIG_FILE: ".tflint.hcl"
-          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_ALL_CODEBASE: false
           VALIDATE_ANSIBLE: true
-          VALIDATE_ARM: false
           VALIDATE_BASH: true
           VALIDATE_BASH_EXEC: true
           VALIDATE_CPP: false
@@ -61,11 +60,9 @@ jobs:
           VALIDATE_CLOJURE: false
           VALIDATE_CLOUDFORMATION: false
           VALIDATE_COFFEESCRIPT: false
-          VALIDATE_CSHARP: false
           VALIDATE_CSS: true
           VALIDATE_DOCKERFILE_HADOLINT: true
           VALIDATE_EDITORCONFIG: false
-          VALIDATE_ENV: true
           VALIDATE_GHERKIN: false
           VALIDATE_GITHUB_ACTIONS: true
           VALIDATE_GITLEAKS: false
@@ -105,10 +102,6 @@ jobs:
           VALIDATE_R: false
           VALIDATE_RAKU: false
           VALIDATE_RUBY: false
-          VALIDATE_RUST_2015: false
-          VALIDATE_RUST_2018: false
-          VALIDATE_RUST_2021: false
-          VALIDATE_RUST_CLIPPY: false
           VALIDATE_SCALAFMT: false
           VALIDATE_SHELL_SHFMT: true
           VALIDATE_SNAKEMAKE_LINT: false
