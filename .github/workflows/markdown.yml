@@ -13,8 +13,12 @@ on:
 permissions: read-all
 
 jobs:
-  markdown:
+  workflow:
+    # only run if workflows are enabled
+    if: ${{ vars.ENABLE_WORKFLOWS == 'true' }}
+
     name: Markdown
+
     runs-on: ubuntu-latest
     steps:
       # see https://github.com/actions/checkout/releases/tag/v3.5.2
@@ -31,3 +35,15 @@ jobs:
           config-file: ".markdown-link-check.json"
           file-extension: ".md"
           use-verbose-mode: yes
+
+  workflow-inactive:
+    # only run if workflows are disabled
+    if: ${{ vars.ENABLE_WORKFLOWS != 'true' }}
+
+    name: Workflow Status
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Display Workflow Status
+        run: echo "::warning ::Workflow is not currently active. Check if `ENABLE_WORKFLOWS` is set to `true`."
