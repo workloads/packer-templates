@@ -13,11 +13,11 @@ on:
 permissions: read-all
 
 jobs:
-  super-linter:
-    name: Super-Linter
-
+  workflow:
     # only run if workflows are enabled
     if: ${{ vars.ENABLE_WORKFLOWS == 'true' }}
+
+    name: Super-Linter
 
     # see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
     permissions:
@@ -49,6 +49,7 @@ jobs:
           IGNORE_GITIGNORED_FILES: true
           MARKDOWN_CONFIG_FILE: ".markdown-lint.yml"
           MULTI_STATUS: true
+          NATURAL_LANGUAGE_CONFIG_FILE: ".textlint.yml"
           SUPPRESS_POSSUM: true
           TERRAFORM_TFLINT_CONFIG_FILE: ".tflint.hcl"
           VALIDATE_ALL_CODEBASE: false
@@ -121,3 +122,15 @@ jobs:
           VALIDATE_YAML: true
           YAML_CONFIG_FILE: ".yaml-lint.yml"
           YAML_ERROR_ON_WARNING: true
+
+  workflow-inactive:
+    # only run if workflows are disabled
+    if: ${{ vars.ENABLE_WORKFLOWS != 'true' }}
+
+    name: Workflow Status
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Display Workflow Status
+        run: echo "::warning ::Workflow is not currently active. Check if `ENABLE_WORKFLOWS` is set to `true`."
