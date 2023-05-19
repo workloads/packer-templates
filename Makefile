@@ -6,9 +6,6 @@ SHELL         := sh
 .ONESHELL     :
 .SHELLFLAGS   := -eu -c
 
-color_off    = $(shell tput sgr0)
-color_bright = $(shell tput bold)
-
 dist_dir     = dist
 packer_dir   = packer
 
