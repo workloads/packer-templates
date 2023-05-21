@@ -17,6 +17,11 @@ jobs:
     # only run if workflows are enabled
     if: ${{ vars.ENABLE_WORKFLOWS == 'true' }}
 
+    # see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency
+    concurrency:
+      group: "${{ github.workflow }}-${{ github.ref }}"
+      cancel-in-progress: true
+
     name: Super-Linter
 
     # see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
@@ -24,6 +29,7 @@ jobs:
       statuses: write
 
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       # see https://github.com/actions/checkout/releases/tag/v3.5.2
@@ -128,8 +134,8 @@ jobs:
     if: ${{ vars.ENABLE_WORKFLOWS != 'true' }}
 
     name: Workflow Status
-
     runs-on: ubuntu-latest
+    timeout-minutes: 1
 
     steps:
       - name: Display Workflow Status
