@@ -23,7 +23,6 @@ jobs:
       cancel-in-progress: true
 
     name: Markdown
-
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
