@@ -23,8 +23,9 @@
 
 ## Requirements
 
-- Packer `1.8.3` or newer
-- Ansible `2.13.1` or newer
+* Packer `1.8.3` or newer
+* Ansible `2.13.1` or newer
+* A check-out of [@workloads/tooling](https://github.com/workloads/tooling)
 
 Ansible is used for system-level operations (e.g.: installing and removing packages).
 
