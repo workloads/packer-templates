@@ -54,7 +54,6 @@ _listincludes   list all included Makefiles and *.mk files      `make _listinclu
 _selfcheck      lint Makefile                                   `make _selfcheck`
 ```
 
-The currently supported options are:
 
 ```text
 clean  Remove "distributables" directory
@@ -142,7 +141,7 @@ The authors would like to thank the following parties for their contributions:
 
 * [@ansible-community](https://github.com/ansible-community?q=hashicorp)
 * [Mark Lewis](https://github.com/ml4/base)
-* [Mike Nomitch](https://github.com/glenngillen/nomatic-stack)
+* [Mike Nomitch](https://github.com/mikenomitch/nomatic-stack)
 * [Ryan Johnson](https://github.com/vmware-samples/packer-examples-for-vsphere)
 
 ## Author Information
