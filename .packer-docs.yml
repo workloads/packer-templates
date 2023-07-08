@@ -1,0 +1,100 @@
+---
+
+# see https://terraform-docs.io/user-guide/configuration/content/
+content: |-
+  {{ define "variables_section" }}
+    {{- printf "\n#### %s\n\n" .title -}}
+    {{- printf "This section describes %s-specific configuration.\n\n" .title -}}
+
+    {{- /* range over length of characters of .Name and .Description */ -}}
+    {{- $NameLen := 0 -}}
+    {{- $DescriptionLen := 0 -}}
+    {{- $prefix := .prefix -}}
+
+    {{- range .variables -}}
+      {{- if .Name | hasPrefix $prefix -}}
+        {{- if gt (len .Name) $NameLen -}}{{ $NameLen = len .Name }}{{- end -}}
+        {{- if gt (len .Description) $DescriptionLen -}}{{ $DescriptionLen = len .Description }}{{- end -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- /* add padding based on styling of field (to account for backticks and spaces) */ -}}
+    {{- $NameLen := add $NameLen 2 -}}
+    {{- $DescriptionLen := add $DescriptionLen 1 -}}
+
+    {{- /* format line with correct amount of spacing for all column fields */ -}}
+    {{- $lineFormat := printf "| %%-%vs | %%-%vs | %%s |\n" $NameLen $DescriptionLen -}}
+
+    {{- /* print table header */ -}}
+    {{- printf $lineFormat "Name" "Description" "Default" -}}
+    {{- printf $lineFormat (repeat (int $NameLen) "-") (repeat (int $DescriptionLen) "-") (repeat 7 "-") -}}
+
+    {{- /* print variables */ -}}
+    {{- range .variables -}}
+      {{- if .Name | hasPrefix $prefix -}}
+        {{- $default := "n/a" -}}
+
+        {{- if or (.Default) (eq "bool" (kindOf .Default)) }}
+          {{- $default = printf "`%s`" (toString .Default) -}}
+        {{ end }}
+
+        {{- if or (.Default) (eq "map" (kindOf .Default)) -}}
+          {{- $default = printf "`%s`" (toJson .Default) -}}
+          {{- /* -}}
+          {{- $default = printf "<pre><code>%s`</code></pre>`" (toPrettyJson .Default | replace "\n" "<br />") -}}
+          {{- $default = printf "`%s`" (toPrettyJson .Default | replace "\n" " ") -}}
+          {{- */ -}}
+        {{ end }}
+
+        {{- printf $lineFormat .Name .Description $default -}}
+      {{- end -}}
+    {{- end -}}
+
+  {{- end -}}
+
+  {{- $sections := dict "Application" "app_" "Packer" "packer_" -}}
+  {{- $inputs := .Module.Inputs -}}
+  {{- range $k, $v := $sections -}}
+  {{- $configs := dict "title" $k "prefix" $v "variables" $inputs -}}
+  {{- template "variables_section" $configs -}}
+  {{- end }}
+
+# see https://terraform-docs.io/user-guide/configuration/formatter/
+formatter: "markdown table"
+
+# see https://terraform-docs.io/user-guide/configuration/output/
+output:
+  file: "README.md"
+  mode: inject
+  template: |-
+    <!-- BEGIN_PACKER_DOCS -->
+    {{ .Content }}
+    <!-- END_PACKER_DOCS -->
+
+# see https://terraform-docs.io/user-guide/configuration/settings/
+settings:
+  anchor: false
+  color: true
+  default: true
+  description: false
+  escape: false
+  hide-empty: true
+  html: false
+  indent: 3
+  read-comments: false
+  required: false
+  sensitive: false
+  type: false
+
+# see https://terraform-docs.io/user-guide/configuration/sort/
+sort:
+  enabled: true
+  by: name
+
+# see https://terraform-docs.io/user-guide/configuration/sections/
+sections:
+  show:
+    - inputs
+
+# see https://terraform-docs.io/user-guide/configuration/version/
+version: ">= 0.16.0, < 1.0.0"
