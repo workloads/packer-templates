@@ -1,6 +1,6 @@
 # Packer Templates
 
-> Packer Templates for HashiCorp products for multiple (Cloud) Platforms
+> This directory manages Packer Images for [@workloads](https://github.com/workloads).
 
 ## Table of Contents
 
@@ -13,8 +13,10 @@
     * [Workflow](#workflow)
     * [Build Options](#build-options)
       * [`debug`](#debug)
+      * [`dev`](#dev)
       * [`force`](#force)
       * [`machine-readable`](#machine-readable)
+      * [`timestamp`](#timestamp)
     * [Supported Providers](#supported-providers)
   * [Notes](#notes)
   * [Author Information](#author-information)
@@ -23,19 +25,34 @@
 
 ## Requirements
 
-* Packer `1.8.3` or newer
-* Ansible `2.13.1` or newer
-* A check-out of [@workloads/tooling](https://github.com/workloads/tooling)
+- HashiCorp Packer `1.9.1` or [newer](https://developer.hashicorp.com/packer/downloads)
+- Ansible `2.13.2` or [newer](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+- a check-out of [@workloads/tooling](https://github.com/workloads/tooling)
 
-Ansible is used for system-level operations (e.g.: installing and removing packages).
+Optional, and only needed for development and testing of Packs:
+
+- `terraform-docs` `0.16.0` or [newer](https://terraform-docs.io/user-guide/installation/)
+- `ansible-lint` `6.17.2` or [newer](https://ansible.readthedocs.io/projects/lint/installing/)
 
 ## Usage
 
-This repository contains Packer templates for multiple providers.
+This repository provides a workflow that is wrapped through a [Makefile](./Makefile).
 
-The primary way of interacting with this repository is `make` via the included [Makefile](./Makefile).
+Running `make` without commands will print out the following help information:
 
-This allows for a consistent execution of the underlying workflows.
+```text
+🔵 PACKER TEMPLATES
+
+Target          Description                                     Usage
+init            initialize a Packer Image                       `make init target=my_target os=my_os`
+lint            lint a Packer Image                             `make lint target=my_target os=my_os`
+build           build a Packer Image                            `make build target=my_target os=my_os`
+docs            generate documentation for all Packer Images    `make docs target=my_target os=my_os`
+test            test a Packer Image                             `make test target=my_target os=my_os`
+help            display a list of Make Targets                  `make help`
+_listincludes   list all included Makefiles and *.mk files      `make _listincludes`
+_selfcheck      lint Makefile                                   `make _selfcheck`
+```
 
 The currently supported options are:
 

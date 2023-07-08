@@ -5,7 +5,7 @@ collections:
   -
     # see https://galaxy.ansible.com/ansible/windows
     name: "ansible.windows"
-    version: "1.11.1"
+    version: "2.0.0"
 
 # see: https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html
 roles:
@@ -15,7 +15,7 @@ roles:
     name: "ansible-lockdown.amazon2_cis"
     src: "git@github.com:ansible-lockdown/AMAZON2-CIS.git"
     scm: "git"
-    version: "1.0.0"  # see: https://github.com/ansible-lockdown/AMAZON2-CIS/releases
+    version: "1.1.0"  # see: https://github.com/ansible-lockdown/AMAZON2-CIS/releases
 
   -
     # CIS-based role for RHEL 8
@@ -23,7 +23,7 @@ roles:
     name: "ansible-lockdown.rhel8_cis"
     src: "git@github.com:ansible-lockdown/RHEL8-CIS.git"
     scm: "git"
-    version: "2.1.0"  # see: https://github.com/ansible-lockdown/RHEL8-CIS/releases
+    version: "2.2.1"  # see: https://github.com/ansible-lockdown/RHEL8-CIS/releases
 
   -
     # CIS-based role for Ubuntu 22.04
@@ -31,7 +31,7 @@ roles:
     name: "ansible-lockdown.ubuntu22_cis"
     src: "git@github.com:ansible-lockdown/UBUNTU22-CIS.git"
     scm: "git"
-    version: "main"  # see: https://github.com/ansible-lockdown/UBUNTU22-CIS/releases
+    version: "1.0.0"  # see: https://github.com/ansible-lockdown/UBUNTU22-CIS/releases
 
   -
     # CIS-based role for Windows Server 2019
@@ -43,13 +43,8 @@ roles:
 
   -
     # CIS-based role for Windows Server 2022
-    # see: https://galaxy.ansible.com/MindPointGroup/windows_2022_cis
+    # see: https://github.com/ansible-lockdown/Windows-2022-CIS
     name: "ansible-lockdown.windows_2022_cis"
     src: "git@github.com:ansible-lockdown/Windows-2022-CIS.git"
     scm: "git"
     version: "main"  # see: https://github.com/ansible-lockdown/Windows-2022-CIS/releases
-
-  -
-    # see https://galaxy.ansible.com/gantsign/golang
-    name: "gantsign.golang"
-    version: "3.0.1"
