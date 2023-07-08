@@ -57,12 +57,6 @@ _selfcheck      lint Makefile                                   `make _selfcheck
 The currently supported options are:
 
 ```text
-PACKER TEMPLATES
-
-help   Displays this help text
-init   Installs and upgrades Packer Plugins      Usage: `make init target=<target> os=<os> os=<os>`
-build  Builds an Image with Packer               Usage: `make build target=<target> os=<os>`
-lint   Formats and validates Packer Template     Usage: `make lint target=<target> os=<os>`
 clean  Remove "distributables" directory
 roles  Install Ansible Collections and Roles
 
