@@ -129,11 +129,11 @@ variable "shared" {
 
       # Go-specific configuration
       go = {
-        version = "1.19.1"
+        version = "1.20.5"
 
         # parent directory for all Go installations
         # individual versions will be installed into
-        # version-specific directories: `/opt/go/1.19.1`
+        # version-specific directories: `/opt/go/1.20.5`
         install_dir_prefix = "/opt/go/"
 
         modules = [
@@ -267,9 +267,9 @@ locals {
     destination        = "/tmp" # "/var/lib/nomad/plugins" # TODO: change
 
     plugins = {
-      # see https://github.com/Roblox/nomad-driver-containerd
+      # see https://github.com/Roblox/nomad-driver-containerd/releases
       nomad-driver-containerd = {
-        url = "https://github.com/Roblox/nomad-driver-containerd/releases/download/v0.9.3/containerd-driver"
+        url = "https://github.com/Roblox/nomad-driver-containerd/releases/download/v0.9.4/containerd-driver"
       }
 
       # see https://releases.hashicorp.com/nomad-driver-ecs/
@@ -290,16 +290,13 @@ locals {
       nomad-driver-podman = {
         # is this an official plugin? (e.g.: is it on `releases.hashicorp.com`)
         official = true
-        version  = "0.4.0"
+        version  = "0.4.2"
       }
     }
   }
 
   repositories = {
     docker = {
-      create_user  = true
-      create_group = true
-
       packages = {
         to_remove = [
           "docker",
@@ -313,74 +310,87 @@ locals {
           {
             # see https://github.com/containerd/containerd/releases/
             name    = "containerd.io"
-            version = "1.6.*"
+            version = "1.8.*"
           },
           {
             # see https://docs.docker.com/engine/release-notes/
             name    = "docker-ce"
-            version = "5:20.10.*"
+            version = "5:24.04.*"
           },
           {
             # see https://docs.docker.com/engine/release-notes/
             name    = "docker-ce-cli"
-            version = "5:20.10.*"
+            version = "5:24.04.*"
           },
+        ]
+      }
+
+      user_groups = {
+        group = "docker"
+
+        users = [
+          "docker",
         ]
       }
     }
 
     hashicorp = {
-      create_user  = true
-      create_group = true
-
       packages = {
         to_remove = []
 
         to_install = [
           {
             # see https://releases.hashicorp.com/boundary-worker/
-            name    = "boundary-worker-hcp"
-            version = "0.11.0+hcp-*"
+            name    = "boundary"
+            version = "0.13.0+ent-*"
           },
           {
             # see https://releases.hashicorp.com/consul/
             name    = "consul"
-            version = "1.14.0-*"
+            version = "1.16.0-*"
           },
           {
             # see https://releases.hashicorp.com/hcdiag/
             name    = "hcdiag"
-            version = "0.4.0-*"
+            version = "0.5.1-*"
           },
           {
             # see https://releases.hashicorp.com/nomad/
             name    = "nomad"
-            version = "1.4.1-*"
+            version = "1.5.6-*"
           },
           {
             # see https://releases.hashicorp.com/nomad-autoscaler/
             name    = "nomad-autoscaler"
             version = "0.3.7-*"
           },
-          # TODO: add when `tfc-agent` is available via Releases
-          #{
-          #  # see https://releases.hashicorp.com/tfc-agent/
-          #  name    = "tfc-agent"
-          #  version = "1.4.0"
-          #},
+          {
+            # see https://releases.hashicorp.com/tfc-agent/
+            name    = "tfc-agent"
+            version = "1.10.1"
+          },
           {
             # see https://releases.hashicorp.com/vault/
             name    = "vault"
-            version = "1.12.0-*"
+            version = "1.14.0-*"
           }
+        ]
+      }
+
+      user_groups = {
+        group = "hashicorp"
+
+        users = [
+          "boundary",
+          "consul",
+          "nomad",
+          "tfc-agent",
+          "vault",
         ]
       }
     }
 
     osquery = {
-      create_user  = false
-      create_group = false
-
       packages = {
         to_remove = []
 
@@ -388,8 +398,16 @@ locals {
           {
             # see https://osquery.io/downloads/official/
             name    = "osquery"
-            version = "5.4.0-*"
+            version = "5.8.2-*"
           }
+        ]
+      }
+
+      user_groups = {
+        group = "osquery"
+
+        users = [
+          "osquery",
         ]
       }
     }
@@ -406,9 +424,9 @@ locals {
         # see https://app.vagrantup.com/ubuntu/boxes/focal64
         source = {
           # see https://cloud-images.ubuntu.com/focal/current/SHA256SUMS
-          checksum = "sha256:49b0eef456a741fe462968f4d35f29feaee7410e1b737957aeb2d2fb56daa2a4"
+          checksum = "sha256:96eff16b24183a3c3947cdc58fe028d9"
           path     = "ubuntu/focal64"
-          version  = "20220920.0.0"
+          version  = "20230619.0.0"
         }
 
         username = "ubuntu"
@@ -428,9 +446,9 @@ locals {
         # see https://app.vagrantup.com/ubuntu/boxes/jammy64
         source = {
           # see https://cloud-images.ubuntu.com/jammy/current/SHA256SUMS
-          checksum = "sha256:df56aae7251548bea361db4ca015a9a8075c8e68229abb4c4d8e4944df8a22ea"
+          checksum = "sha256:96eff16b24183a3c3947cdc58fe028d9"
           path     = "ubuntu/jammy64"
-          version  = "20220921.1.0"
+          version  = "20230616.0.0"
         }
 
         tools = {
@@ -501,6 +519,10 @@ source "file" "configuration" {
         developer_mode = var.developer_mode,
         nomad_plugins  = local.nomad_plugins,
         tools          = local.sources[var.os][var.target].tools,
+
+        user_groups    = [
+          for repository in local.repositories : repository.user_groups
+        ]
       })
     )
   })
