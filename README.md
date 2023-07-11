@@ -47,7 +47,6 @@ init            initialize a Packer Image                                  `make
 lint            lint a Packer Image                                        `make lint target=my_target os=my_os`
 build           build a Packer Image                                       `make build target=my_target os=my_os`
 docs            generate documentation for all Packer Images               `make docs target=my_target`
-test            test a Packer Image                                        `make test target=my_target os=my_os`
 console         start Packer Console                                       `make console target=my_target os=my_os`
 ansible_init    initialize Ansible Collections and Roles                   `make ansible_init`
 ansible_lint    lint Ansible files                                         `make ansible_lint`

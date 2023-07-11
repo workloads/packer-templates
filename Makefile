@@ -143,11 +143,6 @@ define yaml_lint
 		.
 endef
 
-# test a Packer Image
-define test_image
-	echo $(BINARY_PACKER) test target=$(target) os=$(os)
-endef
-
 include ../tooling/make/targets/shared.mk
 
 .SILENT .PHONY: init
@@ -177,13 +172,6 @@ docs: # generate documentation for all Packer Images [Usage: `make docs target=m
 
 	# TODO: align with overall `render_documentation` function
 	$(call render_documentation,$(DIR_PACKER)/$(strip $(target)),shared.pkr.hcl,$(DOCS_CONFIG),sample.pkrvars.hcl)
-
-.SILENT .PHONY: test
-test: # test a Packer Image [Usage: `make test target=my_target os=my_os`]
-	$(if $(target),,$(call missing_argument,test,target=my_target))
-	$(if $(os),,$(call missing_argument,test,os=my_os))
-
-	$(call test_image,$(target),$(os))
 
 .SILENT .PHONY: console
 console: # start Packer Console [Usage: `make console target=my_target os=my_os`]

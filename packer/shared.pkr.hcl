@@ -100,7 +100,7 @@ variable "shared" {
       # The playbook to be run by Ansible.
       playbook_file = "./ansible/playbooks/main.yml"
 
-      skip_version_check = true
+      skip_version_check = false
     }
 
     # Packer Checksum Post-Processor configuration
