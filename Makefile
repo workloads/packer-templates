@@ -172,7 +172,7 @@ build: # build a Packer Image [Usage: `make build target=my_target os=my_os`]
 	$(call build_image,$(target),$(os))
 
 .SILENT .PHONY: docs
-docs: # generate documentation for all Packer Images [Usage: `make docs target=my_target os=my_os`]
+docs: # generate documentation for all Packer Images [Usage: `make docs target=my_target`]
 	$(if $(target),,$(call missing_argument,docs,target=my_target))
 
 	# TODO: align with overall `render_documentation` function
@@ -209,16 +209,16 @@ clean: # remove generated files [Usage: `make clean`]
 	$(call delete_target_path,$(DIR_DIST))
 
 .SILENT .PHONY: _dist
-_dist: # unsupported helper to quickly open generated files directory (macOS only)
+_dist: # quickly open the generated files directory (macOS only) [Usage: `make _dist`]
 	open $(DIR_DIST)
 
 .SILENT .PHONY: _vb
-_vb: # unsupported helper to quickly open `VirtualBox.app` (macOS only)
+_vb: # quickly open VirtualBox (macOS only) [Usage: `make _vb`]
 	open \
 		-a "VirtualBox"
 
 .SILENT .PHONY: _kill_vb
-_kill_vb: # unsupported helper to force-kill a (stuck) VirtualBox processes
+_kill_vb: # force-kill all VirtualBox processes (macOS only) [Usage: `make _kill_vb`]
 	# `9`  = signal number
 	# `-f` = match against the full argument list instead of just process names
 	pkill \
