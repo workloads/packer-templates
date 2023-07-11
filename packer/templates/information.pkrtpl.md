@@ -8,8 +8,6 @@
 | Developer Mode    | ⚠️ enabled                         |
 %{~ endif}
 
---------------------------------------------------------------------------------
-%{ if can(shared.tools.docker) }
 <!-- TOC -->
 
 
@@ -27,10 +25,8 @@
 %{~ for item in shared.tools.hashicorp.packages.to_install }
 - `${item.name}`, version `${item.version}`
 %{~ endfor ~}
-%{ endif ~}
 %{ endif }
 
-%{ if can(shared.nomad_plugins.plugins) }
 %{~ if can(shared.nomad_plugins.plugins) }
 ## HashiCorp Nomad Plugins:
 
@@ -40,10 +36,10 @@
 %{~ endfor ~}
 %{ endif }
 
-%{ if can(shared.tools.osquery) }
+%{~ if can(shared.tools.osquery) }
 ## osquery Packages:
 
 %{~ for item in shared.tools.osquery.packages.to_install }
 - `${item.name}`, version `${item.version}`
 %{~ endfor ~}
-%{ endif ~}
+%{ endif }

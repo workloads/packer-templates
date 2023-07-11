@@ -3,7 +3,7 @@
   hosts: default
   become: true
   vars:
-    ansible_required_version: 2.13.3
+    ansible_required_version: 2.15.1
 
   vars_files:
     - "{{ ConfigFile }}"

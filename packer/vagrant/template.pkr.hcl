@@ -10,14 +10,14 @@ packer {
     # see https://developer.hashicorp.com/packer/plugins/provisioners/ansible/ansible
     ansible = {
       # see https://github.com/hashicorp/packer-plugin-ansible/releases/
-      version = ">= 1.0.3"
+      version = "1.1.0"
       source  = "github.com/hashicorp/ansible"
     }
 
     # see https://developer.hashicorp.com/packer/plugins/provisioners/mondoo/cnspec
     cnspec = {
-      # see https://github.com/mondoohq/packer-plugin-cnspec/releases/tag/v6.2.0
-      version = ">= 6.2.0"
+      # see https://github.com/mondoohq/packer-plugin-cnspec/releases/
+      version = "8.17.0"
       source  = "github.com/mondoohq/cnspec"
     }
   }

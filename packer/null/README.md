@@ -26,6 +26,14 @@
 | build command   | `make build target=null os=<os>` |
 | lint command    | `make lint target=null os=<os>`  |
 
-### Note
+## Usage
+
+To build the `null` image for the `my_os` operating system, run:
+
+```shell
+make build target=null os=my_os
+```
+
+## Notes
 
 * The `null` template does not produce an output image; it is meant for rapid-prototyping of the `shared` variables concept.
