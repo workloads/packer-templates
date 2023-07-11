@@ -1,0 +1,17 @@
+---
+
+# see https://ansible.readthedocs.io/projects/lint/usage/
+# and https://ansible.readthedocs.io/projects/lint/configuring/
+
+# enable installation of dependencies from `requirements.yml` and schema refreshing
+offline: false
+
+# see https://ansible.readthedocs.io/projects/lint/profiles/#production
+profile: production
+
+# return non-zero exit codes on warnings and errors
+strict: true
+
+# reformat YAML files and run rule transforms
+write_list:
+  - all

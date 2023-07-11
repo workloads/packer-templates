@@ -2,9 +2,14 @@
 
 # configuration
 ARGS                  :=
+BINARY_ANSIBLE        ?= ansible
+BINARY_ANSIBLE_GALAXY ?= ansible-galaxy
+BINARY_ANSIBLE_LINT   ?= ansible-lint
 BINARY_PACKER     		?= packer
 DOCS_CONFIG            = .packer-docs.yml
 PACKS                  = $(shell ls $(TEMPLATES_DIR))
+YAMLLINT_CONFIG       ?= .yaml-lint.yml
+YAMLLINT_FORMAT				?= colored
 TITLE                  = 🔵 PACKER TEMPLATES
 
 include ../tooling/make/configs/shared.mk
@@ -74,3 +79,36 @@ console: # start Packer Console [Usage: `make console target=my_target os=my_os`
 	$(if $(os),,$(call missing_argument,console,os=my_os))
 
 	$(call console,$(target),$(os))
+
+.SILENT .PHONY: ansible_init
+ansible_init: # initialize Ansible Collections and Roles [Usage: `make ansible_init`]
+	$(call ansible_init)
+
+.SILENT .PHONY: ansible_lint
+ansible_lint:# lint Ansible files [Usage: `make ansible_lint`]
+	$(call ansible_lint)
+
+.SILENT .PHONY: yaml_lint
+yaml_lint: # lint YAML files
+	$(call yaml_lint)
+
+.SILENT .PHONY: clean
+clean: # remove generated files [Usage: `make clean`]
+	$(call delete_target_path,$(DIR_DIST))
+
+.SILENT .PHONY: _dist
+_dist: # unsupported helper to quickly open generated files directory (macOS only)
+	open $(DIR_DIST)
+
+.SILENT .PHONY: _vb
+_vb: # unsupported helper to quickly open `VirtualBox.app` (macOS only)
+	open \
+		-a "VirtualBox"
+
+.SILENT .PHONY: _kill_vb
+_kill_vb: # unsupported helper to force-kill a (stuck) VirtualBox processes
+	# `9`  = signal number
+	# `-f` = match against the full argument list instead of just process names
+	pkill \
+		-9 \
+		-f "VBox"
