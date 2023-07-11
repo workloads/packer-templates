@@ -57,11 +57,9 @@ build: # build a Packer Image [Usage: `make build target=my_target os=my_os`]
 .SILENT .PHONY: docs
 docs: # generate documentation for all Packer Images [Usage: `make docs target=my_target os=my_os`]
 	$(if $(target),,$(call missing_argument,docs,target=my_target))
-	$(if $(os),,$(call missing_argument,docs,os=my_os))
 
 	# TODO: align with overall `render_documentation` function
-	$(call render_documentation,$(target),$(os))
-	$(call render_documentation,$(IMAGES_DIR)/$(strip $(PACK)),variables.hcl,$(DOCS_CONFIG),$(NOMADVARS_SAMPLE_FILE)))
+	$(call render_documentation,$(DIR_PACKER)/$(strip $(target)),shared.pkr.hcl,$(DOCS_CONFIG),sample.pkrvars.hcl)
 
 .SILENT .PHONY: test
 test: # test a Packer Image [Usage: `make test target=my_target os=my_os`]
