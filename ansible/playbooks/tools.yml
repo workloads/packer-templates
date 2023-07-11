@@ -1,9 +1,8 @@
 ---
-
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
 - name: Debug
   ansible.builtin.debug:
-    msg: "included tools.yml"
+    msg: included tools.yml
   when:
     - enable_debug_statements is defined
     - enable_debug_statements
@@ -18,7 +17,7 @@
 
     # `.asc` is the required extension for armored keys
     repo_gpg_file: "{{ item.key }}.asc"
-    repo_keyring_directory: "/usr/share/keyrings"
+    repo_keyring_directory: /usr/share/keyrings
 
   loop: "{{ tools | dict2items }}"
   when:

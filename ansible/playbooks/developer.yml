@@ -1,19 +1,46 @@
 ---
-
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
 - name: Debug
   ansible.builtin.debug:
-    msg: "included developer.yml"
+    msg: included developer.yml
   when:
     - enable_debug_statements is defined
     - enable_debug_statements
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_module.html
-- name: Install Developer Linux Packages
+- name: Install developer-specific Linux Packages
   ansible.builtin.package:
     name: "{{ developer.packages.to_install }}"
     state: present
   when:
-    - ansible_os_family == "Amazon"
-      or ansible_os_family == "Debian"
-      or ansible_os_family == "RedHat"
+    - ansible_os_family == "Amazon" or ansible_os_family == "Debian" or ansible_os_family == "RedHat"
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html
+- name: Execute `go mod vendor` for relevant Go Modules
+  ansible.builtin.command: go mod vendor {{ item }}
+  environment:
+    GOPATH: "{{ GOPATH }}"
+    GOROOT: "{{ GOROOT }}"
+    GOPROXY: "{{ GOPROXY }}"
+    GO111MODULE: "{{ GO111MODULE }}"
+  register: go_mod_output
+  changed_when: go_mod_output.rc != 0
+  with_items:
+    - "{{ developer.go.modules }}"
+  when:
+    - ansible_os_family == "Amazon" or ansible_os_family == "Debian" or ansible_os_family == "RedHat"
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html
+- name: Execute `go install` for relevant Go Modules
+  ansible.builtin.command: go install {{ item }}
+  environment:
+    GOPATH: "{{ GOPATH }}"
+    GOROOT: "{{ GOROOT }}"
+    GOPROXY: "{{ GOPROXY }}"
+    GO111MODULE: "{{ GO111MODULE }}"
+  register: go_install_output
+  changed_when: go_install_output.rc != 0
+  with_items:
+    - "{{ developer.go.modules }}"
+  when:
+    - ansible_os_family == "Amazon" or ansible_os_family == "Debian" or ansible_os_family == "RedHat"

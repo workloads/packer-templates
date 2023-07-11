@@ -1,36 +1,33 @@
 ---
-
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
-- name: "({{ repo_name | upper }}) Debug"
+- name: Debug for `{{ repo_name | upper }}`
   ansible.builtin.debug:
-    msg: "included tools_repositories.yml"
+    msg: included tools_repositories.yml
   when:
     - enable_debug_statements is defined
     - enable_debug_statements
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_module.html
-- name: "({{ repo_name | upper }}) Remove (possibly-outdated) non-Repository Packages"
+- name: Remove (possibly-outdated) non-Repository Packages for `{{ repo_name | upper }}`
   ansible.builtin.package:
     name: "{{ repo_config.packages.to_remove }}"
     state: absent
   when:
-    - ansible_os_family == "Amazon"
-      or ansible_os_family == "Debian"
-      or ansible_os_family == "RedHat"
+    - ansible_os_family == "Amazon" or ansible_os_family == "Debian" or ansible_os_family == "RedHat"
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
-- name: "({{ repo_name | upper }}) Create Directory to write Keyring Files to"
+- name: Create Directory to write Keyring Files to for `{{ repo_name | upper }}`
   ansible.builtin.file:
-    path: "{{ repo_keyring_directory }}"
     state: directory
     mode: "0644"
+    path: "{{ repo_keyring_directory }}"
   when:
     # create directory only if on Ubuntu < 22.xx
     - ansible_distribution == "Ubuntu"
     - ansible_distribution_major_version < "22"
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/get_url_module.html
-- name: "({{ repo_name | upper }}) Add APT Key from URL"
+- name: Add APT Key from URL for `{{ repo_name | upper }}`
   ansible.builtin.get_url:
     dest: "{{ repo_keyring_directory }}/{{ repo_gpg_file }}"
     mode: "0644"
@@ -42,10 +39,10 @@
     - repo_keyring_directory and repo_gpg_file is defined
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/set_fact_module.html
-- name: "({{ repo_name | upper }}) set Ansible Facts for Debian-specific OS"
+- name: Set Ansible Facts for Debian-specific OS for `{{ repo_name | upper }}`
   ansible.builtin.set_fact:
-    arch: "arch={{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}"
-    signed_by: "signed-by={{ repo_keyring_directory }}/{{ repo_gpg_file }}"
+    arch: arch={{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}
+    signed_by: signed-by={{ repo_keyring_directory }}/{{ repo_gpg_file }}
 
     # TODO: make this less 'smart" and find a better place to define the target string
     target: "{{ repo_config.url }} {{ 'deb' if repo_name == 'osquery' else ansible_distribution_release }} {{ repo_config.component }}"
@@ -54,17 +51,17 @@
     - ansible_os_family == "Debian"
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_repository_module.html
-- name: "({{ repo_name | upper }}) Configure APT Repository"
+- name: Configure APT Repository for `{{ repo_name | upper }}`
   ansible.builtin.apt_repository:
     filename: "{{ repo_name }}"
-    repo: "deb [{{ arch }} {{ signed_by }}] {{ target }}"
+    repo: deb [{{ arch }} {{ signed_by }}] {{ target }}
     update_cache: true
     state: present
   when:
     - ansible_os_family == "Debian"
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
-- name: "({{ repo_name | upper }}) Install Repository-provided Packages"
+- name: Install Repository-provided Packages for `{{ repo_name | upper }}`
   ansible.builtin.apt:
     install_recommends: true
     name: "{{ installable.name }}={{ installable.version | default('*') }}"

@@ -1,10 +1,9 @@
 ---
-
-- name: "Provision Packer Image for Target `{{ packer_builder_type }}`"
+- name: Provision Packer Image for Target `{{ packer_builder_type }}`
   hosts: default
   become: true
   vars:
-    ansible_required_version: "2.13.3"
+    ansible_required_version: 2.13.3
 
   vars_files:
     - "{{ ConfigFile }}"
@@ -13,7 +12,7 @@
     # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fail_module.html
     - name: Verify Ansible Version meets requirements
       ansible.builtin.fail:
-        msg: "Need v{{ ansible_required_version }}, got v{{ ansible_version.full }}"
+        msg: Need v{{ ansible_required_version }}, got v{{ ansible_version.full }}
       when: ansible_version.full < ansible_required_version
 
     # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
@@ -43,9 +42,7 @@
 
     - role: ansible-lockdown.ubuntu22_cis
       when:
-        - ansible_distribution == 'Ubuntu'
-          and ansible_distribution_release == 'jammy'
-          and enable_cis_hardening is true
+        - ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'jammy' and enable_cis_hardening is true
 
   tasks:
     # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
@@ -61,6 +58,13 @@
         file: tools.yml
       when:
         - tools is defined
+
+    # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
+    - name: Manage User Tasks
+      ansible.builtin.include_tasks:
+        file: users.yml
+      when:
+        - users is defined
 
     # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
     - name: Manage Developer Mode Tasks

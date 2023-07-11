@@ -1,0 +1,30 @@
+---
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
+- name: Debug
+  ansible.builtin.debug:
+    msg: included users.yml
+  when:
+    - enable_debug_statements is defined
+    - enable_debug_statements
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/group_module.html
+- name: Create Group
+  ansible.builtin.group:
+    name: "{{ item }}"
+    state: present
+    system: true
+  with_items:
+    - "{{ user_groups.group }}"
+  when:
+    - item is defined
+
+# see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/user_module.html
+- name: Create User for Group {{ item.group }}
+  ansible.builtin.user:
+    name: "{{ item }}"
+    state: present
+    system: true
+  with_items:
+    - "{{ user_groups.group }}"
+  when:
+    - item is defined

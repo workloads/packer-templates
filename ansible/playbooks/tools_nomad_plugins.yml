@@ -1,15 +1,14 @@
 ---
-
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
-- name: "({{ plugin_name | upper }}) Debug"
+- name: Debug for `{{ plugin_name | upper }}`
   ansible.builtin.debug:
-    msg: "included tools_nomad_plugins.yml"
+    msg: included tools_nomad_plugins.yml
   when:
     - enable_debug_statements is defined
     - enable_debug_statements
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
-- name: "({{ plugin_name | upper }}) Create Directory for Nomad Plugins"
+- name: Create Directory for Nomad Plugins for `{{ plugin_name | upper }}`
   ansible.builtin.file:
     path: "{{ destination }}"
     state: directory
@@ -18,7 +17,7 @@
     - destination is defined
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/set_fact_module.html
-- name: "({{ repo_name | upper }}) set Ansible Facts for HashiCorp-maintained Plugin Binary"
+- name: Set Ansible Facts for HashiCorp-maintained Plugin Binary for `{{ repo_name | upper }}`
   ansible.builtin.set_fact:
     plugin_url: "{{ hashicorp_base_url }}/{{ plugin_name }}/{{ plugin_config.version }}/{{ plugin_name }}_{{ plugin_config.version }}"
   when:
@@ -26,9 +25,9 @@
     - plugin_config.official is true
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/get_url_module.html
-- name: "({{ plugin_name | upper }}) Get HashiCorp-maintained Plugin Binary"
+- name: Get HashiCorp-maintained Plugin Binary for `{{ plugin_name | upper }}`
   ansible.builtin.get_url:
-    checksum: "sha256:{{ plugin_url }}_SHA256SUMS"
+    checksum: sha256:{{ plugin_url }}_SHA256SUMS
     dest: "{{ destination }}/"
     mode: "0644"
     url: "{{ plugin_url }}_linux_{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}.zip"
@@ -38,7 +37,7 @@
     - plugin_config.official is true
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/get_url_module.html
-- name: "({{ plugin_name | upper }}) Get community-maintained Plugin Binary"
+- name: Get community-maintained Plugin Binary for `{{ plugin_name | upper }}`
   ansible.builtin.get_url:
     dest: "{{ destination }}/"
     mode: "0644"

@@ -1,9 +1,8 @@
 ---
-
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
 - name: Debug
   ansible.builtin.debug:
-    msg: "included post_cleanup.yml"
+    msg: included post_cleanup.yml
   when:
     - enable_debug_statements is defined
     - enable_debug_statements
@@ -14,8 +13,6 @@
     name: "{{ os.directories.Linux.to_remove }}"
     state: absent
   when:
-    - ansible_os_family == "Amazon"
-      or ansible_os_family == "Debian"
-      or ansible_os_family == "RedHat"
+    - ansible_os_family == "Amazon" or ansible_os_family == "Debian" or ansible_os_family == "RedHat"
     - post_cleanup is defined and post_cleanup.enabled
     - os.toggles.remove_directories

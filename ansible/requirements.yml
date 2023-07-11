@@ -31,7 +31,7 @@ roles:
     name: "ansible-lockdown.ubuntu22_cis"
     src: "git@github.com:ansible-lockdown/UBUNTU22-CIS.git"
     scm: "git"
-    version: "1.0.0"  # see: https://github.com/ansible-lockdown/UBUNTU22-CIS/releases
+    version: "V1.0.0"  # see: https://github.com/ansible-lockdown/UBUNTU22-CIS/releases
 
   -
     # CIS-based role for Windows Server 2019
