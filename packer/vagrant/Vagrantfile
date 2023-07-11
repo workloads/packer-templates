@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # see https://www.vagrantup.com/docs/vagrantfile/vagrant_version
-Vagrant.require_version '>= 2.3.4'
+Vagrant.require_version '>= 2.3.7'
 
 # see https://www.vagrantup.com/docs/vagrantfile/machine_settings
 # and https://www.vagrantup.com/docs/vagrantfile/ssh_settings
