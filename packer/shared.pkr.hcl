@@ -270,7 +270,7 @@ locals {
   # Nomad Plugins-specific information
   nomad_plugins = {
     hashicorp_base_url = "https://releases.hashicorp.com"
-    destination        = "/tmp" # "/var/lib/nomad/plugins" # TODO: change
+    destination        = "/var/lib/nomad/plugins"
 
     plugins = {
       # see https://github.com/Roblox/nomad-driver-containerd/releases

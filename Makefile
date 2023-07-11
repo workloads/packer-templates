@@ -2,15 +2,36 @@
 
 # configuration
 ARGS                  :=
+ANSIBLE_PLAYBOOK      ?= $(DIR_ANSIBLE)/playbooks/main.yml
+ANSIBLE_REQUIREMENTS  ?= $(DIR_ANSIBLE)/requirements.yml
+ANSIBLELINT_CONFIG    ?= .ansible-lint.yml
+ANSIBLELINT_FORMAT    ?= full
+ANSIBLELINT_SARIF_FILE = $(DIR_DIST)/ansible-lint.sarif
 BINARY_ANSIBLE        ?= ansible
 BINARY_ANSIBLE_GALAXY ?= ansible-galaxy
 BINARY_ANSIBLE_LINT   ?= ansible-lint
 BINARY_PACKER     		?= packer
+BINARY_VAGRANT        ?= vagrant
+BINARY_YAMLLINT       ?= yamllint
+DIR_ANSIBLE						?= ansible
+DIR_DIST							?= dist
+DIR_PACKER            ?= packer
 DOCS_CONFIG            = .packer-docs.yml
-PACKS                  = $(shell ls $(TEMPLATES_DIR))
 YAMLLINT_CONFIG       ?= .yaml-lint.yml
 YAMLLINT_FORMAT				?= colored
 TITLE                  = 🔵 PACKER TEMPLATES
+
+# expose build target to Packer
+arg_var_dist_dir = -var 'dist_dir=$(DIR_DIST)'
+arg_var_os       = -var 'os=$(os)'
+arg_var_target   = -var 'target=$(target)'
+
+# enable dev mode and configure corresponding packages
+ifdef dev
+arg_var_developer_mode = -var 'developer_mode=true'
+else
+arg_var_developer_mode = -var 'developer_mode=false'
+endif
 
 include ../tooling/make/configs/shared.mk
 
@@ -18,17 +39,108 @@ include ../tooling/make/functions/shared.mk
 
 # build a Packer Image
 define build_image
-	echo $(BINARY_PACKER) build target=$(target) os=$(os)
+	$(call print_args,$(ARGS))
+
+	# see https://developer.hashicorp.com/packer/docs/commands/build
+	$(BINARY_PACKER) \
+		build \
+			$(arg_var_dist_dir) \
+			$(arg_var_os) \
+      $(arg_var_target) \
+      $(arg_var_developer_mode) \
+			$(ARGS) \
+			"$(DIR_PACKER)/$(target)"
+endef
+
+# open Packer Console for an Image
+define console
+	$(call print_args,$(ARGS))
+
+	# see https://developer.hashicorp.com/packer/docs/commands/console
+	$(BINARY_PACKER) \
+		console \
+			$(arg_var_dist_dir) \
+			$(arg_var_os) \
+      $(arg_var_target) \
+      $(arg_var_developer_mode) \
+			$(ARGS) \
+			"$(DIR_PACKER)/$(target)"
 endef
 
 # initialize a Packer Image
 define init_image
-	echo $(BINARY_PACKER) init target=$(target) os=$(os)
+	$(call print_args,$(ARGS))
+
+	# see https://developer.hashicorp.com/packer/docs/commands/init
+	$(BINARY_PACKER) \
+		init \
+			-upgrade \
+			$(ARGS) \
+			"$(DIR_PACKER)/$(target)"
 endef
 
 # lint a Packer Image
 define lint_image
-	echo $(BINARY_PACKER) lint target=$(target) os=$(os)
+	$(call print_args,$(ARGS))
+
+	# see https://developer.hashicorp.com/packer/docs/commands/fmt
+  # and https://developer.hashicorp.com/packer/docs/commands/validate
+	$(BINARY_PACKER) \
+		fmt \
+			-check \
+			-diff \
+			-recursive \
+			"$(DIR_PACKER)/$(target)" \
+	&& \
+	$(BINARY_PACKER) \
+		validate \
+			$(arg_var_dist_dir) \
+			$(arg_var_os) \
+      $(arg_var_target) \
+      $(arg_var_developer_mode) \
+			$(ARGS) \
+			"$(DIR_PACKER)/$(target)" \
+	;
+endef
+
+
+# initialize Ansible Collections and Roles
+define ansible_init
+	$(call print_reference,$(ANSIBLE_REQUIREMENTS))
+
+	echo
+
+	# see https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html
+	$(BINARY_ANSIBLE_GALAXY) \
+		install \
+			--role-file "$(ANSIBLE_REQUIREMENTS)" \
+			--force
+
+	echo
+endef
+
+# lint Ansible playbooks
+define ansible_lint
+	# create directory for `ansible-lint` SARIF output
+	$(call safely_create_directory,$(DIR_DIST))
+
+	# --exclude "../../../.ansible"
+
+	# lint Ansible files and output SARIF results
+	$(BINARY_ANSIBLE_LINT) \
+		--config "$(ANSIBLELINT_CONFIG)" \
+		--format "$(ANSIBLELINT_FORMAT)" \
+    --sarif-file="$(ANSIBLELINT_SARIF_FILE)" \
+		--write=all \
+		"$(ANSIBLE_PLAYBOOK)"
+endef
+
+define yaml_lint
+	$(BINARY_YAMLLINT) \
+		--config-file "$(YAMLLINT_CONFIG)" \
+		--format "$(YAMLLINT_FORMAT)" \
+		--strict \
+		.
 endef
 
 # test a Packer Image

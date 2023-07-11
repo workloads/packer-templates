@@ -3,11 +3,18 @@
 ## Table of Contents
 
 <!-- TOC -->
-* [Template: `null`](#template--null)
+* [Template: `null`](#template-null)
   * [Table of Contents](#table-of-contents)
+  * [Requirements](#requirements)
   * [Overview](#overview)
-    * [Note](#note)
+  * [Usage](#usage)
+    * [Inputs](#inputs)
+  * [Notes](#notes)
 <!-- TOC -->
+
+## Requirements
+
+- Packer `1.9.1` or newer
 
 ## Overview
 
@@ -21,4 +28,4 @@
 
 ### Note
 
-The `null` template does not produce an output image; it is meant for rapid-prototyping of the `shared` variables concept.
+* The `null` template does not produce an output image; it is meant for rapid-prototyping of the `shared` variables concept.
