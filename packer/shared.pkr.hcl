@@ -261,6 +261,12 @@ locals {
     "--extra-vars", "ConfigFile=../../${local.templates.configuration.output} InfoFile=../../${local.templates.information.output}",
   ]
 
+  # Packer Image-specific configuration
+  image = {
+    name    = var.developer_mode ? "${var.os}-${var.target}-dev" : "${var.os}-${var.target}"
+    version = local.timestamp.iso
+  }
+
   # Nomad Plugins-specific information
   nomad_plugins = {
     hashicorp_base_url = "https://releases.hashicorp.com"
