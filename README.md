@@ -26,7 +26,7 @@
 ## Requirements
 
 - HashiCorp Packer `1.9.1` or [newer](https://developer.hashicorp.com/packer/downloads)
-- Ansible `2.13.2` or [newer](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+- Ansible `2.15.1` or [newer](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 - a check-out of [@workloads/tooling](https://github.com/workloads/tooling)
 
 Optional, and only needed for development and testing of Packs:
@@ -43,37 +43,28 @@ Running `make` without commands will print out the following help information:
 ```text
 🔵 PACKER TEMPLATES
 
-Target          Description                                     Usage
-init            initialize a Packer Image                       `make init target=my_target os=my_os`
-lint            lint a Packer Image                             `make lint target=my_target os=my_os`
-build           build a Packer Image                            `make build target=my_target os=my_os`
-docs            generate documentation for all Packer Images    `make docs target=my_target os=my_os`
-test            test a Packer Image                             `make test target=my_target os=my_os`
-help            display a list of Make Targets                  `make help`
-_listincludes   list all included Makefiles and *.mk files      `make _listincludes`
-_selfcheck      lint Makefile                                   `make _selfcheck`
-```
-
-
-```text
-clean  Remove "distributables" directory
-roles  Install Ansible Collections and Roles
-
+init            initialize a Packer Image                                  `make init target=my_target os=my_os`
+lint            lint a Packer Image                                        `make lint target=my_target os=my_os`
+build           build a Packer Image                                       `make build target=my_target os=my_os`
+docs            generate documentation for all Packer Images               `make docs target=my_target`
+test            test a Packer Image                                        `make test target=my_target os=my_os`
+console         start Packer Console                                       `make console target=my_target os=my_os`
+ansible_init    initialize Ansible Collections and Roles                   `make ansible_init`
+ansible_lint    lint Ansible files                                         `make ansible_lint`
+clean           remove generated files                                     `make clean`
+_dist           quickly open the generated files directory (macOS only)    `make _dist`
+_vb             quickly open VirtualBox (macOS only)                       `make _vb`
+_kill_vb        force-kill all VirtualBox processes (macOS only)           `make _kill_vb`
+help            display a list of Make Targets                             `make help`
+_listincludes   list all included Makefiles and *.mk files                 `make _listincludes`
+_selfcheck      lint Makefile                                              `make _selfcheck`
 ```
 
 ### Helpers
 
 The [Makefile](./Makefile) includes several unsupported helper targets that _may_ be useful when developing in this repository.
 
-| target          | description                                        |
-|-----------------|----------------------------------------------------|
-| `_dist`         | Opens the "distributables" directory (macOS only)  |
-| `_lint_ansible` | Lints Ansible Playbooks using `ansible-lint`       |
-| `_lint_yaml`    | Lints YAML files using `yamllint`                  |
-| `_lint`         | Executes `_lint_yaml`, followed by `_lint_ansible` |
-| `_vb`           | Opens "VirtualBox.app" (macOS only)                |
-
-Unsupported targets are prefixed by an underscore (`_`).
+These are prefixed with an underscore (`_`) and may be removed at any time.
 
 ### Workflow
 
