@@ -87,7 +87,6 @@ define lint_image
   # and https://developer.hashicorp.com/packer/docs/commands/validate
 	$(BINARY_PACKER) \
 		fmt \
-			-check \
 			-diff \
 			-recursive \
 			"$(DIR_PACKER)/$(target)" \

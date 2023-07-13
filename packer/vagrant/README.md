@@ -47,7 +47,6 @@ make build target=null os=my_os
 > `make` commands must be run from the root directory.
 
 
-
 * Packer requires an initial Vagrant Cloud Box to be available, otherwise the upload process will fail.
 
 * Vagrant Cloud is a subset of the Vagrant build process and cannot be executed as a stand-alone build-process.
