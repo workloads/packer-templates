@@ -15,7 +15,6 @@ roles:
     name: "gantsign.golang"
     version: "3.1.5"  # see: https://github.com/gantsign/ansible-role-golang/releases
 
-
   -
     # CIS-based role for Amazon Linux 2
     # see: https://github.com/ansible-lockdown/AMAZON2-CIS

@@ -1,5 +1,4 @@
 ---
-
 - name: Provision Packer Image for Target `{{ packer_builder_type }}`
   hosts: default
   become: true

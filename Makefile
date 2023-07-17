@@ -139,7 +139,7 @@ ansible_inventory: # construct an Ansible Inventory [Usage: `make ansible_invent
 	$(if $(host),,$(call missing_argument,console,host=my_host))
 	$(if $(user),,$(call missing_argument,console,user=my_user))
 
-	echo "\n \
+	echo "\
 [all:vars] \n \
 \t ansible_user=$(user) \n \
 \t ansible_port=22 \n \

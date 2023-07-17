@@ -224,7 +224,7 @@ variable "shared" {
       }
 
       toggles = {
-        copy_nologin_file  = true
+        copy_nologin_file  = false
         copy_versions_file = true
         create_directories = true
         install_packages   = true
