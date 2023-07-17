@@ -2,12 +2,13 @@
 
 # configuration
 ARGS                  :=
+ANSIBLE_INVENTORY     ?= $(DIR_DIST)/inventory.txt
 ANSIBLE_PLAYBOOK      ?= $(DIR_ANSIBLE)/playbooks/main.yml
 ANSIBLE_REQUIREMENTS  ?= $(DIR_ANSIBLE)/requirements.yml
 ANSIBLELINT_CONFIG    ?= .ansible-lint.yml
 ANSIBLELINT_FORMAT    ?= full
 ANSIBLELINT_SARIF_FILE = $(DIR_DIST)/ansible-lint.sarif
-BINARY_ANSIBLE        ?= ansible
+BINARY_ANSIBLE        ?= ansible-playbook
 BINARY_ANSIBLE_GALAXY ?= ansible-galaxy
 BINARY_ANSIBLE_LINT   ?= ansible-lint
 BINARY_PACKER     		?= packer

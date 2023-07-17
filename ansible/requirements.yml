@@ -10,6 +10,13 @@ collections:
 # see: https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html
 roles:
   -
+    # Go tooling
+    # see: https://github.com/gantsign/ansible-role-golang/
+    name: "gantsign.golang"
+    version: "3.1.5"  # see: https://github.com/gantsign/ansible-role-golang/releases
+
+
+  -
     # CIS-based role for Amazon Linux 2
     # see: https://github.com/ansible-lockdown/AMAZON2-CIS
     name: "ansible-lockdown.amazon2_cis"

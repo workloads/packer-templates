@@ -30,7 +30,7 @@
     checksum: sha256:{{ plugin_url }}_SHA256SUMS
     dest: "{{ destination }}/"
     mode: "0644"
-    url: "{{ plugin_url }}_linux_{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}.zip"
+    url: "{{ plugin_url }}_linux_{{ normalized_arch }}.zip"
   when:
     - destination is defined
     - plugin_url is defined

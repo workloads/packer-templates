@@ -120,7 +120,7 @@ variable "shared" {
 
     # Developer Mode-specific configuration
     developer = {
-      # Developer-Mode packages to lifecycle
+      # Developer-Mode packages to manage
       packages = {
         to_install = []
 
@@ -129,11 +129,12 @@ variable "shared" {
 
       # Go-specific configuration
       go = {
-        version = "1.20.5"
+        # see https://go.dev/doc/devel/release
+        version = "1.20.6"
 
         # parent directory for all Go installations
         # individual versions will be installed into
-        # version-specific directories: `/opt/go/1.20.5`
+        # version-specific directories: `/opt/go/<version>`
         install_dir_prefix = "/opt/go/"
 
         modules = [
@@ -148,19 +149,19 @@ variable "shared" {
 
       # Directories to create and remove
       directories = {
-        # Amazon Linux directories to lifecycle
+        # Amazon Linux directories to manage
         Amazon = {
           to_create = []
           to_remove = []
         }
 
-        # Debian / Ubuntu directories to lifecycle
+        # Debian / Ubuntu directories to manage
         Debian = {
           to_create = []
           to_remove = []
         }
 
-        # generic Linux directories to lifecycle
+        # generic Linux directories to manage
         Linux = {
           to_create = []
 
@@ -174,7 +175,7 @@ variable "shared" {
 
       # Packages to install and remove
       packages = {
-        # Amazon Linux packages to lifecycle
+        # Amazon Linux packages to manage
         Amazon = {
           to_install = [
             "amazon-ssm-agent"
@@ -183,7 +184,7 @@ variable "shared" {
           to_remove = []
         }
 
-        # Debian / Ubuntu packages to lifecycle
+        # Debian / Ubuntu packages to manage
         Debian = {
           to_install = [
             "apt-transport-https",
@@ -194,7 +195,7 @@ variable "shared" {
           ]
         }
 
-        # generic Linux packages to lifecycle
+        # generic Linux packages to manage
         Linux = {
           to_install = [
             "ca-certificates",
@@ -265,6 +266,8 @@ locals {
   image = {
     name    = var.developer_mode ? "${var.os}-${var.target}-dev" : "${var.os}-${var.target}"
     version = local.timestamp.iso
+    target  = var.target
+    os      = var.os
   }
 
   # Nomad Plugins-specific information

@@ -41,7 +41,7 @@
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/set_fact_module.html
 - name: Set Ansible Facts for Debian-specific OS for `{{ repo_name | upper }}`
   ansible.builtin.set_fact:
-    arch: arch={{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}
+    arch: arch={{ normalized_arch }}
     signed_by: signed-by={{ repo_keyring_directory }}/{{ repo_gpg_file }}
 
     # TODO: make this less 'smart" and find a better place to define the target string
