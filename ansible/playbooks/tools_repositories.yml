@@ -44,7 +44,7 @@
     arch: arch={{ normalized_arch }}
     signed_by: signed-by={{ repo_keyring_directory }}/{{ repo_gpg_file }}
 
-    # TODO: make this less 'smart" and find a better place to define the target string
+    # TODO: make this less "smart" and find a better place to define the target string
     target: "{{ repo_config.url }} {{ 'deb' if repo_name == 'osquery' else ansible_distribution_release }} {{ repo_config.component }}"
     cacheable: false
   when:

@@ -17,7 +17,7 @@
     - destination is defined
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/set_fact_module.html
-- name: Set Ansible Facts for HashiCorp-maintained Plugin Binary for `{{ repo_name | upper }}`
+- name: Set Ansible Facts for HashiCorp-maintained Plugin Binary for `{{ plugin_name | upper }}`
   ansible.builtin.set_fact:
     plugin_url: "{{ hashicorp_base_url }}/{{ plugin_name }}/{{ plugin_config.version }}/{{ plugin_name }}_{{ plugin_config.version }}"
   when:
