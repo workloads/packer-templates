@@ -38,38 +38,13 @@ include ../tooling/make/configs/shared.mk
 
 include ../tooling/make/functions/shared.mk
 
-# build a Packer Image
-define build_image
-	$(call print_args,$(ARGS))
+include ../tooling/make/targets/shared.mk
 
-	# see https://developer.hashicorp.com/packer/docs/commands/build
-	$(BINARY_PACKER) \
-		build \
-			$(arg_var_dist_dir) \
-			$(arg_var_os) \
-      $(arg_var_target) \
-      $(arg_var_developer_mode) \
-			$(ARGS) \
-			"$(DIR_PACKER)/$(target)"
-endef
+.SILENT .PHONY: init
+init: # initialize a Packer Image [Usage: `make init target=my_target os=my_os`]
+	$(if $(target),,$(call missing_argument,init,target=my_target))
+	$(if $(os),,$(call missing_argument,init,os=my_os))
 
-# open Packer Console for an Image
-define console
-	$(call print_args,$(ARGS))
-
-	# see https://developer.hashicorp.com/packer/docs/commands/console
-	$(BINARY_PACKER) \
-		console \
-			$(arg_var_dist_dir) \
-			$(arg_var_os) \
-      $(arg_var_target) \
-      $(arg_var_developer_mode) \
-			$(ARGS) \
-			"$(DIR_PACKER)/$(target)"
-endef
-
-# initialize a Packer Image
-define init_image
 	$(call print_args,$(ARGS))
 
 	# see https://developer.hashicorp.com/packer/docs/commands/init
@@ -78,10 +53,12 @@ define init_image
 			-upgrade \
 			$(ARGS) \
 			"$(DIR_PACKER)/$(target)"
-endef
 
-# lint a Packer Image
-define lint_image
+.SILENT .PHONY: lint
+lint: # lint a Packer Image [Usage: `make lint target=my_target os=my_os`]
+	$(if $(target),,$(call missing_argument,lint,target=my_target))
+	$(if $(os),,$(call missing_argument,lint,os=my_os))
+
 	$(call print_args,$(ARGS))
 
 	# see https://developer.hashicorp.com/packer/docs/commands/fmt
@@ -101,70 +78,23 @@ define lint_image
 			$(ARGS) \
 			"$(DIR_PACKER)/$(target)" \
 	;
-endef
-
-
-# initialize Ansible Collections and Roles
-define ansible_init
-	$(call print_reference,$(ANSIBLE_REQUIREMENTS))
-
-	echo
-
-	# see https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html
-	$(BINARY_ANSIBLE_GALAXY) \
-		install \
-			--role-file "$(ANSIBLE_REQUIREMENTS)" \
-			--force
-
-	echo
-endef
-
-# lint Ansible playbooks
-define ansible_lint
-	# create directory for `ansible-lint` SARIF output
-	$(call safely_create_directory,$(DIR_DIST))
-
-	# --exclude "../../../.ansible"
-
-	# lint Ansible files and output SARIF results
-	$(BINARY_ANSIBLE_LINT) \
-		--config "$(ANSIBLELINT_CONFIG)" \
-		--format "$(ANSIBLELINT_FORMAT)" \
-    --sarif-file="$(ANSIBLELINT_SARIF_FILE)" \
-		--write=all \
-		"$(ANSIBLE_PLAYBOOK)"
-endef
-
-define yaml_lint
-	$(BINARY_YAMLLINT) \
-		--config-file "$(YAMLLINT_CONFIG)" \
-		--format "$(YAMLLINT_FORMAT)" \
-		--strict \
-		.
-endef
-
-include ../tooling/make/targets/shared.mk
-
-.SILENT .PHONY: init
-init: # initialize a Packer Image [Usage: `make init target=my_target os=my_os`]
-	$(if $(target),,$(call missing_argument,init,target=my_target))
-	$(if $(os),,$(call missing_argument,init,os=my_os))
-
-	$(call init_image,$(target),$(os))
-
-.SILENT .PHONY: lint
-lint: # lint a Packer Image [Usage: `make lint target=my_target os=my_os`]
-	$(if $(target),,$(call missing_argument,lint,target=my_target))
-	$(if $(os),,$(call missing_argument,lint,os=my_os))
-
-	$(call lint_image,$(target),$(os))
 
 .SILENT .PHONY: build
 build: # build a Packer Image [Usage: `make build target=my_target os=my_os`]
 	$(if $(target),,$(call missing_argument,build,target=my_target))
 	$(if $(os),,$(call missing_argument,build,os=my_os))
 
-	$(call build_image,$(target),$(os))
+	$(call print_args,$(ARGS))
+
+	# see https://developer.hashicorp.com/packer/docs/commands/build
+	$(BINARY_PACKER) \
+		build \
+			$(arg_var_dist_dir) \
+			$(arg_var_os) \
+      $(arg_var_target) \
+      $(arg_var_developer_mode) \
+			$(ARGS) \
+			"$(DIR_PACKER)/$(target)"
 
 .SILENT .PHONY: docs
 docs: # generate documentation for all Packer Images [Usage: `make docs target=my_target`]
@@ -178,27 +108,92 @@ console: # start Packer Console [Usage: `make console target=my_target os=my_os`
 	$(if $(target),,$(call missing_argument,console,target=my_target))
 	$(if $(os),,$(call missing_argument,console,os=my_os))
 
-	$(call console,$(target),$(os))
+	$(call print_args,$(ARGS))
+
+	# see https://developer.hashicorp.com/packer/docs/commands/console
+	$(BINARY_PACKER) \
+		console \
+			$(arg_var_dist_dir) \
+			$(arg_var_os) \
+      $(arg_var_target) \
+      $(arg_var_developer_mode) \
+			$(ARGS) \
+			"$(DIR_PACKER)/$(target)"
 
 .SILENT .PHONY: ansible_init
 ansible_init: # initialize Ansible Collections and Roles [Usage: `make ansible_init`]
-	$(call ansible_init)
+	$(call print_reference,$(ANSIBLE_REQUIREMENTS))
+
+	echo
+
+	# see https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html
+	$(BINARY_ANSIBLE_GALAXY) \
+		install \
+			--role-file "$(ANSIBLE_REQUIREMENTS)" \
+			--force
+
+	echo
+
+.SILENT .PHONY: ansible_inventory
+ansible_inventory: # construct an Ansible Inventory [Usage: `make ansible_inventory host=my_host user=my_user`]
+	$(if $(host),,$(call missing_argument,console,host=my_host))
+	$(if $(user),,$(call missing_argument,console,user=my_user))
+
+	echo "\n \
+[all:vars] \n \
+\t ansible_user=$(user) \n \
+\t ansible_port=22 \n \
+\t ansible_ssh_pass=$(user) \n \
+\n \
+[default] \n \
+\t $(host)" \
+> $(ANSIBLE_INVENTORY)
 
 .SILENT .PHONY: ansible_lint
-ansible_lint:# lint Ansible files [Usage: `make ansible_lint`]
-	$(call ansible_lint)
+ansible_lint: # lint Ansible Playbooks [Usage: `make ansible_lint`]
+	# create directory for `ansible-lint` SARIF output
+	$(call safely_create_directory,$(DIR_DIST))
+
+	# lint Ansible files and output SARIF results
+	$(BINARY_ANSIBLE_LINT) \
+		--config "$(ANSIBLELINT_CONFIG)" \
+		--format "$(ANSIBLELINT_FORMAT)" \
+    --sarif-file="$(ANSIBLELINT_SARIF_FILE)" \
+		--write="all" \
+		"$(ANSIBLE_PLAYBOOK)"
+
+.SILENT .PHONY: ansible_local
+ansible_local: # run Ansible directly, outside of Packer [Usage: `make ansible_local`]
+	export ANSIBLE_CONFIG="$(DIR_ANSIBLE)/ansible.cfg" \
+	&& \
+	$(BINARY_ANSIBLE) \
+		--ask-pass \
+		--ask-become-pass \
+		--connection="smart" \
+		--extra-vars "ConfigFile=$(DIR_DIST)/configuration.yml InfoFile=$(DIR_DIST)/README.md" \
+		--inventory-file "$(ANSIBLE_INVENTORY)" \
+		$(ANSIBLE_PLAYBOOK)
 
 .SILENT .PHONY: yaml_lint
 yaml_lint: # lint YAML files
-	$(call yaml_lint)
+	$(BINARY_YAMLLINT) \
+		--config-file "$(YAMLLINT_CONFIG)" \
+		--format "$(YAMLLINT_FORMAT)" \
+		--strict \
+		.
 
-.SILENT .PHONY: clean
-clean: # remove generated files [Usage: `make clean`]
+.SILENT .PHONY: _clean
+_clean: # remove generated files [Usage: `make clean`]
 	$(call delete_target_path,$(DIR_DIST))
 
 .SILENT .PHONY: _dist
 _dist: # quickly open the generated files directory (macOS only) [Usage: `make _dist`]
 	open $(DIR_DIST)
+
+.SILENT .PHONY: _pd
+_pd: # quickly open Parallels Desktop (macOS only) [Usage: `make _pd`]
+	open \
+		-a "Parallels Desktop"
 
 .SILENT .PHONY: _vb
 _vb: # quickly open VirtualBox (macOS only) [Usage: `make _vb`]
