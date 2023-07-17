@@ -6,6 +6,8 @@
   vars:
     ansible_required_version: 2.15.1
 
+  # path is relative from `main.yml`
+  # see https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#understanding-variable-precedence
   vars_files:
     - "{{ ConfigFile }}"
 
