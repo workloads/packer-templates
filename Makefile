@@ -23,9 +23,12 @@ YAMLLINT_FORMAT				?= colored
 TITLE                  = 🔵 PACKER TEMPLATES
 
 # expose build target to Packer
-arg_var_dist_dir = -var 'dist_dir=$(DIR_DIST)'
-arg_var_os       = -var 'os=$(os)'
-arg_var_target   = -var 'target=$(target)'
+arg_var_dist_dir              = -var 'dist_dir=$(DIR_DIST)'
+arg_var_os                    = -var 'os=$(os)'
+arg_var_target                = -var 'target=$(target)'
+arg_var_ansible_command       = -var 'ansible_command=$(BINARY_ANSIBLE)'
+arg_var_ansible_galaxy_file   = -var 'ansible_galaxy_file=$(ANSIBLE_REQUIREMENTS)'
+arg_var_ansible_playbook_file = -var 'ansible_playbook_file=$(ANSIBLE_PLAYBOOK)'
 
 # enable dev mode and configure corresponding packages
 ifdef dev
@@ -71,10 +74,7 @@ lint: # lint a Packer Image [Usage: `make lint target=my_target os=my_os`]
 	&& \
 	$(BINARY_PACKER) \
 		validate \
-			$(arg_var_dist_dir) \
-			$(arg_var_os) \
-      $(arg_var_target) \
-      $(arg_var_developer_mode) \
+			$(cli_args) \
 			$(ARGS) \
 			"$(DIR_PACKER)/$(target)" \
 	;
@@ -89,10 +89,7 @@ build: # build a Packer Image [Usage: `make build target=my_target os=my_os`]
 	# see https://developer.hashicorp.com/packer/docs/commands/build
 	$(BINARY_PACKER) \
 		build \
-			$(arg_var_dist_dir) \
-			$(arg_var_os) \
-      $(arg_var_target) \
-      $(arg_var_developer_mode) \
+			$(cli_args) \
 			$(ARGS) \
 			"$(DIR_PACKER)/$(target)"
 
@@ -113,10 +110,7 @@ console: # start Packer Console [Usage: `make console target=my_target os=my_os`
 	# see https://developer.hashicorp.com/packer/docs/commands/console
 	$(BINARY_PACKER) \
 		console \
-			$(arg_var_dist_dir) \
-			$(arg_var_os) \
-      $(arg_var_target) \
-      $(arg_var_developer_mode) \
+			$(cli_args) \
 			$(ARGS) \
 			"$(DIR_PACKER)/$(target)"
 

@@ -18,9 +18,17 @@
       when: ansible_version.full < ansible_required_version
 
     # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/set_fact_module.html
-    - name: Set Ansible Architecture short-hand
+    - name: Normalize `ansible_architecture`
       ansible.builtin.set_fact:
         normalized_arch: "{{ 'amd64' if (ansible_architecture == 'x86_64') else 'arm64' if (ansible_architecture == 'aarch64') else ansible_architecture }}"
+
+    # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
+    - name: Print `normalized_arch`
+      ansible.builtin.debug:
+        var: normalized_arch
+      when:
+        - enable_debug_statements is defined
+        - enable_debug_statements
 
     # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
     - name: Print `ansible_env`

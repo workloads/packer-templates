@@ -1,4 +1,4 @@
-# see https://www.vagrantup.com/docs/cli/box#box-add
+# see https://developer.hashicorp.com/vagrant/docs/cli/box#box-add
 # and https://developer.hashicorp.com/packer/plugins/builders/vagrant#add_clean
 variable "add_clean" {
   type        = bool
@@ -6,7 +6,7 @@ variable "add_clean" {
   default     = false
 }
 
-# see https://www.vagrantup.com/docs/cli/box#box-add
+# see https://developer.hashicorp.com/vagrant/docs/cli/box#box-add
 # and https://developer.hashicorp.com/packer/plugins/builders/vagrant#add_force
 variable "add_force" {
   type        = bool
@@ -57,6 +57,6 @@ variable "vagrant_cloud_no_release" {
 # see https://developer.hashicorp.com/packer/plugins/post-processors/vagrant/vagrant-cloud#box_tag
 variable "vagrant_cloud_organization" {
   type        = string
-  description = "Vagrant Cloud Organization to publish output image in"
+  description = "Vagrant Cloud Organization to publish Output Vagrant Box in."
   default     = "workloads"
 }
