@@ -28,12 +28,12 @@ ifneq ($(wildcard $(DIR_PACKER)/$(strip $(target))/extras.mk),)
 endif
 
 # expose relevant information to Packer
-arg_var_dist_dir              = -var 'dist_dir=$(DIR_DIST)'
-arg_var_os                    = -var 'os=$(os)'
-arg_var_target                = -var 'target=$(target)'
 arg_var_ansible_command       = -var 'ansible_command=$(BINARY_ANSIBLE)'
 arg_var_ansible_galaxy_file   = -var 'ansible_galaxy_file=$(ANSIBLE_REQUIREMENTS)'
 arg_var_ansible_playbook_file = -var 'ansible_playbook_file=$(ANSIBLE_PLAYBOOK)'
+arg_var_dist_dir              = -var 'dist_dir=$(DIR_DIST)'
+arg_var_os                    = -var 'os=$(os)'
+arg_var_target                = -var 'target=$(target)'
 
 # enable dev mode and configure corresponding packages
 ifdef dev
@@ -43,11 +43,21 @@ arg_var_developer_mode = -var 'developer_mode=false'
 endif
 
 # see https://developer.hashicorp.com/packer/docs/templates/hcl_templates/onlyexcept#except-foo-bar-baz
-extra_except_args ?=
-args_except        = -except="$(extra_except_args)"
+extra_except_args =
+args_only         =
+args_except       =
+
+# if `target` is not null, pass `builder` to Packer
+ifneq ($(target),null)
+	args_only = -only="1-provisioners.$(builder).main"
+endif
+
+ifneq ($(extra_except_args),)
+	args_except = -except="$(extra_except_args)"
+endif
 
 # convenience handle for ALL CLI arguments
-cli_args = $(args_except) $(arg_var_dist_dir) $(arg_var_os) $(arg_var_target) $(arg_var_ansible_command) $(arg_var_ansible_galaxy_file) $(arg_var_ansible_playbook_file) $(arg_var_developer_mode)
+cli_args = $(args_only) $(args_except) $(arg_var_ansible_command) $(arg_var_ansible_galaxy_file) $(arg_var_ansible_playbook_file) $(arg_var_dist_dir) $(arg_var_os) $(arg_var_target)
 
 include ../tooling/make/configs/shared.mk
 
@@ -92,8 +102,9 @@ lint: # lint a Packer Image [Usage: `make lint target=my_target os=my_os`]
 	;
 
 .SILENT .PHONY: build
-build: # build a Packer Image [Usage: `make build target=my_target os=my_os`]
+build: # build a Packer Image [Usage: `make build target=my_target builder=my_builder os=my_os`]
 	$(if $(target),,$(call missing_argument,build,target=my_target))
+	$(if $(builder),,$(call missing_argument,builder,builder=my_builder))
 	$(if $(os),,$(call missing_argument,build,os=my_os))
 
 	$(call print_args,$(ARGS))
