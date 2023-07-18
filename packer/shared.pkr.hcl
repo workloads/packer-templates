@@ -56,14 +56,6 @@ variable "shared" {
     enable_debug_statements = bool
     enable_facts_statement  = bool
 
-    ansible = object({
-      ansible_env_vars   = list(string)
-      command            = string
-      galaxy_file        = string
-      playbook_file      = string
-      skip_version_check = bool
-    })
-
     checksum_types = list(string)
 
     communicator = object({
@@ -547,6 +539,8 @@ source "file" "configuration" {
         ]
       })
     )
+    # see https://developer.hashicorp.com/packer/docs/templates/hcl_templates/functions/encoding/yamlencode
+    configuration = yamlencode(local.configuration_data)
   })
 
   target = local.templates.configuration.output
