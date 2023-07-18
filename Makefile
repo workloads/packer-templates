@@ -22,6 +22,11 @@ YAMLLINT_CONFIG       ?= .yaml-lint.yml
 YAMLLINT_FORMAT				?= colored
 TITLE                  = 🔵 PACKER TEMPLATES
 
+# conditionally load Target-specific configuration if present
+ifneq ($(wildcard $(DIR_PACKER)/$(strip $(target))/extras.mk),)
+	include $(DIR_PACKER)/$(strip $(target))/extras.mk
+endif
+
 # expose build target to Packer
 arg_var_dist_dir              = -var 'dist_dir=$(DIR_DIST)'
 arg_var_os                    = -var 'os=$(os)'
@@ -36,6 +41,12 @@ arg_var_developer_mode = -var 'developer_mode=true'
 else
 arg_var_developer_mode = -var 'developer_mode=false'
 endif
+
+# see https://developer.hashicorp.com/packer/docs/templates/hcl_templates/onlyexcept#except-foo-bar-baz
+args_except = -except="$(extra_except_args)"
+
+# convenience handle for ALL CLI arguments
+cli_args = $(args_except) $(arg_var_dist_dir) $(arg_var_os) $(arg_var_target) $(arg_var_ansible_command) $(arg_var_ansible_galaxy_file) $(arg_var_ansible_playbook_file) $(arg_var_developer_mode)
 
 include ../tooling/make/configs/shared.mk
 
