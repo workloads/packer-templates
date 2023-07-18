@@ -27,7 +27,7 @@
     - os.toggles.update_yum_cache
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_module.html
-- name: Install (generic) Linux Packages
+- name: Install generic Linux Packages
   ansible.builtin.package:
     name: "{{ os.packages.Linux.to_install }}"
     state: present
@@ -36,7 +36,7 @@
     - os.toggles.install_packages
 
 # see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_module.html
-- name: Remove (generic) Linux Packages
+- name: Remove generic Linux Packages
   ansible.builtin.package:
     name: "{{ os.packages.Linux.to_remove }}"
     state: absent

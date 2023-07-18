@@ -8,7 +8,6 @@
   * [Requirements](#requirements)
   * [Overview](#overview)
   * [Usage](#usage)
-    * [Inputs](#inputs)
   * [Notes](#notes)
 <!-- TOC -->
 
@@ -18,13 +17,13 @@
 
 ## Overview
 
-|                 |                                  |
-|-----------------|----------------------------------|
-| image template  | n/a                              |
-| image variables | n/a                              |
-| build target    | `null`                           |
-| build command   | `make build target=null os=<os>` |
-| lint command    | `make lint target=null os=<os>`  |
+|                 |                                      |
+|-----------------|--------------------------------------|
+| image template  | [template.pkr.hcl](template.pkr.hcl) |
+| image variables | n/a                                  |
+| build target    | `null`                               |
+| build command   | `make build target=null os=<os>`     |
+| lint command    | `make lint target=null os=<os>`      |
 
 ## Usage
 
@@ -36,4 +35,4 @@ make build target=null os=my_os
 
 ## Notes
 
-* The `null` template does not produce an output image; it is meant for rapid-prototyping of the `shared` variables concept.
+* The `null` template does not produce an output image but it does render configuration information in the `$(DIR_DIST)` directory.

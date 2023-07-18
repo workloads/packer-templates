@@ -27,7 +27,7 @@ ifneq ($(wildcard $(DIR_PACKER)/$(strip $(target))/extras.mk),)
 	include $(DIR_PACKER)/$(strip $(target))/extras.mk
 endif
 
-# expose build target to Packer
+# expose relevant information to Packer
 arg_var_dist_dir              = -var 'dist_dir=$(DIR_DIST)'
 arg_var_os                    = -var 'os=$(os)'
 arg_var_target                = -var 'target=$(target)'
@@ -43,7 +43,8 @@ arg_var_developer_mode = -var 'developer_mode=false'
 endif
 
 # see https://developer.hashicorp.com/packer/docs/templates/hcl_templates/onlyexcept#except-foo-bar-baz
-args_except = -except="$(extra_except_args)"
+extra_except_args ?=
+args_except        = -except="$(extra_except_args)"
 
 # convenience handle for ALL CLI arguments
 cli_args = $(args_except) $(arg_var_dist_dir) $(arg_var_os) $(arg_var_target) $(arg_var_ansible_command) $(arg_var_ansible_galaxy_file) $(arg_var_ansible_playbook_file) $(arg_var_developer_mode)

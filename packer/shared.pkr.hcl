@@ -3,6 +3,40 @@
 # The contents are made available to ALL Packer Templates through a symlink
 # from `/packer/<target>/shared.pkr.hcl` to `/packer/shared.pkr.hcl`.
 
+variable "ansible_env_vars" {
+  type        = list(string)
+  description = "Ansible Environment Variables."
+
+  # when in doubt, edit `ansible/ansible.cfg` instead of `ansible_env_vars`
+  default = [
+    "ANSIBLE_CONFIG=ansible/ansible.cfg",
+  ]
+}
+
+variable "ansible_command" {
+  type        = string
+  description = "Ansible CLI Command."
+  default     = "ansible-playbook"
+}
+
+variable "ansible_galaxy_file" {
+  type        = string
+  description = "Ansible Galaxy File."
+  default     = "./ansible/requirements.yml"
+}
+
+variable "ansible_playbook_file" {
+  type        = string
+  description = "Ansible Playbook File."
+  default     = "./ansible/playbooks/main.yml"
+}
+
+variable "ansible_skip_version_check" {
+  type        = bool
+  description = "Toggle to check if Ansible is installed prior to running."
+  default     = false
+}
+
 # Advanced Users only: Dev Mode installs packages that are helpful
 # when developing on one or more of the installed HashiCorp products;
 variable "developer_mode" {
@@ -74,7 +108,7 @@ variable "shared" {
   description = "Shared Configuration for all Packer Templates."
 
   default = {
-    # Enable Ansible-Lockdown CIS roles for OS-hardening
+    # feature flag to enable CIS roles for OS-hardening
     enable_cis_hardening = false
 
     # feature flag to enable debug statements
@@ -82,26 +116,6 @@ variable "shared" {
 
     # feature flag to enable printing of Ansible Facts
     enable_facts_statement = false
-
-    # Ansible-specific configuration:
-    ansible = {
-      # Environment variables to set before running Ansible
-      # When in doubt, edit `ansible/ansible.cfg` instead of `ansible_env_vars`
-      ansible_env_vars = [
-        "ANSIBLE_CONFIG=ansible/ansible.cfg",
-      ]
-
-      # The command to invoke Ansible with.
-      command = "ansible-playbook"
-
-      # A requirements file which provides a way to install roles with the `ansible-galaxy` CLI on the remote machine.
-      galaxy_file = "./ansible/requirements.yml"
-
-      # The playbook to be run by Ansible.
-      playbook_file = "./ansible/playbooks/main.yml"
-
-      skip_version_check = false
-    }
 
     # Packer Checksum Post-Processor configuration
     # see https://developer.hashicorp.com/packer/docs/post-processors/checksum#checksum_types
@@ -123,8 +137,7 @@ variable "shared" {
       # Developer-Mode packages to manage
       packages = {
         to_install = []
-
-        to_remove = []
+        to_remove  = []
       }
 
       # Go-specific configuration
