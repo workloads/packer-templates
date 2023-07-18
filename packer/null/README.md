@@ -17,7 +17,7 @@
 
 ## Overview
 
-|                 |                                               |
+|                 | description                                   |
 |-----------------|-----------------------------------------------|
 | image template  | n/a                                           |
 | image variables | n/a                                           |

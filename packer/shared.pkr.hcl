@@ -50,6 +50,12 @@ variable "dist_dir" {
   description = "Directory to store distributable artifacts in."
 }
 
+# `os` as received from `make`
+variable "os" {
+  type        = string
+  description = "Build OS as received from `make`."
+}
+
 variable "shared" {
   type = object({
     enable_cis_hardening    = bool
@@ -245,12 +251,6 @@ variable "shared" {
       enabled = true
     }
   }
-}
-
-# `os` as received from `make`
-variable "os" {
-  type        = string
-  description = "Build OS as received from `make`."
 }
 
 # `target` as received from `make`

@@ -28,11 +28,6 @@ variable "teardown_method" {
   default     = "destroy"
 }
 
-locals {
-  # load Vagrant Cloud Access Token from well-known file
-  vagrant_cloud_access_token = file("~/.vagrant.d/data/vagrant_login_token")
-}
-
 # see https://developer.hashicorp.com/packer/plugins/post-processors/vagrant/vagrant-cloud#keep_input_artifact
 variable "vagrant_cloud_keep_input_artifact" {
   type        = bool
@@ -59,4 +54,9 @@ variable "vagrant_cloud_organization" {
   type        = string
   description = "Vagrant Cloud Organization to publish Output Vagrant Box in."
   default     = "workloads"
+}
+
+locals {
+  # load Vagrant Cloud Access Token from a well-known location
+  vagrant_cloud_access_token = file("~/.vagrant.d/data/vagrant_login_token")
 }
