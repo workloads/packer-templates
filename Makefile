@@ -224,3 +224,23 @@ _kill_vb: # force-kill all VirtualBox processes (macOS only) [Usage: `make _kill
 	pkill \
 		-9 \
 		-f "VBox"
+
+.SILENT .PHONY: _link_vars
+_link_vars: # create a symlink to the shared variables file for a new target [Usage: `make _link_vars target=my_target`]
+	$(if $(target),,$(call missing_argument,build,target=my_target))
+
+	$(call safely_create_directory,$(DIR_PACKER)/$(target))
+
+	# remove and unlink existing file (`-F` and `-f`),
+	# write to stderr if the target exists (`-i`),
+	# attempt to create a soft symbolic link (`-P` and `-s`)
+	#	verbosely describe the operations (`-v` and `-w`)
+	ln \
+		-F \
+		-f \
+		-P \
+		-i \
+		-s \
+		-v \
+			../shared.pkr.hcl \
+			$(DIR_PACKER)/$(target)/shared.pkr.hcl

@@ -38,23 +38,24 @@ Running `make` without commands will print out the following help information:
 ```text
 🔵 PACKER TEMPLATES
 
-init                initialize a Packer Image                                  `make init target=my_target os=my_os`
-lint                lint a Packer Image                                        `make lint target=my_target os=my_os`
-build               build a Packer Image                                       `make build target=my_target builder=my_builder os=my_os`
-docs                generate documentation for all Packer Images               `make docs target=my_target`
-console             start Packer Console                                       `make console target=my_target os=my_os`
-ansible_init        initialize Ansible Collections and Roles                   `make ansible_init`
-ansible_inventory   construct an Ansible Inventory                             `make ansible_inventory host=my_host user=my_user`
-ansible_lint        lint Ansible Playbooks                                     `make ansible_lint`
-ansible_local       run Ansible directly, outside of Packer                    `make ansible_local`
-_clean              remove generated files                                     `make _clean`
-_dist               quickly open the generated files directory (macOS only)    `make _dist`
-_pd                 quickly open Parallels Desktop (macOS only)                `make _pd`
-_vb                 quickly open VirtualBox (macOS only)                       `make _vb`
-_kill_vb            force-kill all VirtualBox processes (macOS only)           `make _kill_vb`
-help                display a list of Make Targets                             `make help`
-_listincludes       list all included Makefiles and *.mk files                 `make _listincludes`
-_selfcheck          lint Makefile                                              `make _selfcheck`
+init                initialize a Packer Image                                         `make init target=my_target os=my_os`
+lint                lint a Packer Image                                               `make lint target=my_target os=my_os`
+build               build a Packer Image                                              `make build target=my_target builder=my_builder os=my_os`
+docs                generate documentation for all Packer Images                      `make docs target=my_target`
+console             start Packer Console                                              `make console target=my_target os=my_os`
+ansible_init        initialize Ansible Collections and Roles                          `make ansible_init`
+ansible_inventory   construct an Ansible Inventory                                    `make ansible_inventory host=my_host user=my_user`
+ansible_lint        lint Ansible Playbooks                                            `make ansible_lint`
+ansible_local       run Ansible directly, outside of Packer                           `make ansible_local`
+_clean              remove generated files                                            `make _clean`
+_dist               quickly open the generated files directory (macOS only)           `make _dist`
+_pd                 quickly open Parallels Desktop (macOS only)                       `make _pd`
+_vb                 quickly open VirtualBox (macOS only)                              `make _vb`
+_kill_vb            force-kill all VirtualBox processes (macOS only)                  `make _kill_vb`
+_link_vars          create a symlink to the shared variables file for a new target    `make _link_vars target  my_target`
+help                display a list of Make Targets                                    `make help`
+_listincludes       list all included Makefiles and *.mk files                        `make _listincludes`
+_selfcheck          lint Makefile                                                     `make _selfcheck`
 ```
 
 ### Workflow
