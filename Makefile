@@ -11,9 +11,13 @@ ANSIBLELINT_SARIF_FILE = $(DIR_DIST)/ansible-lint.sarif
 BINARY_ANSIBLE        ?= ansible-playbook
 BINARY_ANSIBLE_GALAXY ?= ansible-galaxy
 BINARY_ANSIBLE_LINT   ?= ansible-lint
+BINARY_DOCKER 				?= docker
 BINARY_PACKER     		?= packer
 BINARY_VAGRANT        ?= vagrant
 BINARY_YAMLLINT       ?= yamllint
+CLOUDINIT_DIRECTORY   ?= $(shell dirname ${path})
+CLOUDINIT_FILE        ?= $(shell basename ${path})
+CLOUDINIT_LINT_IMAGE  ?= "ghcr.io/workloads/alpine-with-cloudinit:latest" # full content address is supported but not required
 DIR_ANSIBLE						?= ansible
 DIR_DIST							?= dist
 DIR_PACKER            ?= packer
@@ -190,6 +194,22 @@ ansible_local: # run Ansible directly, outside of Packer [Usage: `make ansible_l
 		--extra-vars "ConfigFile=$(DIR_DIST)/configuration.yml InfoFile=$(DIR_DIST)/README.md" \
 		--inventory-file "$(ANSIBLE_INVENTORY)" \
 		$(ANSIBLE_PLAYBOOK)
+
+.SILENT .PHONY: cloudinit_lint
+cloudinit_lint: # lint cloud-init user data files using Alpine (via Docker) [Usage: `make cloudinit_lint path=./packer/templates/user-data.yml`]
+	$(if $(path),,$(call missing_argument,path,path=./packer/templates/user-data.yml))
+
+	$(call print_arg,path,$(path))
+
+	# run an interactive Docker container that self-removes on completion
+	$(BINARY_DOCKER) \
+		run \
+			--interactive \
+			--quiet \
+			--rm \
+			--tty \
+			--volume "$(CLOUDINIT_DIRECTORY):/config/" \
+			$(CLOUDINIT_LINT_IMAGE)
 
 .SILENT .PHONY: yaml_lint
 yaml_lint: # lint YAML files
