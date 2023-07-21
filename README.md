@@ -38,11 +38,11 @@ Running `make` without commands will print out the following help information:
 ```text
 🔵 PACKER TEMPLATES
 
-init                initialize a Packer Image                                         `make init target=my_target os=my_os`
-lint                lint a Packer Image                                               `make lint target=my_target os=my_os`
-build               build a Packer Image                                              `make build target=my_target builder=my_builder os=my_os`
-docs                generate documentation for all Packer Images                      `make docs target=my_target`
-console             start Packer Console                                              `make console target=my_target os=my_os`
+init                initialize a Packer Template                                      `make init target=my_target os=my_os`
+lint                lint a Packer Template                                            `make lint target=my_target os=my_os`
+build               build a Packer Template                                           `make build target=my_target builder=my_builder os=my_os`
+docs                generate documentation for a Packer Template                      `make docs target=my_target`
+console             start Console for a Packer Template                               `make console target=my_target os=my_os`
 ansible_init        initialize Ansible Collections and Roles                          `make ansible_init`
 ansible_inventory   construct an Ansible Inventory                                    `make ansible_inventory host=my_host user=my_user`
 ansible_lint        lint Ansible Playbooks                                            `make ansible_lint`

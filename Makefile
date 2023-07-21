@@ -1,4 +1,4 @@
-# Makefile for Packer Image Building Management
+# Makefile for Packer Template Building Management
 
 # configuration
 ARGS                  :=
@@ -66,11 +66,12 @@ cli_args = $(args_only) $(args_except) $(arg_var_ansible_command) $(arg_var_ansi
 include ../tooling/make/configs/shared.mk
 
 include ../tooling/make/functions/shared.mk
+include ../tooling/make/functions/packer.mk
 
 include ../tooling/make/targets/shared.mk
 
 .SILENT .PHONY: init
-init: # initialize a Packer Image [Usage: `make init target=my_target os=my_os`]
+init: # initialize a Packer Template [Usage: `make init target=my_target os=my_os`]
 	$(if $(target),,$(call missing_argument,init,target=my_target))
 	$(if $(os),,$(call missing_argument,init,os=my_os))
 
@@ -84,62 +85,37 @@ init: # initialize a Packer Image [Usage: `make init target=my_target os=my_os`]
 			"$(DIR_PACKER)/$(target)"
 
 .SILENT .PHONY: lint
-lint: # lint a Packer Image [Usage: `make lint target=my_target os=my_os`]
+lint: # lint a Packer Template [Usage: `make lint target=my_target os=my_os`]
 	$(if $(target),,$(call missing_argument,lint,target=my_target))
 	$(if $(os),,$(call missing_argument,lint,os=my_os))
 
 	$(call print_args,$(ARGS))
 
-	# see https://developer.hashicorp.com/packer/docs/commands/fmt
-  # and https://developer.hashicorp.com/packer/docs/commands/validate
-	$(BINARY_PACKER) \
-		fmt \
-			-diff \
-			-recursive \
-			"$(DIR_PACKER)/$(target)" \
-	&& \
-	$(BINARY_PACKER) \
-		validate \
-			$(cli_args) \
-			$(ARGS) \
-			"$(DIR_PACKER)/$(target)" \
-	;
+	$(call packer_lint,"$(DIR_PACKER)/$(target)")
 
 .SILENT .PHONY: build
-build: # build a Packer Image [Usage: `make build target=my_target builder=my_builder os=my_os`]
+build: # build a Packer Template [Usage: `make build target=my_target builder=my_builder os=my_os`]
 	$(if $(target),,$(call missing_argument,build,target=my_target))
 	$(if $(builder),,$(call missing_argument,builder,builder=my_builder))
 	$(if $(os),,$(call missing_argument,build,os=my_os))
 
 	$(call print_args,$(ARGS))
 
-	# see https://developer.hashicorp.com/packer/docs/commands/build
-	$(BINARY_PACKER) \
-		build \
-			$(cli_args) \
-			$(ARGS) \
-			"$(DIR_PACKER)/$(target)"
-
 .SILENT .PHONY: docs
-docs: # generate documentation for all Packer Images [Usage: `make docs target=my_target`]
+docs: # generate documentation for a Packer Templates [Usage: `make docs target=my_target`]
 	$(if $(target),,$(call missing_argument,docs,target=my_target))
 
 	# TODO: align with overall `render_documentation` function
 	$(call render_documentation,$(DIR_PACKER)/$(strip $(target)),shared.pkr.hcl,$(DOCS_CONFIG),sample.pkrvars.hcl)
 
 .SILENT .PHONY: console
-console: # start Packer Console [Usage: `make console target=my_target os=my_os`]
+console: # start Console for a Packer Template [Usage: `make console target=my_target os=my_os`]
 	$(if $(target),,$(call missing_argument,console,target=my_target))
 	$(if $(os),,$(call missing_argument,console,os=my_os))
 
 	$(call print_args,$(ARGS))
 
-	# see https://developer.hashicorp.com/packer/docs/commands/console
-	$(BINARY_PACKER) \
-		console \
-			$(cli_args) \
-			$(ARGS) \
-			"$(DIR_PACKER)/$(target)"
+	$(call packer_console,"$(DIR_PACKER)/$(target)")
 
 .SILENT .PHONY: ansible_init
 ansible_init: # initialize Ansible Collections and Roles [Usage: `make ansible_init`]
@@ -215,11 +191,7 @@ cloudinit_lint: # lint cloud-init user data files using Alpine (via Docker) [Usa
 
 .SILENT .PHONY: yaml_lint
 yaml_lint: # lint YAML files [Usage: `make yaml_lint`]
-	$(BINARY_YAMLLINT) \
-		--config-file "$(YAMLLINT_CONFIG)" \
-		--format "$(YAMLLINT_FORMAT)" \
-		--strict \
-		.
+	$(call yaml_lint)
 
 .SILENT .PHONY: _clean
 _clean: # remove generated files [Usage: `make clean`]
