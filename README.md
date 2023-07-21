@@ -48,6 +48,7 @@ ansible_inventory   construct an Ansible Inventory                              
 ansible_lint        lint Ansible Playbooks                                            `make ansible_lint`
 ansible_local       run Ansible directly, outside of Packer                           `make ansible_local`
 cloudinit_lint      lint cloud-init user data files using Alpine (via Docker)         `make cloudinit_lint path=./packer/templates/user-data.yml`
+yaml_lint           lint YAML files                                                   `make yaml_lint`
 _clean              remove generated files                                            `make _clean`
 _dist               quickly open the generated files directory (macOS only)           `make _dist`
 _pd                 quickly open Parallels Desktop (macOS only)                       `make _pd`

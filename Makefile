@@ -175,6 +175,8 @@ ansible_lint: # lint Ansible Playbooks [Usage: `make ansible_lint`]
 	# create directory for `ansible-lint` SARIF output
 	$(call safely_create_directory,$(DIR_DIST))
 
+	rm -rf "$(ANSIBLELINT_SARIF_FILE)"
+
 	# lint Ansible files and output SARIF results
 	$(BINARY_ANSIBLE_LINT) \
 		--config "$(ANSIBLELINT_CONFIG)" \
@@ -212,7 +214,7 @@ cloudinit_lint: # lint cloud-init user data files using Alpine (via Docker) [Usa
 			$(CLOUDINIT_LINT_IMAGE)
 
 .SILENT .PHONY: yaml_lint
-yaml_lint: # lint YAML files
+yaml_lint: # lint YAML files [Usage: `make yaml_lint`]
 	$(BINARY_YAMLLINT) \
 		--config-file "$(YAMLLINT_CONFIG)" \
 		--format "$(YAMLLINT_FORMAT)" \
