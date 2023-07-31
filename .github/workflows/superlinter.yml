@@ -87,4 +87,5 @@ jobs:
 
     steps:
       - name: Display Workflow Status
-        run: echo "::warning ::Workflow is not currently active. Check if `ENABLE_WORKFLOWS` is set to `true`."
+        # shellcheck disable=SC2006
+        run: echo "::warning:: Workflow is not currently active. Check if `ENABLE_WORKFLOWS` is set to `true`."
