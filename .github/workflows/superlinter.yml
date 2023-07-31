@@ -47,7 +47,6 @@ jobs:
           CSS_FILE_NAME: ".stylelintrc.json"
           DEFAULT_BRANCH: "main"
           DISABLE_ERRORS: false
-          DOCKERFILE_HADOLINT_FILE_NAME: ".hadolint.yml"
           GITHUB_CUSTOM_API_URL: "https://api.github.com"
           GITHUB_DOMAIN: "github.com"
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
