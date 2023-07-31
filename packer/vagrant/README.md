@@ -14,7 +14,7 @@
 
 ## Requirements
 
-- Packer `1.9.1` or newer
+- HashiCorp Packer `1.9.0` or [newer](https://developer.hashicorp.com/packer/downloads)
 - Vagrant `2.3.7` or newer
 
 ## Overview
@@ -40,7 +40,7 @@ The following Vagrant-specific build options are available:
 To build the `null` image for the `my_os` operating system, run:
 
 ```shell
-make build target=null os=my_os
+make build target=null os=<os>
 ```
 
 > **Note**

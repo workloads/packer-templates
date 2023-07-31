@@ -20,14 +20,14 @@
 
 ## Requirements
 
-- HashiCorp Packer `1.9.1` or [newer](https://developer.hashicorp.com/packer/downloads)
-- Ansible `2.15.1` or [newer](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+- HashiCorp Packer `1.9.0` or [newer](https://developer.hashicorp.com/packer/downloads)
+- Ansible `2.15.0` or [newer](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 - a check-out of [@workloads/tooling](https://github.com/workloads/tooling)
 
 Optional, and only needed for development and testing of Packs:
 
 - `terraform-docs` `0.16.0` or [newer](https://terraform-docs.io/user-guide/installation/)
-- `ansible-lint` `6.17.2` or [newer](https://ansible.readthedocs.io/projects/lint/installing/)
+- `ansible-lint` `6.17.0` or [newer](https://ansible.readthedocs.io/projects/lint/installing/)
 
 ## Usage
 
@@ -38,13 +38,13 @@ Running `make` without commands will print out the following help information:
 ```text
 🔵 PACKER TEMPLATES
 
-init                initialize a Packer Template                                      `make init target=my_target os=my_os`
-lint                lint a Packer Template                                            `make lint target=my_target os=my_os`
-build               build a Packer Template                                           `make build target=my_target builder=my_builder os=my_os`
-docs                generate documentation for a Packer Template                      `make docs target=my_target`
-console             start Console for a Packer Template                               `make console target=my_target os=my_os`
+init                initialize a Packer Template                                      `make init target=<target> os=<os>`
+lint                lint a Packer Template                                            `make lint target=<target> os=<os>`
+build               build a Packer Template                                           `make build target=<target> builder=<builder> os=<os>`
+docs                generate documentation for a Packer Template                      `make docs target=<target>`
+console             start Console for a Packer Template                               `make console target=<target> os=<os>`
 ansible_init        initialize Ansible Collections and Roles                          `make ansible_init`
-ansible_inventory   construct an Ansible Inventory                                    `make ansible_inventory host=my_host user=my_user`
+ansible_inventory   construct an Ansible Inventory                                    `make ansible_inventory host=<host> user=<user>`
 ansible_lint        lint Ansible Playbooks                                            `make ansible_lint`
 ansible_local       run Ansible directly, outside of Packer                           `make ansible_local`
 cloudinit_lint      lint cloud-init user data files using Alpine (via Docker)         `make cloudinit_lint path=./packer/templates/user-data.yml`
