@@ -1,30 +1,30 @@
 # Makefile for Packer Template Building Management
 
 # configuration
-ARGS                  :=
-ANSIBLE_INVENTORY     ?= $(DIR_DIST)/inventory.txt
-ANSIBLE_PLAYBOOK      ?= $(DIR_ANSIBLE)/playbooks/main.yml
-ANSIBLE_REQUIREMENTS  ?= $(DIR_ANSIBLE)/requirements.yml
-ANSIBLELINT_CONFIG    ?= .ansible-lint.yml
-ANSIBLELINT_FORMAT    ?= full
-ANSIBLELINT_SARIF_FILE = $(DIR_DIST)/ansible-lint.sarif
-BINARY_ANSIBLE        ?= ansible-playbook
-BINARY_ANSIBLE_GALAXY ?= ansible-galaxy
-BINARY_ANSIBLE_LINT   ?= ansible-lint
-BINARY_DOCKER 				?= docker
-BINARY_PACKER     		?= packer
-BINARY_VAGRANT        ?= vagrant
-BINARY_YAMLLINT       ?= yamllint
-CLOUDINIT_DIRECTORY   ?= $(shell dirname ${path})
-CLOUDINIT_FILE        ?= $(shell basename ${path})
-CLOUDINIT_LINT_IMAGE  ?= "ghcr.io/workloads/alpine-with-cloudinit:latest" # full content address is supported but not required
-DIR_ANSIBLE						?= ansible
-DIR_DIST							?= dist
-DIR_PACKER            ?= packer
-DOCS_CONFIG            = .packer-docs.yml
-YAMLLINT_CONFIG       ?= .yaml-lint.yml
-YAMLLINT_FORMAT				?= colored
-TITLE                  = 🔵 PACKER TEMPLATES
+ARGS                   :=
+ANSIBLE_INVENTORY      ?= $(DIR_DIST)/inventory.txt
+ANSIBLE_PLAYBOOK       ?= $(DIR_ANSIBLE)/playbooks/main.yml
+ANSIBLE_REQUIREMENTS   ?= $(DIR_ANSIBLE)/requirements.yml
+ANSIBLELINT_CONFIG     ?= .ansible-lint.yml
+ANSIBLELINT_FORMAT     ?= full
+ANSIBLELINT_SARIF_FILE  = $(DIR_DIST)/ansible-lint.sarif
+BINARY_ANSIBLE         ?= ansible-playbook
+BINARY_ANSIBLE_GALAXY  ?= ansible-galaxy
+BINARY_ANSIBLE_LINT    ?= ansible-lint
+BINARY_DOCKER          ?= docker
+BINARY_PACKER          ?= packer
+BINARY_VAGRANT         ?= vagrant
+BINARY_YAMLLINT        ?= yamllint
+CLOUDINIT_DIRECTORY    ?= $(shell dirname ${path})
+CLOUDINIT_FILE         ?= $(shell basename ${path})
+CLOUDINIT_LINT_IMAGE   ?= "ghcr.io/workloads/alpine-with-cloudinit:latest" # full content address is supported but not required
+DIR_ANSIBLE            ?= ansible
+DIR_DIST               ?= dist
+DIR_PACKER             ?= packer
+DOCS_CONFIG             = .packer-docs.yml
+YAMLLINT_CONFIG        ?= .yaml-lint.yml
+YAMLLINT_FORMAT        ?= colored
+TITLE                   = 🔵 PACKER TEMPLATES
 
 # conditionally load Target-specific configuration if present
 ifneq ($(wildcard $(DIR_PACKER)/$(strip $(target))/extras.mk),)
@@ -64,16 +64,14 @@ endif
 cli_args = $(args_only) $(args_except) $(arg_var_ansible_command) $(arg_var_ansible_galaxy_file) $(arg_var_ansible_playbook_file) $(arg_var_dist_dir) $(arg_var_os) $(arg_var_target)
 
 include ../tooling/make/configs/shared.mk
-
 include ../tooling/make/functions/shared.mk
 include ../tooling/make/functions/packer.mk
-
 include ../tooling/make/targets/shared.mk
 
 .SILENT .PHONY: init
-init: # initialize a Packer Template [Usage: `make init target=my_target os=my_os`]
-	$(if $(target),,$(call missing_argument,init,target=my_target))
-	$(if $(os),,$(call missing_argument,init,os=my_os))
+init: # initialize a Packer Template [Usage: `make init target=<target> os=<os>`]
+	$(if $(target),,$(call missing_argument,init,target=<target>))
+	$(if $(os),,$(call missing_argument,init,os=<os>))
 
 	$(call print_args,$(ARGS))
 
@@ -85,36 +83,35 @@ init: # initialize a Packer Template [Usage: `make init target=my_target os=my_o
 			"$(DIR_PACKER)/$(target)"
 
 .SILENT .PHONY: lint
-lint: # lint a Packer Template [Usage: `make lint target=my_target os=my_os`]
-	$(if $(target),,$(call missing_argument,lint,target=my_target))
-	$(if $(os),,$(call missing_argument,lint,os=my_os))
+lint: # lint a Packer Template [Usage: `make lint target=<target> os=<os>`]
+	$(if $(target),,$(call missing_argument,lint,target=<target>))
+	$(if $(builder),,$(call missing_argument,lint,builder=<builder>))
+	$(if $(os),,$(call missing_argument,console,os=<os>))
 
 	$(call print_args,$(ARGS))
-
 	$(call packer_lint,"$(DIR_PACKER)/$(target)")
 
 .SILENT .PHONY: build
-build: # build a Packer Template [Usage: `make build target=my_target builder=my_builder os=my_os`]
-	$(if $(target),,$(call missing_argument,build,target=my_target))
-	$(if $(builder),,$(call missing_argument,builder,builder=my_builder))
-	$(if $(os),,$(call missing_argument,build,os=my_os))
+build: # build a Packer Template [Usage: `make build target=<target> builder=<builder> os=<os>`]
+	$(if $(target),,$(call missing_argument,build,target=<target>))
+	$(if $(builder),,$(call missing_argument,builder,builder=<builder>))
+	$(if $(os),,$(call missing_argument,build,os=<os>))
 
 	$(call print_args,$(ARGS))
 
 .SILENT .PHONY: docs
-docs: # generate documentation for a Packer Templates [Usage: `make docs target=my_target`]
-	$(if $(target),,$(call missing_argument,docs,target=my_target))
+docs: # generate documentation for a Packer Templates [Usage: `make docs target=<target>`]
+	$(if $(target),,$(call missing_argument,docs,target=<target>))
 
 	# TODO: align with overall `render_documentation` function
 	$(call render_documentation,$(DIR_PACKER)/$(strip $(target)),shared.pkr.hcl,$(DOCS_CONFIG),sample.pkrvars.hcl)
 
 .SILENT .PHONY: console
-console: # start Console for a Packer Template [Usage: `make console target=my_target os=my_os`]
-	$(if $(target),,$(call missing_argument,console,target=my_target))
-	$(if $(os),,$(call missing_argument,console,os=my_os))
+console: # start Console for a Packer Template [Usage: `make console target=<target> os=<os>`]
+	$(if $(target),,$(call missing_argument,console,target=<target>))
+	$(if $(os),,$(call missing_argument,console,os=<os>))
 
 	$(call print_args,$(ARGS))
-
 	$(call packer_console,"$(DIR_PACKER)/$(target)")
 
 .SILENT .PHONY: ansible_init
@@ -132,9 +129,9 @@ ansible_init: # initialize Ansible Collections and Roles [Usage: `make ansible_i
 	echo
 
 .SILENT .PHONY: ansible_inventory
-ansible_inventory: # construct an Ansible Inventory [Usage: `make ansible_inventory host=my_host user=my_user`]
-	$(if $(host),,$(call missing_argument,console,host=my_host))
-	$(if $(user),,$(call missing_argument,console,user=my_user))
+ansible_inventory: # construct an Ansible Inventory [Usage: `make ansible_inventory host=<host> user=<user>`]
+	$(if $(host),,$(call missing_argument,console,host=<host>))
+	$(if $(user),,$(call missing_argument,console,user=<user>))
 
 	echo "\
 [all:vars] \n \
@@ -194,7 +191,7 @@ yaml_lint: # lint YAML files [Usage: `make yaml_lint`]
 	$(call yaml_lint)
 
 .SILENT .PHONY: _clean
-_clean: # remove generated files [Usage: `make clean`]
+_clean: # remove generated files [Usage: `make _clean`]
 	$(call delete_target_path,$(DIR_DIST))
 
 .SILENT .PHONY: _dist
@@ -220,8 +217,8 @@ _kill_vb: # force-kill all VirtualBox processes (macOS only) [Usage: `make _kill
 		-f "VBox"
 
 .SILENT .PHONY: _link_vars
-_link_vars: # create a symlink to the shared variables file for a new target [Usage: `make _link_vars target=my_target`]
-	$(if $(target),,$(call missing_argument,build,target=my_target))
+_link_vars: # create a symlink to the shared variables file for a new target [Usage: `make _link_vars target=<target>`]
+	$(if $(target),,$(call missing_argument,build,target=<target>))
 
 	$(call safely_create_directory,$(DIR_PACKER)/$(target))
 
