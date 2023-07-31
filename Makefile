@@ -74,13 +74,7 @@ init: # initialize a Packer Template [Usage: `make init target=<target> os=<os>`
 	$(if $(os),,$(call missing_argument,init,os=<os>))
 
 	$(call print_args,$(ARGS))
-
-	# see https://developer.hashicorp.com/packer/docs/commands/init
-	$(BINARY_PACKER) \
-		init \
-			-upgrade \
-			$(ARGS) \
-			"$(DIR_PACKER)/$(target)"
+	$(call packer_init,"$(DIR_PACKER)/$(target)")
 
 .SILENT .PHONY: lint
 lint: # lint a Packer Template [Usage: `make lint target=<target> os=<os>`]
