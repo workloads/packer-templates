@@ -70,40 +70,39 @@ include ../tooling/make/targets/shared.mk
 
 .SILENT .PHONY: init
 init: # initialize a Packer Template [Usage: `make init target=<target> os=<os>`]
-	$(if $(target),,$(call missing_argument,init,target=<target>))
-	$(if $(os),,$(call missing_argument,init,os=<os>))
+	$(if $(target),,$(call missing_argument,target=<target>))
+	$(if $(os),,$(call missing_argument,os=<os>))
 
 	$(call print_args,$(ARGS))
 	$(call packer_init,"$(DIR_PACKER)/$(target)")
 
 .SILENT .PHONY: lint
 lint: # lint a Packer Template [Usage: `make lint target=<target> os=<os>`]
-	$(if $(target),,$(call missing_argument,lint,target=<target>))
-	$(if $(builder),,$(call missing_argument,lint,builder=<builder>))
-	$(if $(os),,$(call missing_argument,console,os=<os>))
+	$(if $(target),,$(call missing_argument,target=<target>))
+	$(if $(os),,$(call missing_argument,os=<os>))
 
 	$(call print_args,$(ARGS))
 	$(call packer_lint,"$(DIR_PACKER)/$(target)")
 
 .SILENT .PHONY: build
 build: # build a Packer Template [Usage: `make build target=<target> builder=<builder> os=<os>`]
-	$(if $(target),,$(call missing_argument,build,target=<target>))
-	$(if $(builder),,$(call missing_argument,builder,builder=<builder>))
-	$(if $(os),,$(call missing_argument,build,os=<os>))
+	$(if $(target),,$(call missing_argument,target=<target>))
+	$(if $(os),,$(call missing_argument,os=<os>))
+	$(if $(builder),,$(call missing_argument,builder=<builder>))
 
 	$(call print_args,$(ARGS))
 
 .SILENT .PHONY: docs
 docs: # generate documentation for a Packer Templates [Usage: `make docs target=<target>`]
-	$(if $(target),,$(call missing_argument,docs,target=<target>))
+	$(if $(target),,$(call missing_argument,target=<target>))
 
 	# TODO: align with overall `render_documentation` function
 	$(call render_documentation,$(DIR_PACKER)/$(strip $(target)),shared.pkr.hcl,$(DOCS_CONFIG),sample.pkrvars.hcl)
 
 .SILENT .PHONY: console
 console: # start Console for a Packer Template [Usage: `make console target=<target> os=<os>`]
-	$(if $(target),,$(call missing_argument,console,target=<target>))
-	$(if $(os),,$(call missing_argument,console,os=<os>))
+	$(if $(target),,$(call missing_argument,target=<target>))
+	$(if $(os),,$(call missing_argument,os=<os>))
 
 	$(call print_args,$(ARGS))
 	$(call packer_console,"$(DIR_PACKER)/$(target)")
@@ -124,8 +123,8 @@ ansible_init: # initialize Ansible Collections and Roles [Usage: `make ansible_i
 
 .SILENT .PHONY: ansible_inventory
 ansible_inventory: # construct an Ansible Inventory [Usage: `make ansible_inventory host=<host> user=<user>`]
-	$(if $(host),,$(call missing_argument,console,host=<host>))
-	$(if $(user),,$(call missing_argument,console,user=<user>))
+	$(if $(host),,$(call missing_argument,host=<host>))
+	$(if $(user),,$(call missing_argument,user=<user>))
 
 	echo "\
 [all:vars] \n \
@@ -166,7 +165,7 @@ ansible_local: # run Ansible directly, outside of Packer [Usage: `make ansible_l
 
 .SILENT .PHONY: cloudinit_lint
 cloudinit_lint: # lint cloud-init user data files using Alpine (via Docker) [Usage: `make cloudinit_lint path=./packer/templates/user-data.yml`]
-	$(if $(path),,$(call missing_argument,path,path=./packer/templates/user-data.yml))
+	$(if $(path),,$(call missing_argument,path=./packer/templates/user-data.yml))
 
 	$(call print_arg,path,$(path))
 
@@ -212,7 +211,7 @@ _kill_vb: # force-kill all VirtualBox processes (macOS only) [Usage: `make _kill
 
 .SILENT .PHONY: _link_vars
 _link_vars: # create a symlink to the shared variables file for a new target [Usage: `make _link_vars target=<target>`]
-	$(if $(target),,$(call missing_argument,build,target=<target>))
+	$(if $(target),,$(call missing_argument,target=<target>))
 
 	$(call safely_create_directory,$(DIR_PACKER)/$(target))
 
