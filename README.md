@@ -13,6 +13,7 @@
   * [Notes](#notes)
     * [Ansible outside Packer](#ansible-outside-packer)
     * [Development Helpers](#development-helpers)
+    * [Colored Output](#colored-output)
     * [Acknowledgements](#acknowledgements)
   * [Author Information](#author-information)
   * [License](#license)
@@ -89,12 +90,19 @@ This will write an Ansible Inventory file to `$(ANSIBLE_INVENTORY)` (e.g.: `$(DI
 
 Once present, Ansible may be executed using `make ansible_local`
 
-
 ### Development Helpers
 
 The [Makefile](./Makefile) includes several unsupported helper targets that _may_ be useful when developing additional templates and functionality.
 
 These targets are prefixed with an underscore (`_`) and may be removed at any time.
+
+### Colored Output
+
+Colorized CLI output may be disabled by setting the `NO_COLOR` environment variable to any non-empty value.
+
+```shell
+export NO_COLOR=1 && make
+```
 
 ### Acknowledgements
 
