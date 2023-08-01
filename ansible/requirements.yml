@@ -13,7 +13,7 @@ roles:
     # Go tooling
     # see: https://github.com/gantsign/ansible-role-golang/
     name: "gantsign.golang"
-    version: "3.1.5"  # see: https://github.com/gantsign/ansible-role-golang/releases
+    version: "3.1.6"  # see: https://github.com/gantsign/ansible-role-golang/releases
 
   -
     # CIS-based role for Amazon Linux 2
@@ -25,11 +25,11 @@ roles:
 
   -
     # CIS-based role for RHEL 8
-    # see: https://galaxy.ansible.com/MindPointGroup/rhel8_cis
+    # see: https://github.com/ansible-lockdown/RHEL8-CIS
     name: "ansible-lockdown.rhel8_cis"
     src: "git@github.com:ansible-lockdown/RHEL8-CIS.git"
     scm: "git"
-    version: "2.2.1"  # see: https://github.com/ansible-lockdown/RHEL8-CIS/releases
+    version: "2.5"  # see: https://github.com/ansible-lockdown/RHEL8-CIS/releases
 
   -
     # CIS-based role for Ubuntu 22.04
@@ -41,11 +41,11 @@ roles:
 
   -
     # CIS-based role for Windows Server 2019
-    # see: https://galaxy.ansible.com/MindPointGroup/windows_2019_cis
+    # see: https://github.com/ansible-lockdown/Windows-2019-CIS
     name: "ansible-lockdown.windows_2019_cis"
     src: "git@github.com:ansible-lockdown/Windows-2019-CIS.git"
     scm: "git"
-    version: "1.1.1"  # see: https://github.com/ansible-lockdown/Windows-2019-CIS/releases
+    version: "1.2.0"  # see: https://github.com/ansible-lockdown/Windows-2019-CIS/releases
 
   -
     # CIS-based role for Windows Server 2022
