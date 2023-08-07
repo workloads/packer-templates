@@ -1,0 +1,101 @@
+#cloud-config
+
+# This file has a minimal selection of `autoinstall` instructions.
+# see https://ubuntu.com/server/docs/install/autoinstall-reference
+
+autoinstall:
+  version: 1
+
+  apt:
+    # revert to offline installation if no network is availabe
+    fallback: offline-install
+
+    # consider geolocation when choosing a mirror
+    geoip: true
+
+    mirror-selection:
+      primary:
+        - country-mirror
+    preserve_sources_list: false
+
+  # commands to run as early as possible
+  early-commands:
+    # prevent Packer from aborting because of SSH timeouts
+    - systemctl stop ssh.service
+    - systemctl stop ssh.socket
+
+  identity:
+    hostname: "${hostname}"
+    username: "${username}"
+    password: "${password}"
+
+  # keyboard layout
+  keyboard:
+    layout: "us"
+    variant: ""
+
+  # locale to set for the system
+  locale: "en_US.UTF-8"
+
+  packages:
+    - cloud-init
+
+  # do not update to the latest channel-available version of the installer
+  refresh-installer:
+    update: false
+
+  reporting:
+    builtin:
+      # print information to TTY1 (and any serial consoles)
+      type: print
+
+  ssh:
+    # allow password for login
+    allow-pw: true
+
+    # unset authorized keys
+    authorized-keys: []
+
+    # install OpenSSH server
+    install-server: true
+
+# TODO: investigate why this is breaking
+  source:
+    search_drivers: false
+#    id: "ubuntu-server-minimized"
+
+  storage:
+    layout:
+      # create a single volume that is the full size of the Parallels-managed virtual disk
+      # see https://curtin.readthedocs.io/en/latest/topics/storage.html
+      name: direct
+    swap:
+      size: 0
+
+  # poll network for TZ information
+#  timezone: "geoip"
+
+  # download and install updates from the "security" pocket
+  #updates: security
+
+  user-data:
+    disable_root: false
+
+    final_message: "Installation complete."
+
+#    users:
+#      # default user as defined by the installer
+#      - default
+#
+#      - name: "${username}"
+#        groups:
+#          - sudo
+#          -
+#        sudo: "ALL=(ALL) NOPASSWD:ALL"
+#        #plain_text_passwd: "${password}"
+#        passwd: $6$.c38i4RIqZeF4RtR$hRu2RFep/.6DziHLnRqGOEImb15JT2i.K/F9ojBkK/79zqY30Ll2/xx6QClQfdelLe.ZjpeVYfE8xBBcyLspa/
+#
+#        # set shell for user
+#        shell: /bin/bash
+#        # allow password-based login
+#        lock_passwd: false

@@ -27,7 +27,7 @@
 
 ## Usage
 
-To build the `null` image for the `my_os` operating system, run:
+To build the `null` image for the `os` operating system, run:
 
 ```shell
 make build target=null builder=null os=<os>

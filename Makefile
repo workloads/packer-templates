@@ -19,31 +19,38 @@ CLOUDINIT_DIRECTORY    ?= $(shell dirname ${path})
 CLOUDINIT_FILE         ?= $(shell basename ${path})
 CLOUDINIT_LINT_IMAGE   ?= "ghcr.io/workloads/alpine-with-cloudinit:latest" # full content address is supported but not required
 DIR_ANSIBLE            ?= ansible
+DIR_BUILD               = $(DIR_PACKER)/$(builder)
 DIR_DIST               ?= dist
 DIR_PACKER             ?= packer
+DIR_TEMPLATES          ?= ../templates
 DOCS_CONFIG             = .packer-docs.yml
+FILES_SHARED					 ?= "variables_shared.pkr.hcl" "builders_shared.pkr.hcl"
 YAMLLINT_CONFIG        ?= .yaml-lint.yml
 YAMLLINT_FORMAT        ?= colored
 TITLE                   = 🔵 PACKER TEMPLATES
 
+# TODO: fix logic
 # conditionally load Target-specific configuration if present
-ifneq ($(wildcard $(DIR_PACKER)/$(strip $(target))/extras.mk),)
-	include $(DIR_PACKER)/$(strip $(target))/extras.mk
+ifneq ($(wildcard $(DIR_PACKER)/$(strip $(builder))/extras.mk),)
+	include $(DIR_PACKER)/$(strip $(builder))/extras.mk
 endif
 
 # expose relevant information to Packer
-arg_var_ansible_command       = -var 'ansible_command=$(BINARY_ANSIBLE)'
-arg_var_ansible_galaxy_file   = -var 'ansible_galaxy_file=$(ANSIBLE_REQUIREMENTS)'
-arg_var_ansible_playbook_file = -var 'ansible_playbook_file=$(ANSIBLE_PLAYBOOK)'
-arg_var_dist_dir              = -var 'dist_dir=$(DIR_DIST)'
-arg_var_os                    = -var 'os=$(os)'
-arg_var_target                = -var 'target=$(target)'
+var_ansible_command       = -var 'ansible_command=$(BINARY_ANSIBLE)'
+var_ansible_galaxy_file   = -var 'ansible_galaxy_file=$(ANSIBLE_REQUIREMENTS)'
+var_ansible_playbook_file = -var 'ansible_playbook_file=$(ANSIBLE_PLAYBOOK)'
+var_dir_dist              = -var 'dir_dist=$(DIR_DIST)'
+var_dir_templates         = -var 'dir_templates=$(DIR_TEMPLATES)'
+var_template_arch         = -var 'template_arch=$(arch)'
+var_template_builder      = -var 'template_builder=$(builder)'
+var_template_os           = -var 'template_os=$(os)'
+var_template_provider     = -var 'template_provider=$(provider)'
 
 # enable dev mode and configure corresponding packages
+var_developer_mode = -var 'developer_mode=false'
+
 ifdef dev
-arg_var_developer_mode = -var 'developer_mode=true'
-else
-arg_var_developer_mode = -var 'developer_mode=false'
+var_developer_mode = -var 'developer_mode=true'
 endif
 
 # see https://developer.hashicorp.com/packer/docs/templates/hcl_templates/onlyexcept#except-foo-bar-baz
@@ -51,61 +58,72 @@ extra_except_args =
 args_only         =
 args_except       =
 
-# if `target` is not null, pass `builder` to Packer
-ifneq ($(target),null)
-	args_only = -only="1-provisioners.$(builder).main"
+# if `builder` is not null, pass `provider` to Packer
+ifneq ($(builder),null)
+	args_only = -only="1-provisioners.$(provider).main"
 endif
 
 ifneq ($(extra_except_args),)
 	args_except = -except="$(extra_except_args)"
 endif
 
-# convenience handle for ALL CLI arguments
-cli_args = $(args_only) $(args_except) $(arg_var_ansible_command) $(arg_var_ansible_galaxy_file) $(arg_var_ansible_playbook_file) $(arg_var_dist_dir) $(arg_var_os) $(arg_var_target)
+# convenience handles for ALL CLI arguments
+ansible_cli_args  = $(var_ansible_command) $(var_ansible_galaxy_file) $(var_ansible_playbook_file)
+directory_cli_args = $(var_dir_dist) $(var_dir_templates)
+template_cli_args = $(var_template_builder) $(var_template_provider) $(var_template_os) $(var_template_arch)
+varsfile_cli_args = -var-file="$(DIR_BUILD)/$(os)_$(arch).pkrvars.hcl"
+cli_args          = $(args_only) $(args_except) $(template_cli_args) $(directory_cli_args) $(ansible_cli_args) $(var_developer_mode) $(varsfile_cli_args)
 
+# include common and Packer-specific Makefile logic
 include ../tooling/make/configs/shared.mk
 include ../tooling/make/functions/shared.mk
 include ../tooling/make/functions/packer.mk
+include ../tooling/make/targets/packer.mk
 include ../tooling/make/targets/shared.mk
 
 .SILENT .PHONY: init
-init: # initialize a Packer Template [Usage: `make init target=<target> os=<os>`]
-	$(if $(target),,$(call missing_argument,target=<target>))
-	$(if $(os),,$(call missing_argument,os=<os>))
-
-	$(call print_args,$(ARGS))
-	$(call packer_init,"$(DIR_PACKER)/$(target)")
-
-.SILENT .PHONY: lint
-lint: # lint a Packer Template [Usage: `make lint target=<target> os=<os>`]
-	$(if $(target),,$(call missing_argument,target=<target>))
-	$(if $(os),,$(call missing_argument,os=<os>))
-
-	$(call print_args,$(ARGS))
-	$(call packer_lint,"$(DIR_PACKER)/$(target)")
-
-.SILENT .PHONY: build
-build: # build a Packer Template [Usage: `make build target=<target> builder=<builder> os=<os>`]
-	$(if $(target),,$(call missing_argument,target=<target>))
-	$(if $(os),,$(call missing_argument,os=<os>))
+init: # initialize a Packer Template [Usage: `make init builder=<builder> os=<os>`]
 	$(if $(builder),,$(call missing_argument,builder=<builder>))
 
-	$(call print_args,$(ARGS))
+	$(call print_args)
+	$(call packer_init,"$(DIR_BUILD)")
+
+.SILENT .PHONY: lint
+lint: # lint a Packer Template [Usage: `make lint builder=<builder> provider=<provider> os=<os> arch=<arch>`]
+	$(if $(builder),,$(call missing_argument,builder=<builder>))
+	$(if $(provider),,$(call missing_argument,provider=<provider>))
+	$(if $(os),,$(call missing_argument,os=<os>))
+	$(if $(arch),,$(call missing_argument,arch=<arch>))
+
+	$(call print_args)
+	$(call packer_lint,"$(DIR_BUILD)")
+
+.SILENT .PHONY: build
+build: # build a Packer Template [Usage: `make build builder=<builder> provider=<provider> os=<os> arch=<arch>`]
+	$(if $(builder),,$(call missing_argument,builder=<builder>))
+	$(if $(provider),,$(call missing_argument,provider=<provider>))
+	$(if $(os),,$(call missing_argument,os=<os>))
+	$(if $(arch),,$(call missing_argument,arch=<arch>))
+
+	$(call print_args)
+	$(call packer_build,"$(DIR_BUILD)")
 
 .SILENT .PHONY: docs
-docs: # generate documentation for a Packer Templates [Usage: `make docs target=<target>`]
-	$(if $(target),,$(call missing_argument,target=<target>))
+docs: # generate documentation for a Packer Templates [Usage: `make docs builder=<builder>`]
+	$(if $(target),,$(call missing_argument,builder=<builder>))
 
 	# TODO: align with overall `render_documentation` function
-	$(call render_documentation,$(DIR_PACKER)/$(strip $(target)),shared.pkr.hcl,$(DOCS_CONFIG),sample.pkrvars.hcl)
+	$(call render_documentation,$(DIR_BUILD)),shared.pkr.hcl,$(DOCS_CONFIG),sample.pkrvars.hcl)
 
 .SILENT .PHONY: console
-console: # start Console for a Packer Template [Usage: `make console target=<target> os=<os>`]
-	$(if $(target),,$(call missing_argument,target=<target>))
+console: # start Console for a Packer Template [Usage: `make console builder=<builder> provider=<provider> os=<os> arch=<arch>`]
+	$(if $(builder),,$(call missing_argument,builder=<builder>))
+	$(if $(provider),,$(call missing_argument,provider=<provider>))
 	$(if $(os),,$(call missing_argument,os=<os>))
+	$(if $(arch),,$(call missing_argument,arch=<arch>))
 
-	$(call print_args,$(ARGS))
-	$(call packer_console,"$(DIR_PACKER)/$(target)")
+	$(call print_args)
+	$(call packer_console,"$(DIR_BUILD)")
 
 .SILENT .PHONY: ansible_init
 ansible_init: # initialize Ansible Collections and Roles [Usage: `make ansible_init`]
@@ -164,10 +182,12 @@ ansible_local: # run Ansible directly, outside of Packer [Usage: `make ansible_l
 		$(ANSIBLE_PLAYBOOK)
 
 .SILENT .PHONY: cloudinit_lint
-cloudinit_lint: # lint cloud-init user data files using Alpine (via Docker) [Usage: `make cloudinit_lint path=./packer/templates/user-data.yml`]
-	$(if $(path),,$(call missing_argument,path=./packer/templates/user-data.yml))
+cloudinit_lint: # lint cloud-init user data files using Alpine (via Docker) [Usage: `make cloudinit_lint path=templates/user-data.yml`]
+	$(if $(path),,$(call missing_argument,path=templates/user-data.yml))
 
 	$(call print_arg,path,$(path))
+
+	echo $(CLOUDINIT_DIRECTORY)
 
 	# run an interactive Docker container that self-removes on completion
 	$(BINARY_DOCKER) \
@@ -178,10 +198,6 @@ cloudinit_lint: # lint cloud-init user data files using Alpine (via Docker) [Usa
 			--tty \
 			--volume "$(CLOUDINIT_DIRECTORY):/config/" \
 			$(CLOUDINIT_LINT_IMAGE)
-
-.SILENT .PHONY: yaml_lint
-yaml_lint: # lint YAML files [Usage: `make yaml_lint`]
-	$(call yaml_lint)
 
 .SILENT .PHONY: _clean
 _clean: # remove generated files [Usage: `make _clean`]
@@ -210,21 +226,19 @@ _kill_vb: # force-kill all VirtualBox processes (macOS only) [Usage: `make _kill
 		-f "VBox"
 
 .SILENT .PHONY: _link_vars
-_link_vars: # create a symlink to the shared variables file for a new target [Usage: `make _link_vars target=<target>`]
-	$(if $(target),,$(call missing_argument,target=<target>))
+_link_vars: # create a symlink to the shared variables file for a new builder [Usage: `make _link_vars builder=<builder>`]
+	$(if $(builder),,$(call missing_argument,builder=<builder>))
 
-	$(call safely_create_directory,$(DIR_PACKER)/$(target))
+	$(call safely_create_directory,$(DIR_PACKER)/$(builder))
 
 	# remove and unlink existing file (`-F` and `-f`),
 	# write to stderr if the target exists (`-i`),
 	# attempt to create a soft symbolic link (`-P` and `-s`)
 	#	verbosely describe the operations (`-v` and `-w`)
 	ln \
-		-F \
-		-f \
-		-P \
-		-i \
-		-s \
-		-v \
-			../shared.pkr.hcl \
-			$(DIR_PACKER)/$(target)/shared.pkr.hcl
+		-F -f -P -i -s -v "../shared_variables.pkr.hcl"  "$(DIR_BUILD)/shared_variables.pkr.hcl"
+
+	$(foreach shared_file,$(FILES_SHARED),\
+		ln \
+				-F -f -P -i -s -v "../${shared_file}"  "$(DIR_BUILD)/${shared_file}"; \
+	)

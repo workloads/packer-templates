@@ -13,6 +13,7 @@
   * [Notes](#notes)
     * [Ansible outside Packer](#ansible-outside-packer)
     * [Development Helpers](#development-helpers)
+    * [Overriding Binaries](#overriding-binaries)
     * [Colored Output](#colored-output)
     * [Acknowledgements](#acknowledgements)
   * [Author Information](#author-information)
@@ -48,14 +49,14 @@ ansible_init        initialize Ansible Collections and Roles                    
 ansible_inventory   construct an Ansible Inventory                                    `make ansible_inventory host=<host> user=<user>`
 ansible_lint        lint Ansible Playbooks                                            `make ansible_lint`
 ansible_local       run Ansible directly, outside of Packer                           `make ansible_local`
-cloudinit_lint      lint cloud-init user data files using Alpine (via Docker)         `make cloudinit_lint path=./packer/templates/user-data.yml`
+cloudinit_lint      lint cloud-init user data files using Alpine (via Docker)         `make cloudinit_lint path=templates/user-data.yml`
 yaml_lint           lint YAML files                                                   `make yaml_lint`
 _clean              remove generated files                                            `make _clean`
 _dist               quickly open the generated files directory (macOS only)           `make _dist`
 _pd                 quickly open Parallels Desktop (macOS only)                       `make _pd`
 _vb                 quickly open VirtualBox (macOS only)                              `make _vb`
 _kill_vb            force-kill all VirtualBox processes (macOS only)                  `make _kill_vb`
-_link_vars          create a symlink to the shared variables file for a new target    `make _link_vars target  my_target`
+_link_vars          create a symlink to the shared variables file for a new target    `make _link_vars target=my_target`
 help                display a list of Make Targets                                    `make help`
 _listincludes       list all included Makefiles and *.mk files                        `make _listincludes`
 _selfcheck          lint Makefile                                                     `make _selfcheck`
@@ -95,6 +96,20 @@ Once present, Ansible may be executed using `make ansible_local`
 The [Makefile](./Makefile) includes several unsupported helper targets that _may_ be useful when developing additional templates and functionality.
 
 These targets are prefixed with an underscore (`_`) and may be removed at any time.
+
+### Overriding Binaries
+
+* The binaries for Ansible (`ansible`, `ansible-galaxy`, `ansible-lint`), Docker (`docker`), Packer (`packer`), Vagrant (`vagrant`) and `yaml-lint` may be overridden by setting their respective `BINARY_` equivalent arguments when running the [Makefile](./Makefile):
+
+```shell
+# override Ansible binaries
+make render pack=<pack> BINARY_ANSIBLE=/tmp/ansible BINARY_ANSIBLE_GALAXY=/tmp/ansible-galaxy
+
+# override Docker binary
+make render pack=<pack> BINARY_DOCKER=custom-docker-binary
+```
+
+A complete list of overridable binaries can be found in the [Makefile](./Makefile).
 
 ### Colored Output
 
