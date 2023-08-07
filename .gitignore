@@ -1,5 +1,6 @@
-# ignored symlinked shared variable files
-packer/*/shared.pkr.hcl
+# ignored symlinked files
+packer/**/builders_shared.pkr.hcl
+packer/**/variables_shared.pkr.hcl
 
 # ignore distributables
 dist/*
