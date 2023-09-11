@@ -23,7 +23,7 @@
 | image variables | n/a                                           |
 | build target    | `null`                                        |
 | build command   | `make build target=null builder=null os=<os>` |
-| lint command    | `make lint target=null builder=null os=<os>`  |
+| lint command    | `make lint template=null builder=null os=<os>`  |
 
 ## Usage
 

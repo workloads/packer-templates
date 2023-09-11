@@ -41,7 +41,7 @@ Running `make` without commands will print out the following help information:
 🔵 PACKER TEMPLATES
 
 init                initialize a Packer Template                                      `make init target=<target> os=<os>`
-lint                lint a Packer Template                                            `make lint target=<target> os=<os>`
+lint                lint a Packer Template                                            `make lint template=<target> os=<os>`
 build               build a Packer Template                                           `make build target=<target> builder=<builder> os=<os>`
 docs                generate documentation for a Packer Template                      `make docs target=<target>`
 console             start Console for a Packer Template                               `make console target=<target> os=<os>`
