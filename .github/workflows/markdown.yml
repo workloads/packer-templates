@@ -27,9 +27,9 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      # see https://github.com/actions/checkout/releases/tag/v3.6.0
+      # see https://github.com/actions/checkout/releases/tag/v4.1.0
       - name: Checkout Repository
-        uses: "actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744" # ref: `tags/v3.6.0`
+        uses: "actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608" # ref: `tags/v4.1.0`
         with:
           fetch-depth: 1
 
