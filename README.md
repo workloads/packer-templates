@@ -14,9 +14,9 @@
     * [Ansible outside Packer](#ansible-outside-packer)
     * [Development Helpers](#development-helpers)
     * [Overriding Binaries](#overriding-binaries)
-    * [Colored Output](#colored-output)
+    * [Colorized Output](#colorized-output)
     * [Acknowledgements](#acknowledgements)
-  * [Author Information](#author-information)
+  * [Contributors](#contributors)
   * [License](#license)
 <!-- TOC -->
 
@@ -28,12 +28,12 @@
 
 Optional, and only needed for development and testing of Packs:
 
-- `terraform-docs` `0.16.0` or [newer](https://terraform-docs.io/user-guide/installation/)
+- `terraform-docs` `0.17.0` or [newer](https://terraform-docs.io/user-guide/installation/)
 - `ansible-lint` `6.17.0` or [newer](https://ansible.readthedocs.io/projects/lint/installing/)
 
 ## Usage
 
-This repository provides a workflow that is wrapped through a [Makefile](./Makefile).
+This repository provides a [Makefile](./Makefile)-based workflow.
 
 Running `make` without commands will print out the following help information:
 
@@ -111,7 +111,7 @@ make render pack=<pack> BINARY_DOCKER=custom-docker-binary
 
 A complete list of overridable binaries can be found in the [Makefile](./Makefile).
 
-### Colored Output
+### Colorized Output
 
 Colorized CLI output may be disabled by setting the `NO_COLOR` environment variable to any non-empty value.
 
@@ -130,16 +130,14 @@ The authors would like to thank the following parties for their contributions:
 * [Mike Nomitch](https://github.com/mikenomitch/nomatic-stack)
 * [Ryan Johnson](https://github.com/vmware-samples/packer-examples-for-vsphere)
 
-## Author Information
+## Contributors
 
-This repository is maintained by the contributors listed on [GitHub](https://github.com/workloads/packer-templates/graphs/contributors).
+For a list of current (and past) contributors to this repository, see [GitHub](https://github.com/workloads/packer-templates/graphs/contributors).
 
 ## License
 
 Licensed under the Apache License, Version 2.0 (the "License").
 
-You may obtain a copy of the License at [apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an _"AS IS"_ basis, without WARRANTIES or conditions of any kind, either express or implied.
+You may download a copy of the License at [apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
 See the License for the specific language governing permissions and limitations under the License.
