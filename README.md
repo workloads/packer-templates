@@ -1,6 +1,6 @@
 # Packer Templates
 
-> This directory manages Packer Templates for [@workloads](https://github.com/workloads).
+> This repository manages Packer Templates for [@workloads](https://github.com/workloads).
 
 ## Table of Contents
 
