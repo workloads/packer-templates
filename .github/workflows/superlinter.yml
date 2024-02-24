@@ -39,9 +39,9 @@ jobs:
           # full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
 
-      # see https://github.com/super-linter/super-linter/releases/tag/v5.7.2
+      # see https://github.com/super-linter/super-linter/releases/tag/v6.2.0
       - name: Lint Code with Super-Linter
-        uses: "super-linter/super-linter@a8150b40c89574adb5f68bf9502b890a236a06b3"  # ref: `tags/v5.7.2`
+        uses: "super-linter/super-linter@25003d0370b45d97187597838ecb9fdadfc08aea"  # ref: `tags/v6.2.0`
         env:
           # see https://github.com/github/super-linter#environment-variables
           CSS_FILE_NAME: ".stylelintrc.json"
